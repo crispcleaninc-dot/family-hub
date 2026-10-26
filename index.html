@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Our Family Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2951; --navy-2:#24356a; --gold:#C9A961; --gold-soft:#efe2bf;
+    --paper:#FAF7F0; --card:#ffffff; --ink:#1c1917; --muted:#6b6459; --line:#e9e1cf;
+    --ok:#15803d; --ok-soft:#dcfce7; --warn:#b45309; --shadow:0 10px 30px rgba(27,41,81,.12);
+    --radius:22px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0f1424; --card:#18203a; --ink:#f4efe4; --muted:#b9b1a2; --line:#2b3558;
+      --ok-soft:#123a24; --gold-soft:#3a3220; --shadow:0 10px 30px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0f1424; --card:#18203a; --ink:#f4efe4; --muted:#b9b1a2; --line:#2b3558;
+    --ok-soft:#123a24; --gold-soft:#3a3220; --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  button,input{font:inherit}
+  .wrap{max-width:980px;margin:0 auto;padding:0 16px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0;letter-spacing:-.01em}
+  .hidden{display:none!important}
+
+  /* ---------- login ---------- */
+  #login{min-height:100vh;display:grid;place-items:center;padding:24px 16px;
+    background:radial-gradient(1200px 600px at 10% -10%,rgba(201,169,97,.28),transparent 60%),
+               radial-gradient(900px 500px at 110% 110%,rgba(27,41,81,.22),transparent 60%),var(--paper)}
+  .login-card{width:100%;max-width:400px;background:var(--card);border-radius:28px;padding:30px 24px;box-shadow:var(--shadow);border:1px solid var(--line)}
+  .crest{width:72px;height:72px;border-radius:22px;background:var(--navy);color:var(--gold);display:grid;place-items:center;
+    font-family:Fraunces,serif;font-weight:800;font-size:36px;margin:0 auto 14px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+  .login-card h1{text-align:center;font-size:28px;color:var(--navy)}
+  :root[data-theme="dark"] .login-card h1{color:var(--gold)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .login-card h1{color:var(--gold)}}
+  .login-card p.sub{text-align:center;color:var(--muted);margin:6px 0 22px}
+  label{display:block;font-weight:800;font-size:14px;margin:14px 0 6px}
+  input[type=text],input[type=date]{width:100%;padding:14px 16px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:17px;outline:none}
+  input:focus{border-color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;padding:14px 18px;font-weight:900;cursor:pointer;
+    background:var(--navy);color:#fff;font-size:16px;transition:transform .08s ease}
+  .btn:active{transform:scale(.97)}
+  .btn.gold{background:var(--gold);color:var(--navy)}
+  .btn.ghost{background:transparent;color:var(--muted);border:2px solid var(--line)}
+  .btn.block{width:100%;margin-top:20px}
+  .err{color:#b91c1c;font-weight:800;min-height:22px;margin-top:12px;text-align:center}
+
+  /* ---------- top bar ---------- */
+  header.top{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header.top .wrap{display:flex;align-items:center;gap:12px;height:62px}
+  .mini-crest{width:38px;height:38px;border-radius:12px;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-family:Fraunces,serif;font-weight:800}
+  header.top .title{font-family:Fraunces,serif;font-weight:800;font-size:19px;flex:1}
+  .chip{padding:8px 12px;border-radius:999px;background:var(--gold-soft);color:var(--ink);font-weight:800;font-size:13px}
+
+  /* ---------- hero ---------- */
+  .hero{position:relative;margin:18px 0 8px;border-radius:var(--radius);overflow:hidden;min-height:260px;background:var(--navy);box-shadow:var(--shadow)}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s ease}
+  .hero img.on{opacity:1}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,20,36,.05) 30%,rgba(15,20,36,.82))}
+  .hero .txt{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;color:#fff}
+  .hero .date{color:var(--gold);font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:12px}
+  .hero h2{font-size:32px;line-height:1.1;margin-top:4px}
+  .hero .empty{position:absolute;inset:0;display:grid;place-items:center;color:var(--gold);font-family:Fraunces,serif;font-size:22px;z-index:1;text-align:center;padding:20px}
+
+  /* ---------- sections ---------- */
+  section.block{margin:26px 0}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .sec-head img{width:44px;height:44px;border-radius:14px;object-fit:cover;border:2px solid var(--gold)}
+  .sec-head h3{font-size:22px;flex:1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:0 2px 0 rgba(0,0,0,.02)}
+
+  /* chores */
+  .progress{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .ring{--p:0;width:62px;height:62px;border-radius:50%;background:conic-gradient(var(--ok) calc(var(--p)*1%),var(--line) 0);display:grid;place-items:center}
+  .ring span{width:48px;height:48px;border-radius:50%;background:var(--card);display:grid;place-items:center;font-weight:900;font-size:14px}
+  .kid{margin-top:14px}
+  .kid-name{display:flex;align-items:center;gap:8px;font-weight:900;font-size:15px;margin-bottom:6px}
+  .dot{width:12px;height:12px;border-radius:50%}
+  .chore{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);margin-bottom:8px;cursor:pointer;background:var(--paper);user-select:none}
+  .chore .box{width:28px;height:28px;border-radius:9px;border:3px solid var(--line);flex:none;display:grid;place-items:center;font-weight:900;color:#fff}
+  .chore.done{background:var(--ok-soft);border-color:transparent}
+  .chore.done .box{background:var(--ok);border-color:var(--ok)}
+  .chore.done .label{text-decoration:line-through;color:var(--muted)}
+  .chore .label{font-weight:700}
+
+  /* apps */
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .app{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .1s ease,box-shadow .1s ease}
+  .app:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+  .app .ic{font-size:30px}
+  .app b{font-size:15px}
+  .app small{color:var(--muted);font-weight:600;line-height:1.3}
+
+  /* photo strip */
+  .strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+  .strip img{height:150px;border-radius:16px;scroll-snap-align:start;object-fit:cover;aspect-ratio:4/3;flex:none}
+  .upload{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .note{color:var(--muted);font-size:14px}
+  footer{color:var(--muted);text-align:center;font-size:13px;padding:30px 16px 40px}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 18px;border-radius:14px;font-weight:800;box-shadow:var(--shadow);z-index:20}
+  .emoji-ic{width:44px;height:44px;border-radius:14px;background:var(--gold-soft);display:grid;place-items:center;font-size:22px}
+  .mini-title{font-weight:900;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:4px 0 8px}
+  .mini-title.warn{color:var(--warn)}
+  .appt{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+  .appt:first-of-type{border-top:0}
+  .when{min-width:62px;text-align:center;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:6px 4px}
+  .when b{display:block;font-size:20px;font-family:Fraunces,serif}
+  .when small{font-weight:800;color:var(--muted);font-size:11px;text-transform:uppercase}
+  .appt .info{flex:1;min-width:0}
+  .appt .info b{display:block}
+  .appt .info span{color:var(--muted);font-size:14px}
+  .btn.sm{padding:8px 12px;font-size:13px;border-radius:10px}
+  .btn.ok{background:var(--ok)}
+  .kinds{display:flex;flex-wrap:wrap;gap:8px}
+  .kind{padding:10px 14px;border-radius:999px;border:2px solid var(--line);background:var(--paper);font-weight:800;cursor:pointer;color:var(--ink)}
+  .kind.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .levels{display:flex;gap:8px}
+  .lvl{flex:1;padding:10px 0;border-radius:12px;border:2px solid var(--line);background:var(--paper);font-weight:900;cursor:pointer;color:var(--ink)}
+  .lvl.on{background:var(--gold);border-color:var(--gold);color:var(--navy)}
+  textarea{font-family:inherit;width:100%;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:16px;resize:vertical}
+  .req{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:14px;background:var(--gold-soft);margin-top:10px}
+  .req div{flex:1}
+  @media (min-width:720px){.hero{min-height:360px}.hero h2{font-size:42px}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<main id="login">
+  <form class="login-card" id="loginForm" autocomplete="off">
+    <div class="crest">W</div>
+    <h1>Our Family Hub</h1>
+    <p class="sub">Sign in with your first name and birthday.</p>
+    <label for="fn">First name</label>
+    <input id="fn" type="text" inputmode="text" autocapitalize="words" required>
+    <label for="dob">Birthday</label>
+    <input id="dob" type="date" required>
+    <button class="btn block" id="goBtn" type="submit">Come on in</button>
+    <div class="err" id="loginErr" role="alert"></div>
+  </form>
+</main>
+
+<!-- APP -->
+<div id="app" class="hidden">
+  <header class="top"><div class="wrap">
+    <div class="mini-crest">W</div>
+    <div class="title">Family Hub</div>
+    <span class="chip" id="meChip"></span>
+    <button class="btn ghost" id="outBtn" type="button" style="padding:8px 12px">Sign out</button>
+  </div></header>
+
+  <div class="wrap">
+    <div class="hero" id="hero">
+      <div class="empty" id="heroEmpty">Our family photos will show here 💛</div>
+      <div class="txt"><div class="date" id="today"></div><h2 id="hello"></h2></div>
+    </div>
+
+    <section class="block">
+      <div class="sec-head"><img alt="" id="ph1" class="hidden"><h3>Today’s chores</h3></div>
+      <div class="card">
+        <div class="progress"><div class="ring" id="ring"><span id="ringTxt">0%</span></div>
+          <div><b id="progTxt"></b><div class="note">Tap a chore when it’s done.</div></div></div>
+        <div id="chores"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><span class="emoji-ic">🩺</span><h3>Appointments</h3></div>
+      <div class="card">
+        <div id="overdueWrap" class="hidden">
+          <div class="mini-title warn">Past date — did you go?</div>
+          <div id="overdue"></div>
+        </div>
+        <div class="mini-title">Coming up</div>
+        <div id="upcoming"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><span class="emoji-ic">💬</span><h3>Something wrong?</h3></div>
+      <div class="card">
+        <p class="note" style="margin-top:0">Tell Mom if something hurts or you need to see a doctor. If it’s an emergency, get a grown-up right now or call 911.</p>
+        <div class="kinds" id="kinds"></div>
+        <div id="reqForm" class="hidden">
+          <label>How bad is it?</label>
+          <div class="levels" id="levels"></div>
+          <label for="reqNote">Anything else? (optional)</label>
+          <textarea id="reqNote" rows="2" maxlength="400" placeholder="Like: my back tooth hurts when I chew"></textarea>
+          <button class="btn block" id="reqSend" type="button">Tell Mom</button>
+        </div>
+        <div id="reqList"></div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><img alt="" id="ph2" class="hidden"><h3>Our apps</h3></div>
+      <div class="apps" id="apps"></div>
+    </section>
+
+    <section class="block">
+      <div class="sec-head"><img alt="" id="ph3" class="hidden"><h3>Family photos</h3></div>
+      <div class="card">
+        <div class="strip" id="strip"></div>
+        <div class="upload hidden" id="uploadRow">
+          <label class="btn gold" style="margin:0">Add a photo<input type="file" accept="image/*" id="file" hidden></label>
+          <span class="note">Photos are saved in your private Google Drive.</span>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer>“As for me and my house, we will serve the Lord.” — Joshua 24:15</footer>
+</div>
+
+<script>
+/* Paste the Family Hub web app address here after deploying the Apps Script. */
+const API = 'https://script.google.com/macros/s/AKfycbwVvEsI8OIuYAY8k9TiFVeRYGWIuoZ22xTjI3bhi6OjIthe8rqVJWFhcBjnDJ-Tkvxz/exec';
+
+const $ = id => document.getElementById(id);
+let state = { token: null, data: null };
+
+function store(k, v){ try{ v === undefined ? localStorage.removeItem(k) : localStorage.setItem(k, v); }catch(e){} }
+function read(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+
+async function call(action, extra){
+  const res = await fetch(API, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body: JSON.stringify(Object.assign({ action, token: state.token }, extra || {})) });
+  return res.json();
+}
+function toast(msg){ const t=document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+$('loginForm').addEventListener('submit', async ev => {
+  ev.preventDefault();
+  $('loginErr').textContent=''; $('goBtn').disabled=true; $('goBtn').textContent='Checking…';
+  try{
+    const r = await call('login', { name: $('fn').value, dob: $('dob').value });
+    if(!r.ok){ $('loginErr').textContent = r.error || 'Try again.'; return; }
+    state.token = r.token; store('fh_token', r.token); $('dob').value='';
+    await load();
+  }catch(e){ $('loginErr').textContent='Could not reach the family hub. Check your internet.'; }
+  finally{ $('goBtn').disabled=false; $('goBtn').textContent='Come on in'; }
+});
+
+$('outBtn').addEventListener('click', async () => {
+  try{ await call('logout'); }catch(e){}
+  store('fh_token'); state.token=null; $('app').classList.add('hidden'); $('login').classList.remove('hidden');
+});
+
+async function load(){
+  const d = await call('dashboard');
+  if(!d.ok){ store('fh_token'); state.token=null; $('app').classList.add('hidden'); $('login').classList.remove('hidden'); return; }
+  state.data = d;
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  $('meChip').textContent = d.me.name;
+  $('today').textContent = d.date;
+  const hr = new Date().getHours();
+  $('hello').textContent = (hr<12?'Good morning':hr<17?'Good afternoon':'Good evening') + ', ' + d.me.name + '!';
+  renderChores(); renderAppts(); renderHelp(); renderApps(); renderPhotos(d.photos||[]);
+  $('uploadRow').classList.toggle('hidden', d.me.role !== 'parent');
+}
+
+function renderChores(){
+  const d = state.data, box = $('chores'); box.innerHTML='';
+  const groups = {};
+  d.chores.forEach(c => (groups[c.child] = groups[c.child] || []).push(c));
+  const names = Object.keys(groups);
+  if(!names.length){ box.innerHTML='<p class="note">No chores on the list today.</p>'; }
+  names.forEach(n => {
+    const wrap = document.createElement('div'); wrap.className='kid';
+    if(d.me.role==='parent') wrap.innerHTML = '<div class="kid-name"><span class="dot" style="background:'+esc(d.colors[n]||'#C9A961')+'"></span>'+esc(n)+'</div>';
+    groups[n].forEach(c => {
+      const row = document.createElement('div'); row.className='chore'+(c.done?' done':''); row.setAttribute('role','checkbox'); row.setAttribute('aria-checked',c.done); row.tabIndex=0;
+      row.innerHTML = '<span class="box">'+(c.done?'✓':'')+'</span><span class="label">'+esc(c.chore)+'</span>';
+      const flip = async () => {
+        c.done = !c.done; renderChores();
+        try{ const r = await call('chore',{child:c.child,chore:c.chore,done:c.done}); if(!r.ok){ c.done=!c.done; renderChores(); toast(r.error||'Not saved'); } else if(c.done) toast('Nice work! 🎉'); }
+        catch(e){ c.done=!c.done; renderChores(); toast('Not saved — check your internet'); }
+      };
+      row.addEventListener('click', flip); row.addEventListener('keydown', e => { if(e.key===' '||e.key==='Enter'){ e.preventDefault(); flip(); } });
+      wrap.appendChild(row);
+    });
+    box.appendChild(wrap);
+  });
+  const total = d.chores.length, done = d.chores.filter(c=>c.done).length, p = total?Math.round(done/total*100):0;
+  $('ring').style.setProperty('--p', p); $('ringTxt').textContent = p+'%';
+  $('progTxt').textContent = done+' of '+total+' done';
+}
+
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function apptRow(a, canMark){
+  const p = String(a.date||'').split('-'); const mon = MON[(+p[1]||1)-1]||''; const day = +p[2]||'';
+  let t = ''; if(a.time){ const [h,mi]=a.time.split(':').map(Number); t = ((h%12)||12)+':'+String(mi||0).padStart(2,'0')+(h<12?' AM':' PM'); }
+  return '<div class="appt"><div class="when"><small>'+mon+'</small><b>'+day+'</b><small>'+esc(p[0]||'')+'</small></div>'+
+    '<div class="info"><b>'+esc(a.who)+' — '+esc(a.what)+'</b><span>'+esc([t,a.where].filter(Boolean).join(' · '))+'</span>'+
+    (a.address?'<br><span><a href="https://maps.google.com/?q='+encodeURIComponent(a.address)+'" target="_blank" rel="noopener">Directions</a></span>':'')+'</div>'+
+    (canMark?'<button class="btn sm ok" data-att="'+esc(a.id)+'" type="button">Attended</button>':'')+'</div>';
+}
+function renderAppts(){
+  const ap = state.data.appts || {upcoming:[],overdue:[]};
+  $('upcoming').innerHTML = ap.upcoming.length ? ap.upcoming.map(a=>apptRow(a,false)).join('') : '<p class="note">Nothing scheduled.</p>';
+  $('overdueWrap').classList.toggle('hidden', !ap.overdue.length);
+  $('overdue').innerHTML = ap.overdue.map(a=>apptRow(a,true)).join('');
+  $('overdue').querySelectorAll('[data-att]').forEach(b => b.addEventListener('click', async () => {
+    b.disabled = true; b.textContent='Saving…';
+    try{ const r = await call('attended',{id:b.dataset.att}); if(!r.ok) throw 0;
+      ap.overdue = ap.overdue.filter(x=>x.id!==b.dataset.att); renderAppts(); toast('Marked attended ✓'); }
+    catch(e){ b.disabled=false; b.textContent='Attended'; toast('Not saved — try again'); }
+  }));
+}
+let pick = { what:null, level:2 };
+function renderHelp(){
+  const d = state.data;
+  $('kinds').innerHTML = (d.kinds||[]).map(k=>'<button type="button" class="kind'+(pick.what===k?' on':'')+'" data-k="'+esc(k)+'">'+esc(k)+'</button>').join('');
+  $('kinds').querySelectorAll('.kind').forEach(b=>b.addEventListener('click',()=>{ pick.what=b.dataset.k; renderHelp(); $('reqForm').classList.remove('hidden'); }));
+  $('levels').innerHTML = [1,2,3,4,5].map(n=>'<button type="button" class="lvl'+(pick.level===n?' on':'')+'" data-l="'+n+'">'+['🙂','😐','😣','😫','🚨'][n-1]+' '+n+'</button>').join('');
+  $('levels').querySelectorAll('.lvl').forEach(b=>b.addEventListener('click',()=>{ pick.level=+b.dataset.l; renderHelp(); }));
+  const isParent = d.me.role==='parent';
+  $('reqList').innerHTML = (d.requests||[]).map(r=>'<div class="req"><div><b>'+esc(r.who)+': '+esc(r.what)+'</b> · '+esc(r.level)+'/5'+(r.note?'<br><span class="note">'+esc(r.note)+'</span>':'')+'</div>'+
+    (isParent?'<button class="btn sm" type="button" data-h="'+esc(r.id)+'">Handled</button>':'<span class="note">Sent to Mom</span>')+'</div>').join('');
+  $('reqList').querySelectorAll('[data-h]').forEach(b=>b.addEventListener('click', async ()=>{
+    b.disabled=true; try{ const r=await call('handled',{id:b.dataset.h}); if(!r.ok) throw 0; d.requests=d.requests.filter(x=>x.id!==b.dataset.h); renderHelp(); }catch(e){ b.disabled=false; toast('Not saved'); }
+  }));
+}
+$('reqSend').addEventListener('click', async ()=>{
+  if(!pick.what) return toast('Pick what’s wrong first');
+  $('reqSend').disabled=true; $('reqSend').textContent='Sending…';
+  try{
+    const r = await call('request',{what:pick.what, level:pick.level, note:$('reqNote').value});
+    if(!r.ok) return toast(r.error||'Not sent');
+    state.data.requests = [{id:r.id, who:state.data.me.first, what:pick.what, level:pick.level, note:$('reqNote').value}].concat(state.data.requests||[]);
+    pick = {what:null, level:2}; $('reqNote').value=''; $('reqForm').classList.add('hidden'); renderHelp();
+    toast('Mom got your message 💛');
+  }catch(e){ toast('Not sent — find Mom'); }
+  finally{ $('reqSend').disabled=false; $('reqSend').textContent='Tell Mom'; }
+});
+
+function renderApps(){
+  $('apps').innerHTML = state.data.apps.map(a =>
+    '<a class="app" href="'+esc(a.url)+'" target="_blank" rel="noopener"><span class="ic">'+esc(a.icon)+'</span><b>'+esc(a.name)+'</b><small>'+esc(a.desc)+'</small></a>').join('');
+}
+
+let heroTimer = null;
+function renderPhotos(ph){
+  const hero = $('hero'); hero.querySelectorAll('img').forEach(i=>i.remove()); clearInterval(heroTimer);
+  $('heroEmpty').classList.toggle('hidden', ph.length>0);
+  ph.forEach((p,i)=>{ const im=new Image(); im.src=p.src; im.alt=p.caption||'Our family'; if(i===0) im.className='on'; hero.insertBefore(im, hero.firstChild); });
+  const imgs = [...hero.querySelectorAll('img')];
+  if(imgs.length>1){ let k=0; heroTimer=setInterval(()=>{ imgs[k].classList.remove('on'); k=(k+1)%imgs.length; imgs[k].classList.add('on'); },6000); }
+  ['ph1','ph2','ph3'].forEach((id,i)=>{ const el=$(id); if(ph.length){ el.src=ph[(i+1)%ph.length].src; el.classList.remove('hidden'); } else el.classList.add('hidden'); });
+  $('strip').innerHTML = ph.length ? ph.map(p=>'<img src="'+p.src+'" alt="'+esc(p.caption||'Family photo')+'">').join('') : '<p class="note">No photos yet.</p>';
+}
+
+$('file').addEventListener('change', async ev => {
+  const f = ev.target.files[0]; if(!f) return;
+  if(f.size > 8*1024*1024){ toast('Photo too big (8 MB max)'); return; }
+  toast('Uploading…');
+  const b64 = await new Promise((ok,no)=>{ const r=new FileReader(); r.onload=()=>ok(String(r.result).split(',')[1]); r.onerror=no; r.readAsDataURL(f); });
+  try{ const r = await call('upload',{dataBase64:b64,type:f.type||'image/jpeg'}); if(!r.ok) return toast(r.error||'Not saved');
+       const p = await call('photos',{max:12}); if(p.ok) renderPhotos(p.photos); toast('Photo added 💛'); }
+  catch(e){ toast('Upload failed — try again'); }
+  ev.target.value='';
+});
+
+state.token = read('fh_token');
+if(state.token){ load().catch(()=>{}); }
+</script>
+</body>
+</html>
