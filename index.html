@@ -93,12 +93,19 @@
   .chore .label{font-weight:700}
 
   /* apps */
-  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-  .app{display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .1s ease,box-shadow .1s ease}
-  .app:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-  .app .ic{font-size:30px}
-  .app b{font-size:15px}
-  .app small{color:var(--muted);font-weight:600;line-height:1.3}
+  .apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+  .app{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .1s ease,box-shadow .1s ease;position:relative}
+  .app:hover,.app:focus-visible{transform:translateY(-2px);box-shadow:var(--shadow);outline:none;border-color:var(--gold)}
+  .app:active{transform:scale(.99)}
+  .app .ic{font-size:30px;width:56px;height:56px;border-radius:16px;background:var(--gold-soft);display:grid;place-items:center;flex:none}
+  .app .body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+  .app b{font-size:17px}
+  .app small{color:var(--muted);font-weight:600;line-height:1.35;font-size:14px}
+  .app .how{font-size:13px;line-height:1.35;background:var(--paper);border:1px dashed var(--line);border-radius:10px;padding:7px 9px;margin-top:4px}
+  .app .how b{font-size:13px}
+  .app .open{align-self:flex-start;margin-top:8px;background:var(--navy);color:#fff;border-radius:10px;padding:7px 14px;font-weight:900;font-size:14px}
+  .app .new{position:absolute;top:10px;right:10px;background:var(--gold);color:var(--navy);font-size:11px;font-weight:900;padding:3px 8px;border-radius:99px;letter-spacing:.06em}
+  .apps-note{margin:0 0 12px}
 
   /* photo strip */
   .strip{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
@@ -203,6 +210,7 @@
 
     <section class="block">
       <div class="sec-head"><img alt="" id="ph2" class="hidden"><h3>Our apps</h3></div>
+      <p class="note apps-note">Tap any app to open it in a new tab. Each one says what it's for and how to get in.</p>
       <div class="apps" id="apps"></div>
     </section>
 
@@ -343,9 +351,41 @@ $('reqSend').addEventListener('click', async ()=>{
   finally{ $('reqSend').disabled=false; $('reqSend').textContent='Tell Mom'; }
 });
 
+/* Apps every family member can always find here, even before they are added to the Apps sheet. */
+const BUILT_IN_APPS = [
+  { name:'Family Council', icon:'⚖️', isNew:true, url:'https://crispcleaninc-dot.github.io/family-council/',
+    desc:'Settle disagreements fairly, from dishes to big stuff. Everyone tells their side, a guide (like Grandmother or Judge Grace) keeps it fair, and everyone signs a promise they keep.',
+    how:'13 and up: tap Create account and use your email and a PIN. Under 13: Mom adds you on her account. Got a code like ABC-123? Tap Join with a code.' }
+];
+/* Plain-language "what it is" and "how to get in" for the apps on the Apps sheet (matched by name). */
+const APP_GUIDE = {
+  'home management binder': { desc:'Our routines, chores, meals and the weekly reset, all in one binder.' },
+  'family grocery hq': { desc:'Plan the weekly $40 groceries together and see what we need.', how:'Just tap Open. It works straight from the link.' },
+  'family health hub': { desc:'Appointments and medical records for the family.', how:'For Mom. Tap Open and sign in with Mom\u2019s Google account if it asks.' },
+  'family covenant': { desc:'Fasting, prayer and scripture, with daily check-ins and progress.', how:'Make an account with your email and a password, open the email it sends to confirm, then sign in.' },
+  'carey\u2019s japanese': { desc:'Carey\u2019s Japanese lessons, practice and conversation.' },
+  'caleb athlete os': { desc:'Caleb\u2019s football training, film, stats and recruiting.', how:'The family view opens right away. Caleb and Mom use the admin PIN for the full app.' },
+  'amir\u2019s learning': { desc:'Learning games for little ones like Amir.', how:'Just tap Open and play.' },
+  'smart home & security': { desc:'Our home devices and security cameras.', how:'For Mom. Tap Open and sign in if it asks.' },
+  'mommy is human too': { desc:'The picture book studio: our books, characters and read-aloud pages.', how:'Readers sign in with their username and passcode.' },
+  'mind clear mind matter': { desc:'Mom\u2019s personal space.' },
+  'everything': { desc:'Mom\u2019s personal space.' }
+};
+const DEFAULT_HOW = 'Tap Open. It opens in a new tab. If it asks you to sign in, use the login Mom set up for you.';
+function normName(n){ return String(n||'').toLowerCase().replace(/'/g,'\u2019').trim(); }
 function renderApps(){
-  $('apps').innerHTML = state.data.apps.map(a =>
-    '<a class="app" href="'+esc(a.url)+'" target="_blank" rel="noopener"><span class="ic">'+esc(a.icon)+'</span><b>'+esc(a.name)+'</b><small>'+esc(a.desc)+'</small></a>').join('');
+  const fromSheet = (state.data.apps||[]).map(a => Object.assign({}, a));
+  const names = fromSheet.map(a => normName(a.name));
+  const list = BUILT_IN_APPS.filter(b => names.indexOf(normName(b.name)) < 0).concat(fromSheet);
+  $('apps').innerHTML = list.map(a => {
+    const g = APP_GUIDE[normName(a.name)] || {};
+    const desc = a.isNew ? a.desc : (g.desc || a.desc || '');
+    const how = a.how || g.how || DEFAULT_HOW;
+    return '<a class="app" href="'+esc(a.url)+'" target="_blank" rel="noopener" aria-label="Open '+esc(a.name)+'">'+
+      (a.isNew?'<span class="new">NEW</span>':'')+
+      '<span class="ic">'+esc(a.icon)+'</span><span class="body"><b>'+esc(a.name)+'</b><small>'+esc(desc)+'</small>'+
+      '<span class="how"><b>How to get in:</b> '+esc(how)+'</span><span class="open">Open \u203a</span></span></a>';
+  }).join('');
 }
 
 let heroTimer = null;
