@@ -1,5 +1,5 @@
 /* Caleb #56 Athlete OS - service worker (V2.27). Keeps the app shell, fonts and photos on the phone. */
-var SHELL = 'c56-shell-v4', RUNTIME = 'c56-runtime-v1';
+var SHELL = 'c56-shell-v5', RUNTIME = 'c56-runtime-v1';
 var FILES = ['./', './index.html', './sync.js', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {

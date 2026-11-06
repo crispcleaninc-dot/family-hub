@@ -10,7 +10,7 @@
   var BACKEND = 'https://script.google.com/macros/s/AKfycbzs6GRRlaUWHeIrAx3PGGT9y_S5X2n9TeoLWHdt4OEeuofmkJytbKTcnF2D-rLbqBMwMA/exec';
   var DBN = 'caleb56-offline', VER = 1;
   var READS = ['boot', 'list', 'publicList', 'publicProfile', 'getProfile', 'getSettings', 'emailSettings', 'galleryData', 'scPhotos', 'scStats', 'scNext',
-    'wholeAthleteHero', 'weightSummary', 'weeklyReport', 'spainInfo', 'spainAdmin', 'opAll', 'ctPublic', 'ctAll', 'ideaList', 'socialGet', 'contentSources', 'upcoming'];
+    'wholeAthleteHero', 'weightSummary', 'weeklyReport', 'spainInfo', 'spainAdmin', 'opAll', 'ctPublic', 'ctAll', 'ideaList', 'socialGet', 'contentSources', 'upcoming', 'frPublic', 'frGet'];
   var WRITES = ['add', 'update', 'delete', 'publicAdd', 'spainPledge', 'spainSave', 'spainMark', 'opSave', 'opSettings', 'opUpload', 'saveProfile', 'saveSettings',
     'saveEmailSettings', 'socialSave', 'ctSave', 'ctSaveSettings', 'ctEnter', 'ctSponsorUp', 'ctLeadAdd', 'ctScore', 'iqLog', 'modSet', 'modDelete',
     'scSaveGraphic', 'galleryUpload'];
@@ -169,12 +169,12 @@
 
   // save the main screens on the phone so they open offline
   S.prefetch = function (pin) {
-    var jobs = [['boot', {}], ['upcoming', {}], ['publicProfile', {}], ['galleryData', {}], ['spainInfo', {}], ['ctPublic', {}], ['wholeAthleteHero', {}], ['scPhotos', {}], ['scStats', {}]];
+    var jobs = [['boot', {}], ['upcoming', {}], ['publicProfile', {}], ['galleryData', {}], ['spainInfo', {}], ['ctPublic', {}], ['frPublic', {}], ['wholeAthleteHero', {}], ['scPhotos', {}], ['scStats', {}]];
     ['Schedule', 'Track', 'Specs', 'WholeAthlete', 'Film', 'FilmReviewers', 'FilmReviews', 'Family', 'Faith', 'Updates'].forEach(function (m) { jobs.push(['publicList', { module: m }]); });
     var go = function (mods) {
       if (pin) {
         (mods || []).forEach(function (m) { jobs.push(['list', { module: m, pin: pin }]); });
-        ['getProfile', 'getSettings', 'emailSettings', 'spainAdmin', 'opAll', 'ctAll', 'ideaList', 'socialGet', 'weightSummary'].forEach(function (a) { jobs.push([a, { pin: pin }]); });
+        ['getProfile', 'getSettings', 'emailSettings', 'spainAdmin', 'opAll', 'ctAll', 'ideaList', 'socialGet', 'weightSummary', 'frGet'].forEach(function (a) { jobs.push([a, { pin: pin }]); });
       }
       var i = 0; (function next() { if (i >= jobs.length || !navigator.onLine) { kset('prefetchedAt', new Date().toISOString()); paint(); return; } var j = jobs[i++]; runCall(j[0], j[1]).then(next, next); })();
     };
