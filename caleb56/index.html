@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caleb #56 Athlete OS</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0b3d2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Caleb #56">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<style>
+  html,body{margin:0;height:100%;background:#0b3d2e;color:#fff;font-family:Arial,Helvetica,sans-serif}
+  .wrap{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;box-sizing:border-box}
+  .wrap img{width:120px;height:120px;border-radius:26px;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+  .wrap h1{font-size:22px;margin:18px 0 6px;color:#c9a227;letter-spacing:1px}
+  .wrap p{margin:6px 0;font-size:14px;opacity:.9;max-width:420px;line-height:1.45}
+  .bar{width:180px;height:6px;background:rgba(255,255,255,.2);border-radius:4px;overflow:hidden;margin-top:14px}
+  .bar i{display:block;height:100%;width:40%;background:#c9a227;animation:m 1.1s infinite ease-in-out}
+  @keyframes m{0%{margin-left:-40%}100%{margin-left:100%}}
+  button.i{margin-top:16px;background:#c9a227;color:#222;border:none;border-radius:12px;padding:11px 16px;font-weight:bold;font-size:14px}
+  .hint{font-size:12px;opacity:.75;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="wrap" id="splash">
+  <img src="icon-512.png" alt="">
+  <h1>CALEB #56 ATHLETE OS</h1>
+  <p id="msg">Loading...</p>
+  <div class="bar"><i></i></div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var BACKEND = 'https://script.google.com/macros/s/AKfycbzs6GRRlaUWHeIrAx3PGGT9y_S5X2n9TeoLWHdt4OEeuofmkJytbKTcnF2D-rLbqBMwMA/exec';
+  var APP_KEY = './__app.html';
+  var msg = document.getElementById('msg');
+  if ('serviceWorker' in navigator) { try { navigator.serviceWorker.register('sw.js'); } catch (e) {} }
+
+  function fromServer() {
+    var ctl = ('AbortController' in window) ? new AbortController() : null;
+    var t = ctl ? setTimeout(function () { ctl.abort(); }, 12000) : null;
+    return fetch(BACKEND, { method: 'POST', body: JSON.stringify({ action: '__index' }), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, credentials: 'omit', redirect: 'follow', signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { if (t) clearTimeout(t); return r.json(); })
+      .then(function (j) {
+        if (!j || !j.ok || !j.data || !j.data.html) throw new Error((j && j.error) || 'No app in reply');
+        var html = j.data.html;
+        if ('caches' in window) caches.open('c56-app').then(function (c) { c.put(APP_KEY, new Response(html, { headers: { 'Content-Type': 'text/html' } })); });
+        try { localStorage.setItem('c56_app_ver', j.data.version || ''); localStorage.setItem('c56_app_at', new Date().toISOString()); } catch (e) {}
+        return html;
+      });
+  }
+  function fromPhone() {
+    if (!('caches' in window)) return Promise.reject(new Error('no cache'));
+    return caches.open('c56-app').then(function (c) { return c.match(APP_KEY); }).then(function (r) { if (!r) throw new Error('not saved yet'); return r.text(); });
+  }
+  function start(html) {
+    var head = '<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0b3d2e">' +
+      '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Caleb #56"><link rel="apple-touch-icon" href="apple-touch-icon.png">' +
+      '<script src="sync.js"><\/script>';
+    var i = html.search(/<head[^>]*>/i);
+    if (i > -1) { var end = html.indexOf('>', i) + 1; html = html.slice(0, end) + head + html.slice(end); }
+    else html = head + html;
+    document.open(); document.write(html); document.close();
+  }
+
+  var useCacheFirst = !navigator.onLine;
+  (useCacheFirst ? fromPhone().catch(fromServer) : fromServer().catch(function (e) { msg.textContent = 'No connection - opening the copy saved on this phone...'; return fromPhone(); }))
+    .then(start)
+    .catch(function () {
+      msg.innerHTML = 'This phone does not have Caleb\'s app saved yet.<br>Connect to Wi-Fi or data once and open the app. After that it works with no internet.';
+      var b = document.createElement('button'); b.className = 'i'; b.textContent = 'Try again'; b.onclick = function () { location.reload(); };
+      msg.parentNode.appendChild(b);
+    });
+})();
+</script>
+</body>
+</html>
