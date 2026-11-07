@@ -208,7 +208,22 @@
   // returning to the app later (back button / reopen from app switcher) goes back to the Binder
   window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
 
-  if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
+  if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
+
+  /* Self-update: if a newer Home Binder app is published, clear the saved copy and reload once. */
+  var APP_VERSION = '6';
+  if (navigator.onLine && location.protocol === 'https:') {
+    fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
+      v = (v || '').trim();
+      if (!v || v === APP_VERSION) return;
+      var key = 'hb-updated-to';
+      try { if (sessionStorage.getItem(key) === v) return; sessionStorage.setItem(key, v); } catch(e){}
+      var clear = (window.caches && caches.keys) ? caches.keys().then(function(ks){ return Promise.all(ks.filter(function(k){ return k.indexOf('hmb-') === 0; }).map(function(k){ return caches.delete(k); })); }) : Promise.resolve();
+      clear.then(function(){ return navigator.serviceWorker && navigator.serviceWorker.getRegistration ? navigator.serviceWorker.getRegistration() : null; })
+           .then(function(reg){ if (reg) return reg.update(); })
+           .catch(function(){}).then(function(){ location.reload(); });
+    }).catch(function(){});
+  }
 })();
 </script>
 </body>
