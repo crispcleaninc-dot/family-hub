@@ -142,7 +142,7 @@ var SEED = [
   ['Threefold Cord','Personal',''],
   ['Air & Earth','Personal',''],
   ['Japanese learning app (Carey)','Family',''],
-  ['Smart Home & Security Hub','Personal',''],
+  ['Smart Home & Security Hub','Personal','https://crispcleaninc-dot.github.io/family-hub/smarthome/'],
   ['Private Correspondence Agent','Personal',''],
   ['Hybrid AI Cowork','Personal',''],
   ['CAIOCC Command Center','Crisp Clean / Tax',''],
@@ -331,7 +331,7 @@ function submitPin(){
     if(!rec) { busy(false); showLock('setup'); return; }
     return open(rec, pin).then(function(r){
       KEY=r.key; SALT=r.salt; DATA=r.data; setLockState({n:0,until:0});
-      busy(false); enterApp();
+      busy(false); enterApp(); fillSeedLinks();
     }, function(){
       busy(false); var s = recordFail(); pinBuf=''; drawDots();
       $('lockMsg').textContent = s.n>=5 ? '' : 'Wrong PIN. '+(5-s.n)+' tries before a wait.';
@@ -363,6 +363,17 @@ document.addEventListener('visibilitychange', function(){
 function newEntry(o){
   return {id: b64(rand(9)).replace(/[+/=]/g,''), name:o.name||'', category:o.category||'Other', url:o.url||'', account:o.account||'',
           username:o.username||'', password:o.password||'', pin:o.pin||'', notes:o.notes||'', updated:new Date().toISOString()};
+}
+// New app links added to SEED later are filled into an existing vault, only where that entry's link is blank.
+// Never overwrites anything the owner typed, never adds or removes entries.
+function fillSeedLinks(){
+  if(!DATA || !DATA.entries) return;
+  var changed = 0;
+  SEED.forEach(function(s){
+    if(!s[2]) return;
+    DATA.entries.forEach(function(en){ if(en.name===s[0] && !en.url){ en.url=s[2]; en.updated=new Date().toISOString(); changed++; } });
+  });
+  if(changed){ save().then(function(){ render(); }).catch(function(){}); }
 }
 function enterApp(){
   $('lock').classList.add('hidden'); $('app').classList.remove('hidden');
