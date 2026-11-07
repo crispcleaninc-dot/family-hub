@@ -1,0 +1,87 @@
+
+<!-- ══ CALEB'S ATHLETE OS — LIVE LINK (added Nov 7, 2026; additive only) ══ -->
+<style>
+  .aos-card{border-color:var(--gld)!important}
+  .aos-head{display:flex;align-items:center;gap:8px;justify-content:space-between}
+  .aos-live{font-size:11px;font-weight:700;color:var(--grn);background:var(--grn2);border-radius:99px;padding:2px 8px}
+  .aos-item{display:flex;gap:10px;padding:9px 0;border-top:1px solid rgba(0,0,0,.07)}
+  .aos-item:first-of-type{border-top:none}
+  .aos-date{min-width:58px;text-align:center;background:var(--gld2);color:var(--gld);border-radius:9px;padding:4px 2px;font-weight:700;line-height:1.15}
+  .aos-date b{display:block;font-size:18px}
+  .aos-date small{font-size:10px;text-transform:uppercase;letter-spacing:.4px}
+  .aos-body{flex:1;min-width:0;font-size:13px}
+  .aos-body .t{font-weight:700;font-size:14px}
+  .aos-body .m{color:var(--ink2);margin-top:2px}
+  .aos-cd{font-size:11px;font-weight:700;color:var(--red)}
+  .aos-link{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;color:var(--nvy);text-decoration:underline}
+</style>
+<script>
+(function(){
+  var ATHLETE_OS_API = 'https://script.google.com/macros/s/AKfycbzs6GRRlaUWHeIrAx3PGGT9y_S5X2n9TeoLWHdt4OEeuofmkJytbKTcnF2D-rLbqBMwMA/exec';
+  var ATHLETE_OS_APP = 'https://crispcleaninc-dot.github.io/family-hub/caleb56/';
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function appLink(name, desc){
+    var a = document.createElement('a'); a.className='alink'; a.href=ATHLETE_OS_APP; a.target='_blank';
+    a.innerHTML = '<div class="aico" style="background:var(--gld2)">#56</div><div class="ainfo"><div class="aname">'+esc(name)+'</div><div class="adesc">'+esc(desc)+'</div></div><span style="color:var(--ink3);font-size:18px">›</span>';
+    return a;
+  }
+
+  // Hub: add Caleb's Athlete OS beside the other family apps
+  var hub = document.getElementById('p-hub');
+  if (hub && !document.getElementById('aos-hub-link')) {
+    var links = hub.querySelectorAll('a.alink');
+    var l = appLink("Caleb #56 Athlete OS", "Schedule · film · recruiting · Spanish Trip — his live app"); l.id='aos-hub-link';
+    if (links.length) links[links.length-1].insertAdjacentElement('afterend', l); else hub.appendChild(l);
+  }
+
+  // Caleb tab: live card from Athlete OS at the top
+  var cal = document.getElementById('p-caleb');
+  if (!cal || document.getElementById('aos-card')) return;
+  var wrap = document.createElement('div');
+  wrap.innerHTML = '<div class="sl">Coming up — from Caleb\'s Athlete OS</div>' +
+    '<div class="card aos-card" id="aos-card"><div class="aos-head"><span class="ch" style="margin:0">Games · meets · deadlines</span><span class="aos-live" id="aos-status">loading…</span></div>' +
+    '<div id="aos-list"><div class="loading"><div class="spinner"></div></div></div></div>';
+  var first = cal.querySelector('.card');
+  if (first) { first.insertAdjacentElement('afterend', wrap.children[1]); first.insertAdjacentElement('afterend', wrap.children[0]); }
+  else { cal.insertBefore(wrap, cal.firstChild); }
+  var openBtn = appLink("Open Caleb's Athlete OS", "Full schedule, film, recruiting, trip — updates here automatically");
+  document.getElementById('aos-card').insertAdjacentElement('afterend', openBtn);
+
+  var MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function render(items, today){
+    var box = document.getElementById('aos-list');
+    if (!items || !items.length) { box.innerHTML = '<div class="cb" style="padding:8px 0">Nothing coming up in Athlete OS right now.</div>'; return; }
+    var t0 = new Date((today||new Date().toISOString().slice(0,10))+'T00:00:00');
+    box.innerHTML = items.slice(0,8).map(function(it){
+      var d = new Date(String(it.date)+'T00:00:00'), ok = !isNaN(d);
+      var days = ok ? Math.round((d - t0)/86400000) : null;
+      var cd = days===null ? '' : days===0 ? 'Today' : days===1 ? 'Tomorrow' : days<0 ? '' : 'In '+days+' days';
+      var meta = [it.time, it.type, it.location].filter(Boolean).map(esc).join(' · ');
+      return '<div class="aos-item"><div class="aos-date">'+(ok?'<small>'+MON[d.getMonth()]+'</small><b>'+d.getDate()+'</b><small>'+d.getFullYear()+'</small>':esc(it.date))+'</div>' +
+        '<div class="aos-body"><div class="t">'+esc(it.event)+'</div>'+(meta?'<div class="m">'+meta+'</div>':'')+
+        (cd?'<div class="aos-cd">'+cd+'</div>':'')+(it.notes?'<div class="m">'+esc(it.notes)+'</div>':'')+
+        (/^https?:\/\//.test(it.link||'')?'<a class="aos-link" href="'+esc(it.link)+'" target="_blank" rel="noopener">Tickets / details ›</a>':'')+'</div></div>';
+    }).join('');
+  }
+  var busy = false;
+  function load(){
+    if (busy) return; busy = true;
+    fetch(ATHLETE_OS_API, {method:'POST', credentials:'omit', redirect:'follow', headers:{'Content-Type':'text/plain;charset=utf-8'},
+                           body: JSON.stringify({action:'upcoming', payload:{}})})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if (!j || !j.ok) throw new Error((j && j.error) || 'No answer');
+        render(j.data && j.data.items, j.data && j.data.today);
+        document.getElementById('aos-status').textContent = 'live';
+      })
+      .catch(function(){
+        document.getElementById('aos-status').textContent = 'offline';
+        document.getElementById('aos-list').innerHTML = '<div class="cb" style="padding:8px 0">Couldn\'t reach Athlete OS right now. Tap the Caleb tab again to retry, or open his app below.</div>';
+      })
+      .then(function(){ busy = false; });
+  }
+  load();
+  var tab = document.querySelector('.tab[data-p="caleb"]');
+  if (tab) tab.addEventListener('click', load);
+})();
+</script>

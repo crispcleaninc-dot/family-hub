@@ -39,6 +39,14 @@
   #vload{position:absolute;left:0;right:0;top:calc(52px + env(safe-area-inset-top));text-align:center;color:var(--navy);font-size:14px;pointer-events:none}
   #vhelp{background:#fff6e6;color:#5a4a1e;font-size:13px;padding:8px 12px;border-bottom:1px solid #ecd49a}
   #vhelp a{color:var(--navy);font-weight:700}
+  /* app window: Grocery HQ, Foundation, Health Hub, Athlete OS opened from the Binder */
+  #appview{position:fixed;inset:0;display:flex;flex-direction:column;background:#fff;z-index:20}
+  #abar{display:flex;align-items:center;gap:8px;background:var(--navy);padding:calc(6px + env(safe-area-inset-top)) 10px 6px}
+  #abar .t{flex:1;color:var(--gold);font-family:Georgia,serif;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #abar button,#abar a{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.45);border-radius:9px;padding:6px 10px;font-size:13px;text-decoration:none;cursor:pointer;white-space:nowrap}
+  #abar #aBack{background:var(--gold);color:var(--navy);font-weight:700;border:none}
+  #aframe{flex:1;width:100%;border:0;background:#fff}
+  #aload{position:absolute;left:0;right:0;top:calc(56px + env(safe-area-inset-top));text-align:center;color:var(--navy);font-size:14px;pointer-events:none}
 </style>
 </head>
 <body>
@@ -84,6 +92,18 @@
   <div id="vload">Loading your Binder…</div>
   <iframe id="frame" title="Home Management Binder" allow="clipboard-write; fullscreen"></iframe>
 </div>
+
+<!-- app window (opened from links inside the Binder) -->
+<div id="appview" class="hidden">
+  <div id="abar">
+    <button id="aBack" type="button">‹ Binder</button>
+    <span class="t" id="aTitle">App</span>
+    <button id="aReload" type="button">↻</button>
+    <a id="aOut" href="#" target="_blank" rel="noopener">Open in browser</a>
+  </div>
+  <div id="aload">Opening…</div>
+  <iframe id="aframe" title="App" allow="clipboard-write; fullscreen; camera; microphone; geolocation"></iframe>
+</div>
 <script>
 (function(){
   // Live Home Management Binder (Google Apps Script web app)
@@ -120,7 +140,38 @@
     'if(typeof k!=="string"||k==="then")return undefined;' +
     'return function(){var a=Array.prototype.slice.call(arguments);call(k,a).then(function(r){if(o.s)o.s(r,o.u);},function(e){if(o.f)o.f(e,o.u);else console.error(e);});};}});}' +
     'window.google=window.google||{};window.google.script={run:runner({}),host:{close:function(){},setHeight:function(){},setWidth:function(){}}};' +
+    // links to her other apps open inside the Home Binder app (sign-in-free window)
+    'function inApp(u){return /^https:\\/\\/(script\\.google\\.com\\/macros\\/|crispcleaninc-dot\\.github\\.io\\/)/.test(u||"");}' +
+    'document.addEventListener("click",function(e){var a=e.target&&e.target.closest&&e.target.closest("a[href]");if(!a)return;var u=a.href;' +
+    'if(inApp(u)&&parent&&parent.hbOpenApp){e.preventDefault();var n=a.querySelector(".aname");parent.hbOpenApp(u,(n?n.textContent:a.textContent).trim());}},true);' +
+    'var _wo=window.open;window.open=function(u){if(inApp(u)&&parent&&parent.hbOpenApp){parent.hbOpenApp(u,"");return null;}return _wo.apply(window,arguments);};' +
     '})();<\/script>';
+
+  // App window: loads the app with no Google sign-in cookies (credentialless), so Google's
+  // multi-account "unable to open the file" error can't happen. Works with "Anyone" apps.
+  function openApp(url, title){
+    if(!/^https:\/\/(script\.google\.com\/macros\/|crispcleaninc-dot\.github\.io\/)/.test(url)) { window.open(url, '_blank'); return; }
+    $('aTitle').textContent = title || 'App';
+    $('aOut').href = url;
+    var wasHidden = $('appview').classList.contains('hidden');
+    $('appview').classList.remove('hidden'); $('aload').classList.remove('hidden');
+    var old = $('aframe'), f = old.cloneNode(false);
+    f.setAttribute('credentialless', ''); f.removeAttribute('src');
+    f.addEventListener('load', function(){ if(f.getAttribute('src')) $('aload').classList.add('hidden'); });
+    old.parentNode.replaceChild(f, old);
+    f.src = url;
+    if (wasHidden) { try { history.pushState({hbApp:1}, ''); } catch(e){} }
+  }
+  function closeApp(){
+    if($('appview').classList.contains('hidden')) return;
+    $('appview').classList.add('hidden');
+    var old = $('aframe'), f = old.cloneNode(false); f.removeAttribute('src'); old.parentNode.replaceChild(f, old);
+  }
+  window.hbOpenApp = openApp;
+  $('aBack').onclick = function(){ if(history.state && history.state.hbApp) history.back(); else closeApp(); };
+  $('aReload').onclick = function(){ var u = $('aOut').href; openApp(u, $('aTitle').textContent); };
+  // phone back button closes the app window and returns to the Binder
+  window.addEventListener('popstate', function(){ closeApp(); });
 
   function freshFrame(){
     var old = $('frame'), f = old.cloneNode(false); f.removeAttribute('src'); f.removeAttribute('srcdoc');

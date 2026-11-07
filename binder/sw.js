@@ -1,7 +1,7 @@
 /* Home Management Binder launcher - service worker.
    Keeps the launcher on the device so the icon opens (and says "you're offline") without internet.
    The Binder itself lives in Google Apps Script and needs internet. */
-var SHELL = 'hmb-shell-v3';
+var SHELL = 'hmb-shell-v4';
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
