@@ -30,6 +30,8 @@
   .spin{width:34px;height:34px;border:4px solid rgba(201,169,97,.3);border-top-color:var(--gold);border-radius:50%;animation:s 1s linear infinite;margin:18px auto 0}
   @keyframes s{to{transform:rotate(360deg)}}
   .small{font-size:13px;color:#aab3cc;margin-top:16px}
+  /* Hub shown inside the app (avoids Google's multi-account "unable to open the file" error on phones) */
+  #hub{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0b1220;z-index:5}
 </style>
 </head>
 <body>
@@ -42,7 +44,7 @@
   <div id="opening" class="hidden" style="width:100%">
     <div class="spin"></div>
     <p>Opening your Hub…</p>
-    <a class="btn ghost" id="openBtn2" href="#">Tap here if it doesn't open</a>
+    <a class="btn ghost" id="openBtn2" href="#" target="_blank" rel="noopener">Open in the browser instead</a>
   </div>
 
   <!-- offline -->
@@ -54,29 +56,37 @@
   <!-- browser tab: install first -->
   <div id="install" class="hidden" style="width:100%">
     <button class="btn gold hidden" id="installBtn">📲 Install on this device</button>
-    <a class="btn ghost" id="openBtn" href="#">Open the Hub now</a>
+    <button class="btn ghost" id="openBtn">Open the Hub now</button>
     <div class="steps">
       <div><b>iPhone / iPad:</b> in Safari tap Share → <b>Add to Home Screen</b> → Add.</div>
       <div><b>Android:</b> in Chrome tap ⋮ → <b>Install app</b> (or Add to Home screen).</div>
       <div><b>Windows / Mac:</b> in Chrome or Edge click the install icon at the right end of the address bar.</div>
     </div>
-    <p class="small">After installing, open it from the new “Home Hub” icon. It goes straight to your Hub sign-in.</p>
+    <p class="small">After installing, open it from the new “Home Hub” icon. It opens your Hub sign-in inside the app.</p>
   </div>
 </div>
+<iframe id="hub" class="hidden" title="Smart Home &amp; Security Hub" allow="camera; microphone; fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>
 <script>
 (function(){
   // Live Smart Home & Security Hub (Google Apps Script web app, v2.0)
   var HUB_URL = 'https://script.google.com/macros/s/AKfycbx0S4H8ZiQeuwUA1JNgF9kcVfXLUL3oXnK_n7YtQugmlFoB1r0P3xxSZw9lhdaBU5xPTQ/exec';
   var $ = function(id){ return document.getElementById(id); };
-  $('openBtn').href = HUB_URL; $('openBtn2').href = HUB_URL;
+  $('openBtn2').href = HUB_URL;
+  $('openBtn').onclick = function(){ go(); };
 
   var installed = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
                   window.navigator.standalone === true || /[?&]app=1/.test(location.search);
 
-  function show(id){ ['opening','offline','install'].forEach(function(x){ $(x).classList.toggle('hidden', x!==id); }); }
+  function show(id){ ['opening','offline','install'].forEach(function(x){ $(x).classList.toggle('hidden', x!==id); }); if(id!=='hub') $('hub').classList.add('hidden'); }
+  // Load the Hub inside this app instead of jumping to script.google.com.
+  // Phones signed into more than one Google account get sent to a /u/1/ address that
+  // fails with "Sorry, unable to open the file"; opening it in this frame avoids that.
   function go(){
     if(!navigator.onLine){ show('offline'); return; }
-    show('opening'); location.replace(HUB_URL);
+    show('opening');
+    var f = $('hub');
+    if(f.getAttribute('src') !== HUB_URL) f.setAttribute('src', HUB_URL);
+    f.classList.remove('hidden');
   }
   $('retry').onclick = go;
   window.addEventListener('online', function(){ if(installed && !$('offline').classList.contains('hidden')) go(); });
@@ -88,7 +98,8 @@
   if(installed) go(); else show('install');
 
   // returning to the app later (back button / reopen from app switcher) goes back to the Hub
-  window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
+  window.addEventListener('pageshow', function(e){ if(e.persisted && installed && $('hub').classList.contains('hidden')) go(); });
+  window.addEventListener('offline', function(){ if(installed) show('offline'); });
 
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
