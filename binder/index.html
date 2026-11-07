@@ -98,20 +98,51 @@
 
   function show(id){ ['opening','offline','install'].forEach(function(x){ $(x).classList.toggle('hidden', x!==id); }); }
   var helpTimer = null;
-  // Show the Binder inside this app's own screen (the Binder allows this: XFrameOptionsMode.ALLOWALL)
+
+  /* Cookie-free connection to the Binder (doPost in the Binder's Code.gs).
+     No Google sign-in cookies are sent, so Google can't mix up accounts. */
+  function api(fn, args){
+    return fetch(BINDER_URL, {method:'POST', credentials:'omit', redirect:'follow',
+                              headers:{'Content-Type':'text/plain;charset=utf-8'},
+                              body: JSON.stringify({fn:fn, args:args||[]})})
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if(!d || !d.ok) throw new Error((d && d.error) || 'No response'); return d.result; });
+  }
+  // Stand-in for google.script.run inside the Binder page, routed through the cookie-free connection.
+  var SHIM = '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><script>(function(){' +
+    'var URL_=' + JSON.stringify(BINDER_URL) + ';' +
+    'function call(fn,args){return fetch(URL_,{method:"POST",credentials:"omit",redirect:"follow",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({fn:fn,args:args})})' +
+    '.then(function(r){return r.json();}).then(function(d){if(!d||!d.ok)throw new Error((d&&d.error)||"No response");return d.result;});}' +
+    'function runner(o){return new Proxy({},{get:function(_,k){' +
+    'if(k==="withSuccessHandler")return function(f){return runner({s:f,f:o.f,u:o.u});};' +
+    'if(k==="withFailureHandler")return function(f){return runner({s:o.s,f:f,u:o.u});};' +
+    'if(k==="withUserObject")return function(u){return runner({s:o.s,f:o.f,u:u});};' +
+    'if(typeof k!=="string"||k==="then")return undefined;' +
+    'return function(){var a=Array.prototype.slice.call(arguments);call(k,a).then(function(r){if(o.s)o.s(r,o.u);},function(e){if(o.f)o.f(e,o.u);else console.error(e);});};}});}' +
+    'window.google=window.google||{};window.google.script={run:runner({}),host:{close:function(){},setHeight:function(){},setWidth:function(){}}};' +
+    '})();<\/script>';
+
+  function freshFrame(){
+    var old = $('frame'), f = old.cloneNode(false); f.removeAttribute('src'); f.removeAttribute('srcdoc');
+    old.parentNode.replaceChild(f, old); return f;
+  }
   function go(){
     if(!navigator.onLine){ $('view').classList.add('hidden'); show('offline'); return; }
     $('view').classList.remove('hidden'); $('vload').classList.remove('hidden'); $('vhelp').classList.add('hidden');
-    var old = $('frame'), f = old.cloneNode(false); f.addEventListener('load', onFrameLoad); old.parentNode.replaceChild(f, old); f.src = BINDER_URL;
     clearTimeout(helpTimer);
-    // if it hasn't finished loading in 12 s, offer the way out
-    helpTimer = setTimeout(function(){ $('vhelp').classList.remove('hidden'); }, 12000);
-  }
-  function onFrameLoad(){
-    if(!$('frame').getAttribute('src')) return;
-    $('vload').classList.add('hidden'); clearTimeout(helpTimer);
-    // Google's error page can't be read from here, so keep a quiet tip available for a while
-    setTimeout(function(){ $('vhelp').classList.remove('hidden'); setTimeout(function(){ $('vhelp').classList.add('hidden'); }, 8000); }, 2500);
+    helpTimer = setTimeout(function(){ $('vhelp').classList.remove('hidden'); }, 20000);
+    api('__page').then(function(html){
+      var f = freshFrame();
+      f.addEventListener('load', function(){ $('vload').classList.add('hidden'); clearTimeout(helpTimer); });
+      var page = /<head[^>]*>/i.test(html) ? html.replace(/<head[^>]*>/i, function(m){ return m + SHIM; }) : SHIM + html;
+      f.srcdoc = page;
+    }).catch(function(){
+      // Fallback: the old way (Google's page inside the app)
+      var f = freshFrame();
+      f.addEventListener('load', function(){ $('vload').classList.add('hidden'); clearTimeout(helpTimer);
+        setTimeout(function(){ $('vhelp').classList.remove('hidden'); }, 2500); });
+      f.src = BINDER_URL;
+    });
   }
   $('vReload').onclick = go;
   $('retry').onclick = go;
