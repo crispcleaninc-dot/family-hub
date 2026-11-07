@@ -150,6 +150,8 @@
   // App window: loads the app with no Google sign-in cookies (credentialless), so Google's
   // multi-account "unable to open the file" error can't happen. Works with "Anyone" apps.
   function openApp(url, title){
+    // old Grocery HQ copy -> current Grocery HQ (Fresh Look)
+    url = String(url||'').replace('AKfycbzcxYnCxHwCVEps2pGflO79EbPijZOrDlsqsAdZMSb82F0d9iPclulY-rH9o71dJ9nr', 'AKfycbwQveXyW2OrtkNRx9hUa3xKfmL7BT9Fdg6tyEvhW3NdNW_y8_WMREmf70DFg_qtzQVuFg');
     if(!/^https:\/\/(script\.google\.com\/macros\/|crispcleaninc-dot\.github\.io\/)/.test(url)) { window.open(url, '_blank'); return; }
     $('aTitle').textContent = title || 'App';
     $('aOut').href = url;
@@ -211,7 +213,7 @@
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
 
   /* Self-update: if a newer Home Binder app is published, clear the saved copy and reload once. */
-  var APP_VERSION = '6';
+  var APP_VERSION = '7';
   if (navigator.onLine && location.protocol === 'https:') {
     fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
       v = (v || '').trim();

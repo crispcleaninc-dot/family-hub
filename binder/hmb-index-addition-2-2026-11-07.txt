@@ -1,0 +1,10 @@
+
+<!-- ══ CURRENT GROCERY HQ LINK (added Nov 7, 2026; additive only) ══ -->
+<script>
+(function(){
+  // The Binder's original Grocery link points to an old copy; send it to the current Grocery HQ (Fresh Look).
+  var OLD = 'AKfycbzcxYnCxHwCVEps2pGflO79EbPijZOrDlsqsAdZMSb82F0d9iPclulY-rH9o71dJ9nr';
+  var NOW = 'https://script.google.com/macros/s/AKfycbwQveXyW2OrtkNRx9hUa3xKfmL7BT9Fdg6tyEvhW3NdNW_y8_WMREmf70DFg_qtzQVuFg/exec';
+  Array.prototype.forEach.call(document.querySelectorAll('a[href*="' + OLD + '"]'), function(a){ a.href = NOW; });
+})();
+</script>
