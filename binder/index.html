@@ -30,6 +30,15 @@
   .spin{width:34px;height:34px;border:4px solid rgba(201,169,97,.3);border-top-color:var(--gold);border-radius:50%;animation:s 1s linear infinite;margin:18px auto 0}
   @keyframes s{to{transform:rotate(360deg)}}
   .small{font-size:13px;color:#aab3cc;margin-top:16px}
+  /* in-app view: the Binder shown inside this app's own screen */
+  #view{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--cream);z-index:10}
+  #vbar{display:flex;align-items:center;gap:8px;background:var(--navy);padding:calc(6px + env(safe-area-inset-top)) 10px 6px}
+  #vbar .t{flex:1;color:var(--gold);font-family:Georgia,serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #vbar button,#vbar a{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.45);border-radius:9px;padding:6px 10px;font-size:13px;text-decoration:none;cursor:pointer}
+  #frame{flex:1;width:100%;border:0;background:var(--cream)}
+  #vload{position:absolute;left:0;right:0;top:calc(52px + env(safe-area-inset-top));text-align:center;color:var(--navy);font-size:14px;pointer-events:none}
+  #vhelp{background:#fff6e6;color:#5a4a1e;font-size:13px;padding:8px 12px;border-bottom:1px solid #ecd49a}
+  #vhelp a{color:var(--navy);font-weight:700}
 </style>
 </head>
 <body>
@@ -63,6 +72,18 @@
     <p class="small">After installing, open it from the new “Home Binder” icon. It goes straight to your Binder.</p>
   </div>
 </div>
+
+<!-- in-app view -->
+<div id="view" class="hidden">
+  <div id="vbar">
+    <span class="t">🏠 Home Binder</span>
+    <button id="vReload" type="button">↻ Reload</button>
+    <a id="vOut" href="#" target="_blank" rel="noopener">Open in browser</a>
+  </div>
+  <div id="vhelp" class="hidden">Seeing “Sorry, unable to open the file”? That's Google mixing up your signed-in accounts. Tap <a id="vOut2" href="#" target="_blank" rel="noopener">Open in browser</a>, or tap ↻ Reload.</div>
+  <div id="vload">Loading your Binder…</div>
+  <iframe id="frame" title="Home Management Binder" allow="clipboard-write; fullscreen"></iframe>
+</div>
 <script>
 (function(){
   // Live Home Management Binder (Google Apps Script web app)
@@ -73,11 +94,26 @@
   var installed = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
                   window.navigator.standalone === true || /[?&]app=1/.test(location.search);
 
+  $('vOut').href = BINDER_URL; $('vOut2').href = BINDER_URL;
+
   function show(id){ ['opening','offline','install'].forEach(function(x){ $(x).classList.toggle('hidden', x!==id); }); }
+  var helpTimer = null;
+  // Show the Binder inside this app's own screen (the Binder allows this: XFrameOptionsMode.ALLOWALL)
   function go(){
-    if(!navigator.onLine){ show('offline'); return; }
-    show('opening'); location.replace(BINDER_URL);
+    if(!navigator.onLine){ $('view').classList.add('hidden'); show('offline'); return; }
+    $('view').classList.remove('hidden'); $('vload').classList.remove('hidden'); $('vhelp').classList.add('hidden');
+    var old = $('frame'), f = old.cloneNode(false); f.addEventListener('load', onFrameLoad); old.parentNode.replaceChild(f, old); f.src = BINDER_URL;
+    clearTimeout(helpTimer);
+    // if it hasn't finished loading in 12 s, offer the way out
+    helpTimer = setTimeout(function(){ $('vhelp').classList.remove('hidden'); }, 12000);
   }
+  function onFrameLoad(){
+    if(!$('frame').getAttribute('src')) return;
+    $('vload').classList.add('hidden'); clearTimeout(helpTimer);
+    // Google's error page can't be read from here, so keep a quiet tip available for a while
+    setTimeout(function(){ $('vhelp').classList.remove('hidden'); setTimeout(function(){ $('vhelp').classList.add('hidden'); }, 8000); }, 2500);
+  }
+  $('vReload').onclick = go;
   $('retry').onclick = go;
   window.addEventListener('online', function(){ if(installed && !$('offline').classList.contains('hidden')) go(); });
 
