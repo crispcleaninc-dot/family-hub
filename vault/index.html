@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B2951">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Key Vault">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Cyars Key Vault</title>
+<style>
+  :root{--navy:#1B2951;--navy2:#24366a;--gold:#C9A961;--cream:#FAF7F0;--ink:#1d2333;--muted:#6b7183;--line:#e6e0d2;--red:#a8322d;--green:#2f7a4a}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--cream);color:var(--ink);-webkit-tap-highlight-color:transparent}
+  .serif{font-family:Georgia,"Times New Roman",serif}
+  button{font:inherit;cursor:pointer}
+  input,textarea,select{font:inherit;color:inherit}
+  .hidden{display:none!important}
+
+  /* lock screen */
+  #lock{min-height:100%;background:var(--navy);color:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:calc(24px + env(safe-area-inset-top)) 20px calc(24px + env(safe-area-inset-bottom))}
+  #lock img{width:76px;height:76px;border-radius:18px;margin-bottom:10px}
+  #lock h1{margin:0;font-size:26px;letter-spacing:.5px;color:var(--gold)}
+  #lockSub{margin:6px 0 18px;color:#cfd5e6;font-size:15px;text-align:center;max-width:320px}
+  .dots{display:flex;gap:12px;min-height:22px;margin-bottom:8px}
+  .dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--gold)}
+  .dot.on{background:var(--gold)}
+  #lockMsg{min-height:22px;font-size:14px;color:#ffb4a8;text-align:center;margin-bottom:8px}
+  .pad{display:grid;grid-template-columns:repeat(3,76px);gap:14px;margin-top:6px}
+  .pad button{height:76px;border-radius:50%;border:1px solid rgba(201,169,97,.5);background:var(--navy2);color:var(--cream);font-size:28px}
+  .pad button:active{background:var(--gold);color:var(--navy)}
+  .pad .txt{font-size:15px;border:none;background:transparent}
+  .pad .go{background:var(--gold);color:var(--navy);font-weight:700;font-size:16px}
+  #lockExtra{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .linkbtn{background:none;border:none;color:#cfd5e6;text-decoration:underline;font-size:14px;padding:6px}
+  .check{display:flex;gap:8px;align-items:center;font-size:14px;color:#cfd5e6}
+
+  /* main */
+  header{position:sticky;top:0;z-index:5;background:var(--navy);color:var(--cream);padding:calc(10px + env(safe-area-inset-top)) 14px 10px}
+  .bar{display:flex;align-items:center;gap:10px}
+  .bar h2{margin:0;font-size:19px;color:var(--gold);flex:1}
+  .iconbtn{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.45);border-radius:10px;padding:8px 11px;font-size:14px}
+  #search{width:100%;margin-top:10px;padding:11px 12px;border-radius:10px;border:none;font-size:16px}
+  .chips{display:flex;gap:8px;overflow-x:auto;padding:10px 14px 2px;scrollbar-width:none}
+  .chip{white-space:nowrap;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px}
+  .chip.on{background:var(--navy);color:var(--cream);border-color:var(--navy)}
+  main{padding:8px 14px calc(96px + env(safe-area-inset-bottom));max-width:760px;margin:0 auto}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;display:flex;align-items:center;gap:12px}
+  .badge{width:40px;height:40px;border-radius:10px;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}
+  .card .meta{flex:1;min-width:0}
+  .card .nm{font-weight:650;font-size:16px}
+  .card .sub{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .empty-tag{font-size:11px;color:#8a6d22;background:#f6eed8;border-radius:6px;padding:2px 6px;margin-left:6px}
+  .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));background:var(--gold);color:var(--navy);border:none;border-radius:999px;padding:14px 20px;font-weight:700;font-size:16px;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+  .note{font-size:13px;color:var(--muted);text-align:center;margin:18px 0}
+
+  /* sheets / dialogs */
+  .sheet-bg{position:fixed;inset:0;background:rgba(15,20,40,.5);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+  .sheet{background:var(--cream);width:100%;max-width:640px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+  @media(min-width:700px){.sheet-bg{align-items:center}.sheet{border-radius:18px}}
+  .sheet h3{margin:4px 0 12px;color:var(--navy);font-size:20px}
+  .row{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+  .row .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+  .row .val{font-size:16px;word-break:break-all;margin-top:3px;font-family:ui-monospace,Menlo,Consolas,monospace}
+  .row .acts{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .sbtn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:7px 12px;font-size:14px}
+  .pbtn{border:none;background:var(--navy);color:var(--cream);border-radius:10px;padding:12px 16px;font-size:16px;font-weight:600}
+  .gbtn{border:none;background:var(--gold);color:var(--navy);border-radius:10px;padding:12px 16px;font-size:16px;font-weight:700}
+  .dbtn{border:1px solid var(--red);background:#fff;color:var(--red);border-radius:10px;padding:12px 16px;font-size:15px}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .btns>*{flex:1}
+  label.f{display:block;font-size:13px;color:var(--muted);margin:10px 0 4px}
+  .f-in{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:16px}
+  textarea.f-in{min-height:80px;resize:vertical}
+  .inline{display:flex;gap:8px}
+  .inline .f-in{flex:1}
+  .menu-item{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin:8px 0;font-size:16px}
+  .menu-item small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+  .warn{background:#fff6e6;border:1px solid #ecd49a;border-radius:12px;padding:10px 12px;font-size:14px;margin:8px 0}
+  #toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none}
+  #toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- LOCK / SETUP SCREEN -->
+<section id="lock">
+  <img src="icon-192.png" alt="">
+  <h1 class="serif">Key Vault</h1>
+  <p id="lockSub">Enter your PIN</p>
+  <div class="dots" id="dots"></div>
+  <div id="lockMsg" role="alert"></div>
+  <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" maxlength="12" aria-label="PIN" style="position:absolute;opacity:0;width:1px;height:1px;left:-9999px">
+  <div class="pad" id="pad"></div>
+  <div id="lockExtra"></div>
+</section>
+
+<!-- MAIN VAULT -->
+<section id="app" class="hidden">
+  <header>
+    <div class="bar">
+      <h2 class="serif">Key Vault</h2>
+      <button class="iconbtn" id="menuBtn" aria-label="Menu">☰ Menu</button>
+      <button class="iconbtn" id="lockBtn">🔒 Lock</button>
+    </div>
+    <input id="search" type="search" placeholder="Search apps, usernames, notes…" autocomplete="off">
+  </header>
+  <div class="chips" id="chips"></div>
+  <main id="list"></main>
+  <button class="fab" id="addBtn">＋ Add login</button>
+</section>
+
+<div id="sheetHost"></div>
+<div id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ================= settings ================= */
+var ITER = 600000;                 // PBKDF2 rounds: slows down PIN guessing
+var AUTO_LOCK_MS = 5*60*1000;      // lock after 5 minutes without a tap
+var BG_LOCK_MS = 60*1000;          // lock if the app was in the background over 1 minute
+var CLIP_CLEAR_MS = 30*1000;       // try to clear copied passwords after 30 seconds
+var MIN_PIN = 4, MAX_PIN = 12;
+var CATS = ['Crisp Clean / Tax','Crisp Cares','CMCC','Family','Legal','Personal','Google accounts','Other'];
+
+var SEED = [
+  ['Family Hub','Family','https://crispcleaninc-dot.github.io/family-hub/'],
+  ['Caleb #56 Athlete OS','Family','https://crispcleaninc-dot.github.io/family-hub/caleb56/'],
+  ['Family Council','Family','https://crispcleaninc-dot.github.io/family-council/'],
+  ['Family Covenant Mundo','Family',''],
+  ['Family Grocery HQ','Family',''],
+  ['Threefold Cord','Personal',''],
+  ['Air & Earth','Personal',''],
+  ['Japanese learning app (Carey)','Family',''],
+  ['Smart Home & Security Hub','Personal',''],
+  ['Private Correspondence Agent','Personal',''],
+  ['Hybrid AI Cowork','Personal',''],
+  ['CAIOCC Command Center','Crisp Clean / Tax',''],
+  ['Crispus Mundo Tax Platform','Crisp Clean / Tax',''],
+  ['Crisp Clean Client Portal','Crisp Clean / Tax',''],
+  ['Crispus Mundo Tax Agent','Crisp Clean / Tax',''],
+  ['Get Started sales funnel','Crisp Clean / Tax',''],
+  ['Profit Engine','Crisp Clean / Tax',''],
+  ['Work Tracker','Crisp Clean / Tax',''],
+  ['SuccessTax','Crisp Clean / Tax',''],
+  ['QuickBooks Online','Crisp Clean / Tax',''],
+  ['CareLedger','Crisp Cares',''],
+  ['Massage billing app','Crisp Cares',''],
+  ['Homebase','Crisp Cares','https://joinhomebase.com/'],
+  ['Joyful Noise Staff Portal','Crisp Cares',''],
+  ['CMCC Bookkeeping Processor','CMCC',''],
+  ['Connect hub','CMCC',''],
+  ['Courtroom Assistant','Legal',''],
+  ['Lawsuit Analyzer','Legal',''],
+  ['ccyars26@gmail.com','Google accounts','https://accounts.google.com/'],
+  ['crispcleaninc@gmail.com','Google accounts','https://accounts.google.com/'],
+  ['crispcleanmerchandisinginc@gmail.com','Google accounts','https://accounts.google.com/'],
+  ['crispcareses (Google)','Google accounts','https://accounts.google.com/']
+];
+
+/* ================= state ================= */
+var KEY = null;        // AES key, only in memory while unlocked
+var SALT = null;
+var DATA = null;       // {entries:[], created, v}
+var filterCat = 'All';
+var idleTimer = null, hiddenAt = 0, clipTimer = null;
+var pinBuf = '', mode = 'unlock', firstPin = '';
+
+var $ = function(id){ return document.getElementById(id); };
+var enc = new TextEncoder(), dec = new TextDecoder();
+
+/* ================= storage (IndexedDB, localStorage fallback) ================= */
+function idb(){
+  return new Promise(function(res,rej){
+    if(!window.indexedDB) return rej(new Error('no idb'));
+    var r = indexedDB.open('cyars-key-vault',1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore('kv'); };
+    r.onsuccess = function(){ res(r.result); };
+    r.onerror = function(){ rej(r.error); };
+  });
+}
+function store(op, val){
+  return idb().then(function(db){
+    return new Promise(function(res,rej){
+      var tx = db.transaction('kv', op==='get'?'readonly':'readwrite'), s = tx.objectStore('kv');
+      var q = op==='get' ? s.get('vault') : op==='del' ? s.delete('vault') : s.put(val,'vault');
+      q.onsuccess = function(){ res(q.result); };
+      q.onerror = function(){ rej(q.error); };
+    });
+  }).catch(function(){
+    try{
+      if(op==='get'){ var t = localStorage.getItem('ckv_vault'); return t?JSON.parse(t):undefined; }
+      if(op==='del'){ localStorage.removeItem('ckv_vault'); return; }
+      localStorage.setItem('ckv_vault', JSON.stringify(val));
+    }catch(e){ throw new Error('This browser is blocking storage, so the vault cannot be saved here.'); }
+  });
+}
+
+/* ================= crypto ================= */
+function b64(buf){ var s='',a=new Uint8Array(buf); for(var i=0;i<a.length;i++) s+=String.fromCharCode(a[i]); return btoa(s); }
+function unb64(t){ var s=atob(t),a=new Uint8Array(s.length); for(var i=0;i<s.length;i++) a[i]=s.charCodeAt(i); return a; }
+function rand(n){ var a=new Uint8Array(n); crypto.getRandomValues(a); return a; }
+function deriveKey(pin, salt, iter){
+  return crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveKey']).then(function(base){
+    return crypto.subtle.deriveKey({name:'PBKDF2', salt:salt, iterations:iter, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+  });
+}
+function seal(key, salt, obj){
+  var iv = rand(12);
+  return crypto.subtle.encrypt({name:'AES-GCM', iv:iv}, key, enc.encode(JSON.stringify(obj))).then(function(ct){
+    return {app:'cyars-key-vault', v:1, kdf:'PBKDF2-SHA256', iter:ITER, salt:b64(salt), iv:b64(iv), ct:b64(ct), saved:new Date().toISOString()};
+  });
+}
+function open(rec, pin){
+  var salt = unb64(rec.salt);
+  return deriveKey(pin, salt, rec.iter||ITER).then(function(key){
+    return crypto.subtle.decrypt({name:'AES-GCM', iv:unb64(rec.iv)}, key, unb64(rec.ct)).then(function(pt){
+      return {key:key, salt:salt, data:JSON.parse(dec.decode(pt))};
+    });
+  });
+}
+function save(){
+  DATA.updated = new Date().toISOString();
+  return seal(KEY, SALT, DATA).then(function(rec){ return store('put', rec); })
+    .catch(function(e){ toast('Could not save: '+(e.message||e)); throw e; });
+}
+
+/* ================= wrong-PIN lockout ================= */
+function lockState(){ try{ return JSON.parse(localStorage.getItem('ckv_fail')||'{"n":0,"until":0}'); }catch(e){ return {n:0,until:0}; } }
+function setLockState(s){ try{ localStorage.setItem('ckv_fail', JSON.stringify(s)); }catch(e){} }
+function waitLeft(){ return Math.max(0, lockState().until - Date.now()); }
+function recordFail(){
+  var s = lockState(); s.n++;
+  if(s.n >= 5){ s.until = Date.now() + Math.min(3600000, 30000*Math.pow(2, s.n-5)); }
+  setLockState(s); return s;
+}
+
+/* ================= lock screen ================= */
+function buildPad(){
+  var keys = ['1','2','3','4','5','6','7','8','9','⌫','0','OK'];
+  $('pad').innerHTML = '';
+  keys.forEach(function(k){
+    var b = document.createElement('button'); b.type='button'; b.textContent = k;
+    if(k==='⌫') b.className='txt';
+    if(k==='OK') b.className='go';
+    b.addEventListener('click', function(){ press(k); });
+    $('pad').appendChild(b);
+  });
+}
+function drawDots(){
+  var n = Math.max(pinBuf.length, mode==='unlock'?5:MIN_PIN), h='';
+  for(var i=0;i<n;i++) h += '<span class="dot'+(i<pinBuf.length?' on':'')+'"></span>';
+  $('dots').innerHTML = h;
+}
+function press(k){
+  if(k==='⌫'){ pinBuf = pinBuf.slice(0,-1); }
+  else if(k==='OK'){ submitPin(); return; }
+  else if(pinBuf.length < MAX_PIN){ pinBuf += k; }
+  $('lockMsg').textContent=''; drawDots();
+}
+document.addEventListener('keydown', function(e){
+  if($('lock').classList.contains('hidden') || $('sheetHost').children.length) return;
+  if(/^[0-9]$/.test(e.key)){ press(e.key); e.preventDefault(); }
+  else if(e.key==='Backspace'){ press('⌫'); e.preventDefault(); }
+  else if(e.key==='Enter'){ press('OK'); e.preventDefault(); }
+});
+
+function showLock(newMode){
+  mode = newMode; pinBuf=''; firstPin='';
+  $('app').classList.add('hidden'); $('lock').classList.remove('hidden');
+  var x = $('lockExtra'); x.innerHTML='';
+  if(mode==='setup'){
+    $('lockSub').textContent = 'Welcome. Create the PIN you will use to open this vault ('+MIN_PIN+'–'+MAX_PIN+' digits).';
+    x.innerHTML = '<label class="check"><input type="checkbox" id="seedChk" checked> Start with a list of my apps (blank logins to fill in)</label>'+
+                  '<button class="linkbtn" id="restoreFirst">Restore from a backup file instead</button>';
+    $('restoreFirst').onclick = function(){ pickBackup(true); };
+  } else {
+    $('lockSub').textContent = 'Enter your PIN';
+    x.innerHTML = '<button class="linkbtn" id="forgot">Forgot PIN?</button>';
+    $('forgot').onclick = forgotPin;
+  }
+  drawDots(); tickLockout();
+}
+var lockoutTick = null;
+function tickLockout(){
+  clearInterval(lockoutTick);
+  if(mode!=='unlock') return;
+  var upd = function(){
+    var w = waitLeft();
+    if(w>0){ $('lockMsg').textContent = 'Too many wrong PINs. Try again in '+Math.ceil(w/1000)+' s.'; }
+    else { clearInterval(lockoutTick); if(/Too many/.test($('lockMsg').textContent)) $('lockMsg').textContent=''; }
+  };
+  upd(); if(waitLeft()>0) lockoutTick = setInterval(upd, 1000);
+}
+
+function submitPin(){
+  var pin = pinBuf;
+  if(mode==='setup' || mode==='confirm'){
+    if(pin.length < MIN_PIN){ $('lockMsg').textContent = 'Use at least '+MIN_PIN+' digits.'; return; }
+    if(mode==='setup'){
+      firstPin = pin; pinBuf=''; mode='confirm';
+      $('lockSub').textContent = 'Enter the same PIN again to confirm.'; drawDots(); return;
+    }
+    if(pin !== firstPin){ firstPin=''; pinBuf=''; mode='setup'; showLock('setup'); $('lockMsg').textContent='Those PINs did not match. Start again.'; return; }
+    var seed = $('seedChk') ? $('seedChk').checked : true;
+    busy('Setting up your vault…');
+    SALT = rand(16);
+    deriveKey(pin, SALT, ITER).then(function(key){
+      KEY = key;
+      DATA = {v:1, created:new Date().toISOString(), entries: seed ? SEED.map(function(s){ return newEntry({name:s[0], category:s[1], url:s[2]}); }) : []};
+      return save();
+    }).then(function(){ busy(false); requestPersist(); enterApp(); toast('Vault created. Fill in your logins.'); })
+      .catch(function(e){ busy(false); $('lockMsg').textContent = 'Setup failed: '+(e.message||e); pinBuf=''; drawDots(); });
+    return;
+  }
+  // unlock
+  if(waitLeft()>0){ tickLockout(); return; }
+  if(!pin){ return; }
+  busy('Unlocking…');
+  store('get').then(function(rec){
+    if(!rec) { busy(false); showLock('setup'); return; }
+    return open(rec, pin).then(function(r){
+      KEY=r.key; SALT=r.salt; DATA=r.data; setLockState({n:0,until:0});
+      busy(false); enterApp();
+    }, function(){
+      busy(false); var s = recordFail(); pinBuf=''; drawDots();
+      $('lockMsg').textContent = s.n>=5 ? '' : 'Wrong PIN. '+(5-s.n)+' tries before a wait.';
+      tickLockout();
+    });
+  }).catch(function(e){ busy(false); $('lockMsg').textContent = String(e.message||e); });
+}
+
+function busy(msg){
+  $('pad').style.opacity = msg ? .4 : 1; $('pad').style.pointerEvents = msg ? 'none' : '';
+  if(msg) $('lockMsg').textContent = msg; else if(/…$/.test($('lockMsg').textContent)) $('lockMsg').textContent='';
+}
+
+function lockNow(){
+  KEY=null; DATA=null; SALT=null; closeSheet(); clearTimeout(idleTimer);
+  $('search').value=''; $('list').innerHTML='';
+  showLock('unlock');
+}
+
+/* ================= auto-lock ================= */
+function bumpIdle(){ if(!KEY) return; clearTimeout(idleTimer); idleTimer = setTimeout(lockNow, AUTO_LOCK_MS); }
+['click','keydown','touchstart','scroll'].forEach(function(ev){ document.addEventListener(ev, bumpIdle, {passive:true}); });
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden){ hiddenAt = Date.now(); }
+  else if(KEY && hiddenAt && Date.now()-hiddenAt > BG_LOCK_MS){ lockNow(); }
+});
+
+/* ================= main vault ================= */
+function newEntry(o){
+  return {id: b64(rand(9)).replace(/[+/=]/g,''), name:o.name||'', category:o.category||'Other', url:o.url||'', account:o.account||'',
+          username:o.username||'', password:o.password||'', pin:o.pin||'', notes:o.notes||'', updated:new Date().toISOString()};
+}
+function enterApp(){
+  $('lock').classList.add('hidden'); $('app').classList.remove('hidden');
+  clearInterval(lockoutTick); render(); bumpIdle();
+}
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function render(){
+  if(!DATA) return;
+  var used = {}; DATA.entries.forEach(function(e){ used[e.category]=1; });
+  var cats = ['All'].concat(CATS.filter(function(c){ return used[c]; }), Object.keys(used).filter(function(c){ return CATS.indexOf(c)<0; }));
+  $('chips').innerHTML = cats.map(function(c){ return '<button class="chip'+(c===filterCat?' on':'')+'" data-c="'+esc(c)+'">'+esc(c)+'</button>'; }).join('');
+  Array.prototype.forEach.call($('chips').children, function(b){ b.onclick=function(){ filterCat=b.getAttribute('data-c'); render(); }; });
+
+  var q = $('search').value.trim().toLowerCase();
+  var items = DATA.entries.filter(function(e){
+    if(filterCat!=='All' && e.category!==filterCat) return false;
+    if(!q) return true;
+    return [e.name,e.username,e.account,e.url,e.notes,e.category].join(' ').toLowerCase().indexOf(q)>=0;
+  }).sort(function(a,b){ return a.name.localeCompare(b.name); });
+
+  if(!items.length){
+    $('list').innerHTML = '<p class="note">'+(DATA.entries.length?'Nothing matches.':'No logins yet. Tap “＋ Add login”.')+'</p>'; return;
+  }
+  $('list').innerHTML = items.map(function(e){
+    var blank = !e.username && !e.password && !e.pin;
+    var sub = e.username || e.account || e.url || e.category;
+    return '<div class="card" data-id="'+e.id+'" role="button" tabindex="0"><div class="badge">'+esc((e.name||'?').charAt(0).toUpperCase())+'</div>'+
+           '<div class="meta"><div class="nm">'+esc(e.name)+(blank?'<span class="empty-tag">needs login</span>':'')+'</div><div class="sub">'+esc(sub)+'</div></div><span>›</span></div>';
+  }).join('') + '<p class="note">'+DATA.entries.length+' saved · encrypted on this device only</p>';
+  Array.prototype.forEach.call($('list').querySelectorAll('.card'), function(c){ c.onclick=function(){ showEntry(c.getAttribute('data-id')); }; });
+}
+$('search').addEventListener('input', render);
+$('lockBtn').onclick = lockNow;
+$('addBtn').onclick = function(){ editEntry(null); };
+$('menuBtn').onclick = showMenu;
+
+/* ---------- sheets ---------- */
+function sheet(html){
+  $('sheetHost').innerHTML = '<div class="sheet-bg"><div class="sheet" role="dialog" aria-modal="true">'+html+'</div></div>';
+  var bg = $('sheetHost').firstChild;
+  bg.addEventListener('click', function(e){ if(e.target===bg) closeSheet(); });
+  return bg.firstChild;
+}
+function closeSheet(){ $('sheetHost').innerHTML=''; }
+function ask(title, body, okText, danger){
+  return new Promise(function(res){
+    var s = sheet('<h3>'+esc(title)+'</h3><p>'+body+'</p><div class="btns"><button class="sbtn" id="aNo">Cancel</button><button class="'+(danger?'dbtn':'pbtn')+'" id="aYes">'+esc(okText)+'</button></div>');
+    s.querySelector('#aNo').onclick=function(){ closeSheet(); res(false); };
+    s.querySelector('#aYes').onclick=function(){ closeSheet(); res(true); };
+  });
+}
+function find(id){ for(var i=0;i<DATA.entries.length;i++) if(DATA.entries[i].id===id) return DATA.entries[i]; }
+
+function showEntry(id){
+  var e = find(id); if(!e) return;
+  function row(lbl, key, secret){
+    if(!e[key]) return '';
+    var v = esc(e[key]);
+    return '<div class="row"><div class="lbl">'+lbl+'</div><div class="val" data-k="'+key+'">'+(secret?'••••••••':v)+'</div><div class="acts">'+
+      (secret?'<button class="sbtn" data-show="'+key+'">Show</button>':'')+'<button class="sbtn" data-copy="'+key+'">Copy</button></div></div>';
+  }
+  var s = sheet('<h3 class="serif">'+esc(e.name)+'</h3><div style="color:var(--muted);font-size:14px;margin-top:-6px">'+esc(e.category)+'</div>'+
+    (e.url?'<div class="row"><div class="lbl">Link</div><div class="val">'+esc(e.url)+'</div><div class="acts"><button class="sbtn" id="openUrl">Open app ↗</button><button class="sbtn" data-copy="url">Copy</button></div></div>':'')+
+    row('Google account','account')+row('Username / email','username')+row('Password','password',true)+row('PIN','pin',true)+
+    (e.notes?'<div class="row"><div class="lbl">Notes</div><div style="white-space:pre-wrap;margin-top:3px">'+esc(e.notes)+'</div></div>':'')+
+    (!e.username&&!e.password&&!e.pin?'<div class="warn">No login saved yet. Tap Edit to add it.</div>':'')+
+    '<div style="font-size:12px;color:var(--muted);margin-top:8px">Last changed '+new Date(e.updated).toLocaleString()+'</div>'+
+    '<div class="btns"><button class="sbtn" id="eClose">Close</button><button class="pbtn" id="eEdit">Edit</button></div>');
+  s.querySelector('#eClose').onclick = closeSheet;
+  s.querySelector('#eEdit').onclick = function(){ editEntry(id); };
+  if(s.querySelector('#openUrl')) s.querySelector('#openUrl').onclick = function(){
+    if(/^https?:\/\//i.test(e.url)) window.open(e.url, '_blank', 'noopener,noreferrer'); else toast('Link must start with https://');
+  };
+  Array.prototype.forEach.call(s.querySelectorAll('[data-show]'), function(b){
+    b.onclick = function(){
+      var k = b.getAttribute('data-show'), el = s.querySelector('.val[data-k="'+k+'"]');
+      var showing = b.textContent==='Hide';
+      el.textContent = showing ? '••••••••' : e[k]; b.textContent = showing ? 'Show' : 'Hide';
+    };
+  });
+  Array.prototype.forEach.call(s.querySelectorAll('[data-copy]'), function(b){ b.onclick=function(){ copy(e[b.getAttribute('data-copy')], b.getAttribute('data-copy')); }; });
+}
+
+function editEntry(id){
+  var e = id ? find(id) : newEntry({category: filterCat!=='All'?filterCat:'Other'});
+  var catOpts = CATS.concat(CATS.indexOf(e.category)<0?[e.category]:[]).map(function(c){ return '<option'+(c===e.category?' selected':'')+'>'+esc(c)+'</option>'; }).join('');
+  var s = sheet('<h3>'+(id?'Edit login':'Add login')+'</h3>'+
+    '<label class="f">App or site name *</label><input class="f-in" id="fName" value="'+esc(e.name)+'" autocomplete="off">'+
+    '<label class="f">Group</label><select class="f-in" id="fCat">'+catOpts+'</select>'+
+    '<label class="f">Link to the app (https://…)</label><input class="f-in" id="fUrl" type="url" inputmode="url" value="'+esc(e.url)+'" autocomplete="off">'+
+    '<label class="f">Google account it runs under</label><input class="f-in" id="fAcct" value="'+esc(e.account)+'" autocomplete="off" placeholder="e.g. crispcleaninc@gmail.com">'+
+    '<label class="f">Username / email</label><input class="f-in" id="fUser" value="'+esc(e.username)+'" autocomplete="off" autocapitalize="off">'+
+    '<label class="f">Password</label><div class="inline"><input class="f-in" id="fPass" type="password" value="'+esc(e.password)+'" autocomplete="new-password"><button class="sbtn" id="tPass">Show</button><button class="sbtn" id="gPass">Make one</button></div>'+
+    '<label class="f">App PIN</label><div class="inline"><input class="f-in" id="fPin" type="password" inputmode="numeric" value="'+esc(e.pin)+'" autocomplete="off"><button class="sbtn" id="tPin">Show</button></div>'+
+    '<label class="f">Notes (security questions, recovery codes, where it lives)</label><textarea class="f-in" id="fNotes">'+esc(e.notes)+'</textarea>'+
+    '<div class="btns"><button class="sbtn" id="fCancel">Cancel</button><button class="gbtn" id="fSave">Save</button></div>'+
+    (id?'<div class="btns"><button class="dbtn" id="fDel">Delete this login</button></div>':''));
+  function tog(btn, inp){ s.querySelector(btn).onclick=function(){ var i=s.querySelector(inp); var sh=i.type==='password'; i.type=sh?'text':'password'; this.textContent=sh?'Hide':'Show'; }; }
+  tog('#tPass','#fPass'); tog('#tPin','#fPin');
+  s.querySelector('#gPass').onclick = function(){ var i=s.querySelector('#fPass'); i.value=genPassword(16); i.type='text'; s.querySelector('#tPass').textContent='Hide'; };
+  s.querySelector('#fCancel').onclick = function(){ id ? showEntry(id) : closeSheet(); };
+  s.querySelector('#fSave').onclick = function(){
+    var name = s.querySelector('#fName').value.trim();
+    if(!name){ toast('Give it a name first.'); return; }
+    var url = s.querySelector('#fUrl').value.trim();
+    if(url && !/^https?:\/\//i.test(url)) url = 'https://'+url;
+    var upd = {name:name, category:s.querySelector('#fCat').value, url:url, account:s.querySelector('#fAcct').value.trim(),
+               username:s.querySelector('#fUser').value.trim(), password:s.querySelector('#fPass').value, pin:s.querySelector('#fPin').value.trim(),
+               notes:s.querySelector('#fNotes').value, updated:new Date().toISOString()};
+    var target = id ? find(id) : e;
+    var before = JSON.stringify(target);
+    Object.keys(upd).forEach(function(k){ target[k]=upd[k]; });
+    if(!id) DATA.entries.push(target);
+    save().then(function(){ render(); showEntry(target.id); toast('Saved'); }, function(){
+      // roll back the in-memory change so the screen matches what is stored
+      if(!id) DATA.entries.pop(); else { var b=JSON.parse(before); Object.keys(b).forEach(function(k){ target[k]=b[k]; }); }
+      render();
+    });
+  };
+  if(id) s.querySelector('#fDel').onclick = function(){
+    ask('Delete '+e.name+'?', 'This removes the saved login from the vault. It cannot be undone unless you have a backup file.', 'Delete', true).then(function(ok){
+      if(!ok){ showEntry(id); return; }
+      DATA.entries = DATA.entries.filter(function(x){ return x.id!==id; });
+      save().then(function(){ render(); toast('Deleted'); });
+    });
+  };
+}
+
+function genPassword(n){
+  var chars='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789!@#$%&*?-_';
+  var out='', a=new Uint32Array(n); crypto.getRandomValues(a);
+  for(var i=0;i<n;i++) out += chars[a[i]%chars.length];
+  return out;
+}
+
+function copy(text, kind){
+  if(!text) return;
+  var done = function(){
+    var secret = kind==='password'||kind==='pin';
+    toast(secret ? 'Copied. Clipboard clears in 30 s.' : 'Copied');
+    if(secret){ clearTimeout(clipTimer); clipTimer = setTimeout(function(){ if(navigator.clipboard && document.hasFocus()) navigator.clipboard.writeText('').catch(function(){}); }, CLIP_CLEAR_MS); }
+  };
+  if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done(); }); }
+  else { fallbackCopy(text); done(); }
+}
+function fallbackCopy(t){ var ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{document.execCommand('copy');}catch(e){} ta.remove(); }
+
+/* ---------- menu ---------- */
+function showMenu(){
+  var s = sheet('<h3>Menu</h3>'+
+    '<button class="menu-item" id="mBackup">⬇️ Save a backup file<small>Encrypted with your PIN. Use it to move the vault to another device or recover it.</small></button>'+
+    '<button class="menu-item" id="mRestore">⬆️ Restore / merge a backup file<small>Adds logins from a backup into this vault.</small></button>'+
+    '<button class="menu-item" id="mPin">🔑 Change my PIN</button>'+
+    '<button class="menu-item" id="mInstall">📲 Install this app on a device</button>'+
+    '<button class="menu-item" id="mAbout">ℹ️ How your data is protected</button>'+
+    '<div class="btns"><button class="sbtn" id="mClose">Close</button></div>');
+  s.querySelector('#mClose').onclick = closeSheet;
+  s.querySelector('#mBackup').onclick = exportBackup;
+  s.querySelector('#mRestore').onclick = function(){ pickBackup(false); };
+  s.querySelector('#mPin').onclick = changePin;
+  s.querySelector('#mInstall').onclick = installHelp;
+  s.querySelector('#mAbout').onclick = about;
+}
+
+function exportBackup(){
+  store('get').then(function(rec){
+    if(!rec){ toast('Nothing to back up yet.'); return; }
+    var name = 'key-vault-backup-'+new Date().toISOString().slice(0,10)+'.json';
+    var blob = new Blob([JSON.stringify(rec)], {type:'application/json'});
+    var file; try{ file = new File([blob], name, {type:'application/json'}); }catch(e){}
+    if(file && navigator.canShare && navigator.canShare({files:[file]}) && /iPhone|iPad|Android/i.test(navigator.userAgent)){
+      navigator.share({files:[file], title:'Key Vault backup'}).then(function(){ toast('Backup shared'); }).catch(function(){});
+    } else {
+      var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 1000); toast('Backup saved to Downloads');
+    }
+    closeSheet();
+  });
+}
+
+function pickBackup(isFirstRun){
+  var inp=document.createElement('input'); inp.type='file'; inp.accept='.json,application/json';
+  inp.onchange=function(){
+    var f=inp.files[0]; if(!f) return;
+    f.text().then(function(t){
+      var rec; try{ rec=JSON.parse(t); }catch(e){ toast('That is not a Key Vault backup file.'); return; }
+      if(rec.app!=='cyars-key-vault'||!rec.ct){ toast('That is not a Key Vault backup file.'); return; }
+      promptPin('Backup PIN', 'Enter the PIN that was in use when this backup was made.', function(pin, s){
+        open(rec, pin).then(function(r){
+          if(isFirstRun){
+            KEY=r.key; SALT=r.salt; DATA=r.data;
+            return store('put', rec).then(function(){ closeSheet(); requestPersist(); enterApp(); toast('Vault restored. Your PIN is the backup PIN.'); });
+          }
+          var added=0, updated=0;
+          r.data.entries.forEach(function(be){
+            var cur=find(be.id);
+            if(!cur){ DATA.entries.push(be); added++; }
+            else if(be.updated > cur.updated){ Object.keys(be).forEach(function(k){ cur[k]=be[k]; }); updated++; }
+          });
+          return save().then(function(){ closeSheet(); render(); toast('Merged: '+added+' added, '+updated+' updated'); });
+        }, function(){ s.querySelector('#ppMsg').textContent='That PIN does not open this backup.'; });
+      });
+    });
+  };
+  inp.click();
+}
+
+function promptPin(title, text, cb){
+  var s = sheet('<h3>'+esc(title)+'</h3><p style="margin-top:0">'+esc(text)+'</p><input class="f-in" id="ppIn" type="password" inputmode="numeric" autocomplete="off">'+
+    '<div id="ppMsg" style="color:var(--red);font-size:14px;min-height:20px;margin-top:6px"></div>'+
+    '<div class="btns"><button class="sbtn" id="ppNo">Cancel</button><button class="pbtn" id="ppGo">Continue</button></div>');
+  var go=function(){ s.querySelector('#ppMsg').textContent='Checking…'; cb(s.querySelector('#ppIn').value.trim(), s); };
+  s.querySelector('#ppNo').onclick=closeSheet; s.querySelector('#ppGo').onclick=go;
+  s.querySelector('#ppIn').addEventListener('keydown', function(e){ if(e.key==='Enter') go(); });
+  setTimeout(function(){ s.querySelector('#ppIn').focus(); }, 50);
+}
+
+function changePin(){
+  var s = sheet('<h3>Change my PIN</h3>'+
+    '<label class="f">Current PIN</label><input class="f-in" id="cpOld" type="password" inputmode="numeric" autocomplete="off">'+
+    '<label class="f">New PIN ('+MIN_PIN+'–'+MAX_PIN+' digits)</label><input class="f-in" id="cpNew" type="password" inputmode="numeric" autocomplete="off">'+
+    '<label class="f">New PIN again</label><input class="f-in" id="cpNew2" type="password" inputmode="numeric" autocomplete="off">'+
+    '<div id="cpMsg" style="color:var(--red);font-size:14px;min-height:20px;margin-top:6px"></div>'+
+    '<div class="btns"><button class="sbtn" id="cpNo">Cancel</button><button class="pbtn" id="cpGo">Change PIN</button></div>');
+  s.querySelector('#cpNo').onclick=closeSheet;
+  s.querySelector('#cpGo').onclick=function(){
+    var o=s.querySelector('#cpOld').value.trim(), n=s.querySelector('#cpNew').value.trim(), n2=s.querySelector('#cpNew2').value.trim(), m=s.querySelector('#cpMsg');
+    if(!/^\d+$/.test(n) || n.length<MIN_PIN || n.length>MAX_PIN){ m.textContent='New PIN must be '+MIN_PIN+'–'+MAX_PIN+' digits.'; return; }
+    if(n!==n2){ m.textContent='The new PINs do not match.'; return; }
+    m.textContent='Checking…';
+    store('get').then(function(rec){ return open(rec, o); }).then(function(){
+      var salt=rand(16);
+      return deriveKey(n, salt, ITER).then(function(k){ KEY=k; SALT=salt; return save(); });
+    }).then(function(){ closeSheet(); toast('PIN changed. Old backup files still use the old PIN.'); },
+            function(){ m.textContent='Current PIN is not right.'; });
+  };
+}
+
+function forgotPin(){
+  var s = sheet('<h3>Forgot PIN?</h3><p>Your PIN is the only key to this vault. Nobody — not Claude, not GitHub, not Google — can open it or reset it without the PIN. That is what keeps it safe.</p>'+
+    '<p>If you have a backup file and remember the PIN you had then, you can erase this device\'s vault and restore that backup.</p>'+
+    '<label class="f">To erase this device\'s vault, type ERASE</label><input class="f-in" id="erIn" autocomplete="off" autocapitalize="characters">'+
+    '<div class="btns"><button class="sbtn" id="erNo">Cancel</button><button class="dbtn" id="erGo">Erase vault on this device</button></div>');
+  s.querySelector('#erNo').onclick=closeSheet;
+  s.querySelector('#erGo').onclick=function(){
+    if(s.querySelector('#erIn').value.trim()!=='ERASE'){ toast('Type ERASE to confirm.'); return; }
+    store('del').then(function(){ setLockState({n:0,until:0}); closeSheet(); showLock('setup'); toast('Vault erased on this device.'); });
+  };
+}
+
+var deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredPrompt = e; });
+function installHelp(){
+  var s = sheet('<h3>Install Key Vault</h3>'+
+    (deferredPrompt?'<button class="gbtn" id="doInstall" style="width:100%">Install on this device now</button>':'')+
+    '<div class="row"><b>iPhone / iPad</b><br>Open this page in <b>Safari</b> → tap the Share button → <b>Add to Home Screen</b> → Add.</div>'+
+    '<div class="row"><b>Android</b><br>Open in <b>Chrome</b> → tap ⋮ → <b>Install app</b> (or Add to Home screen).</div>'+
+    '<div class="row"><b>Windows / Mac computer</b><br>Open in <b>Chrome or Edge</b> → click the install icon at the right end of the address bar (or ⋮ → Cast, save and share → Install).</div>'+
+    '<div class="warn">Each device keeps its own vault. To put the same logins on another device: Menu → Save a backup file here, then on the other device choose “Restore from a backup file”.</div>'+
+    '<div class="btns"><button class="sbtn" id="iClose">Close</button></div>');
+  s.querySelector('#iClose').onclick=closeSheet;
+  if(deferredPrompt) s.querySelector('#doInstall').onclick=function(){ deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; closeSheet(); }); };
+}
+function about(){
+  var s = sheet('<h3>How your data is protected</h3>'+
+    '<div class="row">Logins are encrypted on this device with AES-256 using a key made from your PIN (PBKDF2, 600,000 rounds). Nothing is sent to any server — this app makes no network calls with your data.</div>'+
+    '<div class="row">The app locks itself after 5 minutes without a tap, or when it has been in the background for over a minute. After 5 wrong PINs it makes you wait, and the wait doubles each time.</div>'+
+    '<div class="row">Copied passwords are cleared from the clipboard after 30 seconds when the phone allows it.</div>'+
+    '<div class="warn"><b>Limits to know:</b> a 5-digit PIN has 100,000 possible combinations. If someone copied this device\'s storage or a backup file, they could try them all offline with enough computer time. A longer PIN (8+ digits) makes that much harder. Keep backup files somewhere private, and keep your phone/computer locked.</div>'+
+    '<div class="btns"><button class="sbtn" id="abClose">Close</button></div>');
+  s.querySelector('#abClose').onclick=closeSheet;
+}
+
+/* ================= misc ================= */
+var toastT=null;
+function toast(m){ var t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(function(){ t.classList.remove('show'); }, 2600); }
+function requestPersist(){ if(navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function(){}); }
+
+/* ================= start ================= */
+buildPad();
+if(!window.crypto || !crypto.subtle){
+  $('lockSub').textContent = 'This browser cannot encrypt. Open the app over https in Safari, Chrome or Edge.'; $('pad').classList.add('hidden');
+} else {
+  store('get').then(function(rec){ showLock(rec ? 'unlock' : 'setup'); }).catch(function(){ showLock('setup'); });
+}
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
+
+})();
+</script>
+</body>
+</html>
