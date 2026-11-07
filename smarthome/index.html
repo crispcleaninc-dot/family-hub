@@ -65,7 +65,9 @@
     <p class="small">After installing, open it from the new “Home Hub” icon. It opens your Hub sign-in inside the app.</p>
   </div>
 </div>
-<iframe id="hub" class="hidden" title="Smart Home &amp; Security Hub" allow="camera; microphone; fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>
+<!-- credentialless: opens the Hub with NO Google account attached, so phones signed into other Google
+     accounts (or not signed into crispcleaninc) still load it. The Hub has its own sign-in. -->
+<iframe id="hub" class="hidden" credentialless title="Smart Home &amp; Security Hub" allow="camera; microphone; fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>
 <script>
 (function(){
   // Live Smart Home & Security Hub (Google Apps Script web app, v2.0)

@@ -1,7 +1,7 @@
 /* Smart Home & Security Hub launcher - service worker.
    Keeps the launcher on the device so the icon opens (and says "you're offline") without internet.
    The Hub itself lives in Google Apps Script and needs internet. */
-var SHELL = 'shh-shell-v2';
+var SHELL = 'shh-shell-v3';
 var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
