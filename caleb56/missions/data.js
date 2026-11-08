@@ -22,6 +22,9 @@ window.C56M_DATA = {
 
   routines: [
     { id: 'r-room', title: 'Clean your room', days: [0, 1, 2, 3, 4, 5, 6], time: 'Every day' },
+    { id: 'r-sink', title: 'Wipe the bathroom sink and counter after you use it', days: [0, 1, 2, 3, 4, 5, 6], time: 'Every day' },
+    { id: 'r-kitchen', title: 'Kitchen reset after you eat: dishes in the sink or dishwasher, wipe your spot and the counter', days: [0, 1, 2, 3, 4, 5, 6], time: 'Every day' },
+    { id: 'r-trashck', title: 'Check the kitchen trash - take it out if it is full', days: [0, 1, 2, 3, 4, 5, 6], time: 'Every day' },
     { id: 'r-out', title: 'Out the door by 6:35 AM', days: [1, 2, 3, 4, 5], time: '6:35 AM' },
     { id: 'r-bed', title: 'Bedtime routine at 9:00, lights out 9:30', days: [0, 1, 2, 3, 4, 5, 6], time: '9:00 PM' },
     { id: 'r-toilet', title: 'Toilets + inside the bathroom sinks', days: [0, 3], time: 'Sun & Wed' },

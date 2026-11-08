@@ -241,3 +241,6 @@
   document.addEventListener('DOMContentLoaded', draw);
   if (document.readyState !== 'loading') draw();
 })();
+
+/* Nov 8 2026: Samsung Internet install guard (send Samsung users to Chrome to install) */
+(function () { try { var s = document.createElement('script'); s.src = '../samsung-guard.js'; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
