@@ -60,6 +60,17 @@ th{font-size:12px;color:var(--mut)}
 .lock input{font-size:24px;letter-spacing:8px;text-align:center;width:180px;padding:10px;border-radius:12px;border:1px solid #cfc7b0}
 .note{font-size:12.5px;color:var(--mut);line-height:1.45}
 .empty{color:var(--mut);font-size:14px;padding:6px 2px}
+.gbtn{display:inline-block;margin-top:6px;font-size:13px;font-weight:700;background:#fff4d6;color:#7a5a00;border:1px solid #e8d08a;border-radius:9px;padding:6px 10px;cursor:pointer}
+.go{display:inline-block;margin:6px 0 2px;font-size:13.5px;background:var(--g);color:#fff;text-decoration:none;border-radius:9px;padding:7px 11px}
+.tip{display:block;font-size:12.5px;color:#7a5a00;background:#fff8e3;border-radius:8px;padding:6px 8px;margin-top:5px}
+.need{background:#eef3ef;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14px;line-height:1.45}
+.need b{color:var(--g)}
+.gstep{display:flex;gap:10px;padding:10px 0;border-top:1px solid #f0ece0;font-size:14.5px;line-height:1.4}
+.gstep .n{flex:0 0 28px;height:28px;border-radius:50%;background:var(--g);color:var(--gold);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:13px}
+.form label{display:block;font-size:12.5px;color:var(--mut);margin-top:8px}
+.form input,.form textarea{width:100%;padding:10px;border:1px solid #d8d1bd;border-radius:10px;font-size:15px;font-family:inherit}
+.req{border-top:1px solid #f0ece0;padding:8px 0;font-size:14px}
+.req .s{font-size:12px;font-weight:700}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#13221c;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:9}
 .toast.show{opacity:1}
 </style>
@@ -78,10 +89,14 @@ th{font-size:12px;color:var(--mut)}
 <main id="main"></main>
 <div class="toast" id="toast"></div>
 <script src="data.js"></script>
+<script src="guides.js"></script>
+<script src="homecare.js"></script>
 <script>
 (function () {
   'use strict';
   var D = window.C56M_DATA;
+  var G = window.C56M_GUIDES || { list: [], guideFor: {} };
+  var HC = window.C56M_HOMECARE || { offices: [], log: [] };
   var BACKEND = 'https://script.google.com/macros/s/AKfycbzs6GRRlaUWHeIrAx3PGGT9y_S5X2n9TeoLWHdt4OEeuofmkJytbKTcnF2D-rLbqBMwMA/exec';
   var KEY = 'c56m_v1';
   var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -137,9 +152,10 @@ th{font-size:12px;color:var(--mut)}
   }
 
   // ---------------------------------------------------------------- nav
-  var TABS = [['today', 'Today'], ['missions', 'All Missions'], ['dates', 'Deadlines'], ['buy', 'Buy Smart'], ['progress', 'Progress']];
+  var TABS = [['today', 'Today'], ['missions', 'All Missions'], ['howto', 'How-To'], ['dates', 'Deadlines'], ['buy', 'Buy Smart'], ['progress', 'Progress']];
   function paintNav() {
-    document.getElementById('nav').innerHTML = TABS.map(function (t) { return '<button data-v="' + t[0] + '" class="' + (view === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; }).join('');
+    var cur = view.indexOf('guide:') === 0 ? 'howto' : view;
+    document.getElementById('nav').innerHTML = TABS.map(function (t) { return '<button data-v="' + t[0] + '" class="' + (cur === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; }).join('');
     var h = document.getElementById('hdr').offsetHeight; document.documentElement.style.setProperty('--hh', h + 'px');
   }
   document.getElementById('nav').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; view = b.dataset.v; location.hash = view; render(); scrollTo(0, 0); });
@@ -160,12 +176,17 @@ th{font-size:12px;color:var(--mut)}
       '<div class="prog"><i style="width:' + d.pct + '%"></i></div></div>';
     if (isOpen) {
       h += '<div class="why">' + esc(m.why || '') + '</div>';
-      h += m.steps.map(function (s, i) { return '<label class="step' + (a[i] ? ' done' : '') + '"><input type="checkbox" data-m="' + m.id + '" data-i="' + i + '"' + (a[i] ? ' checked' : '') + '><span>' + (i + 1) + '. ' + esc(s) + '</span></label>'; }).join('');
+      var gid = G.guideFor && G.guideFor[m.id];
+      if (gid) h += '<button class="gbtn" data-guide="' + gid + '">📘 Show me exactly how</button>';
+      h += m.steps.map(function (s, i) { var o = typeof s === 'string' ? { t: s } : s;
+        return '<div class="step' + (a[i] ? ' done' : '') + '"><input type="checkbox" data-m="' + m.id + '" data-i="' + i + '"' + (a[i] ? ' checked' : '') + '><span>' + (i + 1) + '. ' + esc(o.t) +
+          (o.tip ? '<span class="tip">' + esc(o.tip) + '</span>' : '') + (o.go ? '<br><a class="go" href="' + esc(o.go[1]) + '" target="_blank" rel="noopener">' + esc(o.go[0]) + ' ↗</a>' : '') + '</span></div>'; }).join('');
       if (m.links && m.links.length) h += '<div class="links">' + m.links.map(function (l) { return '<a href="' + esc(l[1]) + '"' + (/^https?:/.test(l[1]) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(l[0]) + ' ↗</a>'; }).join('') + '</div>';
     }
     return h + '</div>';
   }
-  function nextStep(m) { var a = st.steps[m.id] || []; for (var i = 0; i < m.steps.length; i++) if (!a[i]) return m.steps[i]; return ''; }
+  function stepText(x) { return typeof x === 'string' ? x : (x && x.t) || ''; }
+  function nextStep(m) { var a = st.steps[m.id] || []; for (var i = 0; i < m.steps.length; i++) if (!a[i]) return stepText(m.steps[i]); return ''; }
   function lockCard() {
     if (unlocked()) return '';
     return '<div class="card"><h3>🔒 Private missions are hidden</h3><div class="why">Trip, officer path and family items stay hidden from visitors. Use the same admin PIN as your #56 app (ask Mom if you do not have it).</div><button class="btn g" data-act="unlock">Unlock</button></div>';
@@ -217,7 +238,75 @@ th{font-size:12px;color:var(--mut)}
     h += '<div class="card"><h3>Every phone must pass</h3>' + B.phoneChecks.map(function (c, i) { var k = 'pc' + i, on = (st.phoneCheck || {})[k]; return '<label class="step' + (on ? ' done' : '') + '"><input type="checkbox" data-pc="' + k + '"' + (on ? ' checked' : '') + '><span>' + esc(c) + '</span></label>'; }).join('') +
       '<div class="note" style="margin-top:6px">Mom buys. Never pay a stranger directly or meet someone alone to buy a phone.</div></div>';
     var m = D.missions.filter(function (x) { return x.cat === 'buy'; });
+    h += '<h2>📘 Step-by-step guides</h2>' + ['g-buds', 'g-phone', 'g-bulkphones'].map(function (id) { var g = gget(id); return g ? '<div class="card summary" data-guide="' + id + '"><h3>' + g.icon + ' ' + esc(g.title) + '</h3><div class="meta">' + esc(g.intro) + '</div></div>' : ''; }).join('');
+    h += approvalCard() + invCard();
     return h + '<h2>Missions</h2>' + m.map(missionCard).join('');
+  }
+  // ---------------------------------------------------------------- How-To guides
+  function gget(id) { return G.list.filter(function (g) { return g.id === id; })[0]; }
+  function vHowto() {
+    var h = '<h2>📘 How-To guides</h2><div class="note" style="margin:0 4px 6px">Every guide says what you need first, exactly where to go, what to tap or say, and what to check after.</div>';
+    h += G.list.filter(function (g) { return !g.private || unlocked(); }).map(function (g) {
+      var d = st.gdone && st.gdone[g.id] ? Object.keys(st.gdone[g.id]).filter(function (k) { return st.gdone[g.id][k]; }).length : 0;
+      return '<div class="card summary" data-guide="' + g.id + '"><h3>' + g.icon + ' ' + esc(g.title) + '</h3><div class="meta">' + esc(g.intro) + (d ? ' · ' + d + ' after-checks done' : '') + '</div></div>'; }).join('');
+    return h + lockCard();
+  }
+  function vGuide(id) {
+    var g = gget(id); if (!g) return vHowto();
+    if (g.private && !unlocked()) return lockCard();
+    var done = (st.gdone || {})[id] || {};
+    var h = '<div style="margin:6px 2px"><a href="#howto" class="btn l">‹ All guides</a></div><h2>' + g.icon + ' ' + esc(g.title) + '</h2><div class="card"><div class="why">' + esc(g.intro) + '</div>';
+    h += '<div class="need"><b>Before you start you need:</b><br>' + g.need.map(function (x) { return '• ' + esc(x); }).join('<br>') + '</div>';
+    if (g.pick) h += '<div class="need"><b>What to pick:</b><br>' + g.pick.map(function (x) { return '• ' + esc(x); }).join('<br>') + '</div>';
+    h += '</div>';
+    if (g.homecare) h += caseLog() + officeCard();
+    g.routes.forEach(function (r) {
+      h += '<div class="card"><h3>' + esc(r.name) + '</h3>' + r.steps.map(function (x, i) {
+        return '<div class="gstep"><div class="n">' + (i + 1) + '</div><div>' + esc(x.t) + (x.tip ? '<span class="tip">' + esc(x.tip) + '</span>' : '') +
+          (x.go ? '<br><a class="go" href="' + esc(x.go[1]) + '" target="_blank" rel="noopener">' + esc(x.go[0]) + ' ↗</a>' : '') +
+          (x.mission ? '<br><button class="gbtn" data-goto="' + x.mission + '">Open the step-by-step checklist</button>' : '') + '</div></div>'; }).join('') + '</div>';
+    });
+    if (id === 'g-buds' || id === 'g-phone' || id === 'g-bulkphones') h += approvalCard();
+    if (id === 'g-buds') h += invCard();
+    h += '<div class="card"><h3>✅ After / when it arrives</h3>' + g.after.map(function (x, i) { var k = 'a' + i; return '<label class="step' + (done[k] ? ' done' : '') + '"><input type="checkbox" data-g="' + id + '" data-k="' + k + '"' + (done[k] ? ' checked' : '') + '><span>' + esc(x) + '</span></label>'; }).join('');
+    if (g.links) h += '<div class="links">' + g.links.map(function (l) { return '<a href="' + esc(l[1]) + '" target="_blank" rel="noopener">' + esc(l[0]) + ' ↗</a>'; }).join('') + '</div>';
+    return h + '</div>';
+  }
+  function caseLog() {
+    var v = st.caselog || {};
+    return '<div class="card form"><h3>📋 Case Log</h3><div class="note">Saved only on this phone, behind the PIN. Type the last 4 digits of any ID number, never the full number.</div>' +
+      HC.log.map(function (f) { var val = esc(v[f[0]] || '');
+        return '<label>' + esc(f[1]) + '</label>' + (f[2] === 'long' ? '<textarea rows="3" data-log="' + f[0] + '">' + val + '</textarea>' : '<input ' + (f[2] === 'date' ? 'type="date" ' : '') + 'data-log="' + f[0] + '" value="' + val + '">'); }).join('') +
+      '<div style="margin-top:10px"><button class="btn g" data-act="logsms">Text Mom the case status</button></div></div>';
+  }
+  function officeCard() {
+    return '<div class="card"><h3>📞 Oakland County MDHHS offices</h3><div class="note">Call the one for Mom\'s address. Not sure? Call any and ask which office covers her address.</div>' +
+      HC.offices.map(function (o) { return '<div class="req"><b>' + esc(o.name) + '</b><br>' + esc(o.addr) + '<br><a class="go" href="tel:' + o.phone.replace(/\D/g, '') + '">Call ' + esc(o.phone) + '</a> <a class="go" href="https://maps.google.com/?q=' + encodeURIComponent(o.addr) + '" target="_blank" rel="noopener">Directions ↗</a></div>'; }).join('') + '</div>';
+  }
+  function logText() {
+    var v = st.caselog || {}, out = ['Home Help case status ' + todayKey() + ':'];
+    HC.log.forEach(function (f) { if (v[f[0]]) out.push(f[1] + ': ' + v[f[0]]); });
+    var next = visibleMissions().filter(function (m) { return m.cat === 'homecare' && mDone(m).pct < 100; })[0];
+    if (next) out.push('Next: ' + next.title + ' - ' + nextStep(next));
+    return out.join('\n');
+  }
+  // ---------------------------------------------------------------- ask Mom to approve a purchase + my stuff
+  function approvalCard() {
+    var rq = st.requests || [];
+    return '<div class="card form"><h3>🙋🏾 Ask Mom to approve</h3><div class="note">Paste the link of what you picked. Mom checks out. You never type in a card number.</div>' +
+      '<label>What is it?</label><input id="rqItem" placeholder="Example: 100-pack wired earbuds">' +
+      '<label>Link (Share > Copy link, then paste)</label><input id="rqLink" type="url" placeholder="https://...">' +
+      '<div class="calc"><div><label>Price each or pack price ($)</label><input id="rqPrice" type="number" inputmode="decimal"></div><div><label>How many</label><input id="rqQty" type="number" inputmode="numeric" value="1"></div><div><label>Shipping + tax ($)</label><input id="rqShip" type="number" inputmode="decimal" value="0"></div><div><label>Why this one?</label><input id="rqWhy" placeholder="Cheapest, good reviews..."></div></div>' +
+      '<button class="btn g" data-act="rqsend">Text Mom for approval</button>' +
+      (rq.length ? '<h3 style="margin-top:12px">My requests</h3>' + rq.map(function (r, i) {
+        return '<div class="req"><b>' + esc(r.item) + '</b> · $' + esc(r.total) + ' <span class="s">' + esc(r.status) + '</span><br><span class="note">' + esc(r.date) + '</span> ' +
+          (r.link ? '<a href="' + esc(r.link) + '" target="_blank" rel="noopener">link ↗</a>' : '') + '<br>' +
+          ['Approved', 'Ordered', 'Arrived', 'Not approved'].map(function (x) { return '<button class="gbtn" data-rq="' + i + '" data-st="' + x + '">' + x + '</button> '; }).join('') + '</div>'; }).join('') : '') + '</div>';
+  }
+  function invCard() {
+    var n = (st.inv || {}).buds || 0;
+    return '<div class="card"><h3>📦 My stuff: earbuds left</h3><div class="big">' + n + ' pairs</div>' + (n <= 5 ? '<div class="tip">' + (n ? 'Running low. Start the earbuds guide again.' : 'None left. Start the earbuds guide.') + '</div>' : '') +
+      '<div style="margin-top:8px"><button class="btn g" data-act="budUse">Used one</button><button class="btn l" data-act="budAdd">Box arrived (add pairs)</button></div></div>';
   }
   function calc() {
     var p = +document.getElementById('cp').value || 0, n = +document.getElementById('cn').value || 1, s = +document.getElementById('cs').value || 0, mo = +document.getElementById('cm').value || 0;
@@ -249,7 +338,7 @@ th{font-size:12px;color:var(--mut)}
   // ---------------------------------------------------------------- render + events
   function render() {
     paintNav();
-    var f = { today: vToday, missions: vMissions, dates: vDates, buy: vBuy, progress: vProgress }[view] || vToday;
+    var f = view.indexOf('guide:') === 0 ? function () { return vGuide(view.slice(6)); } : ({ today: vToday, missions: vMissions, howto: vHowto, dates: vDates, buy: vBuy, progress: vProgress }[view] || vToday);
     document.getElementById('main').innerHTML = f();
     if (view === 'buy') { ['cp', 'cn', 'cs', 'cm'].forEach(function (i) { document.getElementById(i).addEventListener('input', calc); }); calc(); }
     var imp = document.getElementById('imp'); if (imp) imp.addEventListener('change', importFile);
@@ -260,14 +349,30 @@ th{font-size:12px;color:var(--mut)}
     var el = e.target;
     if (el.dataset.m) { var a = st.steps[el.dataset.m] = st.steps[el.dataset.m] || []; a[+el.dataset.i] = el.checked; save(); if (el.checked) toast('+10 XP'); render(); }
     else if (el.dataset.r) { var dk = todayKey(); st.routine[dk] = st.routine[dk] || {}; st.routine[dk][el.dataset.r] = el.checked; save(); if (el.checked) toast('+5 XP'); render(); }
+    else if (el.dataset.g) { st.gdone = st.gdone || {}; st.gdone[el.dataset.g] = st.gdone[el.dataset.g] || {}; st.gdone[el.dataset.g][el.dataset.k] = el.checked; save(); render(); }
+    else if (el.dataset.log) { st.caselog = st.caselog || {}; st.caselog[el.dataset.log] = el.value; save(); toast('Saved'); }
     else if (el.dataset.pc) { st.phoneCheck = st.phoneCheck || {}; st.phoneCheck[el.dataset.pc] = el.checked; save(); render(); }
   });
   main.addEventListener('click', function (e) {
     var o = e.target.closest('[data-open]'); if (o) { open[o.dataset.open] = !open[o.dataset.open]; render(); return; }
+    var gd = e.target.closest('[data-guide]'); if (gd) { view = 'guide:' + gd.dataset.guide; location.hash = view; render(); scrollTo(0, 0); return; }
+    var rqb = e.target.closest('[data-rq]'); if (rqb) { st.requests[+rqb.dataset.rq].status = rqb.dataset.st; save(); render(); return; }
     var g = e.target.closest('[data-goto]'); if (g) { open[g.dataset.goto] = true; view = 'missions'; location.hash = view; render(); var c = document.getElementById('m-' + g.dataset.goto); if (c) c.scrollIntoView({ block: 'center' }); return; }
     var b = e.target.closest('[data-act]'); if (!b) return;
     var act = b.dataset.act;
     if (act === 'unlock') showLock();
+    if (act === 'logsms') location.href = 'sms:?&body=' + encodeURIComponent(logText());
+    if (act === 'budUse') { st.inv = st.inv || {}; st.inv.buds = Math.max(0, (st.inv.buds || 0) - 1); save(); render(); }
+    if (act === 'budAdd') { var k = parseInt(prompt('How many pairs came in the box?', '100'), 10); if (k > 0) { st.inv = st.inv || {}; st.inv.buds = (st.inv.buds || 0) + k; save(); render(); } }
+    if (act === 'rqsend') {
+      var it = document.getElementById('rqItem').value.trim(), ln = document.getElementById('rqLink').value.trim(), pr = +document.getElementById('rqPrice').value || 0,
+        q = +document.getElementById('rqQty').value || 1, sh = +document.getElementById('rqShip').value || 0, wy = document.getElementById('rqWhy').value.trim();
+      if (!it || !ln) { toast('Add what it is and the link'); return; }
+      var tot = (pr * q + sh).toFixed(2);
+      st.requests = st.requests || []; st.requests.unshift({ item: it, link: ln, total: tot, status: 'Waiting on Mom', date: todayKey() }); save();
+      location.href = 'sms:?&body=' + encodeURIComponent('Mom, can I get this? ' + it + ' - ' + q + ' x $' + pr + (sh ? ' + $' + sh + ' shipping/tax' : '') + ' = $' + tot + (wy ? '. Why: ' + wy : '') + '. Link: ' + ln);
+      setTimeout(render, 600);
+    }
     if (act === 'lock') { st.unlockUntil = 0; save(); render(); }
     if (act === 'sms') location.href = 'sms:?&body=' + encodeURIComponent(updateText());
     if (act === 'copy') { try { navigator.clipboard.writeText(updateText()).then(function () { toast('Copied'); }); } catch (x) { toast('Copy not allowed here'); } }
