@@ -227,3 +227,17 @@
   }
   document.addEventListener('DOMContentLoaded', function () { if (/iphone|ipad|ipod/i.test(navigator.userAgent)) draw(); });
 })();
+
+/* V2.33 MISSIONS: "My Missions" button - opens Caleb's task app (missions/) inside this same installed app */
+(function () {
+  'use strict';
+  function draw() {
+    if (!document.body || document.getElementById('c56miss')) return;
+    var a = document.createElement('a'); a.id = 'c56miss'; a.href = 'missions/';
+    a.style.cssText = 'position:fixed;right:10px;bottom:52px;z-index:99998;border-radius:16px;padding:8px 12px;font:bold 12px Arial,sans-serif;background:#0b3d2e;color:#c9a227;border:2px solid #c9a227;text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.3)';
+    a.textContent = '🎯 My Missions';
+    document.body.appendChild(a);
+  }
+  document.addEventListener('DOMContentLoaded', draw);
+  if (document.readyState !== 'loading') draw();
+})();

@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Caleb #56 Missions</title>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0b3d2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Caleb #56">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" href="../icon-192.png">
+<style>
+:root{--g:#0b3d2e;--g2:#12553f;--gold:#c9a227;--ink:#13221c;--mut:#5d6b65;--bg:#f4f1e8;--card:#fff;--ok:#1f8a4c;--warn:#b5521b}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+header{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:calc(14px + env(safe-area-inset-top)) 16px 12px;position:sticky;top:0;z-index:5}
+header .row{display:flex;align-items:center;gap:10px}
+header h1{font-size:19px;margin:0;letter-spacing:.5px}
+header h1 b{color:var(--gold)}
+header a.back{color:#fff;text-decoration:none;font-size:13px;border:1px solid rgba(255,255,255,.4);border-radius:10px;padding:5px 9px}
+header .sp{flex:1}
+.xp{font-size:12px;opacity:.9;margin-top:6px}
+.bar{height:7px;background:rgba(255,255,255,.2);border-radius:5px;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:var(--gold)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:#fff;border-bottom:1px solid #e3ddcc;position:sticky;top:var(--hh,92px);z-index:4}
+nav button{flex:0 0 auto;border:1px solid #d8d1bd;background:#fff;border-radius:20px;padding:8px 13px;font-size:14px;font-weight:600;color:var(--ink)}
+nav button.on{background:var(--g);border-color:var(--g);color:#fff}
+main{padding:12px 12px 90px;max-width:760px;margin:0 auto}
+h2{font-size:16px;margin:18px 4px 8px;color:var(--g)}
+.card{background:var(--card);border-radius:14px;padding:13px 14px;margin:8px 0;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card h3{margin:0 0 4px;font-size:15.5px}
+.meta{font-size:12.5px;color:var(--mut)}
+.tag{display:inline-block;font-size:11px;font-weight:700;border-radius:8px;padding:2px 7px;margin-right:5px;background:#eef3ef;color:var(--g)}
+.tag.mom{background:#fbeee4;color:var(--warn)}.tag.due{background:#fff4d6;color:#7a5a00}.tag.late{background:#fde2e2;color:#a11}
+.why{font-size:13.5px;margin:7px 0;color:#2c3a34;line-height:1.4}
+.step{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px solid #f0ece0;font-size:14.5px;line-height:1.35}
+.step input{width:22px;height:22px;flex:0 0 22px;accent-color:var(--ok);margin-top:1px}
+.step.done span{text-decoration:line-through;color:#8a958f}
+.links{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px}
+.links a{font-size:13px;background:var(--g);color:#fff;text-decoration:none;border-radius:9px;padding:6px 10px}
+.prog{height:6px;background:#ece7d8;border-radius:4px;margin-top:8px;overflow:hidden}.prog i{display:block;height:100%;background:var(--ok)}
+.summary{cursor:pointer}
+.chev{float:right;color:var(--mut)}
+.routine{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #f0ece0;font-size:15px}
+.routine:first-child{border-top:0}
+.routine input{width:24px;height:24px;accent-color:var(--ok)}
+.routine small{display:block;color:var(--mut);font-size:12px}
+.routine.done span{text-decoration:line-through;color:#8a958f}
+.btn{display:inline-block;border:0;border-radius:11px;padding:11px 14px;font-size:14.5px;font-weight:700;background:var(--gold);color:#222;margin:4px 4px 4px 0}
+.btn.g{background:var(--g);color:#fff}.btn.l{background:#e9e4d6;color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+td,th{text-align:left;padding:7px 5px;border-top:1px solid #eee7d6;vertical-align:top}
+th{font-size:12px;color:var(--mut)}
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.calc label{font-size:12.5px;color:var(--mut)}
+.calc input{width:100%;padding:10px;border:1px solid #d8d1bd;border-radius:10px;font-size:16px}
+.big{font-size:20px;font-weight:800;color:var(--g)}
+.lock{max-width:360px;margin:60px auto;text-align:center}
+.lock input{font-size:24px;letter-spacing:8px;text-align:center;width:180px;padding:10px;border-radius:12px;border:1px solid #cfc7b0}
+.note{font-size:12.5px;color:var(--mut);line-height:1.45}
+.empty{color:var(--mut);font-size:14px;padding:6px 2px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#13221c;color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;opacity:0;transition:.25s;z-index:9}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="row">
+    <a class="back" href="../">‹ #56 App</a>
+    <div class="sp"></div>
+    <h1>CALEB <b>#56</b> MISSIONS</h1>
+  </div>
+  <div class="xp" id="xp"></div>
+  <div class="bar"><i id="xpbar" style="width:0"></i></div>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<script src="data.js"></script>
+<script>
+(function () {
+  'use strict';
+  var D = window.C56M_DATA;
+  var BACKEND = 'https://script.google.com/macros/s/AKfycbzs6GRRlaUWHeIrAx3PGGT9y_S5X2n9TeoLWHdt4OEeuofmkJytbKTcnF2D-rLbqBMwMA/exec';
+  var KEY = 'c56m_v1';
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var st = load();
+  var view = (location.hash || '#today').slice(1);
+  var open = {};
+
+  if ('serviceWorker' in navigator) { try { navigator.serviceWorker.register('../sw.js', { scope: '../' }); } catch (e) {} }
+
+  // ---------------------------------------------------------------- storage (device)
+  function load() { try { var s = JSON.parse(localStorage.getItem(KEY) || '{}'); s.steps = s.steps || {}; s.routine = s.routine || {}; return s; } catch (e) { return { steps: {}, routine: {} }; } }
+  function save() { try { st.updated = new Date().toISOString(); localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) { toast('Could not save on this device'); } }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function toast(m) { var t = document.getElementById('toast'); t.textContent = m; t.classList.add('show'); setTimeout(function () { t.classList.remove('show'); }, 1800); }
+  function todayKey(d) { d = d || new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function daysTo(iso) { var a = new Date(todayKey() + 'T00:00:00'), b = new Date(iso + 'T00:00:00'); return Math.round((b - a) / 864e5); }
+  function fmt(iso) { return new Date(iso + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }); }
+
+  // ---------------------------------------------------------------- private lock (same admin PIN as the #56 app)
+  function sha(pin) { var b = new TextEncoder().encode('c56|' + pin); return crypto.subtle.digest('SHA-256', b).then(function (h) { return Array.from(new Uint8Array(h)).map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); }); }
+  function savedAdminHash() {
+    return new Promise(function (res) {
+      try { var r = indexedDB.open('caleb56-offline', 1); r.onupgradeneeded = function () { var d = r.result; if (!d.objectStoreNames.contains('kv')) d.createObjectStore('kv'); if (!d.objectStoreNames.contains('q')) d.createObjectStore('q', { keyPath: 'n', autoIncrement: true }); };
+        r.onsuccess = function () { try { var g = r.result.transaction('kv', 'readonly').objectStore('kv').get('adminHash'); g.onsuccess = function () { res(g.result || ''); }; g.onerror = function () { res(''); }; } catch (e) { res(''); } };
+        r.onerror = function () { res(''); }; } catch (e) { res(''); }
+    });
+  }
+  function unlocked() { return st.unlockUntil && Date.now() < st.unlockUntil; }
+  function tryUnlock(pin) {
+    return sha(pin).then(function (h) {
+      return savedAdminHash().then(function (saved) {
+        if (saved && saved === h) return true;
+        if (!navigator.onLine) return Promise.reject(new Error(saved ? 'Wrong PIN.' : 'Unlock needs internet the first time on this phone.'));
+        return fetch(BACKEND, { method: 'POST', body: JSON.stringify({ action: 'verifyPin', payload: { pin: pin } }), headers: { 'Content-Type': 'text/plain;charset=utf-8' }, credentials: 'omit', redirect: 'follow' })
+          .then(function (r) { return r.json(); })
+          .then(function (j) { if (j && j.ok && !(j.data && j.data.ok === false)) return true; throw new Error('Wrong PIN.'); });
+      });
+    }).then(function () { st.unlockUntil = Date.now() + 30 * 864e5; save(); });
+  }
+
+  // ---------------------------------------------------------------- progress
+  function visibleMissions() { return D.missions.filter(function (m) { return !m.private || unlocked(); }); }
+  function mDone(m) { var a = st.steps[m.id] || []; var n = m.steps.filter(function (_, i) { return a[i]; }).length; return { n: n, of: m.steps.length, pct: m.steps.length ? Math.round(100 * n / m.steps.length) : 0 }; }
+  function totals() {
+    var n = 0, of = 0; visibleMissions().forEach(function (m) { var d = mDone(m); n += d.n; of += d.of; });
+    var r = 0; Object.keys(st.routine).forEach(function (k) { r += Object.keys(st.routine[k] || {}).filter(function (x) { return st.routine[k][x]; }).length; });
+    return { n: n, of: of, xp: n * 10 + r * 5, pct: of ? Math.round(100 * n / of) : 0 };
+  }
+  function paintXP() {
+    var t = totals(); var lvl = Math.floor(t.xp / 200) + 1;
+    document.getElementById('xp').textContent = 'Level ' + lvl + ' · ' + t.xp + ' XP · ' + t.n + '/' + t.of + ' steps done (' + t.pct + '%)';
+    document.getElementById('xpbar').style.width = ((t.xp % 200) / 2) + '%';
+  }
+
+  // ---------------------------------------------------------------- nav
+  var TABS = [['today', 'Today'], ['missions', 'All Missions'], ['dates', 'Deadlines'], ['buy', 'Buy Smart'], ['progress', 'Progress']];
+  function paintNav() {
+    document.getElementById('nav').innerHTML = TABS.map(function (t) { return '<button data-v="' + t[0] + '" class="' + (view === t[0] ? 'on' : '') + '">' + t[1] + '</button>'; }).join('');
+    var h = document.getElementById('hdr').offsetHeight; document.documentElement.style.setProperty('--hh', h + 'px');
+  }
+  document.getElementById('nav').addEventListener('click', function (e) { var b = e.target.closest('button'); if (!b) return; view = b.dataset.v; location.hash = view; render(); scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { var v = (location.hash || '#today').slice(1); if (v !== view) { view = v; render(); } });
+
+  // ---------------------------------------------------------------- pieces
+  function tags(m) {
+    var t = '';
+    if (m.who === 'Mom') t += '<span class="tag mom">Mom does this</span>'; else if (m.who === 'Both') t += '<span class="tag">You + Mom</span>';
+    if (m.due) { var d = daysTo(m.due); t += d < 0 ? '<span class="tag late">' + (-d) + ' days late</span>' : '<span class="tag due">' + (d === 0 ? 'Today' : d + ' days') + '</span>'; }
+    if (m.private) t += '<span class="tag">🔒 private</span>';
+    return t;
+  }
+  function missionCard(m) {
+    var d = mDone(m), isOpen = open[m.id], a = st.steps[m.id] || [];
+    var h = '<div class="card" id="m-' + m.id + '"><div class="summary" data-open="' + m.id + '"><span class="chev">' + (isOpen ? '▲' : '▼') + '</span>' +
+      '<h3>' + (d.pct === 100 ? '✅ ' : '') + esc(m.title) + '</h3><div class="meta">' + tags(m) + esc(m.when || '') + ' · ' + d.n + '/' + d.of + '</div>' +
+      '<div class="prog"><i style="width:' + d.pct + '%"></i></div></div>';
+    if (isOpen) {
+      h += '<div class="why">' + esc(m.why || '') + '</div>';
+      h += m.steps.map(function (s, i) { return '<label class="step' + (a[i] ? ' done' : '') + '"><input type="checkbox" data-m="' + m.id + '" data-i="' + i + '"' + (a[i] ? ' checked' : '') + '><span>' + (i + 1) + '. ' + esc(s) + '</span></label>'; }).join('');
+      if (m.links && m.links.length) h += '<div class="links">' + m.links.map(function (l) { return '<a href="' + esc(l[1]) + '"' + (/^https?:/.test(l[1]) ? ' target="_blank" rel="noopener"' : '') + '>' + esc(l[0]) + ' ↗</a>'; }).join('') + '</div>';
+    }
+    return h + '</div>';
+  }
+  function nextStep(m) { var a = st.steps[m.id] || []; for (var i = 0; i < m.steps.length; i++) if (!a[i]) return m.steps[i]; return ''; }
+  function lockCard() {
+    if (unlocked()) return '';
+    return '<div class="card"><h3>🔒 Private missions are hidden</h3><div class="why">Trip, officer path and family items stay hidden from visitors. Use the same admin PIN as your #56 app (ask Mom if you do not have it).</div><button class="btn g" data-act="unlock">Unlock</button></div>';
+  }
+
+  // ---------------------------------------------------------------- views
+  function vToday() {
+    var now = new Date(), dow = now.getDay(), dk = todayKey(now), done = st.routine[dk] || {};
+    var r = D.routines.filter(function (x) { return x.days.indexOf(dow) > -1; });
+    var h = '<h2>' + DAYS[dow] + ' · ' + now.toLocaleDateString(undefined, { month: 'long', day: 'numeric' }) + '</h2><div class="card">';
+    h += r.length ? r.map(function (x) { return '<label class="routine' + (done[x.id] ? ' done' : '') + '"><input type="checkbox" data-r="' + x.id + '"' + (done[x.id] ? ' checked' : '') + '><span>' + esc(x.title) + '<small>' + esc(x.time) + '</small></span></label>'; }).join('') : '<div class="empty">No routines today.</div>';
+    h += '</div>';
+    var soon = visibleMissions().filter(function (m) { return m.due && daysTo(m.due) <= 14 && mDone(m).pct < 100; }).sort(function (a, b) { return a.due < b.due ? -1 : 1; });
+    if (soon.length) h += '<h2>⏰ Due in the next 2 weeks</h2>' + soon.map(missionCard).join('');
+    var active = visibleMissions().filter(function (m) { var d = mDone(m); return m.who !== 'Mom' && d.pct < 100 && !m.due; })
+      .sort(function (a, b) { return mDone(b).pct - mDone(a).pct; }).slice(0, 4);
+    h += '<h2>🎯 Your next steps</h2>' + (active.length ? active.map(function (m) { return '<div class="card summary" data-goto="' + m.id + '"><div class="meta">' + esc(catName(m.cat)) + '</div><h3>' + esc(m.title) + '</h3><div class="why">Next: ' + esc(nextStep(m)) + '</div></div>'; }).join('') : '<div class="empty">Everything is done. Ask Mom for the next mission.</div>');
+    return h + lockCard();
+  }
+  function catName(id) { var c = D.cats.filter(function (x) { return x.id === id; })[0]; return c ? c.icon + ' ' + c.name : id; }
+  function vMissions() {
+    var h = '';
+    D.cats.forEach(function (c) {
+      if (c.id === 'today') {
+        h += '<h2>' + c.icon + ' ' + c.name + '</h2><div class="card">' + D.routines.map(function (x) { return '<div class="routine"><span>' + esc(x.title) + '<small>' + esc(x.time) + '</small></span></div>'; }).join('') + '<div class="note">Check these off on the Today tab. Friday pay: $15 a week.</div></div>';
+        return;
+      }
+      var ms = visibleMissions().filter(function (m) { return m.cat === c.id; });
+      if (!ms.length) return;
+      h += '<h2>' + c.icon + ' ' + c.name + '</h2>' + ms.map(missionCard).join('');
+    });
+    return h + lockCard();
+  }
+  function vDates() {
+    var ms = visibleMissions().filter(function (m) { return m.due; }).sort(function (a, b) { return a.due < b.due ? -1 : 1; });
+    var h = '<h2>📅 Deadlines</h2><div class="card"><table><tr><th>Date</th><th>What</th><th>Left</th></tr>';
+    h += ms.map(function (m) { var d = daysTo(m.due), done = mDone(m).pct === 100; return '<tr data-goto="' + m.id + '" class="summary"><td>' + fmt(m.due) + '</td><td>' + (done ? '✅ ' : '') + esc(m.title) + (m.who === 'Mom' ? ' <span class="tag mom">Mom</span>' : '') + '</td><td>' + (done ? 'done' : d < 0 ? '<b style="color:#a11">' + (-d) + 'd late</b>' : d + 'd') + '</td></tr>'; }).join('');
+    h += '</table><div class="note" style="margin-top:8px">Game, meet and match dates live on your #56 app home page ("Coming up").</div></div>';
+    return h + lockCard();
+  }
+  function vBuy() {
+    var B = D.buy;
+    var h = '<h2>🎧 Earbuds: buy the case</h2><div class="card"><div class="why">One pair at Dollar Tree is about $7. A 100-pack works out to under $1 a pair. Ask Mom before you order.</div><table><tr><th>Where</th><th>What / price</th></tr>' +
+      B.buds.map(function (b) { return '<tr><td><a href="' + esc(b.url) + '" target="_blank" rel="noopener">' + esc(b.src) + ' ↗</a></td><td>' + esc(b.what) + '<br><b>' + esc(b.price) + '</b><br><span class="note">' + esc(b.note) + '</span></td></tr>'; }).join('') + '</table>' +
+      '<div class="note" style="margin-top:6px">Prices were found online Nov 8, 2026 and change often. Add shipping and tax before you compare.</div></div>';
+    h += '<div class="card"><h3>Savings calculator</h3><div class="calc"><div><label>Pack price ($)</label><input id="cp" type="number" inputmode="decimal" value="50"></div><div><label>Pairs in pack</label><input id="cn" type="number" inputmode="numeric" value="100"></div><div><label>Shipping ($)</label><input id="cs" type="number" inputmode="decimal" value="0"></div><div><label>Pairs you go through a month</label><input id="cm" type="number" inputmode="numeric" value="2"></div></div><div id="cout" style="margin-top:10px"></div></div>';
+    h += '<h2>📱 Cheaper phone, safe way</h2><div class="card"><table><tr><th>Source</th><th>Notes</th></tr>' +
+      B.phones.map(function (p) { return '<tr><td><b>' + esc(p.src) + '</b><br><span class="tag' + (p.rank === 'Risky' ? ' late' : '') + '">' + esc(p.rank) + '</span></td><td>' + esc(p.note) + '</td></tr>'; }).join('') + '</table></div>';
+    h += '<div class="card"><h3>Every phone must pass</h3>' + B.phoneChecks.map(function (c, i) { var k = 'pc' + i, on = (st.phoneCheck || {})[k]; return '<label class="step' + (on ? ' done' : '') + '"><input type="checkbox" data-pc="' + k + '"' + (on ? ' checked' : '') + '><span>' + esc(c) + '</span></label>'; }).join('') +
+      '<div class="note" style="margin-top:6px">Mom buys. Never pay a stranger directly or meet someone alone to buy a phone.</div></div>';
+    var m = D.missions.filter(function (x) { return x.cat === 'buy'; });
+    return h + '<h2>Missions</h2>' + m.map(missionCard).join('');
+  }
+  function calc() {
+    var p = +document.getElementById('cp').value || 0, n = +document.getElementById('cn').value || 1, s = +document.getElementById('cs').value || 0, mo = +document.getElementById('cm').value || 0;
+    var each = (p + s) / n, save = 7 - each, months = mo ? n / mo : 0;
+    document.getElementById('cout').innerHTML = '<div class="big">$' + each.toFixed(2) + ' a pair</div><div class="why">You save $' + save.toFixed(2) + ' a pair vs $7. ' + (mo ? 'At ' + mo + ' a month the pack lasts about ' + Math.round(months) + ' months and saves about $' + (save * mo * 12).toFixed(0) + ' a year.' : '') + '</div>';
+  }
+  function vProgress() {
+    var t = totals(), h = '<h2>📈 Progress</h2><div class="card"><div class="big">' + t.pct + '% of mission steps done</div><div class="meta">' + t.n + ' of ' + t.of + ' steps · ' + t.xp + ' XP</div></div>';
+    h += '<div class="card"><table><tr><th>Area</th><th>Done</th></tr>' + D.cats.filter(function (c) { return c.id !== 'today'; }).map(function (c) {
+      var ms = visibleMissions().filter(function (m) { return m.cat === c.id; }); if (!ms.length) return '';
+      var n = 0, of = 0; ms.forEach(function (m) { var d = mDone(m); n += d.n; of += d.of; });
+      return '<tr><td>' + c.icon + ' ' + esc(c.name) + '</td><td>' + n + '/' + of + '</td></tr>'; }).join('') + '</table></div>';
+    h += '<div class="card"><h3>Send Mom your update</h3><div class="why">Use this before Monday scrum. It opens a text you send to Mom yourself.</div>' +
+      '<button class="btn g" data-act="sms">Text Mom my update</button><button class="btn l" data-act="copy">Copy update</button></div>';
+    h += '<div class="card"><h3>Backup</h3><div class="note">Your check marks are saved on this phone and work offline. Make a backup before you switch phones or clear your browser.</div>' +
+      '<button class="btn l" data-act="export">Save backup file</button><label class="btn l">Load backup<input type="file" accept=".json" id="imp" style="display:none"></label>' +
+      (unlocked() ? '<button class="btn l" data-act="lock">Lock private missions</button>' : '') + '<div class="note">Missions list ' + esc(D.version) + '</div></div>';
+    return h + lockCard();
+  }
+  function updateText() {
+    var t = totals(), lines = ['Caleb #56 Missions update ' + todayKey() + ': ' + t.pct + '% done (' + t.n + '/' + t.of + ' steps).'];
+    var fin = visibleMissions().filter(function (m) { return mDone(m).pct === 100 && m.who !== 'Mom'; }).map(function (m) { return m.title; });
+    var next = visibleMissions().filter(function (m) { var d = mDone(m); return m.who !== 'Mom' && d.pct < 100; }).slice(0, 3).map(function (m) { return m.title + ' - next: ' + nextStep(m); });
+    if (fin.length) lines.push('Finished: ' + fin.join('; '));
+    if (next.length) lines.push('Working on: ' + next.join(' | '));
+    return lines.join('\n');
+  }
+
+  // ---------------------------------------------------------------- render + events
+  function render() {
+    paintNav();
+    var f = { today: vToday, missions: vMissions, dates: vDates, buy: vBuy, progress: vProgress }[view] || vToday;
+    document.getElementById('main').innerHTML = f();
+    if (view === 'buy') { ['cp', 'cn', 'cs', 'cm'].forEach(function (i) { document.getElementById(i).addEventListener('input', calc); }); calc(); }
+    var imp = document.getElementById('imp'); if (imp) imp.addEventListener('change', importFile);
+    paintXP();
+  }
+  var main = document.getElementById('main');
+  main.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.dataset.m) { var a = st.steps[el.dataset.m] = st.steps[el.dataset.m] || []; a[+el.dataset.i] = el.checked; save(); if (el.checked) toast('+10 XP'); render(); }
+    else if (el.dataset.r) { var dk = todayKey(); st.routine[dk] = st.routine[dk] || {}; st.routine[dk][el.dataset.r] = el.checked; save(); if (el.checked) toast('+5 XP'); render(); }
+    else if (el.dataset.pc) { st.phoneCheck = st.phoneCheck || {}; st.phoneCheck[el.dataset.pc] = el.checked; save(); render(); }
+  });
+  main.addEventListener('click', function (e) {
+    var o = e.target.closest('[data-open]'); if (o) { open[o.dataset.open] = !open[o.dataset.open]; render(); return; }
+    var g = e.target.closest('[data-goto]'); if (g) { open[g.dataset.goto] = true; view = 'missions'; location.hash = view; render(); var c = document.getElementById('m-' + g.dataset.goto); if (c) c.scrollIntoView({ block: 'center' }); return; }
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var act = b.dataset.act;
+    if (act === 'unlock') showLock();
+    if (act === 'lock') { st.unlockUntil = 0; save(); render(); }
+    if (act === 'sms') location.href = 'sms:?&body=' + encodeURIComponent(updateText());
+    if (act === 'copy') { try { navigator.clipboard.writeText(updateText()).then(function () { toast('Copied'); }); } catch (x) { toast('Copy not allowed here'); } }
+    if (act === 'export') { var blob = new Blob([JSON.stringify(st, null, 1)], { type: 'application/json' }); var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'caleb56-missions-backup-' + todayKey() + '.json'; a.click(); }
+  });
+  function importFile(e) {
+    var f = e.target.files[0]; if (!f) return; var r = new FileReader();
+    r.onload = function () { try { var s = JSON.parse(r.result); if (!s.steps) throw 0; s.unlockUntil = st.unlockUntil; st = s; st.routine = st.routine || {}; save(); toast('Backup loaded'); render(); } catch (x) { toast('That is not a missions backup'); } };
+    r.readAsText(f);
+  }
+  function showLock() {
+    main.innerHTML = '<div class="lock card"><h3>Unlock private missions</h3><p class="note">Same admin PIN as your #56 app.</p><input id="pin" type="password" inputmode="numeric" maxlength="12" autocomplete="off"><div id="perr" class="note" style="color:#a11;min-height:18px"></div><button class="btn g" id="pgo">Unlock</button> <button class="btn l" id="pno">Cancel</button></div>';
+    var pin = document.getElementById('pin'); pin.focus();
+    function go() { var v = pin.value.trim(); if (!v) return; document.getElementById('perr').textContent = 'Checking...';
+      tryUnlock(v).then(function () { toast('Unlocked on this phone for 30 days'); render(); }, function (err) { var m = err && err.message; document.getElementById('perr').textContent = (m === 'Wrong PIN.' || (m && m.indexOf('first time') > -1)) ? m : 'Could not check the PIN. Try again when you have internet.'; }); }
+    document.getElementById('pgo').onclick = go; pin.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+    document.getElementById('pno').onclick = render;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
