@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1B2951">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mommy Is Human">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Mommy Is Human Too</title>
+<style>
+  :root{--navy:#1B2951;--navy2:#24366a;--gold:#C9A961;--cream:#FAF7F0}
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--navy);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:calc(28px + env(safe-area-inset-top)) 22px calc(28px + env(safe-area-inset-bottom));max-width:520px;margin:0 auto}
+  img{width:96px;height:96px;border-radius:22px}
+  h1{font-family:"Comic Sans MS","Chalkboard SE",Georgia,serif;color:var(--gold);font-size:28px;margin:14px 0 4px}
+  p{color:#d3d9ea;margin:6px 0;line-height:1.45}
+  .btn{display:block;width:100%;margin-top:14px;border:none;border-radius:12px;padding:15px;font-size:17px;font-weight:700;text-decoration:none;cursor:pointer}
+  .gold{background:var(--gold);color:var(--navy)}
+  .ghost{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.5)}
+  .steps{width:100%;text-align:left;background:var(--navy2);border:1px solid rgba(201,169,97,.35);border-radius:14px;padding:12px 14px;margin-top:18px;font-size:15px}
+  .steps b{color:var(--gold)} .steps div{margin:8px 0}
+  .hidden{display:none!important}
+  .small{font-size:13px;color:#aab3cc;margin-top:16px}
+  #view{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--cream);z-index:10}
+  #vbar{display:flex;align-items:center;gap:8px;background:var(--navy);padding:calc(6px + env(safe-area-inset-top)) 10px 6px}
+  #vbar .t{flex:1;color:var(--gold);font-family:"Comic Sans MS","Chalkboard SE",Georgia,serif;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #vbar button,#vbar a{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.45);border-radius:9px;padding:6px 10px;font-size:13px;text-decoration:none;cursor:pointer}
+  #frame{flex:1;width:100%;border:0;background:#faf8f5}
+  #vload{position:absolute;left:0;right:0;top:calc(60px + env(safe-area-inset-top));text-align:center;color:var(--navy);font-size:15px;pointer-events:none}
+  #vhelp{background:#fff6e6;color:#5a4a1e;font-size:13px;padding:8px 12px;border-bottom:1px solid #ecd49a}
+  #vhelp a{color:var(--navy);font-weight:700}
+</style>
+<script src="../samsung-guard.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <img src="icon-192.png" alt="">
+  <h1>Mommy Is Human Too</h1>
+  <p>Read-along books · coloring book · moving characters · story makers · Picture Studio</p>
+
+  <div id="offline" class="hidden" style="width:100%">
+    <p><b>You're offline.</b> The books and pictures are kept in Google Drive, so the app needs internet. It opens as soon as you're connected.</p>
+    <button class="btn gold" id="retry">Try again</button>
+  </div>
+
+  <div id="install" class="hidden" style="width:100%">
+    <button class="btn gold hidden" id="installBtn">📲 Install on this device</button>
+    <button class="btn ghost" id="openBtn" type="button">Open the app now</button>
+    <div class="steps">
+      <div><b>iPhone / iPad:</b> in Safari tap Share → <b>Add to Home Screen</b> → Add.</div>
+      <div><b>Android:</b> in Chrome tap ⋮ → <b>Install app</b> (or Add to Home screen).</div>
+      <div><b>Windows / Mac:</b> in Chrome or Edge click the install icon at the right end of the address bar.</div>
+    </div>
+    <p class="small">After installing, open it from the new “Mommy Is Human” icon. It goes straight to the books.</p>
+  </div>
+</div>
+
+<div id="view" class="hidden">
+  <div id="vbar">
+    <span class="t">💛 Mommy Is Human Too</span>
+    <button id="vReload" type="button">↻ Reload</button>
+    <a id="vOut" href="#" target="_blank" rel="noopener">Open in browser</a>
+  </div>
+  <div id="vhelp" class="hidden">Still loading or seeing “Sorry, unable to open the file”? Tap ↻ Reload, or <a id="vOut2" href="#" target="_blank" rel="noopener">Open in browser</a>.</div>
+  <div id="vload">Opening the bookshelf…</div>
+  <iframe id="frame" title="Mommy Is Human Too" allow="clipboard-write; fullscreen; autoplay"></iframe>
+</div>
+<script>
+(function(){
+  // Live Mommy Is Human Too app (Google Apps Script web app, "mommy human" project, crispcleaninc)
+  var APP_URL = 'https://script.google.com/macros/s/AKfycbw1cbvdKDECViYjLIZUwB76wdY_v8s_noVTIGjLWwb6SVqQtll_RtV4JKH17af2Qfd4Bw/exec';
+  var $ = function(id){ return document.getElementById(id); };
+  $('vOut').href = APP_URL; $('vOut2').href = APP_URL;
+  var installed = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) ||
+                  window.navigator.standalone === true || /[?&]app=1/.test(location.search);
+  function show(id){ ['offline','install'].forEach(function(x){ $(x).classList.toggle('hidden', x!==id); }); }
+  var helpTimer = null;
+  function go(){
+    if(!navigator.onLine){ $('view').classList.add('hidden'); show('offline'); return; }
+    $('view').classList.remove('hidden'); $('vload').classList.remove('hidden'); $('vhelp').classList.add('hidden');
+    clearTimeout(helpTimer); helpTimer = setTimeout(function(){ $('vhelp').classList.remove('hidden'); }, 20000);
+    var old = $('frame'), f = old.cloneNode(false);
+    // No Google sign-in cookies, so Google can't mix up signed-in accounts. The app is open to "Anyone".
+    f.setAttribute('credentialless', ''); f.removeAttribute('src');
+    f.addEventListener('load', function(){ if(f.getAttribute('src')){ $('vload').classList.add('hidden'); clearTimeout(helpTimer); } });
+    old.parentNode.replaceChild(f, old);
+    f.src = APP_URL;
+  }
+  $('vReload').onclick = go; $('retry').onclick = go; $('openBtn').onclick = go;
+  window.addEventListener('online', function(){ if(!$('offline').classList.contains('hidden')) go(); });
+  var deferred = null;
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred = e; $('installBtn').classList.remove('hidden'); });
+  $('installBtn').onclick = function(){ if(!deferred) return; deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; $('installBtn').classList.add('hidden'); }); };
+  if(installed) go(); else show('install');
+  window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
+  if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
+  var APP_VERSION = '1';
+  if (navigator.onLine && location.protocol === 'https:') {
+    fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
+      v = (v || '').trim(); if (!v || v === APP_VERSION) return;
+      var key = 'mih-updated-to'; try { if (sessionStorage.getItem(key) === v) return; sessionStorage.setItem(key, v); } catch(e){}
+      var clear = (window.caches && caches.keys) ? caches.keys().then(function(ks){ return Promise.all(ks.filter(function(k){ return k.indexOf('mih-') === 0; }).map(function(k){ return caches.delete(k); })); }) : Promise.resolve();
+      clear.then(function(){ location.reload(); });
+    }).catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>

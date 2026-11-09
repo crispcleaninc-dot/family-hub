@@ -1,0 +1,489 @@
+
+<!-- ===== CREATIVE STUDIO ADD-ON (Nov 2026): coloring book, moving characters, AI story agents, talk with the family. Additive only; nothing above is changed. ===== -->
+<style>
+#cs{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:61;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#cs.hide{display:none}
+.csbar{position:sticky;top:0;z-index:3;background:var(--navy);color:#fff;display:flex;align-items:center;gap:6px;padding:8px 10px}
+.csbar b{flex:1;font-size:15px}
+.csbar button{width:auto;margin:0;padding:7px 10px;font-size:13px;background:rgba(255,255,255,.16)}
+.cswrap{max-width:760px;margin:0 auto;padding:10px 12px 90px}
+.cstabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;-webkit-overflow-scrolling:touch}
+.cstabs span{flex:0 0 auto;border:1px solid var(--line);background:#fff;border-radius:18px;padding:9px 13px;font-size:14px;cursor:pointer;font-weight:600}
+.cstabs span.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.cspane{display:none}.cspane.on{display:block}
+.cscan{width:100%;border-radius:12px;border:1px solid var(--line);background:#fff;touch-action:none;display:block}
+.csgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:8px;margin-top:8px}
+.cstile{border:1px solid var(--line);border-radius:10px;background:#fff;overflow:hidden;cursor:pointer;font-size:11.5px;text-align:center}
+.cstile:active{transform:scale(.95)}
+.cstile img,.cstile canvas{width:100%;height:78px;object-fit:cover;display:block;background:#fff}
+.cstile .nm{padding:4px 5px;line-height:1.25}
+.cssw{display:inline-block;width:34px;height:34px;border-radius:50%;margin:3px;border:2px solid #fff;box-shadow:0 0 0 1px #bbb;cursor:pointer;vertical-align:middle}
+.cssw.on{box-shadow:0 0 0 3px var(--gold)}
+.csbusy{min-height:18px;color:var(--navy);font-weight:600;font-size:13px;margin:6px 0}
+.csbusy .spin{border-color:var(--navy);border-top-color:transparent}
+.csagents{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.csagents div{border:1px solid var(--line);border-radius:12px;padding:6px 9px;font-size:12px;background:#fff;color:#777}
+.csagents div.run{border-color:var(--gold);color:var(--gold);font-weight:700}
+.csagents div.ok{border-color:#43a047;color:#2e7d32}
+.csagents div.bad{border-color:#c62828;color:#c62828}
+.csshot{border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;background:#fff}
+.csshot img{width:100%;border-radius:10px;display:block;margin-top:6px;background:#eef}
+.csshot textarea,.csshot input{font-size:14px}
+.csactor{border:1px solid var(--line);border-radius:12px;padding:8px;margin-top:8px;background:#fff}
+.csactor .row select,.csactor .row input{padding:8px;font-size:14px}
+.cschat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;min-height:220px;max-height:46vh;overflow-y:auto}
+.csmsg{max-width:84%;padding:9px 12px;border-radius:16px;margin:6px 0;font-size:16px;line-height:1.4}
+.csmsg.me{background:var(--navy);color:#fff;margin-left:auto;border-bottom-right-radius:4px}
+.csmsg.them{background:#fff6e5;border:1px solid #f2d3a0;border-bottom-left-radius:4px}
+.csmsg .who{display:block;font-size:11px;font-weight:700;color:var(--gold);margin-bottom:2px}
+.cswho{display:flex;gap:8px;overflow-x:auto;padding:4px 0}
+.cswho div{flex:0 0 auto;text-align:center;border:2px solid var(--line);border-radius:14px;padding:4px;cursor:pointer;background:#fff;width:84px;font-size:12px;font-weight:700}
+.cswho div.on{border-color:var(--gold);background:#fff8ec}
+.cswho canvas{width:72px;height:90px;display:block;margin:0 auto}
+.csdisc{font-size:11.5px;color:#7a4d12;background:#fff7ed;border:1px solid #f2d3a0;border-radius:10px;padding:8px 10px;margin-top:8px;line-height:1.45}
+</style>
+<div id="cs" class="hide">
+ <div class="csbar"><b>🌈 Creative Studio</b><button onclick="CS.close()">✕ Close</button></div>
+ <div class="cswrap">
+  <div class="cstabs" id="csTabs"><span data-t="color" class="on">🖍️ Coloring book</span><span data-t="move">🚶🏾 Make it move</span><span data-t="story">🎬 Story makers</span><span data-t="chat">💬 Talk with the family</span></div>
+
+  <!-- COLORING BOOK -->
+  <div class="card cspane on" id="csp-color">
+   <canvas id="ccC" class="cscan" width="1024" height="768"></canvas>
+   <div id="ccBusy" class="csbusy"></div>
+   <div id="ccCols"></div>
+   <div class="row" style="flex-wrap:wrap;margin-top:6px">
+    <button class="mini" id="ccFillBtn" onclick="CS.ccTool('fill')">🪣 Fill</button>
+    <button class="mini ghost" id="ccCrayBtn" onclick="CS.ccTool('crayon')">🖍️ Crayon</button>
+    <button class="mini ghost" id="ccEraseBtn" onclick="CS.ccTool('erase')">🧽 Eraser</button>
+    <button class="mini ghost" onclick="CS.ccUndo()">↶ Undo</button>
+    <button class="mini ghost" onclick="CS.ccClear()">🗑️ Start over</button>
+   </div>
+   <div class="stsl"><span>Crayon size</span><input type="range" id="ccSize" min="4" max="60" value="16"></div>
+   <label>Name your page</label><input id="ccTitle" placeholder="My coloring page">
+   <div class="row"><button class="gold" onclick="CS.ccSave()">💾 Save to My pictures</button><button class="ghost" onclick="CS.ccDownload()">⬇️ Download</button></div>
+   <button class="ghost" onclick="CS.ccPrint()">🖨️ Print a blank copy to color by hand</button>
+   <h3>Coloring pages with our family</h3><div id="ccPresets" class="csgrid"></div>
+   <h3>Turn a book page into a coloring page</h3><div id="ccBooks" class="csgrid"><p class="note">Loading books…</p></div><div id="ccPages" class="csgrid"></div>
+   <h3>Make a new coloring page with AI</h3>
+   <input id="ccIdea" placeholder="e.g. a lion cub reading a book under a tree">
+   <button onclick="CS.ccAI()">✨ Draw it for me</button>
+   <h3>Or use your own picture</h3><input type="file" id="ccUp" accept="image/*"><button class="ghost" onclick="CS.ccUpload()">Make it a coloring page</button>
+   <p class="note">Tap a space to fill it. The black lines always stay on top, so coloring never covers them. AI pages use a free painter that can be slow (about 15–40 seconds).</p>
+  </div>
+
+  <!-- MAKE IT MOVE -->
+  <div class="card cspane" id="csp-move">
+   <canvas id="mvC" class="cscan" width="1024" height="576"></canvas>
+   <div id="mvBusy" class="csbusy"></div>
+   <div class="row"><button class="gold" id="mvPlayBtn" onclick="CS.mvPlay()">▶ Play</button><button class="ghost" onclick="CS.mvRecord()">🎥 Save as a video</button></div>
+   <div id="mvVid"></div>
+   <h3>Shape</h3><div id="mvShapes"></div>
+   <h3>Place</h3><div id="mvBgs" class="csgrid"></div>
+   <div class="row" style="margin-top:8px"><input id="mvIdea" placeholder="Or describe a place for AI to paint"><button style="flex:0 0 96px" onclick="CS.mvAIbg()">✨ Paint</button></div>
+   <input type="file" id="mvUp" accept="image/*" style="margin-top:8px"><button class="ghost" onclick="CS.mvUpload()">Use my picture as the place</button>
+   <h3>Who moves, and how</h3><div id="mvActors"></div>
+   <button class="ghost" onclick="CS.mvAddActor()">➕ Add someone</button>
+   <div class="stsl"><span>Video length</span><input type="range" id="mvLen" min="4" max="20" value="8"><b id="mvLenT" style="flex:0 0 40px">8s</b></div>
+   <p class="note">Our drawn family really walks, runs, jumps and dances. Uploaded cast pictures move like paper puppets. Read-aloud voices can't go into the saved video.</p>
+  </div>
+
+  <!-- STORY MAKERS (AI agents) -->
+  <div class="card cspane" id="csp-story">
+   <h2>🎬 Your story team</h2>
+   <p class="note">A team of helpers turns your idea into a short moving story with our family, painted places, words, and a Bible verse. You check the plan before anything gets painted.</p>
+   <div class="csagents" id="stAgents"></div>
+   <label>What's the story about?</label><textarea id="sgIdea" placeholder="e.g. Pip is grumpy at the park, and Jojo helps her share the swing"></textarea>
+   <div class="row"><div><label>Scenes</label><select id="sgN"><option>3</option><option selected>4</option><option>5</option><option>6</option></select></div>
+    <div><label>Bible verse (KJV)</label><select id="sgVerse"></select></div></div>
+   <label>Who's in it?</label><div id="sgCast"></div>
+   <button class="gold" onclick="CS.sgPlan()">🧠 Plan my story</button>
+   <div id="sgBusy" class="csbusy"></div>
+   <div id="sgPlan"></div>
+  </div>
+
+  <!-- TALK WITH THE FAMILY -->
+  <div class="card cspane" id="csp-chat">
+   <div class="cswho" id="chWho"></div>
+   <div class="cschat" id="chLog"></div>
+   <div id="chBusy" class="csbusy"></div>
+   <div class="row"><input id="chIn" placeholder="Say something…" maxlength="240"><button style="flex:0 0 84px" onclick="CS.chSend()">Send</button></div>
+   <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="chVoice" style="width:auto" checked> Read answers out loud</label>
+   <div class="csdisc">This is a pretend chat with storybook characters. The answers come from a free AI, not a real person, and can be wrong. Chats are not saved. Grown-ups: the free AI answers about once every 45 seconds, so there may be a short wait.</div>
+  </div>
+ </div>
+</div>
+<script>
+/* ===== CREATIVE STUDIO ADD-ON (Nov 2026) ===== */
+var CS=(function(){
+function $(i){return document.getElementById(i);}
+function busy(id,t){ var b=$(id); if(b)b.innerHTML=t?'<span class="spin"></span>'+t:''; }
+function say(m){ if(typeof toast==='function')toast(m); }
+function E(s){ return (typeof esc==='function')?esc(String(s==null?'':s)):String(s); }
+var BLOCK=/\b(nude|naked|nsfw|sexy|sex|kill|killing|blood|bloody|gore|gun|guns|weapon|knife|drug|drugs|beer|alcohol|cigarette|horror|corpse|bikini)\b/i;
+var DANGER=/\b(hurt me|hits me|hit me|touches me|touched me|touch me|abuse|kill myself|want to die|suicide|bleeding|emergency|unsafe|someone is hurting|scared to go home)\b/i;
+var SAFE_REPLY="That sounds really important. Please go tell a grown-up you trust right now, like your mom, dad, a teacher, or another safe adult. If someone is in danger, a grown-up can call 911. You matter so much. 💛";
+var KJV={
+ 'lam3':['Lamentations 3:22-23',"It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness."],
+ 'pro31':['Proverbs 31:28',"Her children arise up, and call her blessed; her husband also, and he praiseth her."],
+ 'th5':['1 Thessalonians 5:12',"And we beseech you, brethren, to know them which labour among you, and are over you in the Lord, and admonish you;"],
+ 'ps139':['Psalm 139:14',"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well."],
+ 'mk12':['Mark 12:31',"And the second is like, namely this, Thou shalt love thy neighbour as thyself. There is none other commandment greater than these."],
+ 'col3':['Colossians 3:12',"Put on therefore, as the elect of God, holy and beloved, bowels of mercies, kindness, humbleness of mind, meekness, longsuffering;"],
+ 'gen9':['Genesis 9:13',"I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth."],
+ 'eph4':['Ephesians 4:32',"And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you."],
+ 'pro17':['Proverbs 17:22',"A merry heart doeth good like a medicine: but a broken spirit drieth the bones."],
+ 'ps23':['Psalm 23:1',"The LORD is my shepherd; I shall not want."],
+ 'php4':['Philippians 4:13',"I can do all things through Christ which strengtheneth me."],
+ 'jn4':['1 John 4:19',"We love him, because he first loved us."],
+ 'gal6':['Galatians 6:2',"Bear ye one another's burdens, and so fulfil the law of Christ."],
+ 'gen2':['Genesis 2:15',"And the LORD God took the man, and put him into the garden of Eden to dress it and to keep it."]};
+function cast(){ return (window.CAST_DRAWN||[]).slice(); }
+function findCast(name){ var n=String(name||'').toLowerCase(); var all=cast().concat(MADE); for(var i=0;i<all.length;i++){ if(String(all[i].name).toLowerCase()===n)return all[i]; } return null; }
+var MADE=[], UPCAST=[];
+function loadImg(src,cb,fail){ var im=new Image(); im.onload=function(){cb(im);}; im.onerror=function(){ say('Could not open that picture'); if(fail)fail(); }; im.src=src; }
+function blobUrl(b,cb){ var r=new FileReader(); r.onload=function(){cb(r.result);}; r.readAsDataURL(b); }
+
+/* ---------- free AI helpers (shared waits so we stay inside the free limits) ---------- */
+var LASTP=0, LASTT=0;
+function paint(prompt,w,h,ok,label,statusId,fail){ var wait=Math.max(0,16000-(Date.now()-LASTP));
+ busy(statusId,(label||'Painting…')+(wait>1500?' (free painter needs '+Math.ceil(wait/1000)+'s between pictures)':''));
+ setTimeout(function(){ LASTP=Date.now(); var url='https://image.pollinations.ai/prompt/'+encodeURIComponent(prompt)+'?width='+w+'&height='+h+'&nologo=true&seed='+Math.floor(Math.random()*1000000);
+  fetch(url).then(function(r){ if(!r.ok)throw new Error('The free painter is busy ('+r.status+'). Try again in a minute.'); return r.blob(); })
+  .then(function(b){ if(!/^image/.test(b.type))throw new Error('The free painter did not send a picture. Try again.'); blobUrl(b,function(u){ LASTP=Date.now(); busy(statusId,''); ok(u); }); })
+  .catch(function(e){ busy(statusId,''); var m=String((e&&e.message)||e); say(/fetch/i.test(m)?'Could not reach the free painter. Check the internet.':m); if(fail)fail(m); }); },wait); }
+function think(messages,ok,statusId,label,fail){ var wait=Math.max(0,47000-(Date.now()-LASTT)), t0=Date.now();
+ var tick=setInterval(function(){ var left=Math.ceil((wait-(Date.now()-t0))/1000); busy(statusId,(label||'Thinking…')+(left>1?' (free helper ready in '+left+'s)':'')); },1000);
+ busy(statusId,(label||'Thinking…')+(wait>1500?' (free helper ready in '+Math.ceil(wait/1000)+'s)':''));
+ setTimeout(function(){ clearInterval(tick); busy(statusId,label||'Thinking…'); LASTT=Date.now();
+  fetch('https://text.pollinations.ai/openai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'openai',messages:messages})})
+  .then(function(r){ if(!r.ok)throw new Error('busy '+r.status); return r.json(); })
+  .then(function(j){ LASTT=Date.now(); busy(statusId,''); var c=j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!c)throw new Error('empty'); ok(String(c)); })
+  .catch(function(e){ clearInterval(tick); busy(statusId,''); if(fail)fail(String((e&&e.message)||e)); }); },wait); }
+
+/* ---------- simple scenes drawn in code (used for coloring pages and moving pictures) ---------- */
+function drawScene(c,W,H,kind,lines){ var ink='#111',G=H*0.8; c.save(); c.lineJoin='round'; c.lineCap='round'; c.lineWidth=lines?Math.max(4,W/200):3;
+ function F(col){ return lines?'#ffffff':col; }
+ function shape(fill){ c.fillStyle=F(fill); c.fill(); if(lines){ c.strokeStyle=ink; c.stroke(); } }
+ c.fillStyle=lines?'#fff':(kind==='night'?'#24305e':'#bfe3ff'); c.fillRect(0,0,W,H);
+ if(kind==='night'){ c.beginPath(); c.arc(W*0.8,H*0.18,H*0.09,0,7); shape('#fff3b0'); for(var i=0;i<9;i++){ var sx=W*(0.06+i*0.1),sy=H*(0.08+(i%3)*0.09); star(sx,sy,H*0.022); } }
+ else { c.beginPath(); c.arc(W*0.85,H*0.16,H*0.08,0,7); shape('#ffca28'); for(var k=0;k<8;k++){ var a=k*Math.PI/4; c.beginPath(); c.moveTo(W*0.85+Math.cos(a)*H*0.11,H*0.16+Math.sin(a)*H*0.11); c.lineTo(W*0.85+Math.cos(a)*H*0.15,H*0.16+Math.sin(a)*H*0.15); c.strokeStyle=lines?ink:'#ffb300'; c.stroke(); }
+  cloud(W*0.18,H*0.15,H*0.05); cloud(W*0.5,H*0.1,H*0.04); }
+ c.beginPath(); c.moveTo(0,G); for(var x=0;x<=W;x+=W/20)c.lineTo(x,G-Math.sin(x/W*6)*H*0.03); c.lineTo(W,H); c.lineTo(0,H); c.closePath(); shape(kind==='night'?'#3b5f3a':'#7cc464');
+ if(kind==='home'||kind==='night'){ var hx=W*0.05,hw=W*0.26,hh=H*0.32; c.beginPath(); c.rect(hx,G-hh,hw,hh); shape('#fff3e0'); c.beginPath(); c.moveTo(hx-W*0.02,G-hh); c.lineTo(hx+hw/2,G-hh-H*0.17); c.lineTo(hx+hw+W*0.02,G-hh); c.closePath(); shape('#c0504d');
+  c.beginPath(); c.rect(hx+hw*0.4,G-hh*0.5,hw*0.2,hh*0.5); shape('#1F3864'); c.beginPath(); c.rect(hx+hw*0.08,G-hh*0.8,hw*0.22,hh*0.25); shape(kind==='night'?'#ffd54f':'#e3f2fd'); c.beginPath(); c.rect(hx+hw*0.7,G-hh*0.8,hw*0.22,hh*0.25); shape(kind==='night'?'#ffd54f':'#e3f2fd'); }
+ if(kind==='park'||kind==='home'){ tree(W*0.93,G,H*0.3); if(kind==='park'){ tree(W*0.08,G,H*0.34); c.beginPath(); c.moveTo(W*0.3,G+H*0.1); c.quadraticCurveTo(W*0.5,G-H*0.02,W*0.7,G+H*0.1); c.strokeStyle=lines?ink:'#e8d5b0'; c.lineWidth=lines?c.lineWidth:H*0.04; c.stroke(); c.lineWidth=lines?Math.max(4,W/200):3; } }
+ for(var f=0;f<6;f++)flower(W*(0.35+f*0.11),G+H*0.09+(f%2)*H*0.05,H*0.025,['#ec407a','#fdd835','#ab47bc'][f%3]);
+ c.restore();
+ function star(x,y,r){ c.beginPath(); for(var j=0;j<10;j++){ var rr=j%2?r*0.45:r,a=j*Math.PI/5-Math.PI/2; c.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr); } c.closePath(); shape('#fff59d'); }
+ function cloud(x,y,r){ c.beginPath(); c.arc(x,y,r,Math.PI*0.5,Math.PI*1.5); c.arc(x+r,y-r*0.6,r*1.1,Math.PI,Math.PI*2); c.arc(x+r*2.1,y,r,Math.PI*1.5,Math.PI*0.5); c.closePath(); shape('#ffffff'); }
+ function tree(x,y,h){ c.beginPath(); c.rect(x-h*0.07,y-h*0.55,h*0.14,h*0.55); shape('#8d5a3b'); c.beginPath(); c.arc(x,y-h*0.7,h*0.3,0,7); shape('#43a047'); }
+ function flower(x,y,r,col){ for(var p=0;p<5;p++){ var a=p*Math.PI*0.4; c.beginPath(); c.arc(x+Math.cos(a)*r,y+Math.sin(a)*r,r*0.7,0,7); shape(col); } c.beginPath(); c.arc(x,y,r*0.55,0,7); shape('#ffeb3b'); } }
+
+/* ---------- edge finder: makes outlines from any colorful picture ---------- */
+function toLines(src,W,H,mode,fit){ var c=document.createElement('canvas'); c.width=W; c.height=H; var x=c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,W,H);
+ var iw=src.naturalWidth||src.width,ih=src.naturalHeight||src.height,k=fit==='cover'?Math.max(W/iw,H/ih):Math.min(W/iw,H/ih),dw=iw*k,dh=ih*k; x.drawImage(src,(W-dw)/2,(H-dh)/2,dw,dh);
+ var d=x.getImageData(0,0,W,H),p=d.data,n=W*H,L=new Float32Array(n),out=x.createImageData(W,H),o=out.data,i;
+ for(i=0;i<n;i++){ L[i]=0.3*p[i*4]+0.59*p[i*4+1]+0.11*p[i*4+2]; }
+ var ink=new Uint8Array(n);
+ if(mode==='lines'){ for(i=0;i<n;i++)ink[i]=L[i]<150?1:0; }
+ else { var th=mode==='soft'?60:42; for(var y=1;y<H-1;y++)for(var xx=1;xx<W-1;xx++){ i=y*W+xx;
+   var gx=-L[i-W-1]-2*L[i-1]-L[i+W-1]+L[i-W+1]+2*L[i+1]+L[i+W+1], gy=-L[i-W-1]-2*L[i-W]-L[i-W+1]+L[i+W-1]+2*L[i+W]+L[i+W+1];
+   if(Math.sqrt(gx*gx+gy*gy)>th)ink[i]=1; } }
+ var thick=new Uint8Array(n); for(i=0;i<n;i++){ if(!ink[i])continue; thick[i]=1; var xi=i%W; if(xi>0)thick[i-1]=1; if(xi<W-1)thick[i+1]=1; if(i>=W)thick[i-W]=1; if(i<n-W)thick[i+W]=1; }
+ for(i=0;i<n;i++){ var v=thick[i]?20:255; o[i*4]=o[i*4+1]=o[i*4+2]=v; o[i*4+3]=255; }
+ x.putImageData(out,0,0); return c; }
+function figLines(s,pose,face,px){ var r=Fig.render(s,pose,face,px),w=r.width,h=r.height,c=document.createElement('canvas'); c.width=w+8; c.height=h+8; var x=c.getContext('2d');
+ x.drawImage(r,4,4); var d=x.getImageData(0,0,c.width,c.height),p=d.data,W=c.width,H=c.height,n=W*H,o=new Uint8ClampedArray(p.length),i;
+ function at(j){ return p[j*4+3]<60?[255,255,255,0]:[p[j*4],p[j*4+1],p[j*4+2],1]; }
+ for(i=0;i<n;i++){ var a=at(i),xi=i%W,edge=false; if(a[3]){ var nb=[xi>0?i-1:i,xi<W-1?i+1:i,i>=W?i-W:i,i<n-W?i+W:i]; for(var q=0;q<4;q++){ var b=at(nb[q]); if(!b[3]||Math.abs(a[0]-b[0])+Math.abs(a[1]-b[1])+Math.abs(a[2]-b[2])>60){edge=true;break;} } }
+  var j=i*4; if(!a[3]){ o[j+3]=0; } else if(edge){ o[j]=o[j+1]=o[j+2]=17; o[j+3]=255; } else { o[j]=o[j+1]=o[j+2]=255; o[j+3]=255; } }
+ d.data.set(o); x.putImageData(d,0,0); return c; }
+
+/* ================= COLORING BOOK ================= */
+var CC={C:null,X:null,line:null,paint:null,px:null,tool:'fill',col:'#e53935',hist:[],drag:false,last:null,title:''};
+var CCOLS=['#e53935','#ec407a','#ab47bc','#5e35b1','#1e88e5','#29b6f6','#26a69a','#43a047','#9ccc65','#fdd835','#ffb300','#fb8c00','#8d6e63','#6d4c41','#3b2219','#7a4b33','#c68c62','#f6d3b3','#9e9e9e','#212121','#1F3864','#B07A1E','#ffffff'];
+var PRESETS=[
+ {t:'Mommy reads to Pip',bg:'home',p:[[0,'read',0.55],[2,'sit',0.75]]},
+ {t:'Jojo runs to the park',bg:'park',p:[[1,'run',0.5]]},
+ {t:'Family prayer',bg:'home',p:[[0,'pray',0.45],[1,'pray',0.63],[2,'pray',0.79]]},
+ {t:'Baby Bee naps',bg:'night',p:[[3,'sleep',0.62]]},
+ {t:'Dance party',bg:'park',p:[[2,'dance',0.4],[1,'cheer',0.62]]},
+ {t:'Hello, sunshine!',bg:'park',p:[[0,'wave',0.32],[1,'wave',0.5],[2,'waveL',0.66],[3,'sit',0.8]]},
+ {t:'Hugs for Mommy',bg:'home',p:[[0,'hug',0.55],[2,'hug',0.74]]},
+ {t:'Jump for joy',bg:'park',p:[[1,'jump',0.4],[2,'jump',0.62]]}];
+function ccInit(){ CC.C=$('ccC'); CC.X=CC.C.getContext('2d'); CC.paint=document.createElement('canvas'); CC.paint.width=1024; CC.paint.height=768;
+ $('ccCols').innerHTML=CCOLS.map(function(c){ return '<span class="cssw" style="background:'+c+'" data-c="'+c+'"></span>'; }).join('');
+ Array.prototype.forEach.call($('ccCols').querySelectorAll('.cssw'),function(el){ el.onclick=function(){ CC.col=el.getAttribute('data-c'); marks(); if(CC.tool==='erase')ccTool('fill'); }; });
+ CC.C.addEventListener('pointerdown',ccDown); CC.C.addEventListener('pointermove',ccMove); CC.C.addEventListener('pointerup',function(){CC.drag=false;}); CC.C.addEventListener('pointercancel',function(){CC.drag=false;});
+ marks(); presetTiles(); ccPreset(0); }
+function marks(){ Array.prototype.forEach.call($('ccCols').querySelectorAll('.cssw'),function(el){ el.classList.toggle('on',el.getAttribute('data-c')===CC.col); }); }
+function ccTool(t){ CC.tool=t; [['fill','ccFillBtn'],['crayon','ccCrayBtn'],['erase','ccEraseBtn']].forEach(function(b){ $(b[1]).className='mini'+(b[0]===t?'':' ghost'); }); }
+function presetCanvas(pr,W,H){ var c=document.createElement('canvas'); c.width=W; c.height=H; var x=c.getContext('2d'); drawScene(x,W,H,pr.bg,true); var cs=cast();
+ pr.p.forEach(function(q){ var s=cs[q[0]]; if(!s)return; var f=figLines(s,q[1],'happy',H*(q[1]==='sleep'?0.4:0.6)); var fx=W*q[2]-f.width/2, fy=H*0.93-f.height; x.drawImage(f,fx,fy); });
+ return c; }
+function presetTiles(){ if(!window.Fig){ $('ccPresets').innerHTML='<p class="note">Family drawings are loading…</p>'; return; }
+ $('ccPresets').innerHTML=PRESETS.map(function(p,i){ return '<div class="cstile" onclick="CS.ccPreset('+i+')"><img src="'+presetCanvas(p,256,192).toDataURL()+'"><div class="nm">'+E(p.t)+'</div></div>'; }).join(''); }
+function setLines(c,title){ CC.line=c; var pc=CC.paint.getContext('2d'); pc.globalCompositeOperation='source-over'; pc.fillStyle='#fff'; pc.fillRect(0,0,1024,768);
+ var lx=c.getContext('2d'),d=lx.getImageData(0,0,1024,768).data,n=1024*768; CC.px=new Uint8Array(n); for(var i=0;i<n;i++)CC.px[i]=(d[i*4]<128)?1:0;
+ CC.hist=[]; CC.title=title||''; $('ccTitle').value=title||''; ccDraw(); }
+function ccPreset(i){ var p=PRESETS[i]; if(!p||!window.Fig)return; setLines(presetCanvas(p,1024,768),p.t); $('ccC').scrollIntoView({behavior:'smooth',block:'start'}); }
+function ccDraw(){ var X=CC.X; X.globalCompositeOperation='source-over'; X.drawImage(CC.paint,0,0); if(CC.line){ X.globalCompositeOperation='multiply'; X.drawImage(CC.line,0,0); X.globalCompositeOperation='source-over'; } }
+function ccPt(e){ var r=CC.C.getBoundingClientRect(); return {x:Math.floor((e.clientX-r.left)*1024/r.width),y:Math.floor((e.clientY-r.top)*768/r.height)}; }
+function ccSnap(){ CC.hist.push(CC.paint.getContext('2d').getImageData(0,0,1024,768)); if(CC.hist.length>15)CC.hist.shift(); }
+function ccUndo(){ var h=CC.hist.pop(); if(!h){say('Nothing to undo');return;} CC.paint.getContext('2d').putImageData(h,0,0); ccDraw(); }
+function ccClear(){ ccSnap(); var pc=CC.paint.getContext('2d'); pc.fillStyle='#fff'; pc.fillRect(0,0,1024,768); ccDraw(); }
+function hex(c){ var n=parseInt(c.slice(1),16); return [n>>16,(n>>8)&255,n&255]; }
+function ccFill(x,y){ if(!CC.px)return; var W=1024,H=768,n=W*H,start=y*W+x; if(x<0||y<0||x>=W||y>=H||CC.px[start]){ say('Tap inside a white space'); return; }
+ ccSnap(); var pc=CC.paint.getContext('2d'),d=pc.getImageData(0,0,W,H),p=d.data,rgb=hex(CC.col),seen=new Uint8Array(n),q=new Int32Array(n),qh=0,qt=0;
+ seen[start]=1; q[qt++]=start;
+ while(qh<qt){ var i=q[qh++],xi=i%W; p[i*4]=rgb[0];p[i*4+1]=rgb[1];p[i*4+2]=rgb[2];p[i*4+3]=255;
+  if(xi>0&&!seen[i-1]&&!CC.px[i-1]){seen[i-1]=1;q[qt++]=i-1;} if(xi<W-1&&!seen[i+1]&&!CC.px[i+1]){seen[i+1]=1;q[qt++]=i+1;}
+  if(i>=W&&!seen[i-W]&&!CC.px[i-W]){seen[i-W]=1;q[qt++]=i-W;} if(i<n-W&&!seen[i+W]&&!CC.px[i+W]){seen[i+W]=1;q[qt++]=i+W;} }
+ /* color the thin ring under the lines too, so no white gaps show */
+ var px=CC.px; function ring(m){ if(px[m]){ p[m*4]=rgb[0];p[m*4+1]=rgb[1];p[m*4+2]=rgb[2];p[m*4+3]=255; } }
+ for(var k=0;k<qt;k++){ var j=q[k],xj=j%W; if(xj>0)ring(j-1); if(xj<W-1)ring(j+1); if(j>=W)ring(j-W); if(j<n-W)ring(j+W); }
+ pc.putImageData(d,0,0); ccDraw(); }
+function ccDown(e){ var p=ccPt(e); try{CC.C.setPointerCapture(e.pointerId);}catch(x){} e.preventDefault();
+ if(CC.tool==='fill'){ ccFill(p.x,p.y); return; } ccSnap(); CC.drag=true; CC.last=p; ccStroke(p); }
+function ccMove(e){ if(!CC.drag)return; e.preventDefault(); ccStroke(ccPt(e)); }
+function ccStroke(p){ var pc=CC.paint.getContext('2d'); pc.strokeStyle=CC.tool==='erase'?'#ffffff':CC.col; pc.lineWidth=+$('ccSize').value*(CC.tool==='erase'?1.6:1); pc.lineCap='round'; pc.lineJoin='round'; pc.globalAlpha=CC.tool==='erase'?1:0.85;
+ pc.beginPath(); pc.moveTo(CC.last.x,CC.last.y); pc.lineTo(p.x+0.1,p.y); pc.stroke(); pc.globalAlpha=1; CC.last=p; ccDraw(); }
+function ccExport(blank){ var c=document.createElement('canvas'); c.width=1024; c.height=768; var x=c.getContext('2d'); if(blank){ x.fillStyle='#fff'; x.fillRect(0,0,1024,768); } else x.drawImage(CC.paint,0,0); if(CC.line){ x.globalCompositeOperation='multiply'; x.drawImage(CC.line,0,0); } return c.toDataURL('image/png'); }
+function ccSave(){ if(!window.ME||ME.guest){ say('Sign in with a reader card to save. Or use Download.'); return; } busy('ccBusy','Saving…');
+ google.script.run.withSuccessHandler(function(){ busy('ccBusy',''); say('Saved to My pictures ✔'); }).withFailureHandler(function(x){ busy('ccBusy',''); say(String((x&&x.message)||x)); }).addCreation(ME.username,ccExport().split(',')[1],'Coloring: '+($('ccTitle').value.trim()||'My page')); }
+function dl(url,name){ var a=document.createElement('a'); a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove(); }
+function ccDownload(){ dl(ccExport(),($('ccTitle').value.trim()||'my-coloring-page')+'.png'); }
+function ccPrint(){ var u=ccExport(true),w=null; try{ w=window.open('','_blank'); }catch(e){}
+ if(!w){ dl(u,'coloring-page-to-print.png'); say('Downloaded. Open it and print.'); return; }
+ w.document.write('<html><head><title>Coloring page</title></head><body style="margin:0"><img src="'+u+'" style="width:100%" onload="setTimeout(function(){print()},300)"></body></html>'); w.document.close(); }
+function ccFromImage(src,title,mode){ loadImg(src,function(im){ setLines(toLines(im,1024,768,mode||'edges'),title); say('Ready to color 🖍️'); }); }
+function ccAI(){ var idea=$('ccIdea').value.trim().slice(0,200); if(idea.length<3){say('Tell me what to draw first');return;} if(BLOCK.test(idea)){say("Let's pick a different idea.");return;}
+ paint("children's coloring book page, "+idea+", clean thick black outlines on pure white background, simple shapes, no shading, no color, no gray, no text",1024,768,function(u){ ccFromImage(u,idea,'lines'); },'Drawing your coloring page… about 15–40 seconds','ccBusy'); }
+function ccUpload(){ var f=$('ccUp').files[0]; if(!f){say('Choose a picture first');return;} var r=new FileReader(); r.onload=function(){ ccFromImage(r.result,'My picture','edges'); $('ccUp').value=''; }; r.readAsDataURL(f); }
+function ccBooks(){ google.script.run.withSuccessHandler(function(list){ list=list||[];
+  $('ccBooks').innerHTML=list.length?list.map(function(b){ return '<div class="cstile" onclick="CS.ccBook(\''+E(b.id)+'\')">'+(b.cover?'<img src="'+b.cover+'">':'<div class="nm" style="height:78px">📖</div>')+'<div class="nm">'+E(b.title)+'</div></div>'; }).join(''):'<p class="note">No published books yet.</p>'; })
+ .withFailureHandler(function(){ $('ccBooks').innerHTML='<p class="note">Could not load books.</p>'; }).getShelf(); }
+var CCPAGES=[];
+function ccBook(id){ $('ccPages').innerHTML='<p class="note">Loading pages…</p>'; google.script.run.withSuccessHandler(function(r){ CCPAGES=(r&&r.pages)||[]; var all=[]; if(r&&r.book&&r.book.front)all.push({img:r.book.front,caption:'Front cover'}); CCPAGES=all.concat(CCPAGES);
+  $('ccPages').innerHTML=CCPAGES.map(function(p,i){ return '<div class="cstile" onclick="CS.ccPage('+i+')"><img src="'+p.img+'"><div class="nm">'+(p.caption?E(String(p.caption).slice(0,30)):'Page '+(i+1))+'</div></div>'; }).join('')||'<p class="note">This book has no pages yet.</p>'; })
+ .withFailureHandler(function(x){ $('ccPages').innerHTML='<p class="note">'+E((x&&x.message)||x)+'</p>'; }).getBookForReading(id); }
+function ccPage(i){ var p=CCPAGES[i]; if(p)ccFromImage(p.img,(p.caption||'Book page').slice(0,40),'edges'); }
+
+/* ================= MAKE IT MOVE ================= */
+var MV={C:null,X:null,W:1024,H:576,bg:null,bgKind:'park',ai:false,actors:[],playing:false,t0:0,raf:0,rec:null};
+var SHAPES=[['wide','Wide 16:9',1024,576],['tall','Tall 9:16',576,1024],['square','Square 1:1',768,768],['book','Book page 4:3',1024,768]];
+var ACTIONS=[['walkR','Walks right ➡️'],['walkL','Walks left ⬅️'],['runR','Runs right 🏃🏾'],['jump','Jumps 🦘'],['wave','Waves 👋🏾'],['dance','Dances 💃🏾'],['cheer','Cheers 🙌🏾'],['sit','Sits 🪑'],['pray','Prays 🙏🏾'],['read','Reads 📖']];
+function mvInit(){ MV.C=$('mvC'); MV.X=MV.C.getContext('2d');
+ $('mvShapes').innerHTML=SHAPES.map(function(s){ return '<span class="chip'+(s[0]==='wide'?' on':'')+'" data-s="'+s[0]+'" onclick="CS.mvShape(\''+s[0]+'\')">'+s[1]+'</span>'; }).join('');
+ $('mvLen').oninput=function(){ $('mvLenT').textContent=this.value+'s'; };
+ bgTiles(); if(!MV.actors.length){ MV.actors=[{who:'Jojo',act:'walkR',x:15,size:100,say:'Come on, let\'s go!'},{who:'Pip',act:'wave',x:70,size:100,say:'Hi friends!'}]; } actorsUI(); mvFrame(0); }
+function mvShape(k){ var s=SHAPES.filter(function(x){return x[0]===k;})[0]; if(!s)return; MV.W=s[2]; MV.H=s[3]; MV.C.width=MV.W; MV.C.height=MV.H;
+ Array.prototype.forEach.call($('mvShapes').querySelectorAll('.chip'),function(el){ el.classList.toggle('on',el.getAttribute('data-s')===k); }); mvFrame(0); }
+var BGS=[['park','🌳 Park'],['home','🏠 Home'],['night','🌙 Night']];
+function bgTiles(){ var h=BGS.map(function(b){ var c=document.createElement('canvas'); c.width=208; c.height=117; drawScene(c.getContext('2d'),208,117,b[0],false); return '<div class="cstile" onclick="CS.mvBg(\''+b[0]+'\')"><img src="'+c.toDataURL()+'"><div class="nm">'+b[1]+'</div></div>'; }).join('');
+ $('mvBgs').innerHTML=h+'<div class="cstile" onclick="CS.mvPlaces()"><div class="nm" style="height:78px;display:flex;align-items:center;justify-content:center;font-size:26px">🏞</div><div class="nm">Picture Studio places</div></div><div id="mvPlaceList" style="grid-column:1/-1"></div>'; }
+function mvBg(kind){ MV.bg=null; MV.bgKind=kind; MV.ai=false; mvFrame(0); }
+function setBgImg(src,ai){ loadImg(src,function(im){ MV.bg=im; MV.ai=!!ai; mvFrame(0); }); }
+function mvPlaces(){ var box=$('mvPlaceList'); box.innerHTML='<p class="note">Loading places that are already painted…</p>';
+ google.script.run.withSuccessHandler(function(cat){ var items=[]; (cat||[]).forEach(function(c){ c.items.forEach(function(it){ if(it.ready)items.push(it); }); });
+  if(!items.length){ box.innerHTML='<p class="note">No painted places yet. Open Picture Studio → Places to paint some.</p>'; return; }
+  box.innerHTML='<div class="csgrid">'+items.slice(0,60).map(function(it){ return '<div class="cstile" onclick="CS.mvPlace(\''+E(it.key)+'\')"><div class="nm" style="padding:10px 4px">🏞 '+E(it.name)+'</div></div>'; }).join('')+'</div>'; })
+ .withFailureHandler(function(){ box.innerHTML='<p class="note">Could not load places.</p>'; }).studioCatalog(); }
+function mvPlace(key){ busy('mvBusy','Opening place…'); google.script.run.withSuccessHandler(function(u){ busy('mvBusy',''); if(u)setBgImg(u,true); else say('That place is not painted yet'); }).withFailureHandler(function(){ busy('mvBusy',''); }).studioSceneCached(key); }
+function mvAIbg(){ var idea=$('mvIdea').value.trim().slice(0,200); if(idea.length<3){say('Describe a place first');return;} if(BLOCK.test(idea)){say("Let's pick a different place.");return;}
+ paint("wholesome children's picture book illustration, "+idea+", empty scene with no people, warm colors, no text, no words",MV.W>=MV.H?1024:576,MV.W>=MV.H?576:1024,function(u){ setBgImg(u,true); },'Painting your place…','mvBusy'); }
+function mvUpload(){ var f=$('mvUp').files[0]; if(!f){say('Choose a picture first');return;} var r=new FileReader(); r.onload=function(){ setBgImg(r.result,false); $('mvUp').value=''; }; r.readAsDataURL(f); }
+function whoOptions(sel){ var names=cast().map(function(c){return c.name;}).concat(MADE.map(function(c){return c.name;})).concat(UPCAST.map(function(c){return '📷 '+c.name;}));
+ return names.map(function(n){ return '<option'+(n===sel?' selected':'')+'>'+E(n)+'</option>'; }).join(''); }
+function actorsUI(){ $('mvActors').innerHTML=MV.actors.map(function(a,i){ return '<div class="csactor"><div class="row"><select onchange="CS.mvSet('+i+',\'who\',this.value)">'+whoOptions(a.who)+'</select><select onchange="CS.mvSet('+i+',\'act\',this.value)">'+ACTIONS.map(function(x){ return '<option value="'+x[0]+'"'+(x[0]===a.act?' selected':'')+'>'+x[1]+'</option>'; }).join('')+'</select></div>'+
+  '<div class="stsl"><span>Start spot</span><input type="range" min="0" max="100" value="'+a.x+'" oninput="CS.mvSet('+i+',\'x\',+this.value)"></div>'+
+  '<div class="stsl"><span>Size</span><input type="range" min="50" max="170" value="'+a.size+'" oninput="CS.mvSet('+i+',\'size\',+this.value)"></div>'+
+  '<div class="row"><input placeholder="Words they say (optional)" value="'+E(a.say||'')+'" oninput="CS.mvSet('+i+',\'say\',this.value)"><button class="x" style="flex:0 0 70px" onclick="CS.mvDel('+i+')">Remove</button></div></div>'; }).join('')||'<p class="note">Add someone to the scene.</p>'; }
+function mvSet(i,k,v){ var a=MV.actors[i]; if(!a)return; if(k==='say'&&BLOCK.test(v)){say("Let's use kinder words.");return;} a[k]=v; if(!MV.playing)mvFrame(1.2); }
+function mvAddActor(){ if(MV.actors.length>=6){say('Six people at a time');return;} var n=cast()[MV.actors.length%Math.max(1,cast().length)]; MV.actors.push({who:n?n.name:'Mommy',act:'walkL',x:85,size:100,say:''}); actorsUI(); mvFrame(0); }
+function mvDel(i){ MV.actors.splice(i,1); actorsUI(); mvFrame(0); }
+var SPR={};
+function sprite(s,pose,face,px){ var k=(s.name||'')+'|'+pose+'|'+face+'|'+Math.round(px)+'|'+JSON.stringify([s.skin,s.hair,s.top,s.bottom,s.outfit]); if(!SPR[k])SPR[k]=Fig.render(s,pose,face,px); return SPR[k]; }
+function poseAt(act,t,i){ var ph=Math.floor(t*4+i)%2;
+ switch(act){ case 'walkR': case 'walkL': return ph?'walk':'stand'; case 'runR': return ph?'run':'jump'; case 'jump': return (Math.floor(t*1.6+i)%2)?'jump':'cheer'; case 'wave': return ph?'wave':'wave2'; case 'dance': return (Math.floor(t*3+i)%2)?'dance':'cheer'; case 'cheer': return ph?'cheer':'stand'; case 'sit': return 'sit'; case 'pray': return 'pray'; case 'read': return 'read'; default: return 'stand'; } }
+function bubble(X,x,y,txt,W){ X.save(); var fs=Math.round(W/34); X.font='bold '+fs+'px "Comic Sans MS","Chalkboard SE",system-ui,sans-serif'; var w=Math.min(W*0.6,X.measureText(txt).width+fs*1.2),h=fs*1.8,bx=Math.max(6,Math.min(W-w-6,x-w/2)),by=Math.max(6,y-h-fs*0.6);
+ X.fillStyle='#fff'; X.strokeStyle='#1F3864'; X.lineWidth=3; Fig.rr(X,bx,by,w,h,h/2.4); X.fill(); X.stroke(); X.beginPath(); X.moveTo(x-fs*0.4,by+h-1); X.lineTo(x,by+h+fs*0.6); X.lineTo(x+fs*0.4,by+h-1); X.fill(); X.stroke(); X.fillRect(x-fs*0.35,by+h-5,fs*0.7,5);
+ X.fillStyle='#1F3864'; X.textAlign='center'; X.textBaseline='middle'; X.fillText(txt.length>40?txt.slice(0,39)+'…':txt,bx+w/2,by+h/2+1); X.restore(); }
+function cover(X,im,W,H){ var iw=im.naturalWidth||im.width,ih=im.naturalHeight||im.height,k=Math.max(W/iw,H/ih),dw=iw*k,dh=ih*k; X.drawImage(im,(W-dw)/2,(H-dh)/2,dw,dh); }
+function drawActors(X,W,H,actors,t,dur,ground){ var G=ground||H*0.93, base=Math.min(W,H)*0.42, out=[];
+ actors.forEach(function(a,i){ var s=findCast(a.who), up=null; if(!s){ up=UPCAST.filter(function(c){ return '📷 '+c.name===a.who; })[0]; }
+  var px=base*(a.size/100), x=W*(a.x/100), dir=1;
+  if(a.act==='walkR'||a.act==='runR'||a.act==='walkL'){ var sp=(a.act==='runR'?0.2:0.1)*W*(a.act==='walkL'?-1:1); x=x+sp*t; var span=W+px; x=((x+px/2)%span+span)%span-px/2; dir=a.act==='walkL'?-1:1; }
+  var bob=(a.act==='jump')?-Math.abs(Math.sin(t*Math.PI*1.6+i))*H*0.12:((a.act==='walkR'||a.act==='walkL'||a.act==='runR')?-Math.abs(Math.sin(t*Math.PI*4+i))*H*0.012:0);
+  var sp2; if(s){ sp2=sprite(s,poseAt(a.act,t,i),(a.act==='jump'||a.act==='cheer')?'big':'happy',px); }
+  else if(up&&up.im){ sp2=up.im; }
+  if(!sp2)return;
+  var w=sp2.width*(s?1:px/(sp2.height||1)), h=s?sp2.height:px; X.save(); X.translate(x,G+bob); if(dir<0)X.scale(-1,1);
+  if(!s){ X.rotate(Math.sin(t*Math.PI*4+i)*((a.act==='walkR'||a.act==='walkL'||a.act==='runR')?0.07:0.03)); }
+  X.drawImage(sp2,-w/2,-h,w,h); X.restore(); out.push({x:x,top:G+bob-h,a:a,i:i}); });
+ out.forEach(function(o){ var st=1+o.i*1.4; if(o.a.say&&t>=st&&t<st+3.2)bubble(X,o.x,o.top,o.a.say,W); }); }
+function disclosure(X,W,H,txt){ X.save(); var fs=Math.max(12,Math.round(W/60)); X.font='600 '+fs+'px system-ui,sans-serif'; var w=X.measureText(txt).width+fs; X.globalAlpha=0.8; X.fillStyle='#000'; Fig.rr(X,W-w-8,8,w,fs*1.7,fs*0.8); X.fill(); X.globalAlpha=1; X.fillStyle='#fff'; X.textAlign='center'; X.textBaseline='middle'; X.fillText(txt,W-w/2-8,8+fs*0.85); X.restore(); }
+function mvFrame(t){ var X=MV.X,W=MV.W,H=MV.H; if(!X)return; X.setTransform(1,0,0,1,0,0); if(MV.bg)cover(X,MV.bg,W,H); else drawScene(X,W,H,MV.bgKind,false);
+ drawActors(X,W,H,MV.actors,t,+$('mvLen').value); if(MV.ai)disclosure(X,W,H,'AI-assisted art'); }
+function mvLoop(){ var t=(Date.now()-MV.t0)/1000,dur=+$('mvLen').value; if(t>dur){ mvStop(); return; } mvFrame(t); MV.raf=requestAnimationFrame(mvLoop); }
+function mvPlay(){ if(MV.playing){ mvStop(); return; } if(!window.Fig){say('Still loading');return;} MV.playing=true; MV.t0=Date.now(); $('mvPlayBtn').textContent='⏹ Stop'; mvLoop(); }
+function mvStop(){ MV.playing=false; cancelAnimationFrame(MV.raf); $('mvPlayBtn').textContent='▶ Play'; if(MV.rec&&MV.rec.state==='recording')MV.rec.stop(); }
+function recorder(canvas){ if(!canvas.captureStream||!window.MediaRecorder)return null; var types=['video/mp4;codecs=avc1','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4'],mt='';
+ for(var i=0;i<types.length;i++){ try{ if(MediaRecorder.isTypeSupported(types[i])){mt=types[i];break;} }catch(e){} }
+ try{ return new MediaRecorder(canvas.captureStream(30),mt?{mimeType:mt,videoBitsPerSecond:4000000}:{}); }catch(e){ return null; } }
+function showVideo(box,chunks,mime,name){ var type=(mime||'video/webm').split(';')[0],ext=type.indexOf('mp4')>-1?'mp4':'webm',blob=new Blob(chunks,{type:type}),u=URL.createObjectURL(blob);
+ $(box).innerHTML='<video src="'+u+'" controls playsinline style="width:100%;border-radius:12px;margin-top:8px"></video><button class="gold" id="'+box+'Dl">⬇️ Download video ('+ext.toUpperCase()+')</button><p class="note">'+(ext==='webm'?'WebM videos play in Chrome, Android and most computers. iPhones may need the free VLC app.':'MP4 plays almost everywhere.')+'</p>';
+ $(box+'Dl').onclick=function(){ dl(u,name+'.'+ext); }; }
+function mvRecord(){ if(MV.playing)mvStop(); var r=recorder(MV.C); if(!r){ say('This browser cannot record video. Try Chrome.'); return; } var chunks=[];
+ r.ondataavailable=function(e){ if(e.data&&e.data.size)chunks.push(e.data); }; r.onstop=function(){ busy('mvBusy',''); showVideo('mvVid',chunks,r.mimeType,'moving-picture'); };
+ MV.rec=r; r.start(250); busy('mvBusy','Recording… keep this screen open'); mvPlay(); }
+function lifePage(){ var img=$('rImg'); open('move'); if(img&&img.src){ setBgImg(img.src,false); mvShape('book'); }
+ MV.actors=[{who:'Jojo',act:'walkR',x:8,size:90,say:''},{who:'Pip',act:'wave',x:72,size:85,say:'Hi! 👋🏾'},{who:'Mommy',act:'walkL',x:92,size:95,say:''}]; actorsUI(); setTimeout(mvPlay,400); }
+
+/* ================= STORY MAKERS (agent team) ================= */
+var TEAM=[['dir','🎬 Director'],['writer','✍️ Writer'],['board','🗂 Storyboard'],['safe','🛡 Safety & faith check'],['ok','✅ Your OK'],['painter','🎨 Painter'],['editor','🎞 Editor']];
+var SG={plan:null,cast:['Mommy','Jojo','Pip'],playing:false,raf:0,imgs:[],rec:null};
+function agents(state){ $('stAgents').innerHTML=TEAM.map(function(a){ var s=state[a[0]]||''; return '<div class="'+s+'">'+a[1]+(s==='ok'?' ✔':(s==='run'?' …':(s==='bad'?' ✖':'')))+'</div>'; }).join(''); }
+var AST={};
+function setA(k,v){ AST[k]=v; agents(AST); }
+function sgInit(){ agents({}); $('sgVerse').innerHTML='<option value="auto">Let the team pick</option>'+Object.keys(KJV).map(function(k){ return '<option value="'+k+'">'+KJV[k][0]+'</option>'; }).join('');
+ sgCastUI(); }
+function sgCastUI(){ var names=cast().map(function(c){return c.name;}).concat(MADE.map(function(c){return c.name;}));
+ $('sgCast').innerHTML=names.map(function(n){ return '<span class="chip'+(SG.cast.indexOf(n)>-1?' on':'')+'" onclick="CS.sgToggle(\''+E(n).replace(/'/g,"\\'")+'\')">'+E(n)+'</span>'; }).join(''); }
+function sgToggle(n){ var i=SG.cast.indexOf(n); if(i>-1)SG.cast.splice(i,1); else SG.cast.push(n); sgCastUI(); }
+function clean(s,max){ return String(s==null?'':s).replace(/https?:\/\/\S+/g,'').replace(/[<>]/g,'').trim().slice(0,max||300); }
+function safetyCheck(plan){ var problems=[]; var names=cast().map(function(c){return c.name;}).concat(MADE.map(function(c){return c.name;}));
+ plan.scenes.forEach(function(s,i){ ['caption','place'].forEach(function(k){ if(BLOCK.test(s[k]))problems.push('Scene '+(i+1)+' has words that are not right for kids'); });
+  s.cast=(s.cast||[]).filter(function(n){ return names.indexOf(n)>-1; }); if(!s.cast.length)s.cast=SG.cast.slice(0,2);
+  if(ACTIONS.map(function(a){return a[0];}).indexOf(s.action)<0)s.action='walkR'; });
+ if(!KJV[plan.verse])plan.verse='lam3';
+ return problems; }
+function localPlan(idea,n,verse){ var who=SG.cast.length?SG.cast:['Mommy','Jojo','Pip'],a=who[0],b=who[1]||who[0];
+ var places=['a sunny backyard with a swing set','a cozy living room with a big couch and bookshelves','a neighborhood park with tall trees and a slide','a bright kitchen with a big window','a quiet bedroom at night with a moon in the window','a church garden with flowers'];
+ var beats=[[a+' starts the day happy.','walkR'],[b+' feels upset and grumpy.','sit'],[a+' stops to listen with a kind heart.','walkL'],['They talk it through and say sorry.','hug'],['Everyone shares and plays together.','dance'],['They thank God for a new day of grace.','pray']];
+ var scenes=[]; for(var i=0;i<n;i++){ var bt=beats[Math.min(i,beats.length-1)]; if(i===n-1)bt=beats[5]; scenes.push({title:'Scene '+(i+1),caption:(i===0?idea+'. ':'')+bt[0],place:places[i%places.length],cast:i%2?[b,a]:[a,b],action:bt[1]==='hug'?'cheer':bt[1],line:''}); }
+ return {title:clean(idea,60)||'Our story',lesson:'Grace for one another',verse:verse==='auto'?'eph4':verse,scenes:scenes,writer:'built-in writer'}; }
+function sgPlan(){ var idea=clean($('sgIdea').value,300),n=+$('sgN').value,verse=$('sgVerse').value; if(idea.length<5){say('Tell the team what the story is about');return;} if(BLOCK.test(idea)){say("Let's pick a kinder story idea.");return;}
+ if(!SG.cast.length){say('Pick at least one character');return;}
+ AST={}; setA('dir','run'); $('sgPlan').innerHTML='';
+ var names=cast().map(function(c){return c.name;}).concat(MADE.map(function(c){return c.name;}));
+ var sys="You are the story team for the Christian children's picture book series 'Mommy Is Human Too' (ages 3-10). The family: Mommy (a loving mom who is human and needs grace too), Jojo (big brother), Pip (little sister), Baby Bee (baby), and Biscuit (the dog). Stories teach grace between moms and kids. Write warm, simple, gentle, rhyming-when-easy sentences. Never include violence, scary content, real people, brands, or Bible quotations (only give a verse key). Reply with ONLY JSON, no markdown.";
+ var usr='Story idea: '+idea+'\nUse exactly '+n+' scenes. Characters you may use: '+SG.cast.join(', ')+'.\nVerse keys you may choose: '+Object.keys(KJV).map(function(k){return k+'='+KJV[k][0];}).join('; ')+(verse!=='auto'?'\nUse verse key: '+verse:'')+
+  '\nAllowed actions: '+ACTIONS.map(function(a){return a[0];}).join(', ')+'\nJSON shape: {"title":"","lesson":"one short sentence","verse":"key","scenes":[{"title":"","caption":"1-2 short sentences read aloud","place":"a place to paint with no people in it","cast":["names"],"action":"one allowed action","line":"short thing a character says, max 8 words"}]}';
+ think([{role:'system',content:sys},{role:'user',content:usr}],function(txt){ var plan=null; try{ var m=txt.match(/\{[\s\S]*\}/); plan=JSON.parse(m?m[0]:txt); }catch(e){ plan=null; }
+   if(!plan||!plan.scenes||!plan.scenes.length){ setA('dir','bad'); plan=localPlan(idea,n,verse); say('The AI writer sent something unclear, so the built-in writer made the plan.'); }
+   else { plan.writer='free AI writer'; plan.scenes=plan.scenes.slice(0,n).map(function(s,i){ return {title:clean(s.title,60)||('Scene '+(i+1)),caption:clean(s.caption,240),place:clean(s.place,160)||'a sunny park',cast:(s.cast||[]).map(String),action:String(s.action||'walkR'),line:clean(s.line,60)}; }); plan.title=clean(plan.title,70); plan.lesson=clean(plan.lesson,140); if(verse!=='auto')plan.verse=verse; setA('dir','ok'); }
+   finishPlan(plan); },'sgBusy','🎬 Director and ✍️ Writer are planning…',function(){ setA('dir','bad'); say('The free AI writer is busy, so the built-in writer made the plan.'); finishPlan(localPlan(idea,n,verse)); }); }
+function finishPlan(plan){ setA('writer','ok'); setA('board','ok'); var probs=safetyCheck(plan); setA('safe',probs.length?'bad':'ok'); SG.plan=plan; SG.imgs=[]; renderPlan(probs); setA('ok','run'); }
+function renderPlan(probs){ var p=SG.plan,v=KJV[p.verse];
+ var h='<div class="csshot"><h2 style="margin:0">'+E(p.title)+'</h2><p class="note">'+E(p.lesson||'')+' · written by the '+E(p.writer)+'</p><p class="note"><b>'+E(v[0])+' (KJV):</b> '+E(v[1])+'</p>'+(probs.length?'<div class="warn">'+probs.map(E).join('<br>')+'<br>Please change those words before painting.</div>':'')+'</div>';
+ h+=p.scenes.map(function(s,i){ return '<div class="csshot"><b>'+(i+1)+'. </b><input value="'+E(s.title)+'" oninput="CS.sgEdit('+i+',\'title\',this.value)" style="width:auto;display:inline-block;padding:6px">'+
+  '<label>Words read aloud</label><textarea oninput="CS.sgEdit('+i+',\'caption\',this.value)">'+E(s.caption)+'</textarea>'+
+  '<label>Place to paint</label><input value="'+E(s.place)+'" oninput="CS.sgEdit('+i+',\'place\',this.value)">'+
+  '<div class="row"><div><label>Who</label><input value="'+E((s.cast||[]).join(', '))+'" oninput="CS.sgEdit('+i+',\'cast\',this.value)"></div><div><label>Action</label><select onchange="CS.sgEdit('+i+',\'action\',this.value)">'+ACTIONS.map(function(a){ return '<option value="'+a[0]+'"'+(a[0]===s.action?' selected':'')+'>'+a[1]+'</option>'; }).join('')+'</select></div></div>'+
+  '<label>Speech bubble</label><input value="'+E(s.line||'')+'" oninput="CS.sgEdit('+i+',\'line\',this.value)">'+
+  '<div id="sgImg'+i+'"></div><button class="ghost mini" onclick="CS.sgRepaint('+i+')">🎨 Paint or repaint this scene only</button></div>'; }).join('');
+ h+='<div class="csshot"><p class="note">Painting '+p.scenes.length+' places takes about '+Math.ceil(p.scenes.length*25/60)+'–'+Math.ceil(p.scenes.length*45/60)+' minutes on the free painter. Our drawn family is added on top, so they look the same in every scene.</p><button class="gold" onclick="CS.sgApprove()">✅ Looks good, paint it</button></div>';
+ h+='<div id="sgOut"></div>'; $('sgPlan').innerHTML=h; }
+function sgEdit(i,k,v){ var s=SG.plan.scenes[i]; if(!s)return; if(BLOCK.test(v)){ say("Let's use kinder words."); return; } if(k==='cast')s.cast=String(v).split(',').map(function(x){return x.trim();}).filter(Boolean); else s[k]=v; }
+function placePrompt(s){ return "wholesome children's picture book illustration, "+s.place+", empty scene with no people and no animals, warm soft colors, storybook style, no text, no words, no letters"; }
+function sgRepaint(i,done){ var s=SG.plan.scenes[i]; if(!s)return; if(BLOCK.test(s.place)){say("Let's change that place.");return;} setA('painter','run');
+ paint(placePrompt(s),1024,576,function(u){ loadImg(u,function(im){ SG.imgs[i]=im; $('sgImg'+i).innerHTML='<img src="'+u+'">'; if(done)done(true); else setA('painter','ok'); }); },'🎨 Painting scene '+(i+1)+'…','sgBusy',function(){ if(done)done(false); else setA('painter','bad'); }); }
+function sgApprove(){ var probs=safetyCheck(SG.plan); if(probs.length){ setA('safe','bad'); renderPlan(probs); say('Fix the flagged words first'); return; } setA('safe','ok'); setA('ok','ok');
+ var todo=[]; SG.plan.scenes.forEach(function(s,i){ if(!SG.imgs[i])todo.push(i); }); var fails=0;
+ (function next(){ if(!todo.length){ setA('painter',fails?'bad':'ok'); sgEditor(); return; } var i=todo.shift(); sgRepaint(i,function(ok){ if(!ok)fails++; next(); }); })(); }
+function sgEditor(){ setA('editor','ok'); var missing=SG.plan.scenes.filter(function(s,i){return !SG.imgs[i];}).length;
+ $('sgOut').innerHTML='<div class="csshot"><h2 style="margin:0">🎞 Your moving story</h2>'+(missing?'<div class="warn">'+missing+' scene(s) did not paint, so they use a drawn place. You can repaint them above and play again.</div>':'')+
+  '<canvas id="sgC" class="cscan" width="1024" height="576" style="margin-top:8px"></canvas><div class="row"><button class="gold" id="sgPlayBtn" onclick="CS.sgPlay()">▶ Play story</button><button class="ghost" onclick="CS.sgRecord()">🎥 Save as a video</button></div>'+
+  '<div id="sgVid"></div><div class="row"><button class="ghost" onclick="CS.sgSaveScenes()">💾 Save scenes to My pictures</button></div><div id="sgAuthor"></div>'+
+  '<div class="csdisc">Places were painted by a free AI and are labeled "AI-assisted art" in the video. A grown-up should look it over before sharing or publishing.</div></div>';
+ if(window.CURBOOK&&$('author')&&!$('author').classList.contains('hide'))$('sgAuthor').innerHTML='<button onclick="CS.sgToBook()">📖 Add these scenes as pages in the book I\'m editing</button>';
+ sgFrame(0,0); }
+var SCENE_LEN=6;
+function sgScene(i){ var s=SG.plan.scenes[i]; return s; }
+function sgFrame(i,t){ var c=$('sgC'); if(!c)return; var X=c.getContext('2d'),W=1024,H=576,s=SG.plan.scenes[i],v=KJV[SG.plan.verse];
+ X.setTransform(1,0,0,1,0,0);
+ if(i>=SG.plan.scenes.length){ drawScene(X,W,H,'night',false); X.fillStyle='rgba(31,56,100,.82)'; Fig.rr(X,W*0.08,H*0.18,W*0.84,H*0.56,30); X.fill(); X.fillStyle='#fff'; X.textAlign='center'; X.font='bold 34px "Comic Sans MS",system-ui,sans-serif'; X.fillText(SG.plan.title||'The End',W/2,H*0.3);
+  X.font='22px Georgia,serif'; wrap(X,'"'+v[1]+'"',W/2,H*0.4,W*0.74,30); X.font='bold 22px system-ui,sans-serif'; X.fillStyle='#ffd27a'; X.fillText(v[0]+' (KJV)',W/2,H*0.68); disclosure(X,W,H,'AI-assisted art'); return; }
+ if(SG.imgs[i])cover(X,SG.imgs[i],W,H); else drawScene(X,W,H,['park','home','night'][i%3],false);
+ var acts=(s.cast||[]).slice(0,4).map(function(n,k){ var act=k===0?s.action:(s.action==='walkR'||s.action==='runR'?'walkR':(s.action==='walkL'?'walkL':'cheer')); return {who:n,act:act,x:[18,40,62,80][k],size:95,say:k===0?s.line:''}; });
+ drawActors(X,W,H,acts,t,SCENE_LEN,H*0.8);
+ X.fillStyle='rgba(255,255,255,.9)'; X.fillRect(0,H*0.82,W,H*0.18); X.fillStyle='#1F3864'; X.textAlign='center'; X.font='bold 24px "Comic Sans MS","Chalkboard SE",system-ui,sans-serif'; wrap(X,s.caption,W/2,H*0.865,W*0.92,28);
+ if(SG.imgs[i])disclosure(X,W,H,'AI-assisted art'); }
+function wrap(X,txt,x,y,maxW,lh){ var words=String(txt||'').split(/\s+/),line='',yy=y; X.textBaseline='middle'; for(var i=0;i<words.length;i++){ var t=line?line+' '+words[i]:words[i]; if(X.measureText(t).width>maxW&&line){ X.fillText(line,x,yy); line=words[i]; yy+=lh; } else line=t; } if(line)X.fillText(line,x,yy); }
+function speak(txt){ try{ if(!window.speechSynthesis)return; speechSynthesis.cancel(); var u=new SpeechSynthesisUtterance(txt); u.rate=0.92; if(window.WARMVOICE)u.voice=WARMVOICE; speechSynthesis.speak(u); }catch(e){} }
+function sgPlay(){ if(SG.playing){ sgStop(); return; } SG.playing=true; $('sgPlayBtn').textContent='⏹ Stop'; var t0=Date.now(),last=-1,n=SG.plan.scenes.length;
+ (function loop(){ if(!SG.playing)return; var t=(Date.now()-t0)/1000,i=Math.floor(t/SCENE_LEN); if(i>n){ sgStop(); return; }
+  if(i!==last){ last=i; if(!SG.rec)speak(i<n?SG.plan.scenes[i].caption:KJV[SG.plan.verse][1]+' '+KJV[SG.plan.verse][0]); }
+  sgFrame(i,t-i*SCENE_LEN); SG.raf=requestAnimationFrame(loop); })(); }
+function sgStop(){ SG.playing=false; cancelAnimationFrame(SG.raf); try{speechSynthesis.cancel();}catch(e){} var b=$('sgPlayBtn'); if(b)b.textContent='▶ Play story'; if(SG.rec&&SG.rec.state==='recording')SG.rec.stop(); }
+function sgRecord(){ if(SG.playing)sgStop(); var r=recorder($('sgC')); if(!r){ say('This browser cannot record video. Try Chrome.'); return; } var chunks=[];
+ r.ondataavailable=function(e){ if(e.data&&e.data.size)chunks.push(e.data); }; r.onstop=function(){ SG.rec=null; busy('sgBusy',''); showVideo('sgVid',chunks,r.mimeType,(SG.plan.title||'my-story').replace(/[^\w\- ]/g,'')); };
+ SG.rec=r; r.start(250); busy('sgBusy','Recording your story… keep this screen open'); sgPlay(); }
+function frameData(i){ sgFrame(i,1.5); return $('sgC').toDataURL('image/png').split(',')[1]; }
+function sgSaveScenes(){ if(!window.ME||ME.guest){ say('Sign in with a reader card to save'); return; } var n=SG.plan.scenes.length+1,i=0;
+ (function next(){ if(i>=n){ busy('sgBusy',''); say('Saved '+n+' pictures ✔'); return; } busy('sgBusy','Saving '+(i+1)+' of '+n+'…'); var title=(SG.plan.title||'Story')+' · '+(i<SG.plan.scenes.length?(i+1):'verse');
+  google.script.run.withSuccessHandler(function(){ i++; next(); }).withFailureHandler(function(x){ busy('sgBusy',''); say(String((x&&x.message)||x)); }).addCreation(ME.username,frameData(i),title); })(); }
+function sgToBook(){ if(!window.CURBOOK){ say('Open a book under Author → Books first'); return; } var n=SG.plan.scenes.length,i=0;
+ (function next(){ if(i>=n){ busy('sgBusy',''); say('Added '+n+' pages to your book ✔'); if(typeof loadBookPages==='function')loadBookPages(); return; } busy('sgBusy','Adding page '+(i+1)+' of '+n+'…');
+  google.script.run.withSuccessHandler(function(){ i++; next(); }).withFailureHandler(function(x){ busy('sgBusy',''); say(String((x&&x.message)||x)); }).addPage(CURBOOK,frameData(i),SG.plan.scenes[i].caption); })(); }
+
+/* ================= TALK WITH THE FAMILY ================= */
+var CH={who:'Mommy',log:[],queue:false};
+var PERSONA={
+ 'Mommy':"You are Mommy from the children's book series 'Mommy Is Human Too'. You are a warm, loving Black Christian mom. You are human, you make mistakes, and you give and ask for grace. You speak to a child aged 3-10.",
+ 'Jojo':"You are Jojo, the big brother in 'Mommy Is Human Too'. You are curious, kind, a little impatient sometimes, and learning to understand people. You speak to a younger child like a friendly big brother.",
+ 'Pip':"You are Pip, the playful little sister in 'Mommy Is Human Too'. You giggle, love stories, puffs in your hair, and sometimes do random silly things. You speak to a child like a fun friend."};
+var LOCAL={'Baby Bee':['Ba-ba-boo! 🐝','Hee hee! *claps hands*','Mama! 💛','*gives you a big sloppy hug*','Bzzz bzzz! 🐝','Goo goo… story? 📖'],'Biscuit':['Woof woof! 🐾','*wags tail super fast*','Arf! *brings you a ball* ⚽','*licks your hand* 💛','Woof! *rolls over for belly rubs*']};
+var RULES=" Rules: keep answers to 1-3 short sentences with simple words. Be gentle, joyful and encouraging. Never ask for the child's real name, address, school, phone, photos or any personal details, and never suggest meeting. Never pretend to be a real human; you are a storybook character. You may mention a Bible verse by its reference only, without quoting it. If the child talks about being hurt, unsafe or very sad, tell them to tell a trusted grown-up right away. Avoid scary, violent, romantic or grown-up topics; gently change the subject to something kind.";
+var FALLBACK={'Mommy':["I'm so glad you're here. Mommies need hugs and grace too. 💛","That's a great question! Let's ask a grown-up to read a story with you.","You are fearfully and wonderfully made, just like Psalm 139:14 says."],'Jojo':["Whoa, cool! Want to read a story with me?","I'm learning to be patient. It's hard sometimes, but I keep trying!"],'Pip':["Hee hee! Let's color something together! 🖍️","I love that! Tell me more!"]};
+function chInit(){ var list=cast().map(function(c){return c.name;}).concat(['Biscuit']);
+ $('chWho').innerHTML=list.map(function(n){ var cv=document.createElement('canvas'),cs=findCast(n); cv.width=144; cv.height=180; var x=cv.getContext('2d'); x.fillStyle='#f3f8ff'; x.fillRect(0,0,144,180);
+  if(cs){ var r=Fig.render(cs,'wave','happy',170); x.drawImage(r,(144-r.width)/2,180-r.height); } else { x.font='90px sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('🐶',72,95); }
+  return '<div class="'+(n===CH.who?'on':'')+'" onclick="CS.chPick(\''+E(n).replace(/'/g,"\\'")+'\')"><img src="'+cv.toDataURL()+'" style="width:72px;height:90px;display:block;margin:0 auto">'+E(n)+'</div>'; }).join('');
+ if(!CH.log.length)chAdd(CH.who,'Hi there! I\'m '+CH.who+'. What do you want to talk about? 😊'); else chRender();
+ $('chIn').onkeydown=function(e){ if(e.key==='Enter')chSend(); }; }
+function chPick(n){ CH.who=n; CH.log=[]; chInit(); }
+function chAdd(who,txt){ CH.log.push({who:who,txt:txt}); if(CH.log.length>40)CH.log.shift(); chRender(); if(who!=='me'&&$('chVoice').checked)speak(txt.replace(/[*_]/g,'')); }
+function chRender(){ var b=$('chLog'); b.innerHTML=CH.log.map(function(m){ return m.who==='me'?'<div class="csmsg me">'+E(m.txt)+'</div>':'<div class="csmsg them"><span class="who">'+E(m.who)+'</span>'+E(m.txt)+'</div>'; }).join(''); b.scrollTop=b.scrollHeight; }
+function chSend(){ var t=clean($('chIn').value,240); if(!t)return; $('chIn').value=''; chAdd('me',t); var who=CH.who;
+ if(DANGER.test(t)){ chAdd(who,SAFE_REPLY); return; }
+ if(BLOCK.test(t)){ chAdd(who,"Hmm, let's talk about something kind instead. What's your favorite story? 📖"); return; }
+ if(LOCAL[who]){ var L=LOCAL[who]; setTimeout(function(){ chAdd(who,L[Math.floor(Math.random()*L.length)]); },600); return; }
+ if(CH.queue){ say(who+' is still thinking about your last message'); return; } CH.queue=true;
+ var msgs=[{role:'system',content:(PERSONA[who]||PERSONA.Mommy)+RULES}].concat(CH.log.slice(-8).map(function(m){ return {role:m.who==='me'?'user':'assistant',content:m.txt}; }));
+ think(msgs,function(reply){ CH.queue=false; reply=clean(reply,400); if(BLOCK.test(reply)||!reply)reply=FALLBACK[who][0]; chAdd(who,reply); },'chBusy',who+' is thinking…',function(){ CH.queue=false; var f=FALLBACK[who]||FALLBACK.Mommy; chAdd(who,f[Math.floor(Math.random()*f.length)]+' (my AI helper is resting, so this is a saved answer)'); }); }
+
+/* ================= open / close / hooks ================= */
+var READY={};
+function tab(t){ Array.prototype.forEach.call($('csTabs').querySelectorAll('span'),function(s){ s.classList.toggle('on',s.getAttribute('data-t')===t); });
+ Array.prototype.forEach.call(document.querySelectorAll('.cspane'),function(p){ p.classList.toggle('on',p.id==='csp-'+t); });
+ if(!READY[t]){ READY[t]=1; if(t==='color'){ ccInit(); ccBooks(); } if(t==='move')mvInit(); if(t==='story')sgInit(); if(t==='chat')chInit(); }
+ if(t!=='move'&&MV.playing)mvStop(); if(t!=='story'&&SG.playing)sgStop(); }
+function open(t){ $('cs').classList.remove('hide'); tab(t||'color'); }
+function close(){ if(MV.playing)mvStop(); if(SG.playing)sgStop(); try{speechSynthesis.cancel();}catch(e){} $('cs').classList.add('hide'); }
+function loadExtras(){ try{ google.script.run.withSuccessHandler(function(l){ MADE=l||[]; }).listMadeChars(); }catch(e){}
+ try{ google.script.run.withSuccessHandler(function(l){ UPCAST=(l||[]).slice(0,12); UPCAST.forEach(function(c){ loadImg(c.img,function(im){ c.im=cutout(im); }); }); }).listCharacters(); }catch(e){} }
+function cutout(im){ var k=Math.min(1,500/Math.max(im.width,im.height)),c=document.createElement('canvas'); c.width=Math.max(1,Math.round(im.width*k)); c.height=Math.max(1,Math.round(im.height*k)); var x=c.getContext('2d'); x.drawImage(im,0,0,c.width,c.height);
+ try{ var d=x.getImageData(0,0,c.width,c.height),p=d.data,w=c.width,h=c.height,n=w*h,r=0,g=0,b=0,cnt=0,i,seen=new Uint8Array(n),q=new Int32Array(n),qh=0,qt=0;
+  function acc(j){ r+=p[j*4];g+=p[j*4+1];b+=p[j*4+2];cnt++; } for(i=0;i<w;i++){acc(i);acc((h-1)*w+i);} for(i=0;i<h;i++){acc(i*w);acc(i*w+w-1);} r/=cnt;g/=cnt;b/=cnt;
+  function near(j){ var dr=p[j*4]-r,dg=p[j*4+1]-g,db=p[j*4+2]-b; return p[j*4+3]===0||dr*dr+dg*dg+db*db<45*45*3; }
+  function add(j){ if(!seen[j]&&near(j)){ seen[j]=1; q[qt++]=j; } }
+  for(i=0;i<w;i++){add(i);add((h-1)*w+i);} for(i=0;i<h;i++){add(i*w);add(i*w+w-1);}
+  while(qh<qt){ var j=q[qh++],xj=j%w; if(xj>0)add(j-1); if(xj<w-1)add(j+1); if(j>=w)add(j-w); if(j<n-w)add(j+w); }
+  for(i=0;i<qt;i++)p[q[i]*4+3]=0; x.putImageData(d,0,0); }catch(e){} return c; }
+function inject(){
+ var anchor=document.getElementById('stOpen1')||document.querySelector('#scr-shelf button[onclick="openMake()"]');
+ if(anchor&&!$('csOpen1')){ var wrap=document.createElement('div'); wrap.id='csOpen1'; wrap.innerHTML='<div class="row"><button class="gold" onclick="CS.open(\'color\')">🖍️ Coloring book</button><button onclick="CS.open(\'move\')">🚶🏾 Make it move</button></div><div class="row"><button onclick="CS.open(\'story\')">🎬 Story makers</button><button class="ghost" onclick="CS.open(\'chat\')">💬 Talk with the family</button></div>';
+  var host=anchor.id==='stOpen1'?anchor:anchor.parentNode; host.parentNode.insertBefore(wrap,host.nextSibling); }
+ var play=$('playBtn'); if(play&&!$('csLife')){ var b=document.createElement('button'); b.id='csLife'; b.className='gold'; b.textContent='✨ Bring this page to life'; b.onclick=lifePage; var row=play.parentNode; row.parentNode.insertBefore(b,row.nextSibling); }
+ var gb=$('stOpen2')||$('genBtn'); if(gb&&!$('csOpen2')){ var a=document.createElement('button'); a.id='csOpen2'; a.className='ghost'; a.textContent='🎬 Story makers: plan and paint new pages with AI'; a.onclick=function(){ open('story'); }; gb.parentNode.insertBefore(a,gb.nextSibling); } }
+function init(){ $('csTabs').addEventListener('click',function(e){ var t=e.target.getAttribute&&e.target.getAttribute('data-t'); if(t)tab(t); }); loadExtras(); inject(); setTimeout(inject,1500); }
+init();
+return {open:open,close:close,ccTool:ccTool,ccUndo:ccUndo,ccClear:ccClear,ccSave:ccSave,ccDownload:ccDownload,ccPrint:ccPrint,ccPreset:ccPreset,ccAI:ccAI,ccUpload:ccUpload,ccBook:ccBook,ccPage:ccPage,
+ mvPlay:mvPlay,mvRecord:mvRecord,mvShape:mvShape,mvBg:mvBg,mvPlaces:mvPlaces,mvPlace:mvPlace,mvAIbg:mvAIbg,mvUpload:mvUpload,mvAddActor:mvAddActor,mvDel:mvDel,mvSet:mvSet,lifePage:lifePage,
+ sgPlan:sgPlan,sgToggle:sgToggle,sgEdit:sgEdit,sgRepaint:sgRepaint,sgApprove:sgApprove,sgPlay:sgPlay,sgRecord:sgRecord,sgSaveScenes:sgSaveScenes,sgToBook:sgToBook,
+ chSend:chSend,chPick:chPick};
+})();
+</script>
