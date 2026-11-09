@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B2951">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Command Hub">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Cyars Command Hub</title>
+<style>
+  :root{--navy:#1B2951;--navy2:#24366a;--navy3:#2d4280;--gold:#C9A961;--gold2:#efe2bf;--cream:#FAF7F0;--muted:#aab3cc;--bad:#f87171;--ok:#4ade80}
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;background:var(--navy);color:var(--cream);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  button,input,select{font:inherit}
+  .hidden{display:none!important}
+  .wrap{max-width:560px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom))}
+  h1,h2{font-family:Georgia,"Times New Roman",serif;color:var(--gold);margin:0}
+  h1{font-size:24px}
+  h2{font-size:17px;margin:22px 2px 10px;letter-spacing:.02em}
+  p{line-height:1.45}
+  .muted{color:var(--muted)}
+  .small{font-size:13px}
+
+  /* lock */
+  #lock{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+  #lock img{width:84px;height:84px;border-radius:20px}
+  #lock h1{margin-top:12px}
+  .dots{display:flex;gap:12px;justify-content:center;margin:20px 0 8px;min-height:18px}
+  .dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--gold)}
+  .dot.on{background:var(--gold)}
+  .pad{display:grid;grid-template-columns:repeat(3,76px);gap:12px;margin-top:14px}
+  .pad button{height:64px;border-radius:18px;border:1px solid rgba(201,169,97,.35);background:var(--navy2);color:var(--cream);font-size:24px;font-weight:700;cursor:pointer}
+  .pad button:active{background:var(--navy3)}
+  .pad .k-ok{background:var(--gold);color:var(--navy);font-size:18px}
+  #lockMsg{color:var(--bad);font-weight:700;min-height:22px;margin-top:10px}
+
+  /* top */
+  .top{display:flex;align-items:center;gap:10px}
+  .top img{width:40px;height:40px;border-radius:11px}
+  .top .t{flex:1}
+  .top .sub{font-size:13px;color:var(--muted)}
+  .iconbtn{border:1px solid rgba(201,169,97,.45);background:var(--navy2);color:var(--cream);border-radius:12px;padding:9px 11px;font-weight:700;cursor:pointer;font-size:14px}
+
+  /* tiles */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .tile{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:1px solid rgba(201,169,97,.35);background:var(--navy2);color:var(--cream);border-radius:16px;padding:14px 13px;min-height:92px;cursor:pointer;text-decoration:none}
+  .tile:active{transform:scale(.98);background:var(--navy3)}
+  .tile .em{font-size:24px;line-height:1}
+  .tile b{font-size:15.5px;line-height:1.2}
+  .tile span{font-size:12.5px;color:var(--muted);line-height:1.3}
+  .tile.need{border-style:dashed;opacity:.85}
+  .tile.need span{color:var(--gold)}
+  .tile.phone{border-color:rgba(201,169,97,.7)}
+
+  /* sheet */
+  .veil{position:fixed;inset:0;background:rgba(5,10,25,.6);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+  .sheet{width:100%;max-width:560px;background:var(--navy);border-top:2px solid var(--gold);border-radius:22px 22px 0 0;padding:18px 16px calc(22px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto}
+  .sheet h2{margin:0 0 4px}
+  .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:10px;border:none;border-radius:13px;padding:14px;font-size:16px;font-weight:800;text-decoration:none;cursor:pointer}
+  .gold{background:var(--gold);color:var(--navy)}
+  .ghost{background:var(--navy2);color:var(--cream);border:1px solid rgba(201,169,97,.45)}
+  .danger{background:transparent;color:var(--bad);border:1px solid rgba(248,113,113,.5)}
+  label{display:block;font-weight:700;font-size:13px;margin:12px 0 5px;color:var(--gold2)}
+  input[type=text],input[type=url],input[type=email],input[type=tel],select{width:100%;padding:12px 13px;border-radius:12px;border:1px solid rgba(201,169,97,.4);background:var(--navy2);color:var(--cream);font-size:16px;outline:none}
+  input:focus,select:focus{border-color:var(--gold)}
+  .row{display:flex;gap:8px}
+  .row>*{flex:1}
+  .list .item{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid rgba(201,169,97,.18)}
+  .list .item .n{flex:1;min-width:0}
+  .list .item .n b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .list .item .n span{font-size:12px;color:var(--muted)}
+  .toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--gold);color:var(--navy);font-weight:800;padding:11px 16px;border-radius:12px;z-index:40;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+  .note{background:var(--navy2);border:1px solid rgba(201,169,97,.3);border-radius:13px;padding:11px 13px;font-size:13.5px;color:#d3d9ea;margin-top:12px}
+  .note b{color:var(--gold)}
+  #installCard .btn{margin-top:8px}
+</style>
+<script src="../samsung-guard.js"></script>
+</head>
+<body>
+
+<!-- ============ PIN LOCK ============ -->
+<div id="lock">
+  <img src="icon-192.png" alt="">
+  <h1>Command Hub</h1>
+  <p id="lockSub" class="muted">Enter your PIN</p>
+  <div class="dots" id="dots"></div>
+  <div class="pad" id="pad"></div>
+  <div id="lockMsg"></div>
+  <div id="lockExtra" class="small" style="margin-top:8px"></div>
+</div>
+
+<!-- ============ HOME ============ -->
+<div id="home" class="wrap hidden">
+  <div class="top">
+    <img src="icon-192.png" alt="">
+    <div class="t"><h1>Command Hub</h1><div class="sub">Pick which one you want to use</div></div>
+    <button class="iconbtn" id="setBtn" aria-label="Settings">⚙︎</button>
+    <button class="iconbtn" id="lockBtn" aria-label="Lock">🔒</button>
+  </div>
+
+  <div id="installCard" class="note hidden">
+    <b>Install this on your device</b> so it opens from its own icon.
+    <button class="btn gold hidden" id="installBtn">📲 Install now</button>
+    <div style="margin-top:8px"><b>iPhone:</b> Safari → Share → Add to Home Screen.<br><b>Android:</b> Chrome → ⋮ → Install app.<br><b>Computer:</b> Chrome or Edge → install icon in the address bar.</div>
+  </div>
+
+  <h2>Command centers</h2>
+  <div class="grid" id="gCenters"></div>
+
+  <h2>Phone lines</h2>
+  <div class="grid" id="gPhones"></div>
+
+  <h2>More of your apps</h2>
+  <div class="grid" id="gApps"></div>
+
+  <p class="small muted" style="margin-top:22px;text-align:center">Each button opens in its own window. Your buttons and PIN are kept on this device only.</p>
+</div>
+
+<!-- ============ SHEETS ============ -->
+<div id="veil" class="veil hidden"><div class="sheet" id="sheet"></div></div>
+
+<script>
+(function(){
+'use strict';
+var $ = function(id){ return document.getElementById(id); };
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function toast(m){ var t=document.createElement('div'); t.className='toast'; t.textContent=m; document.body.appendChild(t); setTimeout(function(){t.remove();},2400); }
+function get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function put(k,v){ try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k,v); return true; }catch(e){ return false; } }
+
+/* ================= default buttons =================
+   kind: 'center' (command center), 'phone' (phone line), 'app' (other app)
+   Phone lines: gv = Google account for that Google Voice line (opens texts/calls/voicemail on that account);
+                center = id of the command center that handles that line. */
+var DEFAULTS = [
+  {id:'caiocc', kind:'center', em:'🏢', name:'Business Command Center', sub:'CAIOCC · all business apps, health, approvals', url:''},
+  {id:'pca',    kind:'center', em:'🏠', name:'Personal Command Center', sub:'Private Correspondence Agent · ccyars26', url:''},
+  {id:'opsA',   kind:'center', em:'🤖', name:'AI Ops Agent · Crisp Clean', sub:'Business auto-replies & AI CFO (crispcleaninc)', url:'https://script.google.com/macros/s/AKfycbwQYBxXgMAp160PMphmWYWWX2iuz2NGY9NX2QExMklyr9wLtFK1YHdQo0UUhj_DrXkO/exec'},
+  {id:'opsB',   kind:'center', em:'🧾', name:'AI Ops Agent · Merch / Tax line', sub:'Tax line agent & intake hub (merchandisinginc)', url:'https://script.google.com/macros/s/AKfycbx8kxf-xR-WUYwq1rUmAI9k0vFRHOw-DDqNbl0FlCjR64gwikPQavIvA9YCRkG17zacGw/exec'},
+
+  {id:'ph313',  kind:'phone', em:'📱', name:'Personal line', num:'(313) 721-5079', sub:'Google Voice · ccyars26', gv:'ccyars26@gmail.com', center:'pca', url:''},
+  {id:'phMerch',kind:'phone', em:'🛍️', name:'Crisp Clean Merch line', num:'(248) 387-9226', sub:'Google Voice · merch', gv:'crispcleanmerchandisinginc@gmail.com', center:'opsB', url:''},
+  {id:'phCares',kind:'phone', em:'🏡', name:'Crisp Cares line', num:'(248) 403-8982', sub:'Crisp Cares Environmental Services', gv:'', center:'opsA', url:''},
+  {id:'ph248',  kind:'phone', em:'☎️', name:'My cell', num:'(248) 690-6860', sub:'This phone · no auto-reply', gv:'', center:'', url:'', device:true},
+
+  {id:'tax',    kind:'app', em:'📊', name:'Tax Platform', sub:'Returns, review, Season Desk', url:'https://script.google.com/macros/s/AKfycbwfNyYoPU947Zj2n_BJyEvXefdj6QkJjp_tIuVojSxoItl3wy5vI02M6Y7CBdvKgSJf/exec'},
+  {id:'portal', kind:'app', em:'🗂️', name:'Client Portal', sub:'Crisp Clean client hub', url:'https://script.google.com/macros/s/AKfycbww5S-QVvXhuxUznEo-zGx_xjJJ00JtcM6avEdLEl-jp6VPQZfaYGqhJuwNxLPwA7tz/exec'},
+  {id:'family', kind:'app', em:'👨‍👩‍👧‍👦', name:'Family Hub', sub:'Chores, appointments, apps', url:'../'},
+  {id:'home',   kind:'app', em:'🛡️', name:'Home Hub', sub:'Smart Home & Security', url:'../smarthome/'},
+  {id:'vault',  kind:'app', em:'🔐', name:'Key Vault', sub:'Your logins and PINs', url:'../vault/'}
+];
+var LS_ITEMS='cch_items_v1', LS_PIN='cch_pin_v1', LS_FAIL='cch_fail_v1';
+var items = load();
+function load(){
+  var saved=null; try{ saved=JSON.parse(get(LS_ITEMS)||'null'); }catch(e){}
+  if(!Array.isArray(saved)) return JSON.parse(JSON.stringify(DEFAULTS));
+  // keep her edits; add any new default buttons shipped in later versions
+  var ids={}; saved.forEach(function(x){ ids[x.id]=1; });
+  DEFAULTS.forEach(function(d){ if(!ids[d.id]) saved.push(JSON.parse(JSON.stringify(d))); });
+  return saved;
+}
+function save(){ if(!put(LS_ITEMS, JSON.stringify(items))) toast('Could not save on this device'); }
+function byId(id){ for(var i=0;i<items.length;i++) if(items[i].id===id) return items[i]; return null; }
+function absUrl(u){ try{ return new URL(u, location.href).href; }catch(e){ return u; } }
+function open(u){
+  if(!u) return;
+  // a real link click: opens a new window/tab and keeps the hub where it is
+  var a=document.createElement('a'); a.href=absUrl(u); a.target='_blank'; a.rel='noopener';
+  document.body.appendChild(a); a.click(); a.remove();
+}
+function digits(n){ return String(n||'').replace(/\D/g,''); }
+function gvLink(acct, section){
+  return 'https://voice.google.com/u/0/' + section + (acct ? '?authuser=' + encodeURIComponent(acct) : '');
+}
+
+/* ================= render home ================= */
+function tile(it){
+  var need = (it.kind!=='phone') && !it.url;
+  var sub = it.kind==='phone' ? (it.num + ' · ' + it.sub) : it.sub;
+  if(need) sub = 'Tap to add its link';
+  return '<button class="tile'+(need?' need':'')+(it.kind==='phone'?' phone':'')+'" data-id="'+esc(it.id)+'" type="button">'+
+    '<span class="em">'+esc(it.em||'•')+'</span><b>'+esc(it.name)+'</b><span>'+esc(sub)+'</span></button>';
+}
+function render(){
+  var g={center:'',phone:'',app:''};
+  items.forEach(function(it){ if(!it.hidden && g[it.kind]!=null) g[it.kind]+=tile(it); });
+  $('gCenters').innerHTML = g.center || '<p class="small muted">No command centers showing. Add one in ⚙︎.</p>';
+  $('gPhones').innerHTML  = g.phone  || '<p class="small muted">No phone lines showing. Add one in ⚙︎.</p>';
+  $('gApps').innerHTML    = g.app    || '<p class="small muted">Nothing here yet.</p>';
+  Array.prototype.forEach.call(document.querySelectorAll('.tile'), function(b){
+    b.onclick = function(){ press(byId(b.getAttribute('data-id'))); };
+  });
+}
+function press(it){
+  if(!it) return;
+  if(it.kind==='phone') return phoneSheet(it);
+  if(!it.url) return editSheet(it, true);
+  open(it.url);
+}
+
+/* ================= sheets ================= */
+function showSheet(html){ $('sheet').innerHTML = html; $('veil').classList.remove('hidden'); }
+function closeSheet(){ $('veil').classList.add('hidden'); $('sheet').innerHTML=''; }
+$('veil').addEventListener('click', function(e){ if(e.target===$('veil')) closeSheet(); });
+
+function phoneSheet(it){
+  var c = it.center ? byId(it.center) : null;
+  var h = '<h2>'+esc(it.em+' '+it.name)+'</h2><p class="muted" style="margin:2px 0 6px">'+esc(it.num)+' · '+esc(it.sub)+'</p>';
+  if(it.gv){
+    h += '<button class="btn gold" data-go="'+esc(gvLink(it.gv,'messages'))+'">💬 Texts on this line</button>'+
+         '<button class="btn ghost" data-go="'+esc(gvLink(it.gv,'calls'))+'">📞 Calls</button>'+
+         '<button class="btn ghost" data-go="'+esc(gvLink(it.gv,'voicemail'))+'">🎙️ Voicemail</button>';
+  }
+  if(it.device){
+    h += '<a class="btn gold" href="sms:">💬 Open Messages on this phone</a>';
+  }
+  if(it.url){ h += '<button class="btn ghost" data-go="'+esc(it.url)+'">🔗 Open this line\'s app</button>'; }
+  if(c){
+    h += '<button class="btn ghost" data-go="'+esc(c.url)+'" '+(c.url?'':'disabled style="opacity:.55"')+'>'+esc((c.em||'')+' Its command center: '+c.name)+(c.url?'':' (add its link in ⚙︎)')+'</button>';
+  }
+  if(!it.gv && !it.device && !it.url){
+    h += '<div class="note">No app is set up for this line yet. Tap <b>Edit this line</b> to add the link you use for it (for example its Google Voice account or carrier app link).</div>';
+  }
+  h += '<div class="row"><button class="btn ghost" id="copyNum">📋 Copy number</button><button class="btn ghost" id="editLine">✏️ Edit this line</button></div>'+
+       (it.gv ? '<p class="small muted" style="margin-top:12px">Opens Google Voice signed in as '+esc(it.gv)+'. If the Google Voice app opens on another account, switch accounts at the top of Google Voice.</p>' : '')+
+       '<button class="btn ghost" id="closeS">Close</button>';
+  showSheet(h);
+  Array.prototype.forEach.call($('sheet').querySelectorAll('[data-go]'), function(b){ b.onclick=function(){ var u=b.getAttribute('data-go'); if(u){ open(u); closeSheet(); } }; });
+  $('copyNum').onclick = function(){ var n=it.num; (navigator.clipboard?navigator.clipboard.writeText(n):Promise.reject()).then(function(){toast('Copied '+n);},function(){toast(n);}); };
+  $('editLine').onclick = function(){ editSheet(it); };
+  $('closeS').onclick = closeSheet;
+}
+
+function editSheet(it, firstTime){
+  var isNew = !it;
+  it = it || {id:'c'+Date.now().toString(36), kind:'center', em:'⭐', name:'', sub:'', url:''};
+  var centers = items.filter(function(x){ return x.kind==='center'; });
+  var h = '<h2>'+(isNew?'Add a button':(firstTime?'Add the link for '+esc(it.name):'Edit '+esc(it.name)))+'</h2>'+
+    (firstTime?'<p class="small muted">Open it once in your browser, copy the address from the address bar, and paste it here.</p>':'')+
+    '<label>Type</label><select id="fKind"><option value="center">Command center</option><option value="phone">Phone line</option><option value="app">Other app</option></select>'+
+    '<div class="row"><div style="flex:0 0 74px"><label>Icon</label><input id="fEm" type="text" maxlength="4"></div><div><label>Name</label><input id="fName" type="text"></div></div>'+
+    '<label>Short description</label><input id="fSub" type="text">'+
+    '<div id="phoneFields"><label>Phone number</label><input id="fNum" type="tel">'+
+      '<label>Google Voice account for this line (email, leave blank if not Google Voice)</label><input id="fGv" type="email" autocapitalize="off">'+
+      '<label>Command center that handles this line</label><select id="fCenter"><option value="">None</option>'+
+      centers.map(function(c){ return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>'; }).join('')+'</select></div>'+
+    '<label id="urlLbl">Link (web address)</label><input id="fUrl" type="url" autocapitalize="off" placeholder="https://…">'+
+    '<button class="btn gold" id="fSave">Save</button>'+
+    (isNew?'':'<button class="btn ghost" id="fHide">'+(it.hidden?'Show on home screen':'Hide from home screen')+'</button>')+
+    '<button class="btn ghost" id="fCancel">Cancel</button>';
+  showSheet(h);
+  $('fKind').value=it.kind; $('fEm').value=it.em||''; $('fName').value=it.name||''; $('fSub').value=it.sub||'';
+  $('fNum').value=it.num||''; $('fGv').value=it.gv||''; $('fCenter').value=it.center||''; $('fUrl').value=it.url||'';
+  function kindUi(){ var p=$('fKind').value==='phone'; $('phoneFields').classList.toggle('hidden',!p); $('urlLbl').textContent = p ? 'Other link for this line (optional)' : 'Link (web address)'; }
+  $('fKind').onchange=kindUi; kindUi();
+  $('fSave').onclick=function(){
+    var url=$('fUrl').value.trim();
+    if(url && !/^(https:\/\/|\.\.\/|\.\/|sms:|tel:)/i.test(url)){ toast('Links must start with https://'); return; }
+    if(!$('fName').value.trim()){ toast('Give it a name'); return; }
+    it.kind=$('fKind').value; it.em=$('fEm').value.trim()||'⭐'; it.name=$('fName').value.trim(); it.sub=$('fSub').value.trim();
+    it.url=url;
+    if(it.kind==='phone'){ it.num=$('fNum').value.trim(); it.gv=$('fGv').value.trim(); it.center=$('fCenter').value; }
+    if(isNew) items.push(it);
+    save(); render(); closeSheet(); toast('Saved');
+  };
+  if(!isNew) $('fHide').onclick=function(){ it.hidden=!it.hidden; save(); render(); closeSheet(); toast(it.hidden?'Hidden (bring it back in ⚙︎)':'Showing'); };
+  $('fCancel').onclick=closeSheet;
+}
+
+function settingsSheet(){
+  var h='<h2>Settings</h2><p class="small muted">Tap any button to edit its link, name or phone details.</p><div class="list">'+
+    items.map(function(it){
+      var miss = it.kind!=='phone' && !it.url;
+      return '<div class="item"><div class="n"><b>'+esc((it.em||'')+' '+it.name)+'</b><span>'+
+        ({center:'Command center',phone:'Phone line',app:'App'})[it.kind]+(it.hidden?' · hidden':'')+(miss?' · link needed':'')+'</span></div>'+
+        '<button class="iconbtn" data-edit="'+esc(it.id)+'">Edit</button></div>';
+    }).join('')+'</div>'+
+    '<button class="btn gold" id="sAdd">+ Add a button</button>'+
+    '<button class="btn ghost" id="sPin">Change PIN</button>'+
+    '<button class="btn ghost" id="sCopy">Copy my buttons (backup)</button>'+
+    '<button class="btn ghost" id="sPaste">Restore buttons from a backup</button>'+
+    '<button class="btn danger" id="sReset">Reset buttons to the original set</button>'+
+    '<button class="btn ghost" id="sClose">Close</button>';
+  showSheet(h);
+  Array.prototype.forEach.call($('sheet').querySelectorAll('[data-edit]'), function(b){ b.onclick=function(){ editSheet(byId(b.getAttribute('data-edit'))); }; });
+  $('sAdd').onclick=function(){ editSheet(null); };
+  $('sPin').onclick=function(){ closeSheet(); showLock('change'); };
+  $('sCopy').onclick=function(){
+    var txt=JSON.stringify(items);
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){ toast('Backup copied. Paste it into your Key Vault notes.'); },function(){ toast('Could not copy on this device'); });
+  };
+  $('sPaste').onclick=function(){
+    showSheet('<h2>Restore buttons</h2><p class="small muted">Paste a backup you copied from this app. It replaces the buttons on this device.</p><label>Backup</label><input id="rTxt" type="text" autocapitalize="off"><button class="btn gold" id="rGo">Restore</button><button class="btn ghost" id="rNo">Cancel</button>');
+    $('rNo').onclick=settingsSheet;
+    $('rGo').onclick=function(){
+      try{ var v=JSON.parse($('rTxt').value); if(!Array.isArray(v)||!v.every(function(x){return x&&x.id&&x.name&&x.kind;})) throw 0;
+        items=v; save(); items=load(); render(); closeSheet(); toast('Buttons restored'); }
+      catch(e){ toast('That backup could not be read'); }
+    };
+  };
+  $('sReset').onclick=function(){
+    showSheet('<h2>Reset buttons?</h2><p>This puts back the original set of buttons and removes any links or buttons you added on this device. Your PIN stays the same.</p><button class="btn danger" id="yes">Yes, reset</button><button class="btn ghost" id="no">Keep my buttons</button>');
+    $('no').onclick=settingsSheet;
+    $('yes').onclick=function(){ put(LS_ITEMS,null); items=load(); render(); closeSheet(); toast('Buttons reset'); };
+  };
+  $('sClose').onclick=closeSheet;
+}
+$('setBtn').onclick=settingsSheet;
+
+/* ================= PIN lock (PBKDF2-SHA256, stored on this device only) ================= */
+var MIN_PIN=4, MAX_PIN=8, ITER=200000, pinBuf='', mode='unlock', firstPin='';
+var enc=new TextEncoder();
+function hex(b){ return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2);}).join(''); }
+function unhex(s){ var a=new Uint8Array(s.length/2); for(var i=0;i<a.length;i++) a[i]=parseInt(s.substr(i*2,2),16); return a; }
+function hashPin(pin, saltHex, iter){
+  return crypto.subtle.importKey('raw', enc.encode(pin), 'PBKDF2', false, ['deriveBits']).then(function(k){
+    return crypto.subtle.deriveBits({name:'PBKDF2', hash:'SHA-256', salt:unhex(saltHex), iterations:iter}, k, 256);
+  }).then(hex);
+}
+function pinRec(){ try{ return JSON.parse(get(LS_PIN)||'null'); }catch(e){ return null; } }
+function fails(){ try{ return JSON.parse(get(LS_FAIL)||'{"n":0,"until":0}'); }catch(e){ return {n:0,until:0}; } }
+
+var KEYS=['1','2','3','4','5','6','7','8','9','⌫','0','OK'];
+$('pad').innerHTML = KEYS.map(function(k){ return '<button type="button" class="'+(k==='OK'?'k-ok':'')+'" data-k="'+k+'">'+k+'</button>'; }).join('');
+Array.prototype.forEach.call($('pad').querySelectorAll('button'), function(b){ b.onclick=function(){ key(b.getAttribute('data-k')); }; });
+document.addEventListener('keydown', function(e){
+  if($('lock').classList.contains('hidden')) return;
+  if(/^[0-9]$/.test(e.key)) key(e.key); else if(e.key==='Backspace') key('⌫'); else if(e.key==='Enter') key('OK');
+});
+function drawDots(){ var n=Math.max(pinBuf.length, MIN_PIN), h=''; for(var i=0;i<n;i++) h+='<span class="dot'+(i<pinBuf.length?' on':'')+'"></span>'; $('dots').innerHTML=h; }
+function key(k){
+  $('lockMsg').textContent='';
+  if(k==='⌫') pinBuf=pinBuf.slice(0,-1);
+  else if(k==='OK'){ submit(); return; }
+  else if(pinBuf.length<MAX_PIN) pinBuf+=k;
+  drawDots();
+}
+function showLock(m){
+  mode=m; pinBuf=''; firstPin='';
+  $('home').classList.add('hidden'); closeSheet(); $('lock').classList.remove('hidden'); $('lockExtra').innerHTML='';
+  if(m==='setup') $('lockSub').textContent='Create a PIN for your Command Hub ('+MIN_PIN+'–'+MAX_PIN+' digits).';
+  else if(m==='change') $('lockSub').textContent='Enter your current PIN to change it.';
+  else {
+    $('lockSub').textContent='Enter your PIN';
+    $('lockExtra').innerHTML='<button class="iconbtn" id="forgot" type="button">Forgot PIN?</button>';
+    $('forgot').onclick=function(){
+      $('lockExtra').innerHTML='<p class="muted">Resetting clears the PIN and the links you added on this device. The original buttons come back.</p><button class="iconbtn" id="forgotYes" type="button">Reset this device</button>';
+      $('forgotYes').onclick=function(){ put(LS_PIN,null); put(LS_ITEMS,null); put(LS_FAIL,null); items=load(); showLock('setup'); };
+    };
+  }
+  drawDots();
+}
+function unlocked(){ $('lock').classList.add('hidden'); $('home').classList.remove('hidden'); render(); lastActive=Date.now(); }
+function submit(){
+  var pin=pinBuf, f=fails();
+  if(Date.now()<f.until){ $('lockMsg').textContent='Too many wrong PINs. Try again in '+Math.ceil((f.until-Date.now())/1000)+' s.'; pinBuf=''; drawDots(); return; }
+  if(mode==='setup'||mode==='new'){
+    if(pin.length<MIN_PIN){ $('lockMsg').textContent='Use at least '+MIN_PIN+' digits.'; return; }
+    firstPin=pin; pinBuf=''; mode=(mode==='setup'?'confirm':'confirmNew'); $('lockSub').textContent='Enter the same PIN again to confirm.'; drawDots(); return;
+  }
+  if(mode==='confirm'||mode==='confirmNew'){
+    if(pin!==firstPin){
+      if(mode==='confirm') showLock('setup');
+      else { mode='new'; pinBuf=''; firstPin=''; $('lockSub').textContent='Enter your new PIN.'; drawDots(); }
+      $('lockMsg').textContent='Those PINs did not match. Start again.'; return;
+    }
+    var salt=hex(crypto.getRandomValues(new Uint8Array(16)));
+    hashPin(pin,salt,ITER).then(function(h){
+      if(!put(LS_PIN, JSON.stringify({salt:salt,iter:ITER,hash:h}))){ $('lockMsg').textContent='This device would not save the PIN.'; return; }
+      put(LS_FAIL,null); toast(mode==='confirmNew'?'PIN changed':'PIN set'); unlocked();
+    });
+    return;
+  }
+  // unlock / change: check current PIN
+  var rec=pinRec(); if(!rec){ showLock('setup'); return; }
+  $('lockSub').textContent='Checking…';
+  hashPin(pin,rec.salt,rec.iter).then(function(h){
+    if(h===rec.hash){
+      put(LS_FAIL,null);
+      if(mode==='change'){ pinBuf=''; mode='new'; $('lockSub').textContent='Enter your new PIN.'; drawDots(); return; }
+      unlocked();
+    } else {
+      f.n=(f.n||0)+1; if(f.n>=5){ f.until=Date.now()+30000*Math.pow(2,Math.min(f.n-5,6)); }
+      put(LS_FAIL, JSON.stringify(f)); pinBuf=''; drawDots();
+      $('lockSub').textContent = mode==='change'?'Enter your current PIN to change it.':'Enter your PIN';
+      $('lockMsg').textContent = f.until>Date.now() ? 'Too many wrong PINs. Wait a bit and try again.' : 'Wrong PIN.';
+    }
+  });
+}
+$('lockBtn').onclick=function(){ showLock('unlock'); };
+
+/* auto-lock after 5 minutes away */
+var lastActive=Date.now(), AWAY=5*60*1000;
+document.addEventListener('visibilitychange', function(){
+  if(document.hidden){ lastActive=Date.now(); return; }
+  if($('home').classList.contains('hidden')) return;
+  if(Date.now()-lastActive>AWAY) showLock('unlock');
+});
+
+/* install */
+var installed=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+if(!installed) $('installCard').classList.remove('hidden');
+var deferred=null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred=e; $('installBtn').classList.remove('hidden'); });
+$('installBtn').onclick=function(){ if(!deferred) return; deferred.prompt(); deferred.userChoice.then(function(){ deferred=null; $('installBtn').classList.add('hidden'); }); };
+
+if(!window.crypto || !crypto.subtle){ $('lockSub').textContent='This browser cannot lock the hub. Open it in Chrome, Edge or Safari.'; $('pad').classList.add('hidden'); }
+else showLock(pinRec()?'unlock':'setup');
+
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script>
+</body>
+</html>
