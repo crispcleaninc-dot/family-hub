@@ -1,7 +1,8 @@
 /* Cyars Command Hub - service worker. Keeps the app files on the device so it opens offline.
    Buttons and PIN live in this device storage; the worker never sees them. */
+try { importScripts('notify-sw.js'); } catch (e) {} // Cyars Notify: alerts + taps
 var SHELL = 'cch-shell-v1';
-var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));

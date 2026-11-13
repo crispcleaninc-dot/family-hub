@@ -1,0 +1,14 @@
+{
+  "_note": "Cyars Notify settings shared by every app. Fill in once Firebase and the Notify Hub are set up. Until then, apps still give alerts while open or recently used.",
+  "hubUrl": "",
+  "vapidKey": "",
+  "firebaseVersion": "10.12.2",
+  "firebase": {
+    "apiKey": "",
+    "authDomain": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": ""
+  }
+}

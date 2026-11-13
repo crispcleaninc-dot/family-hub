@@ -1,7 +1,8 @@
 /* Cyars Key Vault - service worker. Keeps the app files on the device so it opens offline.
    It never caches or sees vault data: the vault lives encrypted in this device's IndexedDB. */
+try { importScripts('notify-sw.js'); } catch (e) {} // Cyars Notify: alerts + taps
 var SHELL = 'ckv-shell-v2';
-var FILES = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));
