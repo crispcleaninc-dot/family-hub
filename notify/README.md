@@ -21,7 +21,7 @@ Until then, alerts still work while an app is open or was used recently.
 CyarsNotify.schedule({ id: 'appt-123', type: 'appointment', title: 'Dentist — Emma', at: '2026-11-20T15:30', body: '3:30 PM, bring card', url: location.href });
 CyarsNotify.cancel('appt-123');   CyarsNotify.done('appt-123');
 ```
-Types: `appointment`, `deadline`, `unfinished`, `todo`. Repeat: `daily`, `weekly`.
+Types: `appointment`, `deadline`, `unfinished`, `todo`, `updates`. `CyarsNotify.announce(title, body)` sends an "App updates & news" alert; apps also announce themselves automatically when a new version installs. Repeat: `daily`, `weekly`.
 
 Other Apps Scripts can alert everyone who opted in to an app: POST `{action:'send', key:HUB_KEY, app:'Covenant', title, body, url, type}` to the hub.
 

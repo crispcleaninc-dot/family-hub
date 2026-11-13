@@ -135,7 +135,7 @@ function sendDue() {
       if (!at || at > now || last >= at) return;
       if (String(d[8]).split(',').indexOf(String(r[4])) < 0) return;
       if (quiet_(d[6], d[9], d[10])) return;
-      var label = { appointment: 'Appointment', deadline: 'Deadline', unfinished: 'Unfinished', todo: 'To do' }[r[4]] || '';
+      var label = { appointment: 'Appointment', deadline: 'Deadline', unfinished: 'Unfinished', todo: 'To do', updates: 'Update' }[r[4]] || '';
       var res = fcm_(r[0], { title: r[5] || 'Reminder', body: (label ? label + ' · ' : '') + (r[6] || ''), url: r[9] || d[4], tag: 'cyars-' + r[2] + '-' + r[3], icon: d[5] });
       if (res.gone) { gone[r[0]] = 1; return; }
       if (res.code !== 200) return;

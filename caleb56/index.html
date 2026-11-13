@@ -49,7 +49,11 @@
         if (!j || !j.ok || !j.data || !j.data.html) throw new Error((j && j.error) || 'No app in reply');
         var html = j.data.html;
         if ('caches' in window) caches.open('c56-app').then(function (c) { c.put(APP_KEY, new Response(html, { headers: { 'Content-Type': 'text/html' } })); });
-        try { localStorage.setItem('c56_app_ver', j.data.version || ''); localStorage.setItem('c56_app_at', new Date().toISOString()); } catch (e) {}
+        try {
+          var oldVer = localStorage.getItem('c56_app_ver') || '';
+          if (oldVer && j.data.version && oldVer !== j.data.version) localStorage.setItem('c56_upd', j.data.version); // Cyars Notify: announce new version
+          localStorage.setItem('c56_app_ver', j.data.version || ''); localStorage.setItem('c56_app_at', new Date().toISOString());
+        } catch (e) {}
         return html;
       });
   }
@@ -60,7 +64,9 @@
   function start(html) {
     var head = '<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0b3d2e">' +
       '<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Caleb #56"><link rel="apple-touch-icon" href="apple-touch-icon.png">' +
-      '<script src="sync.js"><\/script>';
+      '<script src="sync.js"><\/script>' +
+      '<script src="notify.js" data-app="Caleb #56"><\/script>' +
+      '<script src="notify-c56.js"><\/script>';
     var i = html.search(/<head[^>]*>/i);
     if (i > -1) { var end = html.indexOf('>', i) + 1; html = html.slice(0, end) + head + html.slice(end); }
     else html = head + html;
@@ -77,6 +83,5 @@
     });
 })();
 </script>
-<script src="notify.js" data-app="Caleb #56" defer></script>
 </body>
 </html>
