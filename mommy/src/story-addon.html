@@ -191,11 +191,12 @@ var STORY=(function(){
   $('sbCap').onclick=function(e){ if(e.target.tagName==='SPAN'&&typeof phonics==='function'){ stop(); phonics(e.target); } };
   AUD.addEventListener('ended',function(){ hl(-1); if(AUTO){ if(IDX<BOOK.pages.length-1)setTimeout(function(){ if(AUTO){ go(IDX+1); play(); } },650); else { AUTO=false; setPlay(); } } }); }
  function setPlay(){ var b=$('sbPlay'); if(b)b.textContent=AUTO?'⏸ Pause':'▶ Read to me'; }
- function stop(){ AUTO=false; setPlay(); try{ AUD.pause(); }catch(e){} cancelAnimationFrame(RAF); hl(-1); }
+ function stop(){ AUTO=false; setPlay(); try{ AUD.pause(); }catch(e){} try{ if(window.SB_SPEAK_STOP)window.SB_SPEAK_STOP(); }catch(e){} cancelAnimationFrame(RAF); hl(-1); }
  function open(id){ loading(true); ui(); getJSON('books/'+id+'/book.json').then(function(b){ BOOK=b; BOOK.id=id; IDX=0; loading(false); $('sbWrap').classList.add('on'); document.body.style.overflow='hidden'; go(0);
    b.pages.slice(0,3).forEach(function(p){ var i=new Image(); i.src=BASE+'art/bg/'+p.scene.bg+'.jpg'; });
   }).catch(function(e){ loading(false); if(window.toast)toast('Could not open the book. Check your internet and try again.'); }); }
- function close(){ stop(); $('sbWrap').classList.remove('on'); document.body.style.overflow=''; }
+ function openBook(b){ ui(); BOOK=b; IDX=0; $('sbWrap').classList.add('on'); document.body.style.overflow='hidden'; go(0); }
+ function close(){ stop(); try{ if(window.SB_SPEAK_STOP)window.SB_SPEAK_STOP(); }catch(e){} $('sbWrap').classList.remove('on'); document.body.style.overflow=''; }
  var WORDS=[],TIMES=[];
  function go(i){ if(!BOOK)return; if(i<0)return; if(i>=BOOK.pages.length){ return; } IDX=i; var p=BOOK.pages[i];
   stage(p.scene,$('sbStage')); var st=$('sbStage');
@@ -209,13 +210,16 @@ var STORY=(function(){
   var n=BOOK.pages[i+1]; if(n){ var im=new Image(); im.src=BASE+'art/bg/'+n.scene.bg+'.jpg'; }
   if(p.kind==='end'){ try{ var k2='mihStoryDone:'+BOOK.id; if(!localStorage.getItem(k2)){ localStorage.setItem(k2,'1'); if(window.GLOW&&GLOW.award)GLOW.award(3,'You finished '+BOOK.title+'!','🏁'); } }catch(e){} } }
  function hl(k){ var s=$('sbCap')?$('sbCap').querySelectorAll('span'):[]; s.forEach(function(x,j){ x.classList.toggle('on',j===k); }); }
- function play(){ var p=BOOK&&BOOK.pages[IDX]; if(!p||!p.audio){ if(AUTO)setTimeout(function(){ go(IDX+1); play(); },1500); return; }
+ function play(){ var p=BOOK&&BOOK.pages[IDX]; if(p&&!p.audio&&!p.audioUrl&&p.text&&window.SB_SPEAK){ hl(-1); window.SB_SPEAK(p.text,function(){ if(AUTO&&BOOK&&IDX<BOOK.pages.length-1)setTimeout(function(){ if(AUTO){ go(IDX+1); play(); } },650); else if(AUTO){ AUTO=false; setPlay(); } }); return; }
+  if(p&&p.audioUrl){ try{ AUD.pause(); }catch(e){} AUD.src=p.audioUrl; AUD.currentTime=0; var pr0=AUD.play(); if(pr0&&pr0.catch)pr0.catch(function(){}); cancelAnimationFrame(RAF); (function loop(){ var t=AUD.currentTime,k=-1; for(var j=0;j<TIMES.length;j++){ if(t>=TIMES[j])k=j; } if(!AUD.paused)hl(k); if(!AUD.paused&&!AUD.ended)RAF=requestAnimationFrame(loop); })(); return; }
+  if(!p||!p.audio){ if(AUTO)setTimeout(function(){ go(IDX+1); play(); },1500); return; }
   try{ AUD.pause(); }catch(e){} AUD.src=BASE+'books/'+BOOK.id+'/audio/'+p.audio; AUD.currentTime=0; var pr=AUD.play(); if(pr&&pr.catch)pr.catch(function(){});
   cancelAnimationFrame(RAF); (function loop(){ var t=AUD.currentTime,k=-1; for(var j=0;j<TIMES.length;j++){ if(t>=TIMES[j])k=j; } if(!AUD.paused)hl(k); if(!AUD.paused&&!AUD.ended)RAF=requestAnimationFrame(loop); })(); }
  /* ---------- home characters speak ---------- */
  var SAY={mom:['say-mom','say-mom2'],jojo:['say-jojo','say-jojo2'],pip:['say-pip','say-pip2'],bee:['say-bee','say-bee2']}, SAYI={}, VOICE=new Audio();
+ var SAYTXT={mom:['Hi, baby! Give yourself some grace today. 💛','Mommy is human too, you know. 💛'],jojo:["Mommy gets tired too. Let's give her a big hug! 🤗","Hey, I'm Jojo! When Mommy gives me a job, I finish it all the way! 💪🏾"],pip:["I can help Mommy! I'm a big helper! ✨","Hi! I'm Pip! Wanna read a story with me? Pleeease? 📖"],bee:['Ba ba boo! Hi hi! 🐝','Hee hee! Mama! I love you! 💛']};
  function homeVoices(){ var h=$('bkHero'); if(!h||h.__sb)return; h.__sb=1;
-  h.addEventListener('pointerdown',function(){ setTimeout(function(){ var j=h.querySelector('.bh-c.jump'); if(!j)return; var k=j.dataset.k, list=SAY[k]; if(!list)return; SAYI[k]=((SAYI[k]||0)+1)%list.length; try{ VOICE.pause(); VOICE.src=BASE+'art/'+list[SAYI[k]]+'.mp3'; VOICE.play().catch(function(){}); }catch(e){} },40); }); }
+  h.addEventListener('pointerdown',function(ev){ var tg=ev&&ev.target&&ev.target.closest&&ev.target.closest('.bh-c'); setTimeout(function(){ var j=tg||h.querySelector('.bh-c.jump'); if(!j)return; var k=j.dataset.k, list=SAY[k]; if(!list)return; SAYI[k]=((SAYI[k]||0)+1)%list.length; try{ VOICE.pause(); VOICE.src=BASE+'art/'+list[SAYI[k]]+'.mp3?v=3'; VOICE.play().catch(function(){}); }catch(e){} try{ var bb=h.querySelector('.bh-bub'); if(bb&&SAYTXT[k]){ var nb=bb.cloneNode(false); nb.textContent=SAYTXT[k][SAYI[k]]; bb.parentNode.replaceChild(nb,bb); var ms=Math.max(2600,nb.textContent.length*75); nb.style.animationDuration=(ms/1000)+'s'; setTimeout(function(){ nb.remove(); },ms); } }catch(e){} },40); }); }
  /* ---------- tap feedback for every book ---------- */
  function taps(){ if(document.__sbTaps)return; document.__sbTaps=1;
   document.addEventListener('pointerdown',function(e){ var c=e.target.closest&&e.target.closest('.bookcard'); if(c){ c.classList.add('sb-press'); setTimeout(function(){ c.classList.remove('sb-press'); },220); } },true);
@@ -228,6 +232,6 @@ var STORY=(function(){
   var el=$('shelf'); if(el){ try{ new MutationObserver(function(){ if(!el.querySelector('.sb-card')&&!/Loading/.test(el.textContent))shelf(); else shelf(); }).observe(el,{childList:true}); }catch(e){} }
   var n=0,iv=setInterval(function(){ homeVoices(); shelf(); if(++n>20)clearInterval(iv); },600); catalog().catch(function(){}); }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,700); }); else setTimeout(init,700);
- return {open:open,close:close};
+ return {open:open,openBook:openBook,close:close,stop:stop};
 })();
 </script>

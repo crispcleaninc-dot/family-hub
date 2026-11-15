@@ -1,0 +1,195 @@
+<!-- ===== STUDIO 3D + VOICES ADD-ON (Nov 2026) ===== -->
+<style>
+#bkHero .bh-bub{ white-space:normal !important; max-width:min(270px,72%); text-align:center; line-height:1.3; }
+#mihAd{ margin:14px auto 6px; max-width:520px; border-radius:26px; overflow:hidden; position:relative; background:#1B2951; box-shadow:0 14px 34px rgba(27,41,81,.28); }
+#mihAd video{ display:block; width:100%; max-height:62vh; aspect-ratio:9/16; object-fit:cover; background:#1B2951; }
+#mihAd .ad-top{ position:absolute; left:12px; top:12px; background:rgba(27,41,81,.72); color:#fff; font:700 12.5px Fredoka,Nunito,sans-serif; padding:6px 11px; border-radius:16px; letter-spacing:.3px; }
+#mihAd .ad-snd{ position:absolute; right:12px; bottom:12px; border:0; border-radius:24px; padding:11px 16px; font:700 15px Fredoka,Nunito,sans-serif; color:#1B2951; background:#FFD65A; box-shadow:0 5px 0 #c99a1d; cursor:pointer; width:auto; margin:0; }
+#mihAd .ad-snd.on{ background:#fff; box-shadow:0 5px 0 #b9c3d9; }
+.cs-vstat{ font:600 13px Nunito,sans-serif; color:#5a4f8a; margin:6px 2px 0; min-height:18px; }
+.cs-vstat b{ color:#1B2951; }
+#chStory{ width:100%; margin-top:10px; background:linear-gradient(135deg,#ff9a76,#f06292); color:#fff; border:0; border-radius:22px; padding:14px; font:700 16px Fredoka,Nunito,sans-serif; box-shadow:0 5px 0 #b8456a; cursor:pointer; }
+#stMk{ position:fixed; inset:0; z-index:9998; background:rgba(20,16,40,.6); display:none; align-items:flex-end; justify-content:center; }
+#stMk.on{ display:flex; }
+#stMk .mk-in{ background:#fff8ef; width:100%; max-width:640px; max-height:92vh; overflow:auto; border-radius:26px 26px 0 0; padding:18px 16px 26px; font-family:Nunito,sans-serif; }
+#stMk h3{ font:700 22px Fredoka,sans-serif; color:#1B2951; margin:4px 0 2px; }
+#stMk .mk-note{ font-size:13px; color:#6a5f8f; margin-bottom:10px; }
+#stMk .mk-title{ width:100%; font:700 18px Fredoka,sans-serif; padding:10px 12px; border-radius:14px; border:2px solid #e8dcc8; margin-bottom:10px; box-sizing:border-box; }
+.mk-pg{ background:#fff; border-radius:18px; padding:10px; margin:10px 0; box-shadow:0 4px 12px rgba(40,30,80,.08); display:grid; grid-template-columns:96px 1fr; gap:10px; }
+.mk-th{ width:96px; height:72px; border-radius:12px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+.mk-th img{ position:absolute; bottom:0; height:78%; }
+.mk-pg textarea{ width:100%; min-height:56px; border:2px solid #efe4d2; border-radius:12px; padding:8px; font:600 15px Nunito,sans-serif; box-sizing:border-box; resize:vertical; }
+.mk-row{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; align-items:center; }
+.mk-row select{ font:600 13px Nunito,sans-serif; padding:6px 8px; border-radius:10px; border:2px solid #efe4d2; width:auto; margin:0; }
+.mk-chip{ border:2px solid #e3d6c0; background:#fff; border-radius:16px; padding:3px 4px; cursor:pointer; display:inline-flex; align-items:center; }
+.mk-chip img{ height:30px; width:30px; object-fit:cover; object-position:top; border-radius:50%; }
+.mk-chip.on{ border-color:#f06292; background:#ffe3ee; }
+.mk-btns{ display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.mk-btns button{ flex:1 1 140px; margin:0; }
+#myStories{ margin:6px 0 16px; }
+#myStories h4{ font:700 18px Fredoka,Nunito,sans-serif; color:#1B2951; margin:6px 2px 8px; }
+.mys-card .mys-art{ aspect-ratio:3/4; border-radius:14px; background-size:cover; background-position:center; position:relative; overflow:hidden; }
+.mys-card .mys-art img{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); height:70%; }
+.mys-card .sb-badge{ background:#f06292 !important; }
+.mys-del{ border:0; background:none; color:#a0566f; font-size:12px; cursor:pointer; padding:2px; margin:0; width:auto; }
+</style>
+<script>
+var STUDIO3D=(function(){
+ var BASE='https://crispcleaninc-dot.github.io/family-hub/mommy/';
+ function $(i){ return document.getElementById(i); }
+ function esc(s){ return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+ function note(t){ try{ if(window.toast)toast(t); }catch(e){} }
+
+ /* ---------- 1. the real 3D cast replaces the old drawn people ---------- */
+ var IMG={}, FILES={'Mommy':'art/mommy.webp','Jojo':'art/jojo.webp','Pip':'art/pip.webp','Baby Bee':'art/bee.webp','Biscuit':'art/props/prop_dog.webp'};
+ var KEYOF={'Mommy':'mom','Jojo':'jojo','Pip':'pip','Baby Bee':'bee','Biscuit':'dog'};
+ var SIZE={'Mommy':[1.32,0.32],'Jojo':[0.74,0],'Pip':[0.66,0],'Baby Bee':[0.58,0],'Biscuit':[0.42,0]};
+ Object.keys(FILES).forEach(function(n){ var im=new Image(); im.crossOrigin='anonymous'; im.onload=function(){ IMG[n]=im; }; im.src=BASE+FILES[n]; });
+ var POSE={ stand:[0,1,1], walk:[4,1,1], run:[9,1.03,.98], jump:[0,1.07,.95], cheer:[-4,1.04,.98], wave:[-6,1,1], wave2:[6,1,1], dance:[-9,1.02,1], sit:[0,.8,1.04], pray:[0,.97,1], read:[2,.98,1] };
+ function realRender(s,pose,face,px){ var im=IMG[s.name], sz=SIZE[s.name]||[.8,0], p=POSE[pose]||[0,1,1], lie=pose==='sleep';
+  var ih=px*sz[0]*p[1], iw=ih*(im.width/im.height)*p[2], W=Math.ceil(Math.max(iw*1.25,10)), H=Math.ceil(px), cv=document.createElement('canvas'), c;
+  if(lie){ var L=Math.ceil(ih*0.8), T=Math.ceil(iw*0.8); cv.width=L; cv.height=T; c=cv.getContext('2d'); c.translate(L/2,T/2); c.rotate(-Math.PI/2); c.drawImage(im,-T/2,-L/2,T,L); return cv; }
+  cv.width=W; cv.height=H; c=cv.getContext('2d'); c.translate(W/2,H+ih*sz[1]); c.rotate(p[0]*Math.PI/180); c.drawImage(im,-iw/2,-ih,iw,ih); return cv; }
+ function hookFig(){ if(!window.Fig||Fig.__real)return !!(window.Fig&&Fig.__real); var orig=Fig.render; Fig.__real=1;
+  Fig.render=function(s,pose,face,px){ try{ if(s&&IMG[s.name]&&!/figLines|presetCanvas|lineArt/.test(String(new Error().stack||'')))return realRender(s,pose,face,px); }catch(e){} return orig.apply(Fig,arguments); }; return true; }
+ /* Talk-with-the-family tiles: swap the emoji dog for Biscuit and refresh when the art arrives */
+ function fixTiles(){ var w=$('chWho'); if(!w)return; w.querySelectorAll('div').forEach(function(d){ var nm=(d.textContent||'').trim(); var img=d.querySelector('img'); if(!img)return;
+   if(IMG[nm]&&!img.__real){ img.__real=1; img.src=BASE+FILES[nm]; img.style.objectFit='contain'; img.style.objectPosition='bottom'; img.style.background='radial-gradient(circle at 50% 30%,#fff3d6,#ffe0ec)'; img.style.borderRadius='18px'; } }); }
+
+ /* ---------- 2. a real voice for every character ---------- */
+ var VOICE={ 'Mommy':{v:'af_heart',p:1,s:.9,dp:1,dr:.92}, 'Jojo':{v:'am_puck',p:1.32,s:1,dp:1.35,dr:1}, 'Pip':{v:'af_sky',p:1.28,s:1,dp:1.65,dr:1.05}, 'Baby Bee':{v:'af_bella',p:1.5,s:.85,dp:1.95,dr:.9}, 'Biscuit':{v:'am_michael',p:1.15,s:1.1,dp:.6,dr:1.1} };
+ var AC=null; function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(AC&&AC.state==='suspended')AC.resume(); return AC; }
+ document.addEventListener('pointerdown',function(){ ac(); },true);
+ var CUR=null, TOKEN=0, MAN=null;
+ function stopAll(){ TOKEN++; try{ if(CUR)CUR.stop(); }catch(e){} CUR=null; try{ ORIGCANCEL(); }catch(e){} }
+ function playBuf(buf,rate,done){ var a=ac(); if(!a){ done&&done(); return; } try{ if(CUR)CUR.stop(); }catch(e){} var src=a.createBufferSource(); src.buffer=buf; src.playbackRate.value=rate||1; src.connect(a.destination); src.onended=function(){ if(CUR===src){ CUR=null; done&&done(); } }; CUR=src; src.start(); }
+ function clip(file,done){ var my=TOKEN; fetch(BASE+'art/chat/'+file+'.mp3').then(function(r){ return r.arrayBuffer(); }).then(function(ab){ return new Promise(function(res,rej){ ac().decodeAudioData(ab,res,rej); }); }).then(function(b){ if(my===TOKEN)playBuf(b,1,done); }).catch(function(){ done&&done('fail'); }); }
+ function norm(t){ return String(t||'').replace(/\*[^*]*\*/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
+ function sayable(t){ return String(t||'').replace(/\*[^*]*\*/g,' ').replace(/(\d+):(\d+)/g,'$1, $2').replace(/[\u{1F000}-\u{1FFFF}☀-➿️‍]/gu,'').replace(/\(my AI helper[^)]*\)/,'').replace(/\s+/g,' ').trim(); }
+ function manifest(){ if(MAN)return Promise.resolve(MAN); return fetch(BASE+'art/chat/index.json').then(function(r){ return r.json(); }).then(function(j){ MAN=j; return j; }).catch(function(){ MAN={}; return MAN; }); }
+ /* in-browser neural voice (Kokoro) runs in a background worker so the app never freezes */
+ var W=null, WSTATE='off', WCB={}, WID=0;
+ var WCODE="import {KokoroTTS} from 'https://cdn.jsdelivr.net/npm/kokoro-js@1.2.1/+esm';\n"+
+ "let tts=null; const VB='https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/resolve/main/voices/';\n"+
+ "async function blend(){ try{ const c=await caches.open('kokoro-voices'); if(await c.match(VB+'__mih_blend_v1'))return; const [a,b]=await Promise.all(['af_heart','af_nicole'].map(n=>fetch(VB+n+'.bin').then(r=>r.arrayBuffer()))); const A=new Float32Array(a),B=new Float32Array(b),O=new Float32Array(A.length); for(let i=0;i<A.length;i++)O[i]=.55*A[i]+.45*(B[i]||0); await c.put(VB+'af_heart.bin',new Response(O.buffer)); await c.put(VB+'__mih_blend_v1',new Response('1')); }catch(e){} }\n"+
+ "self.onmessage=async(e)=>{ const m=e.data; try{ if(m.type==='load'){ await blend(); tts=await KokoroTTS.from_pretrained('onnx-community/Kokoro-82M-v1.0-ONNX',{dtype:'q8',device:'wasm'}); self.postMessage({type:'ready'}); return; }\n"+
+ " if(m.type==='say'){ const a=await tts.generate(m.text,{voice:m.voice,speed:m.speed}); self.postMessage({type:'audio',id:m.id,pcm:a.audio,sr:a.sampling_rate},[a.audio.buffer]); } }catch(err){ self.postMessage({type:m.type==='load'?'fail':'err',id:m.id,msg:String(err)}); } };";
+ function vstat(t){ var el=$('csVstat'); if(el)el.innerHTML=t||''; }
+ function loadVoices(){ if(WSTATE!=='off')return; WSTATE='loading';
+  try{ W=new Worker(URL.createObjectURL(new Blob([WCODE],{type:'text/javascript'})),{type:'module'}); }catch(e){ WSTATE='fail'; return; }
+  vstat('🎙️ Getting the family\'s real voices ready… <span style="opacity:.7">(first time only, about 90 MB)</span>');
+  var to=setTimeout(function(){ if(WSTATE==='loading'){ WSTATE='fail'; vstat(''); } },180000);
+  W.onmessage=function(e){ var m=e.data; if(m.type==='ready'){ clearTimeout(to); WSTATE='ready'; vstat('🎙️ <b>Real voices on</b> · each person sounds like themselves'); setTimeout(function(){ if(WSTATE==='ready')vstat(''); },5000); }
+   else if(m.type==='fail'){ clearTimeout(to); WSTATE='fail'; vstat(''); }
+   else if(WCB[m.id]){ var f=WCB[m.id]; delete WCB[m.id]; f(m.type==='audio'?m:null); } };
+  W.onerror=function(){ if(WSTATE==='loading'){ WSTATE='fail'; vstat(''); } }; W.postMessage({type:'load'}); }
+ function neural(text,who){ return new Promise(function(res){ if(WSTATE!=='ready'){ res(null); return; } var v=VOICE[who]||VOICE.Mommy, id=++WID; var t=setTimeout(function(){ delete WCB[id]; res(null); },60000);
+  WCB[id]=function(m){ clearTimeout(t); if(!m){ res(null); return; } var a=ac(); var b=a.createBuffer(1,m.pcm.length,m.sr); b.getChannelData(0).set(m.pcm); res({buf:b,rate:v.p}); };
+  W.postMessage({type:'say',id:id,text:text,voice:v.v,speed:v.s/v.p}); }); }
+ function sentences(t){ var s=t.match(/[^.!?…]+[.!?…]*["”]?\s*/g)||[t]; var out=[]; s.forEach(function(x){ x=x.trim(); if(!x)return; if(out.length&&out[out.length-1].length<18)out[out.length-1]+=' '+x; else out.push(x); }); return out; }
+ var ORIGSPEAK=null, ORIGCANCEL=function(){};
+ function device(text,who,done){ try{ var v=VOICE[who]||VOICE.Mommy, u=new SpeechSynthesisUtterance(text); u.pitch=Math.min(2,v.dp); u.rate=v.dr; if(window.WARMVOICE)u.voice=WARMVOICE; u.onend=function(){ done&&done(); }; u.onerror=function(){ done&&done(); }; ORIGSPEAK(u); }catch(e){ done&&done(); } }
+ /* speak as a character: saved real-voice clip → in-browser neural voice → phone voice tuned to that character */
+ function speakAs(who,raw,done){ stopAll(); var my=TOKEN, text=sayable(raw); if(!text&&who!=='Biscuit'&&who!=='Baby Bee'){ done&&done(); return; }
+  manifest().then(function(m){ if(my!==TOKEN)return; var f=m[who]&&m[who][norm(raw)];
+   if(!f&&(who==='Biscuit'||who==='Baby Bee')){ var keys=Object.keys(m[who]||{}); if(keys.length)f=m[who][keys[Math.floor(Math.random()*keys.length)]]; }
+   if(f){ clip(f,function(err){ if(err&&my===TOKEN)device(text,who,done); else done&&done(); }); return; }
+   if(WSTATE==='ready'){ var parts=sentences(text), proms=parts.map(function(p){ return neural(p,who); }), i=0; vstat('🎙️ <b>'+esc(who)+'</b> is about to talk…');
+    (function next(){ if(my!==TOKEN)return; if(i>=proms.length){ done&&done(); return; } proms[i].then(function(r){ if(my!==TOKEN)return; vstat(''); if(!r){ device(parts.slice(i).join(' '),who,done); return; } i++; playBuf(r.buf,r.rate,next); }); })(); return; }
+   device(text,who,done); }); }
+ function chatOpen(){ var cs=$('cs'),p=$('csp-chat'); return cs&&!cs.classList.contains('hide')&&p&&p.classList.contains('on'); }
+ function chatWho(){ var on=$('chWho')&&$('chWho').querySelector('div.on'); return on?(on.textContent||'').trim():'Mommy'; }
+ function hookSpeech(){ if(!window.speechSynthesis||speechSynthesis.__mih)return; speechSynthesis.__mih=1; ORIGSPEAK=speechSynthesis.speak.bind(speechSynthesis); ORIGCANCEL=speechSynthesis.cancel.bind(speechSynthesis);
+  speechSynthesis.speak=function(u){ try{ if(chatOpen()&&u&&u.text){ var who=chatWho(); speakAs(who,u.text); return; } }catch(e){} return ORIGSPEAK(u); };
+  speechSynthesis.cancel=function(){ try{ TOKEN++; if(CUR)CUR.stop(); CUR=null; }catch(e){} return ORIGCANCEL(); }; }
+ /* stories read in Mommy's voice */
+ window.SB_SPEAK=function(text,done){ speakAs('Mommy',text,done); };
+ window.SB_SPEAK_STOP=function(){ stopAll(); vstat(''); };
+
+ /* ---------- 3. turn our chat into a story ---------- */
+ var BGS=['bg_kitchen','bg_kitchen_mess','bg_living_calm','bg_living_loud','bg_park','bg_beach','bg_porch','bg_school','bg_shop','bg_parlor','bg_car','bg_hallway','bg_ice_sunset'];
+ var BGNAME={bg_kitchen:'Kitchen',bg_kitchen_mess:'Messy kitchen',bg_living_calm:'Cozy living room',bg_living_loud:'Busy living room',bg_park:'Park',bg_beach:'Beach',bg_porch:'Front porch',bg_school:'School',bg_shop:'Ice cream shop',bg_parlor:'Ice cream parlor',bg_car:'In the car',bg_hallway:'Hallway',bg_ice_sunset:'Sunset'};
+ var ACTS=['idle','bounce','jump','walkIn','tiptoe','look','bliss','hug','hugIn','big','wobble','droop','sleepy','yawn','breathe','kneel','lean','plead','turn','shake','drum'];
+ var ACTNAME={idle:'Just be',bounce:'Bounce',jump:'Jump for joy',walkIn:'Walk in',tiptoe:'Tiptoe',look:'Look around',bliss:'So happy',hug:'Hug',hugIn:'Run for a hug',big:'Get big',wobble:'Wobble',droop:'Feel tired',sleepy:'Sleepy',yawn:'Yawn',breathe:'Deep breath',kneel:'Kneel',lean:'Lean',plead:'Say please',turn:'Turn around',shake:'Shake',drum:'Drum'};
+ var PROPS=['','prop_cone','prop_kettle','prop_clock','prop_bowl','prop_pots','prop_backpack','prop_sock','prop_keys','prop_toast','prop_tv'];
+ var FXS=['','sparkles','hearts','notes','zzz','glow','breath','quiet','warm','night'];
+ var WHO=['mom','jojo','pip','bee','dog'], WHOIMG={mom:'art/mommy.webp',jojo:'art/jojo.webp',pip:'art/pip.webp',bee:'art/bee.webp',dog:'art/props/prop_dog.webp'}, WHONAME={mom:'Mommy',jojo:'Jojo',pip:'Pip',bee:'Baby Bee',dog:'Biscuit'};
+ var VERSES={eph4:['Ephesians 4:32',"And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you."],ps139:['Psalm 139:14',"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well."],gal6:['Galatians 6:2',"Bear ye one another's burdens, and so fulfil the law of Christ."],jas1:['James 1:19',"Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath."],mk6:['Mark 6:31',"And he said unto them, Come ye yourselves apart into a desert place, and rest a while."],pro17:['Proverbs 17:22',"A merry heart doeth good like a medicine: but a broken spirit drieth the bones."],jn4:['1 John 4:19',"We love him, because he first loved us."],th5:['1 Thessalonians 5:12',"And we beseech you, brethren, to know them which labour among you, and are over you in the Lord, and admonish you;"]};
+ var PLAN=null;
+ function transcript(){ var out=[]; ($('chLog')?$('chLog').querySelectorAll('.csmsg'):[]).forEach(function(m){ var me=m.classList.contains('me'); var w=m.querySelector('.who'); var who=me?'Child':(w?w.textContent:'Character'); var t=(m.textContent||''); if(w)t=t.slice(w.textContent.length); out.push(who+': '+t.trim()); }); return out; }
+ function ask(msgs){ return fetch('https://text.pollinations.ai/openai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'openai',messages:msgs})}).then(function(r){ if(!r.ok)throw new Error('busy'); return r.json(); }).then(function(j){ return String(j.choices[0].message.content||''); }); }
+ function pick(v,list,d){ return list.indexOf(v)>=0?v:d; }
+ function tidy(p){ var pages=(p&&p.pages||[]).slice(0,8).map(function(g,i){ var who=(g.who||[]).filter(function(w){ return WHO.indexOf(w)>=0; }).slice(0,3); if(!who.length)who=['mom'];
+   return {text:String(g.text||'').replace(/[<>]/g,'').slice(0,240), bg:pick(g.bg,BGS,'bg_living_calm'), who:who, action:pick(g.action,ACTS,'bounce'), prop:pick(g.prop||'',PROPS,''), fx:pick(g.fx||'',FXS,'')}; }).filter(function(g){ return g.text; });
+  return {title:String(p&&p.title||'Our Story').replace(/[<>]/g,'').slice(0,60), verse:VERSES[p&&p.verse]?p.verse:'eph4', pages:pages}; }
+ function fallbackPlan(lines){ var kid=lines.filter(function(l){ return /^Child:/.test(l); }).map(function(l){ return l.slice(7).replace(/[?!.]+$/,''); }); var who=chatWho(), k=KEYOF[who]||'mom';
+  var a=kid[0]||'a fun idea', b=kid[1]||kid[0]||'something kind', c=kid[2]||'how much we love each other';
+  return tidy({title:'Talking with '+who, verse:'eph4', pages:[
+   {text:'One day, a little friend sat down to talk with '+who+'.',bg:'bg_living_calm',who:[k],action:'walkIn',fx:'sparkles'},
+   {text:'"Guess what?" said the little friend. "'+a+'!"',bg:'bg_living_calm',who:[k],action:'look',fx:''},
+   {text:who+' listened with big, kind ears. Then they talked about '+b+'.',bg:'bg_park',who:k==='mom'?['mom','jojo']:[k,'mom'],action:'bounce',fx:'notes'},
+   {text:'Mommy was a little tired that day. Mommy is human too, you know.',bg:'bg_living_calm',who:['mom'],action:'droop',fx:'quiet'},
+   {text:'So everyone gave Mommy a big hug and some grace.',bg:'bg_living_calm',who:['mom','jojo','pip'],action:'hug',fx:'hearts'},
+   {text:'And they all remembered '+c+'. The end!',bg:'bg_ice_sunset',who:['mom','jojo','pip','bee'].slice(0,3),action:'bliss',fx:'warm'}]}); }
+ function makePlan(){ var lines=transcript(); if(lines.filter(function(l){ return /^Child:/.test(l); }).length<1){ note('Say a few things to the family first, then make your story ✨'); return; }
+  var btn=$('chStory'); btn.disabled=true; btn.textContent='✨ Writing your story…';
+  var sys="You turn a child's chat with storybook characters into a short, gentle picture-book story in the 'Mommy Is Human Too' series. The family: Mommy (a warm Black Christian mom who is human and needs grace too), Jojo (big brother), Pip (little sister), Baby Bee (baby), Biscuit (puppy). Build the story from what the CHILD talked about. Include one moment where Mommy is human (tired, makes a mistake, or needs a break) and the children understand her and help, and end warm and kind. No scary, violent, romantic or grown-up content. Never include the child's real name or personal details. Reply with ONLY JSON, no other text: {\"title\":\"...\",\"verse\":one of "+JSON.stringify(Object.keys(VERSES))+",\"pages\":[{\"text\":\"one or two short sentences for ages 3-8\",\"bg\":one of "+JSON.stringify(BGS)+",\"who\":[1 to 3 of "+JSON.stringify(WHO)+"],\"action\":one of "+JSON.stringify(ACTS)+",\"prop\":one of "+JSON.stringify(PROPS)+",\"fx\":one of "+JSON.stringify(FXS)+"}]} with 5 or 6 pages.";
+  ask([{role:'system',content:sys},{role:'user',content:'Our chat:\n'+lines.slice(-24).join('\n')}]).then(function(t){ var m=t.match(/\{[\s\S]*\}/); var p=tidy(JSON.parse(m[0])); if(p.pages.length<3)throw new Error('short'); return p; })
+  .catch(function(){ note('The free story helper is busy, so we built a story from your chat ourselves.'); return fallbackPlan(lines); })
+  .then(function(p){ btn.disabled=false; btn.textContent='✨ Turn our chat into a story'; PLAN=p; editor(); }); }
+ function opt(list,names,v){ return list.map(function(x){ return '<option value="'+x+'"'+(x===v?' selected':'')+'>'+esc(names?names[x]||x||'None':x||'None')+'</option>'; }).join(''); }
+ var PROPNAME={'':'No prop',prop_cone:'Ice cream',prop_kettle:'Kettle',prop_clock:'Clock',prop_bowl:'Bowl',prop_pots:'Pots & pans',prop_backpack:'Backpack',prop_sock:'Sock',prop_keys:'Keys',prop_toast:'Toast',prop_tv:'TV'};
+ var FXNAME={'':'No magic',sparkles:'Sparkles',hearts:'Hearts',notes:'Music',zzz:'Sleepy z\'s',glow:'Glow',breath:'Calm breath',quiet:'Quiet',warm:'Warm light',night:'Night time'};
+ function editor(){ if(!$('stMk'))document.body.insertAdjacentHTML('beforeend','<div id="stMk"><div class="mk-in"></div></div>');
+  var h='<h3>✨ Your story</h3><div class="mk-note">The app wrote this from your chat. Change any words, places, people or moves, then press <b>Make it move!</b></div><input class="mk-title" id="mkTitle" maxlength="60" value="'+esc(PLAN.title)+'">';
+  PLAN.pages.forEach(function(g,i){ h+='<div class="mk-pg" data-i="'+i+'"><div class="mk-th" style="background-image:url('+BASE+'art/bg/'+g.bg+'.jpg)">'+g.who.map(function(w,j){ return '<img src="'+BASE+WHOIMG[w]+'" style="left:'+(8+j*28)+'%">'; }).join('')+'</div><div><textarea data-f="text" maxlength="240">'+esc(g.text)+'</textarea>'+
+   '<div class="mk-row"><select data-f="bg">'+opt(BGS,BGNAME,g.bg)+'</select><select data-f="action">'+opt(ACTS,ACTNAME,g.action)+'</select><select data-f="prop">'+opt(PROPS,PROPNAME,g.prop)+'</select><select data-f="fx">'+opt(FXS,FXNAME,g.fx)+'</select></div>'+
+   '<div class="mk-row">'+WHO.map(function(w){ return '<span class="mk-chip'+(g.who.indexOf(w)>=0?' on':'')+'" data-w="'+w+'" title="'+WHONAME[w]+'"><img src="'+BASE+WHOIMG[w]+'"></span>'; }).join('')+'</div></div></div>'; });
+  h+='<div class="mk-btns"><button class="gold" id="mkGo">🎬 Make it move!</button><button id="mkSave">💾 Save to My stories</button><button class="ghost" id="mkX">Close</button></div>';
+  var box=$('stMk'); box.querySelector('.mk-in').innerHTML=h; box.classList.add('on');
+  box.querySelector('.mk-in').onchange=box.querySelector('.mk-in').oninput=function(e){ var pg=e.target.closest('.mk-pg'); if(e.target.id==='mkTitle'){ PLAN.title=e.target.value; return; } if(!pg)return; var g=PLAN.pages[+pg.dataset.i], f=e.target.dataset.f; if(f){ g[f]=e.target.value; if(f==='bg')pg.querySelector('.mk-th').style.backgroundImage='url('+BASE+'art/bg/'+g.bg+'.jpg)'; } };
+  box.querySelector('.mk-in').onclick=function(e){ var ch=e.target.closest('.mk-chip'); if(ch){ var pg=ch.closest('.mk-pg'), g=PLAN.pages[+pg.dataset.i], w=ch.dataset.w, k=g.who.indexOf(w); if(k>=0){ if(g.who.length>1)g.who.splice(k,1); } else if(g.who.length<3)g.who.push(w); else note('Up to 3 people on a page');
+    pg.querySelectorAll('.mk-chip').forEach(function(c){ c.classList.toggle('on',g.who.indexOf(c.dataset.w)>=0); }); pg.querySelector('.mk-th').innerHTML=g.who.map(function(w2,j){ return '<img src="'+BASE+WHOIMG[w2]+'" style="left:'+(8+j*28)+'%">'; }).join(''); } };
+  $('mkX').onclick=function(){ box.classList.remove('on'); }; $('mkGo').onclick=function(){ box.classList.remove('on'); play(PLAN); }; $('mkSave').onclick=function(){ save(PLAN); }; }
+ var XS={1:[42],2:[28,58],3:[18,44,68]};
+ function toBook(p){ var v=VERSES[p.verse]||VERSES.eph4;
+  function scene(g){ var xs=XS[g.who.length]||XS[3]; var order=g.who.slice().sort(function(a,b){ return (a==='mom'?-1:0)-(b==='mom'?-1:0); });
+   var cast=order.map(function(w,i){ var a=g.action; if(w==='dog')a=(a==='bounce'||a==='jump'||a==='bliss')?'wag':'idle'; return [w,xs[i],a,{delay:i*0.25}]; });
+   var props=g.prop?[[g.prop,74,40,22,'float']]:[]; return {bg:g.bg,cast:cast,props:props,fx:g.fx?[g.fx]:[]}; }
+  var first=p.pages[0]||{bg:'bg_living_calm',who:['mom'],action:'bounce'};
+  var pages=[{kind:'cover',text:p.title,scene:{bg:first.bg,cast:[['mom',30,'bounce',{}],['jojo',56,'bounce',{delay:.2}],['pip',72,'bounce',{delay:.4}]],props:[],fx:['sparkles']}}];
+  p.pages.forEach(function(g){ pages.push({kind:'page',text:g.text,dur:Math.max(4,g.text.split(/\s+/).length*0.42),scene:scene(g)}); });
+  pages.push({kind:'end',text:v[1]+' '+v[0],dur:9,scene:{bg:'bg_ice_sunset',cast:[['mom',34,'hug',{}],['jojo',58,'hugIn',{delay:.2}],['pip',72,'hugIn',{delay:.4}]],props:[],fx:['hearts','warm']}});
+  return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:[v[0],v[1]],pages:pages}; }
+ function play(p){ loadVoices(); if(!window.STORY||!STORY.openBook){ note('Story player is still loading. Try again in a second.'); return; } try{ $('cs').classList.add('hide'); }catch(e){} STORY.openBook(toBook(p)); try{ if(window.GLOW&&GLOW.award)GLOW.award(2,'You made your own story!','🎬'); }catch(e){} }
+ function mine(){ try{ return JSON.parse(localStorage.getItem('mihMyStories')||'[]'); }catch(e){ return []; } }
+ function save(p){ var l=mine(); p.id=p.id||Date.now(); l=l.filter(function(x){ return x.id!==p.id; }); l.unshift(JSON.parse(JSON.stringify(p))); l=l.slice(0,24); try{ localStorage.setItem('mihMyStories',JSON.stringify(l)); note('Saved to My stories on the bookshelf 💛'); }catch(e){ note('Could not save on this device'); } shelf(true); }
+ function shelf(force){ var sh=$('shelf'); if(!sh)return; var l=mine(), box=$('myStories'); if(!l.length){ if(box)box.remove(); return; }
+  if(box&&!force&&box.dataset.n===String(l.length))return; if(!box){ box=document.createElement('div'); box.id='myStories'; sh.parentNode.insertBefore(box,sh); }
+  box.dataset.n=String(l.length); box.innerHTML='<h4>✨ Our stories</h4><div class="'+esc(sh.className)+'" style="'+esc(sh.getAttribute('style')||'')+'">'+l.map(function(p,i){ var g=p.pages[0]||{bg:'bg_living_calm',who:['mom']}; return '<div class="bookcard mys-card" data-i="'+i+'"><span class="sb-badge">✨ Our story</span><div class="mys-art" style="background-image:url('+BASE+'art/bg/'+g.bg+'.jpg)"><img src="'+BASE+WHOIMG[g.who[0]||'mom']+'"></div><div class="t">'+esc(p.title)+'</div><div class="p"><button class="mys-del" data-del="'+i+'">remove</button></div></div>'; }).join('')+'</div>';
+  box.onclick=function(e){ var d=e.target.dataset&&e.target.dataset.del; if(d!=null){ e.stopPropagation(); var l2=mine(); l2.splice(+d,1); localStorage.setItem('mihMyStories',JSON.stringify(l2)); shelf(true); return; } var c=e.target.closest('.mys-card'); if(c){ var s=mine()[+c.dataset.i]; if(s)play(s); } }; }
+ function chatUI(){ var p=$('csp-chat'); if(!p||$('chStory'))return; var row=$('chIn')&&$('chIn').closest('.row'); var st=document.createElement('div'); st.id='csVstat'; st.className='cs-vstat'; (row||p).parentNode.insertBefore(st,row?row.nextSibling:null);
+  var b=document.createElement('button'); b.id='chStory'; b.type='button'; b.textContent='✨ Turn our chat into a story'; b.onclick=makePlan; st.parentNode.insertBefore(b,st.nextSibling);
+  try{ new MutationObserver(function(){ if(p.classList.contains('on')){ fixTiles(); if($('chVoice')&&$('chVoice').checked)loadVoices(); } }).observe(p,{attributes:true,attributeFilter:['class']}); }catch(e){}
+  try{ new MutationObserver(fixTiles).observe($('chWho'),{childList:true}); }catch(e){} }
+
+ /* ---------- 4. home: tap the right person, and the commercial plays on its own ---------- */
+ var MASK={};
+ function masks(){ ['mom','jojo','pip','bee'].forEach(function(k){ if(MASK[k])return; var im=new Image(); im.crossOrigin='anonymous'; im.onload=function(){ var c=document.createElement('canvas'); c.width=im.width; c.height=im.height; var x=c.getContext('2d'); x.drawImage(im,0,0); try{ MASK[k]={w:im.width,h:im.height,d:x.getImageData(0,0,im.width,im.height).data}; }catch(e){} }; im.src=BASE+'art/'+(k==='mom'?'mommy':k)+'.webp'; }); }
+ function solid(img,cx,cy){ var m=MASK[img.dataset.k]; var r=img.getBoundingClientRect(); if(cx<r.left||cx>r.right||cy<r.top||cy>r.bottom)return false; if(!m)return true; var px=Math.floor((cx-r.left)/r.width*m.w), py=Math.floor((cy-r.top)/r.height*m.h); return m.d[(py*m.w+px)*4+3]>40; }
+ function heroHit(){ var h=$('bkHero'); if(!h||h.__hit)return; h.__hit=1; masks();
+  h.addEventListener('pointerdown',function(e){ h.querySelectorAll('.bh-c.jump').forEach(function(j){ j.classList.remove('jump'); }); if(e.__mih)return; var imgs=[].slice.call(h.querySelectorAll('.bh-c')).reverse(), hit=null; for(var i=0;i<imgs.length;i++){ if(solid(imgs[i],e.clientX,e.clientY)){ hit=imgs[i]; break; } }
+   var cur=e.target.closest&&e.target.closest('.bh-c'); if(hit&&hit!==cur){ e.stopImmediatePropagation(); var ev; try{ ev=new PointerEvent('pointerdown',{bubbles:true,clientX:e.clientX,clientY:e.clientY}); }catch(x){ ev=document.createEvent('Event'); ev.initEvent('pointerdown',true,true); } ev.__mih=1; hit.dispatchEvent(ev); } },true); }
+ function ad(){ var h=$('bkHero'); if(!h||$('mihAd'))return; var d=document.createElement('div'); d.id='mihAd';
+  d.innerHTML='<video id="mihAdV" muted autoplay loop playsinline webkit-playsinline preload="auto" poster="'+BASE+'art/commercial.jpg"><source src="'+BASE+'art/commercial.mp4" type="video/mp4"></video><span class="ad-top">▶ Mommy Is Human Too</span><button type="button" class="ad-snd" id="mihAdS">🔊 Tap for sound</button>';
+  h.parentNode.insertBefore(d,h.nextSibling); var v=$('mihAdV'), b=$('mihAdS'); v.muted=true; var p=v.play(); if(p&&p.catch)p.catch(function(){});
+  b.onclick=function(e){ e.stopPropagation(); if(v.muted){ v.muted=false; v.currentTime=0; v.play().catch(function(){}); b.textContent='🔇 Sound off'; b.classList.add('on'); } else { v.muted=true; b.textContent='🔊 Tap for sound'; b.classList.remove('on'); } };
+  v.onclick=function(){ b.onclick({stopPropagation:function(){}}); };
+  try{ new IntersectionObserver(function(en){ en.forEach(function(x){ if(x.isIntersecting&&x.intersectionRatio>.25){ var q=v.play(); if(q&&q.catch)q.catch(function(){}); } else { v.pause(); } }); },{threshold:[0,.25,.6]}).observe(d); }catch(e){}
+  document.addEventListener('visibilitychange',function(){ if(document.hidden)v.pause(); }); }
+ function tick(){ hookFig(); hookSpeech(); chatUI(); heroHit(); ad(); shelf(false); var sb=$('sbWrap'); if(sb&&sb.classList.contains('on')){ var v=$('mihAdV'); if(v&&!v.paused)v.pause(); } }
+ function init(){ tick(); var n=0, iv=setInterval(function(){ tick(); if(++n>40){ clearInterval(iv); setInterval(tick,3000); } },500); }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,900); }); else setTimeout(init,900);
+ return {speakAs:speakAs, loadVoices:loadVoices, makePlan:makePlan, play:play};
+})();
+</script>
