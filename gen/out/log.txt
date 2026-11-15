@@ -1,73 +1,49 @@
-bg_kitchen ok 65286
-bg_kitchen_mess err HTTP Error 402: Payment Required
-bg_kitchen_mess err HTTP Error 402: Payment Required
-bg_kitchen_mess ok 58298
-bg_shop err HTTP Error 402: Payment Required
-bg_shop err HTTP Error 402: Payment Required
-bg_shop ok 65778
-bg_parlor err HTTP Error 402: Payment Required
-bg_parlor err HTTP Error 402: Payment Required
-bg_parlor ok 53516
-bg_park err HTTP Error 402: Payment Required
-bg_park err HTTP Error 402: Payment Required
-bg_park ok 96990
-bg_beach err HTTP Error 402: Payment Required
-bg_beach err HTTP Error 402: Payment Required
-bg_beach ok 69197
-bg_car err HTTP Error 402: Payment Required
-bg_car err HTTP Error 402: Payment Required
-bg_car ok 46111
-bg_school err HTTP Error 402: Payment Required
-bg_school err HTTP Error 402: Payment Required
-bg_school ok 76888
-bg_living_loud err HTTP Error 402: Payment Required
-bg_living_loud err HTTP Error 402: Payment Required
-bg_living_loud ok 61558
-bg_living_calm err HTTP Error 402: Payment Required
-bg_living_calm err HTTP Error 402: Payment Required
-bg_living_calm ok 60865
-bg_hallway err HTTP Error 402: Payment Required
-bg_hallway err HTTP Error 402: Payment Required
-bg_hallway ok 51010
-bg_porch err HTTP Error 402: Payment Required
-bg_porch err HTTP Error 402: Payment Required
-bg_porch ok 81839
-bg_ice_sunset err HTTP Error 402: Payment Required
-bg_ice_sunset err HTTP Error 402: Payment Required
-bg_ice_sunset ok 65483
-prop_cone err HTTP Error 402: Payment Required
-prop_cone err HTTP Error 402: Payment Required
-prop_cone ok 40192
-prop_kettle err HTTP Error 402: Payment Required
-prop_kettle err HTTP Error 402: Payment Required
-prop_kettle ok 44766
-prop_clock err HTTP Error 402: Payment Required
-prop_clock err HTTP Error 402: Payment Required
-prop_clock ok 45426
-prop_bowl err HTTP Error 402: Payment Required
-prop_bowl err HTTP Error 402: Payment Required
-prop_bowl ok 32280
-prop_pots err HTTP Error 402: Payment Required
-prop_pots err HTTP Error 402: Payment Required
-prop_pots ok 37743
-prop_dog err HTTP Error 402: Payment Required
-prop_dog err HTTP Error 402: Payment Required
-prop_dog ok 40327
-prop_battery err HTTP Error 402: Payment Required
-prop_battery err HTTP Error 402: Payment Required
-prop_battery ok 49841
-prop_backpack err HTTP Error 402: Payment Required
-prop_backpack err HTTP Error 402: Payment Required
-prop_backpack ok 43021
-prop_sock err HTTP Error 402: Payment Required
-prop_sock err HTTP Error 402: Payment Required
-prop_sock ok 34811
-prop_keys err HTTP Error 402: Payment Required
-prop_keys err HTTP Error 402: Payment Required
-prop_keys ok 39010
-prop_toast err HTTP Error 402: Payment Required
-prop_toast err HTTP Error 402: Payment Required
-prop_toast ok 69234
-prop_tv err HTTP Error 402: Payment Required
-prop_tv err HTTP Error 402: Payment Required
-prop_tv ok 39036
+bg_stairs ok 60267
+bg_rain_window err HTTP Error 402: Payment Required
+bg_rain_window err HTTP Error 402: Payment Required
+bg_rain_window ok 60631
+bg_store_aisle err HTTP Error 402: Payment Required
+bg_store_aisle err HTTP Error 402: Payment Required
+bg_store_aisle ok 70927
+bg_classroom err HTTP Error 402: Payment Required
+bg_classroom err HTTP Error 402: Payment Required
+bg_classroom ok 62213
+bg_dining err HTTP Error 402: Payment Required
+bg_dining err HTTP Error 402: Payment Required
+bg_dining ok 70654
+bg_school_door err HTTP Error 402: Payment Required
+bg_school_door err HTTP Error 402: Payment Required
+bg_school_door ok 52878
+prop_tissue err HTTP Error 402: Payment Required
+prop_tissue err HTTP Error 402: Payment Required
+prop_tissue ok 32183
+prop_phone err HTTP Error 402: Payment Required
+prop_phone err HTTP Error 402: Payment Required
+prop_phone ok 40304
+prop_note err HTTP Error 402: Payment Required
+prop_note err HTTP Error 402: Payment Required
+prop_note ok 35623
+prop_shoes_old err HTTP Error 402: Payment Required
+prop_shoes_old err HTTP Error 402: Payment Required
+prop_shoes_old ok 63275
+prop_shoes_new err HTTP Error 402: Payment Required
+prop_shoes_new err HTTP Error 402: Payment Required
+prop_shoes_new ok 55948
+prop_list err HTTP Error 402: Payment Required
+prop_list err HTTP Error 402: Payment Required
+prop_list ok 34632
+prop_cart err HTTP Error 402: Payment Required
+prop_cart err HTTP Error 402: Payment Required
+prop_cart ok 49536
+prop_heart err HTTP Error 402: Payment Required
+prop_heart err HTTP Error 402: Payment Required
+prop_heart ok 32304
+prop_cloud err HTTP Error 402: Payment Required
+prop_cloud err HTTP Error 402: Payment Required
+prop_cloud ok 36950
+prop_treasure err HTTP Error 402: Payment Required
+prop_treasure err HTTP Error 402: Payment Required
+prop_treasure ok 46118
+prop_comb err HTTP Error 402: Payment Required
+prop_comb err HTTP Error 402: Payment Required
+prop_comb ok 40963
