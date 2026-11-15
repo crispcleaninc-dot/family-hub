@@ -1,0 +1,22 @@
+{
+ "books": [
+  {
+   "id": "just-one-scoop",
+   "title": "Just One Scoop",
+   "vol": "Book One",
+   "replaces": "just one scoop"
+  },
+  {
+   "id": "big-voice",
+   "title": "Mommy's Big Voice",
+   "vol": "Book Two",
+   "replaces": ""
+  },
+  {
+   "id": "five-quiet",
+   "title": "Five Quiet Minutes",
+   "vol": "Book Three",
+   "replaces": ""
+  }
+ ]
+}
