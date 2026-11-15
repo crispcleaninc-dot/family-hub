@@ -1,0 +1,128 @@
+
+<!-- ===== BOOK LOOK ADD-ON (Nov 2026): home page uses the real 3D cast from the books; reading and cover screens look like one storybook. Additive: the old drawn welcome scene is only hidden, and every reading button still runs the same code. ===== -->
+<style>
+/* ---------- home hero with the real cast ---------- */
+#bkHero{ position:relative; overflow:hidden; border-radius:30px; aspect-ratio:1/0.9; max-height:440px; width:100%; box-shadow:0 18px 44px rgba(43,35,100,.28); background:#bfe3ff; cursor:pointer; touch-action:manipulation; }
+#bkHero .bh-bg{ position:absolute; inset:-4%; background:url(https://crispcleaninc-dot.github.io/family-hub/mommy/art/home-bg.jpg) center 30%/cover; animation:bhKen 22s ease-in-out infinite alternate; }
+@keyframes bhKen{ from{ transform:scale(1.02) translateX(0); } to{ transform:scale(1.12) translateX(-2%); } }
+#bkHero .bh-sun{ position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(255,236,170,.95),rgba(255,214,140,.35) 45%,rgba(255,214,140,0) 70%); animation:gPulse 5s ease-in-out infinite; }
+#bkHero .bh-glow{ position:absolute; left:0; right:0; bottom:0; height:45%; background:linear-gradient(transparent,rgba(255,236,200,.45)); }
+#bkHero .bh-c{ position:absolute; bottom:4%; transform-origin:50% 100%; filter:drop-shadow(0 10px 10px rgba(30,20,60,.28)); animation:bhBob 3.2s ease-in-out infinite; user-select:none; -webkit-user-drag:none; }
+#bkHero .bh-c.mom{ left:2%; bottom:-16%; height:104%; animation:bhSway 4.6s ease-in-out infinite; }
+#bkHero .bh-c.jojo{ left:39%; height:58%; animation-delay:-.6s; }
+#bkHero .bh-c.pip{ left:60%; height:50%; animation-delay:-1.4s; }
+#bkHero .bh-c.bee{ left:79%; height:43%; animation-delay:-2.1s; }
+#bkHero .bh-sh{ position:absolute; bottom:2.5%; height:4%; border-radius:50%; background:radial-gradient(rgba(30,20,60,.35),rgba(30,20,60,0) 70%); }
+@keyframes bhBob{ 0%,100%{ transform:translateY(0) scaleY(1); } 50%{ transform:translateY(-3%) scaleY(1.01); } }
+@keyframes bhSway{ 0%,100%{ transform:rotate(-1deg); } 50%{ transform:rotate(1.2deg) translateY(-1%); } }
+#bkHero .bh-c.jump{ animation:bhJump .8s cubic-bezier(.3,1.6,.5,1) 1 !important; }
+@keyframes bhJump{ 0%{ transform:translateY(0) scale(1,1); } 20%{ transform:translateY(2%) scale(1.06,.92); } 55%{ transform:translateY(-16%) scale(.96,1.06); } 100%{ transform:translateY(0) scale(1,1); } }
+#bkHero .bh-bub{ position:absolute; z-index:5; background:#fff; color:#1B2951; font-family:Fredoka,Nunito,sans-serif; font-weight:600; font-size:15px; padding:9px 14px; border-radius:18px; box-shadow:0 8px 20px rgba(30,20,60,.25); white-space:nowrap; transform:translate(-50%,-100%); animation:bhPop .35s cubic-bezier(.2,1.5,.4,1); pointer-events:none; }
+#bkHero .bh-bub::after{ content:""; position:absolute; left:50%; bottom:-7px; margin-left:-7px; border:7px solid transparent; border-top-color:#fff; border-bottom:0; }
+@keyframes bhPop{ from{ transform:translate(-50%,-80%) scale(.6); opacity:0; } }
+#bkHero .bh-heart{ position:absolute; z-index:4; font-size:24px; pointer-events:none; animation:bhUp 1.8s ease-out forwards; }
+@keyframes bhUp{ to{ transform:translateY(-120px) scale(1.3); opacity:0; } }
+#bkHero .bh-sp{ position:absolute; color:#fff8d6; text-shadow:0 0 8px rgba(255,220,140,.9); animation:mTw 2.6s ease-in-out infinite; pointer-events:none; }
+@keyframes mTw{ 0%,100%{ opacity:.15; transform:scale(.7); } 50%{ opacity:1; transform:scale(1.15); } }
+#bkHero .bh-hint{ position:absolute; left:50%; top:14px; transform:translateX(-50%); background:rgba(255,255,255,.88); color:#1B2951; font-weight:800; font-size:13px; padding:7px 14px; border-radius:20px; box-shadow:0 4px 14px rgba(0,0,0,.12); animation:gFloat 3s ease-in-out infinite; white-space:nowrap; }
+body.bk-home .lgx-hero{ display:none !important; }
+body.bk-home .lgx-card{ margin-top:-34px !important; position:relative; z-index:3; }
+
+/* ---------- the storybook reader ---------- */
+#scr-read > .card{ background:transparent !important; box-shadow:none !important; padding:2px 0 !important; }
+.bk-book{ position:relative; border-radius:10px 26px 26px 10px; overflow:hidden; background:linear-gradient(90deg,#efe3cf 0,#fbf5ea 3.5%,#fffaf2 12%,#fffaf2 100%); box-shadow:0 22px 48px rgba(40,30,70,.25), inset 10px 0 18px -10px rgba(90,60,30,.35); }
+.bk-top{ position:absolute; z-index:4; top:10px; left:12px; right:12px; display:flex; justify-content:space-between; align-items:center; pointer-events:none; }
+.bk-top > *{ pointer-events:auto; }
+.bk-top button{ width:auto !important; margin:0 !important; padding:8px 14px !important; font-size:13.5px !important; border-radius:20px !important; background:rgba(255,255,255,.88) !important; color:#1B2951 !important; box-shadow:0 4px 14px rgba(0,0,0,.15) !important; backdrop-filter:blur(6px); }
+.bk-top #pageNum{ background:rgba(27,41,81,.78); color:#fff !important; font-size:12.5px !important; font-weight:800; padding:7px 13px; border-radius:20px; line-height:1.2 !important; backdrop-filter:blur(6px); }
+.bk-art{ position:relative; aspect-ratio:4/4.3; overflow:hidden; background:#e9dfcf; }
+.bk-art .bk-blur{ position:absolute; inset:-30px; background-size:cover; background-position:center; filter:blur(22px) saturate(1.1); opacity:.85; transform:scale(1.1); }
+.bk-art #rImg{ position:relative; z-index:1; width:100% !important; height:100% !important; object-fit:contain; border:0 !important; border-radius:0 !important; box-shadow:none !important; animation:bkKen 14s ease-in-out infinite alternate; }
+@keyframes bkKen{ from{ transform:scale(1); } to{ transform:scale(1.055) translateY(-1%); } }
+.bk-art #rImg.glow-turn{ animation:gTurn .55s cubic-bezier(.2,.8,.2,1), bkKen 14s ease-in-out .55s infinite alternate !important; }
+.bk-art .bk-fade{ position:absolute; z-index:2; left:0; right:0; bottom:0; height:22%; background:linear-gradient(rgba(255,250,242,0),#fffaf2); pointer-events:none; }
+.bk-text{ position:relative; padding:4px 26px 8px; text-align:center; }
+.bk-text #rCap{ font-family:Fredoka,Nunito,sans-serif !important; font-weight:500 !important; font-size:21px !important; line-height:1.5 !important; color:#2b2440; white-space:pre-line; margin:2px 0 4px !important; }
+.bk-text #rCap span{ border-radius:6px; padding:0 1px; }
+.bk-text #rCap span.on{ background:linear-gradient(transparent 50%,#ffd27a 50%) !important; }
+.bk-folio{ text-align:center; font-family:Fredoka,sans-serif; color:#b8a68c; font-size:13px; letter-spacing:2px; padding:0 0 14px; }
+.bk-folio::before,.bk-folio::after{ content:"✦"; color:#e2c27e; margin:0 10px; font-size:10px; vertical-align:2px; }
+.bk-dots{ display:flex; justify-content:center; gap:6px; margin:14px 0 4px; flex-wrap:wrap; }
+.bk-dots i{ width:8px; height:8px; border-radius:8px; background:#e2d6c4; transition:all .3s; cursor:pointer; }
+.bk-dots i.on{ width:24px; background:linear-gradient(90deg,#e9a93a,#c9861f); }
+.bk-ctrl{ display:flex; align-items:center; justify-content:center; gap:12px; margin:10px 0 4px; }
+.bk-ctrl button{ margin:0 !important; width:56px !important; height:56px; padding:0 !important; border-radius:50% !important; font-size:22px !important; display:grid; place-items:center; background:#fff !important; color:#1B2951 !important; box-shadow:0 4px 0 #e6dccd, 0 8px 18px rgba(60,40,90,.12) !important; flex:0 0 auto; }
+.bk-ctrl button#playBtn{ width:auto !important; min-width:132px; height:62px; border-radius:31px !important; padding:0 20px !important; font-size:17px !important; font-family:Fredoka,sans-serif; background:linear-gradient(135deg,#2b4a8f,#1B2951) !important; color:#fff !important; box-shadow:0 5px 0 #0f1838, 0 10px 24px rgba(27,41,81,.3) !important; }
+.bk-ctrl button#csLife{ background:linear-gradient(135deg,#f6b73c,#d9822b) !important; color:#fff !important; box-shadow:0 4px 0 #a9621d !important; }
+.bk-tips{ text-align:center; color:#9a8f86; font-size:12px; margin-top:8px; }
+#scr-read .note{ display:none; }
+
+/* ---------- the cover screen ---------- */
+#scr-intro > .card{ text-align:center; background:linear-gradient(180deg,#fff,#fff8ee) !important; }
+#scr-intro > .card > button.ghost:first-child{ width:auto !important; padding:8px 16px !important; font-size:13.5px !important; border-radius:20px !important; margin:0 0 6px !important; display:block; }
+.bk-cover{ perspective:1400px; margin:14px auto 6px; width:78%; max-width:360px; }
+.bk-cover .bc-inner{ position:relative; border-radius:6px 18px 18px 6px; overflow:hidden; transform:rotateY(-14deg) rotateX(3deg); transform-origin:left center; box-shadow:18px 22px 40px rgba(40,30,70,.35), inset 12px 0 16px -8px rgba(0,0,0,.35); animation:bcIn 1s cubic-bezier(.2,.8,.2,1); transition:transform .5s; }
+.bk-cover:hover .bc-inner,.bk-cover:active .bc-inner{ transform:rotateY(-4deg); }
+@keyframes bcIn{ from{ transform:rotateY(-70deg); opacity:0; } }
+.bk-cover #iCover{ display:block; width:100% !important; margin:0 !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; aspect-ratio:3/4; object-fit:cover; background:#efe3cf; }
+.bk-cover .bc-shine{ position:absolute; inset:0; background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.45) 45%,transparent 60%); background-size:250% 100%; animation:bcShine 4.5s ease-in-out infinite; pointer-events:none; }
+@keyframes bcShine{ 0%,55%{ background-position:150% 0; } 100%{ background-position:-60% 0; } }
+#scr-intro #iTitle{ font-family:Fredoka,sans-serif !important; font-size:25px !important; font-weight:700 !important; line-height:1.15; margin:18px 6px 6px !important; background:linear-gradient(90deg,#1B2951,#7a3b8c); -webkit-background-clip:text; background-clip:text; color:transparent; }
+#scr-intro #iDesc{ white-space:pre-line; font-family:Georgia,"Times New Roman",serif; font-style:italic; font-size:15.5px !important; line-height:1.6; color:#5b4a3a; background:#fffaf0; border:1px solid #f0e2c4; border-radius:20px; padding:16px 18px; margin:12px 4px 14px; position:relative; text-align:left; }
+#scr-intro #iDesc::before{ content:"✝  Verses for this story"; display:block; font-family:Nunito,sans-serif; font-style:normal; font-weight:800; font-size:11.5px; letter-spacing:1.5px; color:#c9861f; text-transform:uppercase; margin-bottom:6px; }
+#scr-intro button.gold{ font-family:Fredoka,sans-serif; font-size:20px !important; padding:16px !important; border-radius:22px !important; animation:bcPulse 2.4s ease-in-out infinite; }
+@keyframes bcPulse{ 0%,100%{ box-shadow:0 5px 0 #a9621d, 0 0 0 0 rgba(233,169,58,.5); } 50%{ box-shadow:0 5px 0 #a9621d, 0 0 0 12px rgba(233,169,58,0); } }
+</style>
+<script>
+/* ===== BOOK LOOK ADD-ON (Nov 2026) ===== */
+var BOOKLOOK=(function(){
+ var ART='https://crispcleaninc-dot.github.io/family-hub/mommy/art/';
+ function $(i){ return document.getElementById(i); }
+ var CAST=[['mom','mommy','Mommy','Give yourself grace today 💛'],['jojo','jojo','Jojo','Know those you labor among!'],['pip','pip','Pip',"Let's read a story!"],['bee','bee','Baby Bee','Ba-ba-boo! 🐝']];
+ function home(){ var lg=$('lgx'); if(!lg||$('bkHero'))return; var hero=lg.querySelector('.lgx-hero'); if(!hero)return;
+  var h='<div id="bkHero"><div class="bh-bg"></div><div class="bh-sun"></div><div class="bh-glow"></div>';
+  [[8,18,16],[22,10,12],[70,22,14],[86,12,18],[52,8,11],[34,30,10]].forEach(function(s,i){ h+='<span class="bh-sp" style="left:'+s[0]+'%;top:'+s[1]+'%;font-size:'+s[2]+'px;animation-delay:'+(-i*0.7)+'s">✦</span>'; });
+  h+='<div class="bh-sh" style="left:40%;width:17%"></div><div class="bh-sh" style="left:60.5%;width:15%"></div><div class="bh-sh" style="left:79%;width:14%"></div>';
+  CAST.forEach(function(c){ h+='<img class="bh-c '+c[0]+'" data-k="'+c[0]+'" alt="'+c[2]+'" draggable="false" src="'+ART+c[1]+'.webp">'; });
+  h+='<div class="bh-hint">👋 Tap the family to say hi</div></div>';
+  hero.insertAdjacentHTML('beforebegin',h); document.body.classList.add('bk-home');
+  var el=$('bkHero'); el.addEventListener('pointerdown',function(e){ var t=e.target.closest('.bh-c'); var hint=el.querySelector('.bh-hint'); if(hint)hint.style.display='none';
+   if(!t){ var imgs=el.querySelectorAll('.bh-c'); t=imgs[Math.floor(Math.random()*imgs.length)]; }
+   var c=CAST.filter(function(x){return x[0]===t.dataset.k;})[0]; t.classList.remove('jump'); void t.offsetWidth; t.classList.add('jump');
+   var r=el.getBoundingClientRect(), tr=t.getBoundingClientRect(), x=(tr.left+tr.width/2-r.left), y=Math.max(46,tr.top-r.top+ (c[0]==='mom'?tr.height*0.02:0));
+   el.querySelectorAll('.bh-bub').forEach(function(b){ b.remove(); }); var b=document.createElement('div'); b.className='bh-bub'; b.textContent=c[3]; b.style.left=Math.min(Math.max(x,90),r.width-90)+'px'; b.style.top=y+'px'; el.appendChild(b); setTimeout(function(){ b.remove(); },2600);
+   for(var i=0;i<5;i++){ var hz=document.createElement('span'); hz.className='bh-heart'; hz.textContent=c[0]==='bee'?'🐝':(i%2?'💛':'✨'); hz.style.left=(x+Math.random()*70-35)+'px'; hz.style.top=(y+20)+'px'; hz.style.animationDelay=(i*0.08)+'s'; el.appendChild(hz); setTimeout(function(n){ return function(){ n.remove(); }; }(hz),2000); }
+   try{ if(window.GLOW&&GLOW.chime)GLOW.chime(); }catch(err){} });
+ }
+ function reader(){ var sc=$('scr-read'); if(!sc||$('bkBook'))return; var card=sc.querySelector('.card'),img=$('rImg'),cap=$('rCap'),num=$('pageNum'); if(!card||!img||!cap)return;
+  var shelfBtn=card.querySelector('button[onclick="backToShelf()"]');
+  var book=document.createElement('div'); book.id='bkBook'; book.className='bk-book';
+  book.innerHTML='<div class="bk-top"></div><div class="bk-art"><div class="bk-blur"></div><div class="bk-fade"></div></div><div class="bk-text"></div><div class="bk-folio" id="bkFolio"></div>';
+  card.insertBefore(book,card.firstChild);
+  var top=book.querySelector('.bk-top'); if(shelfBtn){ top.appendChild(shelfBtn); shelfBtn.innerHTML='← Shelf'; } if(num)top.appendChild(num);
+  book.querySelector('.bk-art').insertBefore(img,book.querySelector('.bk-fade')); book.querySelector('.bk-text').appendChild(cap);
+  var dots=document.createElement('div'); dots.id='bkDots'; dots.className='bk-dots'; book.parentNode.insertBefore(dots,book.nextSibling);
+  var ctrl=document.createElement('div'); ctrl.id='bkCtrl'; ctrl.className='bk-ctrl'; dots.parentNode.insertBefore(ctrl,dots.nextSibling);
+  var tips=document.createElement('div'); tips.className='bk-tips'; tips.textContent='Swipe the page or tap › to turn · tap any word to sound it out'; ctrl.parentNode.insertBefore(tips,ctrl.nextSibling);
+  controls(); card.querySelectorAll('.row').forEach(function(r){ if(!r.querySelector('button'))r.style.display='none'; });
+  var art=book.querySelector('.bk-art'),sx=0,sy=0; art.addEventListener('touchstart',function(e){ sx=e.touches[0].clientX; sy=e.touches[0].clientY; },{passive:true});
+  art.addEventListener('touchend',function(e){ var dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){ if(dx<0)nextPage(); else prevPage(); } },{passive:true});
+  sync(); }
+ function controls(){ var ctrl=$('bkCtrl'); if(!ctrl)return; var card=$('scr-read').querySelector('.card');
+  function grab(sel){ var b=card.querySelector(sel); return b; }
+  var prev=grab('button[onclick="prevPage()"]'),next=grab('button[onclick="nextPage()"]'),play=$('playBtn'),read=grab('button[onclick="readAloud()"]'),life=$('csLife');
+  [[prev,'‹','Back'],[read,'🔊','Read this page'],[play,null,null],[life,'✨','Bring this page to life'],[next,'›','Next page']].forEach(function(x){ var b=x[0]; if(!b)return; if(b.parentNode!==ctrl)ctrl.appendChild(b); if(x[1]){ b.textContent=x[1]; b.title=x[2]; b.setAttribute('aria-label',x[2]); } });
+  // keep the order even if a button arrives later
+  [prev,read,play,life,next].forEach(function(b){ if(b&&b.parentNode===ctrl)ctrl.appendChild(b); }); }
+ function sync(){ var img=$('rImg'),bl=document.querySelector('#bkBook .bk-blur'); if(img&&bl)bl.style.backgroundImage='url("'+img.src+'")';
+  var f=$('bkFolio'); if(f&&typeof pageLabel==='function'){ try{ f.textContent=pageLabel(); }catch(e){} }
+  var d=$('bkDots'); if(d&&window.RSEQ){ var h=''; for(var i=0;i<RSEQ.length;i++)h+='<i class="'+(i===RIDX?'on':'')+'" data-i="'+i+'"></i>'; d.innerHTML=h; d.onclick=function(e){ var i=e.target.dataset&&e.target.dataset.i; if(i!=null){ pauseBook(); RIDX=+i; renderPage(); } }; }
+  if(!$('csLife')||$('csLife').parentNode!==$('bkCtrl'))controls(); }
+ function cover(){ var sc=$('scr-intro'),img=$('iCover'); if(!sc||!img||document.querySelector('.bk-cover'))return; var w=document.createElement('div'); w.className='bk-cover'; w.innerHTML='<div class="bc-inner"></div>'; img.parentNode.insertBefore(w,img); w.firstChild.appendChild(img); w.firstChild.insertAdjacentHTML('beforeend','<div class="bc-shine"></div>'); }
+ function wrap(name,after){ var f=window[name]; if(typeof f!=='function'||f.__bk)return; var g=function(){ var r=f.apply(this,arguments); try{ after.apply(this,arguments); }catch(e){} return r; }; g.__bk=1; for(var k in f)g[k]=f[k]; window[name]=g; }
+ function init(){ reader(); cover(); home(); wrap('renderPage',sync); wrap('startReading',function(){ reader(); sync(); });
+  var tries=0,iv=setInterval(function(){ home(); reader(); cover(); controls(); if(++tries>20)clearInterval(iv); },500); }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,600); }); else setTimeout(init,600);
+ return {sync:sync};
+})();
+</script>
