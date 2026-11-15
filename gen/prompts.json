@@ -3,64 +3,64 @@
 "propstyle": ", 3D Pixar style render, single object centered, isolated on a plain white background, soft studio light, no text",
 "shots": [
 [
-"bg_gas_station",
-91,
+"char_leo",
+111,
+"prop",
+"full body 3D Pixar style cute lion cub character standing on four paws, big friendly eyes, fluffy little mane tuft, golden fur, brave and curious, plain white background"
+],
+[
+"char_leo2",
+112,
+"prop",
+"cute 3D Disney Pixar animated lion cub sitting upright and smiling, big expressive eyes, golden fur, small fluffy mane, full body, isolated on white background"
+],
+[
+"char_mamalion",
+113,
+"prop",
+"full body 3D Pixar style gentle mother lioness character standing, warm kind eyes, golden fur, calm and loving, plain white background"
+],
+[
+"bg_savanna_smoke",
+114,
 "bg",
-"small red roadside gas station on a quiet street, seen from a car, afternoon"
+"African savanna at dawn under a hazy smoky gray sky, a big warm rock in front, acacia trees, soft muted colors"
 ],
 [
-"bg_church_outside",
-92,
+"bg_savanna_fire",
+115,
 "bg",
-"pretty white neighborhood church with a steeple on a sunny street corner, trees and flowers"
+"wide African savanna with a faint orange glow and gentle smoke on the far horizon, hazy sky, grass in front"
 ],
 [
-"bg_bedroom",
-93,
+"bg_savanna_blue",
+116,
 "bg",
-"cozy mom's bedroom with a made bed, soft morning light through curtains, a rug to kneel on"
+"African savanna with the sky opening to bright blue and gold sunrise, green grass, acacia trees, hopeful"
 ],
 [
-"bg_desk_night",
-94,
+"bg_sky_daynight",
+117,
 "bg",
-"kitchen table at night with an open textbook, notebook, lamp glowing, quiet house"
+"dreamy sky split in half, one side bright blue day with soft clouds and sun, other side starry night with moon"
 ],
 [
-"prop_bills",
-95,
+"prop_seedling",
+118,
 "prop",
-"small stack of paper bills and envelopes"
+"small green tree seedling sprout in a little mound of soil"
 ],
 [
-"prop_books",
-96,
+"prop_earth",
+119,
 "prop",
-"stack of school textbooks and a notebook with a pencil"
+"cute cartoon planet earth wrapped in a soft see-through light blue blanket of air"
 ],
 [
-"prop_sign",
-97,
+"prop_cape",
+120,
 "prop",
-"handmade colorful poster sign with glitter and stars, blank, no text"
-],
-[
-"prop_soup",
-98,
-"prop",
-"bowl of warm chicken noodle soup with a spoon, steam"
-],
-[
-"prop_thermometer",
-99,
-"prop",
-"simple kids medical thermometer"
-],
-[
-"prop_map",
-100,
-"prop",
-"folded paper road map"
+"red superhero cape made from a bath towel"
 ]
 ]
 }
