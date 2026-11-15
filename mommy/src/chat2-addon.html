@@ -1,0 +1,185 @@
+<!-- ===== FAMILY CHAT 2 + BETTER STORIES (Nov 2026): chats are saved per character, other family members can join the same chat, Bible references are quoted in full (KJV), chat stories rhyme and read themselves aloud. Additive: replaces only the Talk-with-the-family send/switch handlers. ===== -->
+<style>
+.ch2-ask{ background:#fff4e0; border:2px solid #f2c46b; border-radius:18px; padding:12px 14px; margin:8px 0; font:600 15px Nunito,sans-serif; color:#1B2951; text-align:center; }
+.ch2-ask button{ width:auto; display:inline-block; margin:8px 6px 0; padding:9px 22px; border-radius:18px; font:700 15px Fredoka,Nunito,sans-serif; }
+.ch2-verse{ background:linear-gradient(135deg,#1B2951,#3b2a6b); color:#fff8e8; border-radius:18px; padding:12px 14px; margin:6px 0 10px; font-family:Georgia,serif; font-style:italic; font-size:15.5px; line-height:1.45; }
+.ch2-verse b{ display:block; font-family:Nunito,sans-serif; font-style:normal; color:#f4c95d; font-size:12.5px; letter-spacing:1px; margin-bottom:4px; }
+.ch2-bar{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:6px 2px 8px; font:600 13px Nunito,sans-serif; color:#5a4f8a; }
+.ch2-bar button{ width:auto; margin:0; padding:6px 12px; border-radius:14px; font:700 12.5px Nunito,sans-serif; background:#fff; color:#a0566f; border:2px solid #f1d4de; box-shadow:none; }
+#stProg{ position:fixed; inset:0; z-index:9999; background:rgba(20,16,40,.7); display:none; align-items:center; justify-content:center; }
+#stProg.on{ display:flex; }
+#stProg .in{ background:#fff8ef; border-radius:24px; padding:22px 24px; width:min(86%,380px); text-align:center; font-family:Nunito,sans-serif; color:#1B2951; }
+#stProg .t{ font:700 20px Fredoka,sans-serif; margin-bottom:6px; }
+#stProg .bar{ height:12px; border-radius:6px; background:#efe4d2; overflow:hidden; margin:12px 0 4px; }
+#stProg .bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#ff9a76,#f06292); transition:width .3s; }
+</style>
+<script>
+var CHAT2=(function(){
+ var BASE='https://crispcleaninc-dot.github.io/family-hub/mommy/';
+ function $(i){ return document.getElementById(i); }
+ function esc(s){ return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+ function clean(s,max){ return String(s==null?'':s).replace(/https?:\/\/\S+/g,'').replace(/[<>]/g,'').trim().slice(0,max||300); }
+ function note(t){ try{ if(window.toast)toast(t); }catch(e){} }
+ var BLOCK=/\b(nude|naked|nsfw|sexy|sex|kill|killing|blood|bloody|gore|gun|guns|weapon|knife|drug|drugs|beer|alcohol|cigarette|horror|corpse|bikini)\b/i;
+ var DANGER=/\b(hurt me|hits me|hit me|touches me|touched me|touch me|abuse|kill myself|want to die|suicide|bleeding|emergency|unsafe|someone is hurting|scared to go home)\b/i;
+ var SAFE_REPLY="That sounds really important. Please go tell a grown-up you trust right now, like your mom, dad, a teacher, or another safe adult. If someone is in danger, a grown-up can call 911. You matter so much. 💛";
+ var PERSONA={
+  'Mommy':"Mommy: a warm, loving Black Christian mom from the book series 'Mommy Is Human Too'. She is human, makes mistakes, and gives and asks for grace. She IS the child's mom in this pretend chat, so she speaks as 'I' or 'Mommy' and never tells the child to go ask their mom.",
+  'Jojo':"Jojo: the big brother. Curious, kind, a little impatient sometimes, learning to understand people. Talks like a friendly big brother.",
+  'Pip':"Pip: the playful little sister with puffs in her hair. Giggly, loves stories, does random silly things. Talks like a fun friend.",
+  'Baby Bee':"Baby Bee: the baby. Only says baby sounds and one or two simple words (like 'Mama!', 'Ba-ba-boo!', 'Hee hee!').",
+  'Biscuit':"Biscuit: the family puppy. Only barks and does dog actions written between asterisks, like *wags tail*."};
+ var LOCAL={'Baby Bee':['Ba-ba-boo! 🐝','Hee hee! *claps hands*','Mama! 💛','*gives you a big sloppy hug*','Bzzz bzzz! 🐝','Goo goo… story? 📖'],'Biscuit':['Woof woof! 🐾','*wags tail super fast*','Arf! *brings you a ball* ⚽','*licks your hand* 💛','Woof! *rolls over for belly rubs*']};
+ var RULES="Rules: each answer is 1-3 short sentences with simple words for a child aged 3-10. Be gentle, joyful and encouraging. Never ask for the child's real name, address, school, phone, photos or any personal details, and never suggest meeting. Never pretend to be a real human; you are storybook characters. Whenever you mention a Bible verse, always write the FULL book name with chapter and verse (for example 'Philippians 4:13', never just '4:13') and quote the words of the verse from the King James Version. If the child talks about being hurt, unsafe or very sad, tell them to tell a trusted grown-up right away. Avoid scary, violent, romantic or grown-up topics; gently change the subject to something kind.";
+ /* ---------- KJV verses: quoted in full whenever a reference appears ---------- */
+ var KJV={'philippians 4:13':"I can do all things through Christ which strengtheneth me.",'john 3:16':"For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",'psalm 139:14':"I will praise thee; for I am fearfully and wonderfully made: marvellous are thy works; and that my soul knoweth right well.",'proverbs 3:5':"Trust in the LORD with all thine heart; and lean not unto thine own understanding.",'ephesians 4:32':"And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you.",'psalm 56:3':"What time I am afraid, I will trust in thee.",'psalm 23:1':"The LORD is my shepherd; I shall not want.",'1 john 4:19':"We love him, because he first loved us.",'ephesians 6:1':"Children, obey your parents in the Lord: for this is right.",'exodus 20:12':"Honour thy father and thy mother: that thy days may be long upon the land which the LORD thy God giveth thee.",'james 1:5':"If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him.",'galatians 6:9':"And let us not be weary in well doing: for in due season we shall reap, if we faint not.",'colossians 3:23':"And whatsoever ye do, do it heartily, as to the Lord, and not unto men;",'james 1:19':"Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath:",'mark 6:31':"And he said unto them, Come ye yourselves apart into a desert place, and rest a while: for there were many coming and going, and they had no leisure so much as to eat.",'1 thessalonians 5:12':"And we beseech you, brethren, to know them which labour among you, and are over you in the Lord, and admonish you;",'proverbs 31:28':"Her children arise up, and call her blessed; her husband also, and he praiseth her.",'mark 12:31':"And the second is like, namely this, Thou shalt love thy neighbour as thyself. There is none other commandment greater than these.",'john 11:35':"Jesus wept.",'proverbs 24:16':"For a just man falleth seven times, and riseth up again: but the wicked shall fall into mischief.",'psalm 46:10':"Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth.",'genesis 9:13':"I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth.",'proverbs 17:22':"A merry heart doeth good like a medicine: but a broken spirit drieth the bones.",'galatians 6:2':"Bear ye one another's burdens, and so fulfil the law of Christ."};
+ var BOOKS='Genesis|Exodus|Leviticus|Numbers|Deuteronomy|Joshua|Judges|Ruth|Samuel|Kings|Chronicles|Ezra|Nehemiah|Esther|Job|Psalms?|Proverbs|Ecclesiastes|Song of Solomon|Isaiah|Jeremiah|Lamentations|Ezekiel|Daniel|Hosea|Joel|Amos|Obadiah|Jonah|Micah|Nahum|Habakkuk|Zephaniah|Haggai|Zechariah|Malachi|Matthew|Mark|Luke|John|Acts|Romans|Corinthians|Galatians|Ephesians|Philippians|Colossians|Thessalonians|Timothy|Titus|Philemon|Hebrews|James|Peter|Jude|Revelation';
+ var REF=new RegExp('\\b((?:[1-3]|First|Second|Third|I{1,3})\\s+)?('+BOOKS+')\\s+(\\d{1,3}):(\\d{1,3})(?:\\s*[-–]\\s*(\\d{1,3}))?','gi');
+ function refs(t){ var out=[],m; REF.lastIndex=0; while((m=REF.exec(String(t||'')))){ var n=(m[1]||'').trim().replace(/^First$|^I$/i,'1').replace(/^Second$|^II$/i,'2').replace(/^Third$|^III$/i,'3'); var b=m[2].replace(/^Psalms$/i,'Psalm'); b=b.charAt(0).toUpperCase()+b.slice(1).toLowerCase(); var r=(n?n+' ':'')+b+' '+m[3]+':'+m[4]+(m[5]?'-'+m[5]:''); if(out.indexOf(r)<0)out.push(r); } return out.slice(0,2); }
+ function verseText(r){ var k=r.toLowerCase(); if(KJV[k])return Promise.resolve(KJV[k]);
+  return fetch('https://bible-api.com/'+encodeURIComponent(r)+'?translation=kjv').then(function(x){ return x.json(); }).then(function(j){ var t=String(j&&j.text||'').replace(/\s+/g,' ').trim(); if(!t)throw 0; KJV[k]=t; return t; }); }
+ /* ---------- saved chats ---------- */
+ var ST=null;
+ function key(){ return 'mihChats:'+((window.ME&&ME.username&&!ME.guest)?ME.username:'guest'); }
+ function load(){ try{ ST=JSON.parse(localStorage.getItem(key())||'null'); }catch(e){} if(!ST||!ST.threads)ST={threads:{},cur:'Mommy'}; return ST; }
+ function save(){ try{ var t=ST.threads; Object.keys(t).forEach(function(k){ t[k].log=t[k].log.slice(-60); }); localStorage.setItem(key(),JSON.stringify(ST)); }catch(e){} }
+ function th(){ var k=ST.cur; if(!ST.threads[k])ST.threads[k]={members:k.split('+'),log:[]}; return ST.threads[k]; }
+ function greet(w){ return w==='Biscuit'?'Woof woof! 🐾 *wags tail*':(w==='Baby Bee'?'Ba-ba-boo! Hi hi! 🐝':"Hi there! I'm "+w+". What do you want to talk about? 😊"); }
+ function joinLine(w){ return w==='Biscuit'?'Woof! *runs in and sits right next to you* 🐾':(w==='Baby Bee'?'Mama! Hee hee! *crawls over* 🐝':"Hi! It's "+w+". Can I join the chat too? 😊"); }
+ /* ---------- render + speak ---------- */
+ var ASK=null;
+ function render(){ var b=$('chLog'); if(!b)return; var t=th();
+  b.innerHTML=t.log.map(function(m){ if(m.who==='me')return '<div class="csmsg me">'+esc(m.txt)+'</div>'; if(m.verse)return '<div class="ch2-verse"><b>📖 '+esc(m.ref)+' (KJV)</b>“'+esc(m.txt)+'”</div>'; return '<div class="csmsg them"><span class="who">'+esc(m.who)+'</span>'+esc(m.txt)+'</div>'; }).join('')+(ASK?'<div class="ch2-ask">Add <b>'+esc(ASK)+'</b> to this chat?<br><button class="gold" type="button" data-ch2="yes">Yes, add '+esc(ASK)+'</button><button class="ghost" type="button" data-ch2="no">No, talk to '+esc(ASK)+' alone</button></div>':'');
+  b.scrollTop=b.scrollHeight; tiles(); bar(); }
+ function tiles(){ var w=$('chWho'); if(!w)return; var mem=th().members; w.querySelectorAll('div').forEach(function(d){ var n=(d.textContent||'').trim(); if(n)d.classList.toggle('on',mem.indexOf(n)>=0); }); }
+ function bar(){ var b=$('ch2Bar'); if(!b){ var log=$('chLog'); if(!log)return; b=document.createElement('div'); b.id='ch2Bar'; b.className='ch2-bar'; log.parentNode.insertBefore(b,log); }
+  var t=th(); b.innerHTML='<span>💬 '+(t.members.length>1?'Family chat: ':'Chatting with ')+esc(t.members.join(', '))+' · saved</span><button type="button" data-ch2="new">Start over</button>'; }
+ var QUEUE=[], SPEAKING=false;
+ function voiceOn(){ return !$('chVoice')||$('chVoice').checked; }
+ function say(who,txt){ if(!voiceOn()||!window.STUDIO3D||!STUDIO3D.speakAs)return; QUEUE.push([who,txt]); if(!SPEAKING)next(); }
+ function next(){ var q=QUEUE.shift(); if(!q){ SPEAKING=false; return; } SPEAKING=true; STUDIO3D.speakAs(q[0],q[1],function(){ setTimeout(next,250); }); }
+ function add(who,txt,speak){ th().log.push({who:who,txt:txt}); save(); render(); if(speak!==false&&who!=='me')say(who,txt); }
+ function addVerses(text){ refs(text).forEach(function(r){ var t=th(); if(t.log.slice(-6).some(function(m){ return m.verse&&m.ref===r; }))return;
+   verseText(r).then(function(v){ t.log.push({who:'verse',verse:1,ref:r,txt:v}); save(); render(); say('Mommy',r.replace(/(\d+):(\d+)/,'$1, verse $2')+'. '+v.replace(/LORD/g,'Lord')); }).catch(function(){}); }); }
+ /* ---------- switching characters ---------- */
+ function pick(n){ if(!ST)load(); var t=th(); if(t.members.indexOf(n)>=0&&t.members.length===1)return;
+  var talked=t.log.some(function(m){ return m.who==='me'; });
+  if(talked&&t.members.indexOf(n)<0){ ASK=n; render(); return; }
+  go(n); }
+ function go(n){ ASK=null; ST.cur=n; var t=th(); if(!t.log.length)add(n,greet(n)); else { render(); } save(); }
+ function answer(yes){ var n=ASK; ASK=null; if(!n){ render(); return; }
+  if(yes){ var t=th(), old=ST.cur, mem=t.members.concat([n]), k=mem.join('+'); ST.threads[k]={members:mem,log:t.log.slice()}; ST.cur=k; if(old!==k&&old.indexOf('+')>0)delete ST.threads[old]; add(n,joinLine(n)); }
+  else go(n); }
+ /* ---------- sending ---------- */
+ var LAST=0, BUSY=false;
+ function status(t){ var b=$('chBusy'); if(b){ b.textContent=t||''; b.style.display=t?'block':''; } }
+ function ai(msgs,tries){ tries=tries||0; var wait=Math.max(0,16000-(Date.now()-LAST));
+  return new Promise(function(r){ setTimeout(r,wait); }).then(function(){ LAST=Date.now(); return fetch('https://text.pollinations.ai/openai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'openai',messages:msgs})}); })
+  .then(function(r){ if(!r.ok)throw new Error('busy'); return r.json(); }).then(function(j){ var c=j&&j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!c)throw new Error('empty'); return String(c); })
+  .catch(function(e){ if(tries<2){ LAST=Date.now(); return new Promise(function(r){ setTimeout(r,9000); }).then(function(){ return ai(msgs,tries+1); }); } throw e; }); }
+ function send(){ if(!ST)load(); var inp=$('chIn'); var txt=clean(inp&&inp.value,240); if(!txt)return; inp.value=''; ASK=null; add('me',txt,false);
+  var t=th(), mem=t.members;
+  if(DANGER.test(txt)){ add(mem[0]==='Biscuit'||mem[0]==='Baby Bee'?'Mommy':mem[0],SAFE_REPLY); return; }
+  if(BLOCK.test(txt)){ add(mem[0],"Hmm, let's talk about something kind instead. What's your favorite story? 📖"); return; }
+  addVerses(txt);
+  var talkers=mem.filter(function(m){ return !LOCAL[m]; });
+  mem.filter(function(m){ return LOCAL[m]; }).forEach(function(m,i){ setTimeout(function(){ var L=LOCAL[m]; add(m,L[Math.floor(Math.random()*L.length)]); },700+i*500); });
+  if(!talkers.length)return;
+  if(BUSY){ note('The family is still answering your last message'); return; } BUSY=true; status((talkers.length>1?'The family is':talkers[0]+' is')+' thinking…');
+  var hist=t.log.filter(function(m){ return !m.verse; }).slice(-10).map(function(m){ return (m.who==='me'?'Child':m.who)+': '+m.txt; }).join('\n');
+  var sys="You are voicing storybook characters from the Christian children's book series 'Mommy Is Human Too' in a pretend chat with a child. Characters in this chat: "+talkers.map(function(m){ return PERSONA[m]; }).join(' ')+' '+RULES+(talkers.length>1?" Reply ONLY with JSON: an array like [{\"who\":\"Mommy\",\"text\":\"...\"},{\"who\":\"Jojo\",\"text\":\"...\"}] with one short reply from each of: "+talkers.join(', ')+'. They can respond to each other too.':" Reply as "+talkers[0]+" only, with just the words "+talkers[0]+" says.");
+  ai([{role:'system',content:sys},{role:'user',content:'Chat so far:\n'+hist+'\n\nNow reply to the child\'s last message.'}]).then(function(c){ BUSY=false; status('');
+    var out=[]; if(talkers.length>1){ try{ var m=c.match(/\[[\s\S]*\]/); out=JSON.parse(m[0]).filter(function(x){ return x&&talkers.indexOf(x.who)>=0&&x.text; }); }catch(e){} if(!out.length)out=[{who:talkers[0],text:c.replace(/^[^:]{1,12}:\s*/,'')}]; }
+    else out=[{who:talkers[0],text:c.replace(new RegExp('^\\s*'+talkers[0]+'\\s*:\\s*','i'),'')}];
+    out.forEach(function(o,i){ var r=clean(o.text,400); if(!r||BLOCK.test(r))r="I love talking with you! Let's read a story together. 📖"; setTimeout(function(){ add(o.who,r); addVerses(r); },i*400); }); })
+  .catch(function(){ BUSY=false; status(''); add(talkers[0],"I'm here and I love you! My thinking helper is resting for a minute, so ask me again in a little bit. 💛"); }); }
+ /* ---------- hook into Talk with the family ---------- */
+ function hook(){ if(!window.CS||!$('csp-chat'))return; if(!CS.__ch2){ CS.__ch2=1; CS.chPick=pick; CS.chSend=send; }
+  var inp=$('chIn'); if(inp&&inp.onkeydown!==kd)inp.onkeydown=kd;
+  var log=$('chLog'); if(log&&!log.__ch2){ log.__ch2=1; log.addEventListener('click',function(e){ var a=e.target.getAttribute&&e.target.getAttribute('data-ch2'); if(a==='yes')answer(true); if(a==='no')answer(false); }); }
+  var p=$('csp-chat'); if(p.classList.contains('on')&&!p.__ch2){ p.__ch2=1; load(); setTimeout(function(){ var t=th(); if(!t.log.length){ t.log.push({who:t.members[0],txt:greet(t.members[0])}); save(); } render(); },60); }
+  if(!p.classList.contains('on'))p.__ch2=0;
+  var b=$('ch2Bar'); if(b&&!b.__ch2){ b.__ch2=1; b.addEventListener('click',function(e){ if(e.target.getAttribute('data-ch2')==='new'){ var t=th(); t.log=[]; save(); add(t.members[0],greet(t.members[0])); } }); } }
+ function kd(e){ if(e.key==='Enter')send(); }
+ setInterval(hook,700);
+ return {pick:pick,send:send,refs:refs,verseText:verseText,state:function(){ return ST; }};
+})();
+
+/* ===== better stories from the chat ===== */
+var STORY2=(function(){
+ function $(i){ return document.getElementById(i); }
+ var BG={home:'bg_living_calm',kitchen:'bg_kitchen',school:'bg_classroom',park:'bg_park',night:'bg_living_calm',porch:'bg_porch',table:'bg_dining',stairs:'bg_stairs'};
+ var TOPICS=[
+  {re:/math|homework|school|test|spell|read(ing)?|teacher|grade|learn|confus|wrong/i, title:'The Homework Hill', pages:[
+   ["After school, the homework waited, sitting on the table,","with numbers stacked like building blocks — more than Jojo was able.",'table',['jojo'],'look','',''],
+   ["He tried, and tried, and got it wrong, and tried and missed again.","\"I'm never getting this,\" he groaned, and dropped his little pen.",'table',['jojo'],'droop','','quiet'],
+   ["Then Mommy's voice came big and quick: \"You're not even trying!\"","And Jojo's eyes went shiny, and his heart felt close to crying.",'table',['mom','jojo'],'tense','','quiet'],
+   ["But Mommy stopped. She took a breath. She knelt down by his chair.","\"I'm sorry, love. That voice was mine. That wasn't kind or fair.",'table',['mom','jojo'],'kneel','',''],
+   ["Sometimes I get frustrated too — I'm tired, and I'm learning.","Your Mommy's human just like you, with feelings that get churning.\"",'home',['mom','jojo'],'hug','','hearts'],
+   ["So side by side they tried once more, one number at a time,","and every little step they took felt like an easy climb.",'table',['mom','jojo','pip'],'bounce','','sparkles'],
+   ["\"I can do all things,\" Mommy said, \"through Christ who makes me strong —","and so can you. We'll take it slow. We'll get there before long.\"",'table',['mom','jojo'],'bliss','','glow'],
+   ["Because your Mommy tries and trips and learns the whole day through —","and Mommy gets frustrated sometimes… because she's human too.",'porch',['mom','jojo','pip','bee'],'jump','','hearts']],verse:'php4'},
+  {re:/bed|sleep|night|dark|dream|tired/i, title:'One More Story', pages:[
+   ["The moon came up, the lights went low, and bedtime came around,","but nobody was sleepy yet — they bounced up off the ground!",'home',['jojo','pip','bee'],'jump','','night'],
+   ["\"One more story! One more song! One more glass of water too!\"","And Mommy yawned a giant yawn — her day was nearly through.",'home',['mom','pip'],'yawn','','night'],
+   ["Her eyes were heavy, feet were sore, her voice was soft and slow.","\"Your Mommy's tired, little ones. I need some rest, you know.\"",'home',['mom'],'sleepy','','zzz'],
+   ["Then Jojo whispered, \"Let's be quiet. Let's tuck Mommy in.\"","And Pip got out the softest blanket, grinning a big grin.",'home',['jojo','pip'],'tiptoe','','quiet'],
+   ["They hummed a hush, they dimmed the lamp, they kissed her on the cheek,","and Baby Bee said, \"Night-night, Mama,\" barely loud enough to speak.",'home',['mom','bee'],'bliss','','hearts'],
+   ["So everyone got cozy, every head upon a bed,","with prayers to thank the Lord for all the love that day had said.",'home',['mom','jojo','pip','bee'],'sleepy','','night'],
+   ["Because your Mommy gives and gives the whole long day through —","and Mommy needs her sleep sometimes… because she's human too.",'home',['mom','jojo','pip','bee'],'breathe','','zzz']],verse:'mk6'},
+  {re:/sad|cry|mad|angry|upset|feel|scared|afraid|lonely|hurt feelings/i, title:'Big Feelings Day', pages:[
+   ["Some days feel sunny, some feel gray, and some feel big and loud,","and on this day a feeling came and hung just like a cloud.",'home',['jojo'],'droop','','quiet'],
+   ["\"I feel all mixed,\" the little voice said softly to the floor.","\"I don't know why. I just feel sad. I don't want to anymore.\"",'stairs',['jojo','pip'],'down','','quiet'],
+   ["And Mommy came and sat right down, as close as close could be.","\"I feel that way sometimes as well. You're not alone with me.",'stairs',['mom','jojo'],'hug','','hearts'],
+   ["A feeling's like the weather — it can rain, and then it's done.","We'll wait it out together till we see the peeking sun.\"",'home',['mom','jojo','pip'],'breathe','','glow'],
+   ["So Biscuit brought his softest toy, and Bee brought one big hug,","and Pip lay down beside them all upon the comfy rug.",'home',['mom','pip','bee'],'hugIn','','hearts'],
+   ["And slowly, slowly, little smiles came peeking through the gray,","because when family sits beside you, clouds don't always stay.",'porch',['mom','jojo','pip'],'bounce','','warm'],
+   ["Because your Mommy laughs and cries and feels the whole day through —","and Mommy has big feelings sometimes… because she's human too.",'porch',['mom','jojo','pip','bee'],'jump','','hearts']],verse:'ps30'},
+  {re:/clean|chore|room|mess|toys|help|dishes|laundry|work/i, title:'The Messy Room Mountain', pages:[
+   ["The toys were piled up to the sky, the socks were everywhere,","the blocks had built a city on the carpet and the chair.",'home',['jojo','pip'],'look','prop_sock',''],
+   ["\"Please clean your room,\" said Mommy once. She said it twice and more.","But no one heard; they built a fort and giggled on the floor.",'home',['mom','pip'],'plead','','please'],
+   ["Then Mommy sighed a heavy sigh. Her shoulders slumped down low.","\"I work so hard to keep our home. I'm tired, you know.\"",'home',['mom'],'droop','','quiet'],
+   ["And Jojo looked at Mommy's face and saw how tired she'd grown.","\"We'll do it, Mom! You taught us how. We'll do it on our own!\"",'home',['mom','jojo'],'big','',''],
+   ["So off they went, a cleaning crew — a sock, a block, a book —","till every toy was home again, wherever they would look.",'home',['jojo','pip','bee'],'bounce','','sparkles'],
+   ["When Mommy came back in the room, her eyes went big and bright:","\"You did it all — and thoroughly! You did it just right!\"",'home',['mom','jojo','pip'],'bliss','','hearts'],
+   ["Because your Mommy trusts you, and she knows that you'll come through —","and Mommy needs a helper sometimes… because she's human too.",'porch',['mom','jojo','pip','bee'],'jump','','hearts']],verse:'col3'},
+  {re:/./, title:'A Day with Mommy', pages:[
+   ["It started out an ordinary, everyday kind of day,","with Jojo, Pip, and Baby Bee all ready for some play.",'home',['jojo','pip','bee'],'bounce','',''],
+   ["They had so much to tell her — every wonder, every thought —","they told her all about the things they'd learned and seen and sought.",'home',['mom','jojo','pip'],'leanIn','','sparkles'],
+   ["And Mommy listened, really listened, putting down her phone,","because the things that matter to them matter to her own.",'home',['mom','jojo'],'lean','','hearts'],
+   ["But by the evening Mommy slowed; her smile got soft and small.","\"I'm tired,\" she said. \"I gave today my very best of all.\"",'home',['mom'],'droop','','quiet'],
+   ["So Pip brought tea, and Jojo brought a pillow for her head,","and Baby Bee brought kisses — that was all she had, she said.",'home',['mom','pip','bee'],'hugIn','','hearts'],
+   ["And Mommy laughed and pulled them close. \"You know me — yes, you do.","You know that Mommy needs your love the way you need mine too.\"",'home',['mom','jojo','pip','bee'],'hug','','hearts'],
+   ["Because your Mommy laughs and tries and learns the whole day through —","and Mommy needs some love sometimes… because she's human too.",'porch',['mom','jojo','pip','bee'],'jump','','hearts']],verse:'th5'}];
+ var VMAP={php4:['Philippians 4:13',"I can do all things through Christ which strengtheneth me."],mk6:['Mark 6:31',"Come ye yourselves apart… and rest a while."],ps30:['Psalm 30:5',"Weeping may endure for a night, but joy cometh in the morning."],col3:['Colossians 3:23',"And whatsoever ye do, do it heartily, as to the Lord, and not unto men."],th5:['1 Thessalonians 5:12',"Know them which labour among you."],eph4:['Ephesians 4:32',"And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you."],ps139:['Psalm 139:14',"I will praise thee; for I am fearfully and wonderfully made."],jas1:['James 1:19',"Let every man be swift to hear, slow to speak, slow to wrath."],gal6:['Galatians 6:2',"Bear ye one another's burdens, and so fulfil the law of Christ."],jn4:['1 John 4:19',"We love him, because he first loved us."],pro17:['Proverbs 17:22',"A merry heart doeth good like a medicine."]};
+ var FAMILY=[["And we beseech you, brethren, to know them which labour among you.","1 Thessalonians 5:12"],["It is of the LORD's mercies that we are not consumed, because his compassions fail not. They are new every morning: great is thy faithfulness.","Lamentations 3:22-23"],["Her children arise up, and call her blessed.","Proverbs 31:28"]];
+ var ACTS=['idle','bounce','jump','walkIn','tiptoe','look','bliss','hug','hugIn','big','wobble','droop','sleepy','yawn','breathe','kneel','lean','leanIn','plead','turn','shake','down','tense'];
+ var XS={1:[42],2:[28,58],3:[18,44,68],4:[14,40,60,78]};
+ function scene(bg,who,act,prop,fx){ who=who.slice(0,4); var xs=XS[who.length]; var cast=who.map(function(w,i){ var a=act; if(w==='dog')a='wag'; return [w,xs[i],a,{delay:i*.25}]; });
+  return {bg:BG[bg]||bg||'bg_living_calm',cast:cast,props:prop?[[prop,76,40,18,'float']]:[],fx:fx?[fx]:[]}; }
+ function fromTemplate(lines){ var kid=lines.filter(function(l){ return /^Child:/.test(l); }).join(' '); var T=TOPICS.filter(function(t){ return t.re.test(kid); })[0];
+  return {title:T.title,verse:T.verse,pages:T.pages.map(function(p){ return {text:p[0]+'\n'+p[1],scene:scene(p[2],p[3],p[4],p[5],p[6])}; })}; }
+ var PRES='Example of the series voice (Book One, Just One Scoop):\n"Mommy wanted ice cream. She\'d been craving it all day —\\njust a scoop to call her own, with the kids all far away."\n"So Mommy turned around and said, \\"You\'re right. I\'m sorry, too.\\nI should have spoken up, or saved a little bite for you.\\""\n"Because your Mommy laughs and cries and tries and learns and grew —\\nand Mommy makes mistakes sometimes… because she\'s human too."';
+ function aiStory(lines){ var BGS=['bg_living_calm','bg_kitchen','bg_classroom','bg_park','bg_porch','bg_dining','bg_stairs','bg_kitchen_mess','bg_living_loud','bg_beach','bg_school','bg_car','bg_store_aisle','bg_rain_window','bg_hallway','bg_ice_sunset','bg_shop'];
+  var sys="You write a new picture book in the Christian children's series 'Mommy Is Human Too' (ages 3-8). Family: Mommy (a warm Black Christian mom who is human, gets tired, makes mistakes and needs grace), Jojo (big brother, about 7), Pip (little sister, about 4), Baby Bee (baby), Biscuit (puppy). Base the story on what the CHILD talked about in the chat, retold as a story about the family (use Jojo or Pip as the child) — never copy the child's sentences, never say 'a little friend'. Write 8 pages. EVERY page is a rhyming couplet: two lines that rhyme, steady bouncy rhythm, separated by \\n. There must be a moment where Mommy is human (tired, frustrated, makes a mistake, or needs help) and owns it kindly, and the children understand her and help. The LAST page must end with the line pattern '… because she's human too.' Warm, gentle, a little funny, no pet names like sweetheart. If a Bible verse fits, Mommy may say it inside the story. "+PRES+"\nReply with ONLY JSON: {\"title\":\"short title\",\"verse\":one of "+JSON.stringify(Object.keys(VMAP))+",\"pages\":[{\"text\":\"line one\\nline two\",\"bg\":one of "+JSON.stringify(BGS)+",\"who\":[1-4 of mom,jojo,pip,bee,dog],\"action\":one of "+JSON.stringify(ACTS)+",\"fx\":one of [\"\",\"sparkles\",\"hearts\",\"quiet\",\"glow\",\"warm\",\"zzz\",\"notes\"]}]}";
+  return CHAT2_AI([{role:'system',content:sys},{role:'user',content:'The chat:\n'+lines.slice(-24).join('\n')}]).then(function(c){ var j=JSON.parse(c.match(/\{[\s\S]*\}/)[0]); var pages=(j.pages||[]).filter(function(p){ return p&&p.text&&/\n/.test(p.text); }).slice(0,9);
+   if(pages.length<5)throw new Error('short'); if(!/human too/i.test(pages[pages.length-1].text))throw new Error('ending');
+   return {title:String(j.title||'Our Story').replace(/[<>]/g,'').slice(0,50),verse:VMAP[j.verse]?j.verse:'eph4',pages:pages.map(function(p){ var who=(p.who||['mom']).filter(function(w){ return ['mom','jojo','pip','bee','dog'].indexOf(w)>=0; }); if(!who.length)who=['mom']; return {text:String(p.text).replace(/[<>]/g,'').slice(0,260),scene:scene(BGS.indexOf(p.bg)>=0?p.bg:'home',who,ACTS.indexOf(p.action)>=0?p.action:'bounce','',p.fx||'')}; })}; }); }
+ window.CHAT2_AI=function(msgs){ var tries=0; function go(){ return fetch('https://text.pollinations.ai/openai',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'openai',messages:msgs})}).then(function(r){ if(!r.ok)throw new Error('busy'); return r.json(); }).then(function(j){ return String(j.choices[0].message.content||''); }).catch(function(e){ if(++tries<3)return new Promise(function(r){ setTimeout(r,12000); }).then(go); throw e; }); } return go(); };
+ /* ---------- voice: record every page in Mommy's real voice before opening ---------- */
+ function prog(on,t,p){ var el=$('stProg'); if(!el){ document.body.insertAdjacentHTML('beforeend','<div id="stProg"><div class="in"><div class="t">✨ Making your story</div><div id="stProgT"></div><div class="bar"><i id="stProgB"></i></div><button type="button" class="ghost" id="stSkip" style="margin-top:12px;width:auto;padding:8px 18px">Skip — start reading now</button></div></div>'); el=$('stProg'); $('stSkip').onclick=function(){ SKIP=true; if(SKIPCB)SKIPCB(); }; } el.classList.toggle('on',!!on); if(t!=null)$('stProgT').textContent=t; if(p!=null)$('stProgB').style.width=Math.round(p*100)+'%'; }
+ function wav(buf){ var d=buf.getChannelData(0), sr=buf.sampleRate, n=d.length, ab=new ArrayBuffer(44+n*2), v=new DataView(ab), o=0;
+  function s(x){ for(var i=0;i<x.length;i++)v.setUint8(o++,x.charCodeAt(i)); } function u32(x){ v.setUint32(o,x,true); o+=4; } function u16(x){ v.setUint16(o,x,true); o+=2; }
+  s('RIFF'); u32(36+n*2); s('WAVE'); s('fmt '); u32(16); u16(1); u16(1); u32(sr); u32(sr*2); u16(2); u16(16); s('data'); u32(n*2); for(var i=0;i<n;i++){ var x=Math.max(-1,Math.min(1,d[i])); v.setInt16(o,x<0?x*0x8000:x*0x7FFF,true); o+=2; }
+  return URL.createObjectURL(new Blob([ab],{type:'audio/wav'})); }
+ function narr(t){ return String(t||'').replace(/\n/g,' ').replace(/—/g,', ').replace(/…/g,'...').replace(/LORD/g,'Lord').replace(/(\d+):(\d+)/g,'$1, verse $2'); }
+ var SKIP=false, SKIPCB=null;
+ function record(book){ var pages=book.pages, i=0; SKIP=false; if(!window.STUDIO3D||!STUDIO3D.neural)return Promise.resolve(false);
+  var skip=new Promise(function(r){ SKIPCB=function(){ r(false); }; });
+  return Promise.race([skip,STUDIO3D.ready(70000).then(function(ok){ if(!ok||SKIP)return false;
+   return new Promise(function(done){ (function step(){ if(i>=pages.length||SKIP){ done(true); return; } prog(true,'Recording Mommy reading page '+(i+1)+' of '+pages.length+'…',(i+1)/(pages.length+1)); var p=pages[i], txt=narr(p.say||p.text);
+     if(!txt){ i++; step(); return; }
+     STUDIO3D.neural(txt,'Mommy').then(function(r){ if(r){ var b=r.buf; p.audioUrl=wav(b); p.dur=b.duration+.4; } i++; step(); }); })(); }); })]); }
+ return {fromTemplate:fromTemplate,aiStory:aiStory,record:record,prog:prog,FAMILY:FAMILY,VMAP:VMAP};
+})();
+</script>

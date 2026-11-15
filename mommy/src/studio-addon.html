@@ -65,7 +65,7 @@ var STUDIO3D=(function(){
  function playBuf(buf,rate,done){ var a=ac(); if(!a){ done&&done(); return; } try{ if(CUR)CUR.stop(); }catch(e){} var src=a.createBufferSource(); src.buffer=buf; src.playbackRate.value=rate||1; src.connect(a.destination); src.onended=function(){ if(CUR===src){ CUR=null; done&&done(); } }; CUR=src; src.start(); }
  function clip(file,done){ var my=TOKEN; fetch(BASE+'art/chat/'+file+'.mp3').then(function(r){ return r.arrayBuffer(); }).then(function(ab){ return new Promise(function(res,rej){ ac().decodeAudioData(ab,res,rej); }); }).then(function(b){ if(my===TOKEN)playBuf(b,1,done); }).catch(function(){ done&&done('fail'); }); }
  function norm(t){ return String(t||'').replace(/\*[^*]*\*/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
- function sayable(t){ return String(t||'').replace(/\*[^*]*\*/g,' ').replace(/(\d+):(\d+)/g,'$1, $2').replace(/[\u{1F000}-\u{1FFFF}☀-➿️‍]/gu,'').replace(/\(my AI helper[^)]*\)/,'').replace(/\s+/g,' ').trim(); }
+ function sayable(t){ return String(t||'').replace(/\*[^*]*\*/g,' ').replace(/(\d+):(\d+)/g,'$1, verse $2').replace(/LORD/g,'Lord').replace(/[\u{1F000}-\u{1FFFF}☀-➿️‍]/gu,'').replace(/\(my AI helper[^)]*\)/,'').replace(/\s+/g,' ').trim(); }
  function manifest(){ if(MAN)return Promise.resolve(MAN); return fetch(BASE+'art/chat/index.json').then(function(r){ return r.json(); }).then(function(j){ MAN=j; return j; }).catch(function(){ MAN={}; return MAN; }); }
  /* in-browser neural voice (Kokoro) runs in a background worker so the app never freezes */
  var W=null, WSTATE='off', WCB={}, WID=0;
@@ -107,10 +107,10 @@ var STUDIO3D=(function(){
  window.SB_SPEAK_STOP=function(){ stopAll(); vstat(''); };
 
  /* ---------- 3. turn our chat into a story ---------- */
- var BGS=['bg_kitchen','bg_kitchen_mess','bg_living_calm','bg_living_loud','bg_park','bg_beach','bg_porch','bg_school','bg_shop','bg_parlor','bg_car','bg_hallway','bg_ice_sunset'];
- var BGNAME={bg_kitchen:'Kitchen',bg_kitchen_mess:'Messy kitchen',bg_living_calm:'Cozy living room',bg_living_loud:'Busy living room',bg_park:'Park',bg_beach:'Beach',bg_porch:'Front porch',bg_school:'School',bg_shop:'Ice cream shop',bg_parlor:'Ice cream parlor',bg_car:'In the car',bg_hallway:'Hallway',bg_ice_sunset:'Sunset'};
- var ACTS=['idle','bounce','jump','walkIn','tiptoe','look','bliss','hug','hugIn','big','wobble','droop','sleepy','yawn','breathe','kneel','lean','plead','turn','shake','drum'];
- var ACTNAME={idle:'Just be',bounce:'Bounce',jump:'Jump for joy',walkIn:'Walk in',tiptoe:'Tiptoe',look:'Look around',bliss:'So happy',hug:'Hug',hugIn:'Run for a hug',big:'Get big',wobble:'Wobble',droop:'Feel tired',sleepy:'Sleepy',yawn:'Yawn',breathe:'Deep breath',kneel:'Kneel',lean:'Lean',plead:'Say please',turn:'Turn around',shake:'Shake',drum:'Drum'};
+ var BGS=['bg_classroom','bg_dining','bg_stairs','bg_rain_window','bg_store_aisle','bg_school_door','bg_kitchen','bg_kitchen_mess','bg_living_calm','bg_living_loud','bg_park','bg_beach','bg_porch','bg_school','bg_shop','bg_parlor','bg_car','bg_hallway','bg_ice_sunset'];
+ var BGNAME={bg_classroom:'Classroom',bg_dining:'Dining table',bg_stairs:'Stairs at home',bg_rain_window:'Rainy window',bg_store_aisle:'Store',bg_school_door:'School hallway',bg_kitchen:'Kitchen',bg_kitchen_mess:'Messy kitchen',bg_living_calm:'Cozy living room',bg_living_loud:'Busy living room',bg_park:'Park',bg_beach:'Beach',bg_porch:'Front porch',bg_school:'School',bg_shop:'Ice cream shop',bg_parlor:'Ice cream parlor',bg_car:'In the car',bg_hallway:'Hallway',bg_ice_sunset:'Sunset'};
+ var ACTS=['leanIn','down','tense','idle','bounce','jump','walkIn','tiptoe','look','bliss','hug','hugIn','big','wobble','droop','sleepy','yawn','breathe','kneel','lean','plead','turn','shake','drum'];
+ var ACTNAME={leanIn:'Lean in close',down:'Look down',tense:'Get tense',idle:'Just be',bounce:'Bounce',jump:'Jump for joy',walkIn:'Walk in',tiptoe:'Tiptoe',look:'Look around',bliss:'So happy',hug:'Hug',hugIn:'Run for a hug',big:'Get big',wobble:'Wobble',droop:'Feel tired',sleepy:'Sleepy',yawn:'Yawn',breathe:'Deep breath',kneel:'Kneel',lean:'Lean',plead:'Say please',turn:'Turn around',shake:'Shake',drum:'Drum'};
  var PROPS=['','prop_cone','prop_kettle','prop_clock','prop_bowl','prop_pots','prop_backpack','prop_sock','prop_keys','prop_toast','prop_tv'];
  var FXS=['','sparkles','hearts','notes','zzz','glow','breath','quiet','warm','night'];
  var WHO=['mom','jojo','pip','bee','dog'], WHOIMG={mom:'art/mommy.webp',jojo:'art/jojo.webp',pip:'art/pip.webp',bee:'art/bee.webp',dog:'art/props/prop_dog.webp'}, WHONAME={mom:'Mommy',jojo:'Jojo',pip:'Pip',bee:'Baby Bee',dog:'Biscuit'};
@@ -132,11 +132,11 @@ var STUDIO3D=(function(){
    {text:'So everyone gave Mommy a big hug and some grace.',bg:'bg_living_calm',who:['mom','jojo','pip'],action:'hug',fx:'hearts'},
    {text:'And they all remembered '+c+'. The end!',bg:'bg_ice_sunset',who:['mom','jojo','pip','bee'].slice(0,3),action:'bliss',fx:'warm'}]}); }
  function makePlan(){ var lines=transcript(); if(lines.filter(function(l){ return /^Child:/.test(l); }).length<1){ note('Say a few things to the family first, then make your story ✨'); return; }
-  var btn=$('chStory'); btn.disabled=true; btn.textContent='✨ Writing your story…';
-  var sys="You turn a child's chat with storybook characters into a short, gentle picture-book story in the 'Mommy Is Human Too' series. The family: Mommy (a warm Black Christian mom who is human and needs grace too), Jojo (big brother), Pip (little sister), Baby Bee (baby), Biscuit (puppy). Build the story from what the CHILD talked about. Include one moment where Mommy is human (tired, makes a mistake, or needs a break) and the children understand her and help, and end warm and kind. No scary, violent, romantic or grown-up content. Never include the child's real name or personal details. Reply with ONLY JSON, no other text: {\"title\":\"...\",\"verse\":one of "+JSON.stringify(Object.keys(VERSES))+",\"pages\":[{\"text\":\"one or two short sentences for ages 3-8\",\"bg\":one of "+JSON.stringify(BGS)+",\"who\":[1 to 3 of "+JSON.stringify(WHO)+"],\"action\":one of "+JSON.stringify(ACTS)+",\"prop\":one of "+JSON.stringify(PROPS)+",\"fx\":one of "+JSON.stringify(FXS)+"}]} with 5 or 6 pages.";
-  ask([{role:'system',content:sys},{role:'user',content:'Our chat:\n'+lines.slice(-24).join('\n')}]).then(function(t){ var m=t.match(/\{[\s\S]*\}/); var p=tidy(JSON.parse(m[0])); if(p.pages.length<3)throw new Error('short'); return p; })
-  .catch(function(){ note('The free story helper is busy, so we built a story from your chat ourselves.'); return fallbackPlan(lines); })
-  .then(function(p){ btn.disabled=false; btn.textContent='✨ Turn our chat into a story'; PLAN=p; editor(); }); }
+  var btn=$('chStory'); btn.disabled=true; btn.textContent='✨ Writing your story… (about 20 seconds)'; loadVoices();
+  function toPlan(st){ return {title:st.title,verse:st.verse,pages:st.pages.map(function(p){ var sc=p.scene; return {text:p.text,bg:sc.bg,who:sc.cast.map(function(c){ return c[0]; }),action:(sc.cast[0]&&sc.cast[0][2])||'bounce',prop:'',fx:(sc.fx||[])[0]||''}; })}; }
+  var job=(window.STORY2?STORY2.aiStory(lines):Promise.reject()).catch(function(){ return STORY2.fromTemplate(lines); });
+  job.then(function(st){ btn.disabled=false; btn.textContent='✨ Turn our chat into a story'; PLAN=toPlan(st); editor(); })
+   .catch(function(){ btn.disabled=false; btn.textContent='✨ Turn our chat into a story'; PLAN=fallbackPlan(lines); editor(); }); }
  function opt(list,names,v){ return list.map(function(x){ return '<option value="'+x+'"'+(x===v?' selected':'')+'>'+esc(names?names[x]||x||'None':x||'None')+'</option>'; }).join(''); }
  var PROPNAME={'':'No prop',prop_cone:'Ice cream',prop_kettle:'Kettle',prop_clock:'Clock',prop_bowl:'Bowl',prop_pots:'Pots & pans',prop_backpack:'Backpack',prop_sock:'Sock',prop_keys:'Keys',prop_toast:'Toast',prop_tv:'TV'};
  var FXNAME={'':'No magic',sparkles:'Sparkles',hearts:'Hearts',notes:'Music',zzz:'Sleepy z\'s',glow:'Glow',breath:'Calm breath',quiet:'Quiet',warm:'Warm light',night:'Night time'};
@@ -152,16 +152,19 @@ var STUDIO3D=(function(){
     pg.querySelectorAll('.mk-chip').forEach(function(c){ c.classList.toggle('on',g.who.indexOf(c.dataset.w)>=0); }); pg.querySelector('.mk-th').innerHTML=g.who.map(function(w2,j){ return '<img src="'+BASE+WHOIMG[w2]+'" style="left:'+(8+j*28)+'%">'; }).join(''); } };
   $('mkX').onclick=function(){ box.classList.remove('on'); }; $('mkGo').onclick=function(){ box.classList.remove('on'); play(PLAN); }; $('mkSave').onclick=function(){ save(PLAN); }; }
  var XS={1:[42],2:[28,58],3:[18,44,68]};
- function toBook(p){ var v=VERSES[p.verse]||VERSES.eph4;
+ function toBook(p){ var VV=Object.assign({},VERSES,(window.STORY2&&STORY2.VMAP)||{}); var v=VV[p.verse]||VV.eph4;
   function scene(g){ var xs=XS[g.who.length]||XS[3]; var order=g.who.slice().sort(function(a,b){ return (a==='mom'?-1:0)-(b==='mom'?-1:0); });
    var cast=order.map(function(w,i){ var a=g.action; if(w==='dog')a=(a==='bounce'||a==='jump'||a==='bliss')?'wag':'idle'; return [w,xs[i],a,{delay:i*0.25}]; });
    var props=g.prop?[[g.prop,74,40,22,'float']]:[]; return {bg:g.bg,cast:cast,props:props,fx:g.fx?[g.fx]:[]}; }
   var first=p.pages[0]||{bg:'bg_living_calm',who:['mom'],action:'bounce'};
   var pages=[{kind:'cover',text:p.title,scene:{bg:first.bg,cast:[['mom',30,'bounce',{}],['jojo',56,'bounce',{delay:.2}],['pip',72,'bounce',{delay:.4}]],props:[],fx:['sparkles']}}];
   p.pages.forEach(function(g){ pages.push({kind:'page',text:g.text,dur:Math.max(4,g.text.split(/\s+/).length*0.42),scene:scene(g)}); });
-  pages.push({kind:'end',text:v[1]+' '+v[0],dur:9,scene:{bg:'bg_ice_sunset',cast:[['mom',34,'hug',{}],['jojo',58,'hugIn',{delay:.2}],['pip',72,'hugIn',{delay:.4}]],props:[],fx:['hearts','warm']}});
-  return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:[v[0],v[1]],pages:pages}; }
- function play(p){ loadVoices(); if(!window.STORY||!STORY.openBook){ note('Story player is still loading. Try again in a second.'); return; } try{ $('cs').classList.add('hide'); }catch(e){} STORY.openBook(toBook(p)); try{ if(window.GLOW&&GLOW.award)GLOW.award(2,'You made your own story!','🎬'); }catch(e){} }
+  pages.push({kind:'end',text:'',say:v[1]+' '+v[0],dur:9,scene:{bg:'bg_ice_sunset',cast:[['mom',34,'hug',{}],['jojo',58,'hugIn',{delay:.2}],['pip',72,'hugIn',{delay:.4}]],props:[],fx:['hearts','warm']}});
+  if(window.STORY2)pages.push({kind:'family',text:'',say:'Our family verses. '+STORY2.FAMILY.map(function(f){ return f[0]+' '+f[1]+'.'; }).join(' '),dur:30,verses:STORY2.FAMILY,scene:{bg:'bg_porch',cast:[['mom',26,'hug',{}],['jojo',52,'hugIn',{}],['pip',68,'hugIn',{delay:.25}],['bee',82,'hugIn',{delay:.5}]],props:[],fx:['hearts','warm']}});
+  return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:['"'+v[1]+'"',v[0]+' (KJV)'],pages:pages}; }
+ function play(p,quick){ loadVoices(); if(!window.STORY||!STORY.openBook){ note('Story player is still loading. Try again in a second.'); return; } var bk=toBook(p);
+  var go=function(){ if(window.STORY2)STORY2.prog(false); try{ $('cs').classList.add('hide'); }catch(e){} STORY.openBook(bk,true); };
+  if(window.STORY2){ STORY2.prog(true,'Getting Mommy\'s voice ready…',.05); STORY2.record(bk).then(go,go); setTimeout(function(){},0); } else go(); try{ if(window.GLOW&&GLOW.award)GLOW.award(2,'You made your own story!','🎬'); }catch(e){} }
  function mine(){ try{ return JSON.parse(localStorage.getItem('mihMyStories')||'[]'); }catch(e){ return []; } }
  function save(p){ var l=mine(); p.id=p.id||Date.now(); l=l.filter(function(x){ return x.id!==p.id; }); l.unshift(JSON.parse(JSON.stringify(p))); l=l.slice(0,24); try{ localStorage.setItem('mihMyStories',JSON.stringify(l)); note('Saved to My stories on the bookshelf 💛'); }catch(e){ note('Could not save on this device'); } shelf(true); }
  function shelf(force){ var sh=$('shelf'); if(!sh)return; var l=mine(), box=$('myStories'); if(!l.length){ if(box)box.remove(); return; }
@@ -190,6 +193,7 @@ var STUDIO3D=(function(){
  function tick(){ hookFig(); hookSpeech(); chatUI(); heroHit(); ad(); shelf(false); var sb=$('sbWrap'); if(sb&&sb.classList.contains('on')){ var v=$('mihAdV'); if(v&&!v.paused)v.pause(); } }
  function init(){ tick(); var n=0, iv=setInterval(function(){ tick(); if(++n>40){ clearInterval(iv); setInterval(tick,3000); } },500); }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,900); }); else setTimeout(init,900);
- return {speakAs:speakAs, loadVoices:loadVoices, makePlan:makePlan, play:play};
+ function ready(ms){ loadVoices(); return new Promise(function(res){ var t0=Date.now(); (function w(){ if(WSTATE==='ready')return res(true); if(WSTATE==='fail'||Date.now()-t0>(ms||60000))return res(false); setTimeout(w,400); })(); }); }
+ return {speakAs:speakAs, loadVoices:loadVoices, makePlan:makePlan, play:play, neural:neural, ready:ready};
 })();
 </script>
