@@ -3,106 +3,94 @@
 "propstyle": ", 3D Pixar style render, single object centered, isolated on a plain white background, soft studio light, no text",
 "shots": [
 [
-"bg_stairs",
-41,
+"bg_night_window",
+71,
 "bg",
-"cozy family home interior with a wooden staircase, a soft step to sit on, warm afternoon window light, toys on the floor"
+"cozy kids bedroom window at night with a big glowing full moon over rooftops, soft blue moonlight, curtains, a small night light"
 ],
 [
-"bg_rain_window",
-42,
+"bg_lawn_sprinkler",
+72,
 "bg",
-"big living room window with gentle rain drops on the glass and sunshine breaking through clouds outside, cozy window seat with pillows"
+"sunny suburban street seen from a car window, a front lawn with a sprinkler spraying water and a small rainbow in the mist"
 ],
 [
-"bg_store_aisle",
-43,
-"bg",
-"bright friendly family department store aisle with shelves of kids shoes, clothes and a shopping cart area, clean and colorful"
-],
-[
-"bg_classroom",
-44,
-"bg",
-"bright elementary school classroom with a show and tell table, colorful rug, chalkboard and kids art on the walls"
-],
-[
-"bg_dining",
-45,
-"bg",
-"cozy family dining room with a round wooden table, five chairs and a small dog bowl, warm evening light"
-],
-[
-"bg_school_door",
-46,
-"bg",
-"elementary school front doors and hallway entrance in the morning, cubbies and backpack hooks"
-],
-[
-"prop_tissue",
-51,
+"prop_rainbow",
+73,
 "prop",
-"box of soft tissues with one tissue pulled up"
+"small bright cute rainbow arc with little clouds on each end"
 ],
 [
-"prop_phone",
-52,
+"prop_feather",
+74,
 "prop",
-"smartphone showing a bright alarm bell icon on the screen"
+"single soft white bird feather"
 ],
 [
-"prop_note",
-53,
+"prop_flower",
+75,
 "prop",
-"yellow sticky note with a little curled corner"
+"small yellow flower growing out of a crack in a sidewalk"
 ],
 [
-"prop_shoes_old",
-54,
+"prop_moon",
+76,
 "prop",
-"pair of worn out old women's sneakers with holes in them"
+"glowing full moon with soft craters, warm and friendly"
 ],
 [
-"prop_shoes_new",
-55,
+"prop_jar",
+77,
 "prop",
-"pair of brand new shiny women's sneakers with a bow on the box"
+"glass mason jar full of tiny paper notes and drawings with a ribbon, glimpse jar"
 ],
 [
-"prop_list",
-56,
+"prop_blocks",
+78,
 "prop",
-"long handwritten paper shopping list curling at the bottom"
+"colorful toy blocks and toy cars lined up perfectly in a straight row by size"
 ],
 [
-"prop_cart",
-57,
+"prop_dishes",
+79,
 "prop",
-"red shopping cart full of kids clothes and shoes"
+"stack of clean plates cups and a spoon drying on a dish rack"
 ],
 [
-"prop_heart",
-58,
+"prop_toybin",
+80,
 "prop",
-"big glowing soft pink heart"
+"kids toy chest box full of toys and a teddy bear"
 ],
 [
-"prop_cloud",
-59,
+"prop_milk",
+81,
 "prop",
-"small fluffy rain cloud with gentle rain drops and a little sun peeking out"
+"carton of milk and a box of cereal"
 ],
 [
-"prop_treasure",
-60,
+"prop_waterbowl",
+82,
 "prop",
-"small wooden treasure box with a shiny rock and a feather inside, kids show and tell"
+"dog water bowl filled with water, blue"
 ],
 [
-"prop_comb",
-61,
+"prop_uniform",
+83,
 "prop",
-"pink hair comb missing one tooth"
+"neatly folded green military dress uniform with a cap on top"
+],
+[
+"char_uncle",
+84,
+"prop",
+"full body 3D Pixar style cartoon character, friendly Black man in his thirties with a short neat haircut and trimmed beard, standing very straight with good posture, wearing a neatly tucked navy polo shirt, khaki pants and clean shoes, kind but serious face, standing on plain background"
+],
+[
+"char_uncle2",
+85,
+"prop",
+"full body 3D Disney Pixar style animated character of a tall Black man uncle, short fade haircut, neat beard, standing upright, arms at his sides, tucked in navy polo shirt, khaki pants, brown shoes, warm eyes, plain white background"
 ]
 ]
 }
