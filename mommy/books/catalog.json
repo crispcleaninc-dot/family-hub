@@ -17,6 +17,24 @@
    "title": "Five Quiet Minutes",
    "vol": "Book Three",
    "replaces": ""
+  },
+  {
+   "id": "mommy-cried",
+   "title": "When Mommy Cried",
+   "vol": "Book Four",
+   "replaces": ""
+  },
+  {
+   "id": "mommy-forgot",
+   "title": "Mommy Forgot",
+   "vol": "Book Five",
+   "replaces": ""
+  },
+  {
+   "id": "needs-things",
+   "title": "Mommy Needs Things Too",
+   "vol": "Book Six",
+   "replaces": ""
   }
  ]
 }

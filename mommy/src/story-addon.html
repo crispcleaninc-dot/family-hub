@@ -123,6 +123,10 @@
 .sb-verse{ position:absolute; left:8%; right:8%; top:12%; z-index:5; background:rgba(255,250,240,.94); border-radius:24px; padding:22px 20px; text-align:center; box-shadow:0 14px 34px rgba(0,0,0,.25); animation:pPop .7s cubic-bezier(.3,1.5,.5,1) both; }
 .sb-verse .v1{ font-family:Georgia,serif; font-style:italic; font-size:20px; color:#3b2c22; line-height:1.45; }
 .sb-verse .v2{ margin-top:10px; font-weight:800; color:#c9861f; letter-spacing:1px; font-size:13px; }
+.sb-verse.sb-more{ top:58px; bottom:auto; max-height:calc(100% - 70px); overflow:auto; padding:14px 16px 12px; }
+.sb-verse.sb-more .v1{ font-size:16.5px; margin-top:10px; }
+.sb-verse.sb-more .v2{ margin-top:4px; font-size:12px; }
+.sb-verse.sb-more .v0{ font-size:23px; margin-bottom:2px; }
 .sb-verse .v0{ font-family:Fredoka,sans-serif; font-size:28px; font-weight:700; color:#1B2951; margin-bottom:8px; }
 #sbCap span{ border-radius:6px; padding:0 1px; transition:background .15s; }
 #sbCap span.on{ background:linear-gradient(transparent 50%,#ffd27a 50%); }
@@ -201,10 +205,11 @@ var STORY=(function(){
  function go(i){ if(!BOOK)return; if(i<0)return; if(i>=BOOK.pages.length){ return; } IDX=i; var p=BOOK.pages[i];
   stage(p.scene,$('sbStage')); var st=$('sbStage');
   if(p.kind==='cover')st.insertAdjacentHTML('beforeend','<div class="sb-title"><b>'+esc2(BOOK.title)+'</b><br><span>'+esc2(BOOK.vol)+'</span></div>');
+  if(p.kind==='more'||p.kind==='family')st.insertAdjacentHTML('beforeend','<div class="sb-verse sb-more"><div class="v0">'+(p.kind==='more'?'More from the Word 📖':'Our family verses 💛')+'</div>'+(p.verses||[]).map(function(v){ return '<div class="v1">"'+esc2(v[0])+'"</div><div class="v2">'+esc2(v[1])+' (KJV)</div>'; }).join('')+'</div>');
   if(p.kind==='end')st.insertAdjacentHTML('beforeend','<div class="sb-verse"><div class="v0">The End 💛</div><div class="v1">'+esc2(BOOK.verse[0])+'</div><div class="v2">'+esc2(BOOK.verse[1])+'</div></div>');
   var text=p.text||''; var parts=text.split(/(\s+)/); WORDS=[]; var h=parts.map(function(w){ if(/\S/.test(w)){ WORDS.push(w); return '<span>'+esc2(w)+'</span>'; } return esc2(w); }).join('');
   $('sbCap').innerHTML=h; var tot=0,lens=WORDS.map(function(w){ var l=w.length+2+(/[,;:—]$/.test(w)?4:0)+(/[.!?…]["”]?$/.test(w)?7:0); tot+=l; return l; }); var acc=0, span=Math.max(.5,(p.dur||5)-.6); TIMES=lens.map(function(l){ var t=.15+span*acc/tot; acc+=l; return t; });
-  $('sbNum').textContent=p.kind==='cover'?'Cover':(p.kind==='end'?'The End':'Page '+i+' / '+(BOOK.pages.length-2)); $('sbFolio').textContent=p.kind==='page'?String(i):'';
+  var NP=BOOK.pages.filter(function(x){ return x.kind==='page'; }).length; $('sbNum').textContent=p.kind==='cover'?'Cover':(p.kind==='end'?'The End':(p.kind==='more'?'More Scripture':(p.kind==='family'?'Family verses':'Page '+i+' / '+NP))); $('sbFolio').textContent=p.kind==='page'?String(i):'';
   var d=''; for(var k=0;k<BOOK.pages.length;k++)d+='<i class="'+(k===i?'on':'')+'" data-i="'+k+'"></i>'; $('sbDots').innerHTML=d;
   $('sbPrev').style.opacity=i===0?.4:1; $('sbNext').style.opacity=i===BOOK.pages.length-1?.4:1;
   var n=BOOK.pages[i+1]; if(n){ var im=new Image(); im.src=BASE+'art/bg/'+n.scene.bg+'.jpg'; }

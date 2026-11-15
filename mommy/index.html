@@ -9,8 +9,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Mommy Is Human">
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="icon" href="icon-192.png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon3-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon3.png">
 <title>Mommy Is Human Too</title>
 <style>
   :root{--navy:#1B2951;--navy2:#24366a;--gold:#C9A961;--cream:#FAF7F0}
@@ -72,7 +72,7 @@
 </head>
 <body>
 <div class="wrap">
-  <img src="icon-192.png" alt="">
+  <img src="icon3-192.png" alt="">
   <h1>Mommy Is Human Too</h1>
   <p>Read-along books · coloring book · moving characters · story makers · Picture Studio</p>
 
@@ -141,7 +141,7 @@
   if(installed) go(); else show('install');
   window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
-  var APP_VERSION = '2';
+  var APP_VERSION = '3';
   if (navigator.onLine && location.protocol === 'https:') {
     fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
       v = (v || '').trim(); if (!v || v === APP_VERSION) return;

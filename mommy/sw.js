@@ -2,8 +2,8 @@
    Keeps the launcher on the device so the icon opens (and says "you're offline") without internet.
    The app itself lives in Google Apps Script and needs internet. */
 try { importScripts('notify-sw.js'); } catch (e) {} // Cyars Notify: alerts + taps
-var SHELL = 'mih-shell-v2';
-var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
+var SHELL = 'mih-shell-v3';
+var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './icon3-192.png', './icon3-512.png', './icon-maskable-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));
