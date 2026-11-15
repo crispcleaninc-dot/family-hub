@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  html,body{margin:0;padding:0;width:1080px;height:1920px;overflow:hidden;background:#FAF7F0;}
+  *{box-sizing:border-box;}
+  #stage{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Poppins,sans-serif;color:#1B2951;
+    background:radial-gradient(circle at 50% 38%, #FFF6E3 0%, #FAF7F0 45%, #F3EBDB 100%);}
+  .abs{position:absolute;}
+  .serif{font-family:Lora,serif;}
+  .center{left:0;right:0;text-align:center;}
+  .cap{position:absolute;left:70px;right:70px;top:1480px;min-height:150px;display:flex;align-items:center;justify-content:center;}
+  .capbox{background:rgba(27,41,81,.92);color:#FAF7F0;border-radius:34px;padding:26px 40px;font-size:44px;line-height:1.3;
+     text-align:center;font-weight:500;box-shadow:0 10px 30px rgba(0,0,0,.25);border:3px solid rgba(201,169,97,.7);}
+  .card{position:absolute;left:110px;right:110px;height:230px;background:#fff;border-radius:40px;
+     box-shadow:0 14px 40px rgba(27,41,81,.12);display:flex;align-items:center;padding:0 44px;gap:40px;border:3px solid #EFE4CC;}
+  .card .txt{font-size:50px;line-height:1.18;font-weight:600;}
+  .chip{display:inline-block;padding:20px 44px;border-radius:60px;font-size:54px;font-weight:600;margin:12px;}
+  .phone{position:absolute;left:250px;top:280px;width:580px;height:1150px;border-radius:84px;background:#1B2951;padding:22px;
+     box-shadow:0 30px 70px rgba(27,41,81,.28);}
+  .screen{position:relative;width:100%;height:100%;border-radius:64px;overflow:hidden;background:#FAF7F0;}
+  .apphdr{height:150px;background:#1B2951;color:#FAF7F0;padding:56px 36px 0;font-family:Lora,serif;font-size:34px;font-weight:700;}
+  .apphdr small{display:block;font-family:Poppins;font-size:20px;color:#C9A961;font-weight:500;letter-spacing:2px;}
+</style></head>
+<body><div id="stage"></div>
+<script src="nursery.js" defer></script><script>
+const NAVY='#1B2951', GOLD='#C9A961', CREAM='#FAF7F0';
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const ease=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
+const easeOut=x=>{x=clamp(x);return 1-Math.pow(1-x,3);};
+const back=x=>{x=clamp(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2);};
+const ramp=(t,s,d=.5)=>clamp((t-s)/d);
+let SC=window.SCENES||[];
+
+function chunks(sc){
+  const parts=sc.text.split(/(?<=[.!?])\s+/);
+  const tot=parts.reduce((a,p)=>a+p.length,0);
+  let cum=0;return parts.map(p=>{const s=sc.lead+sc.vo*cum/tot;cum+=p.length;return {text:p,start:s,end:sc.lead+sc.vo*cum/tot};});
+}
+function blinkAt(t,off=0){const p=(t+off)%3.7;return p>3.55;}
+
+/* ---------- characters (original designs) ---------- */
+function jojo(o={}){const sk='#6F4325',b=o.blink;return `<svg viewBox="0 0 200 300" width="100%" height="100%">
+  <path d="M30 300 C32 230 62 205 100 205 C138 205 168 230 170 300Z" fill="${GOLD}"/>
+  <path d="M78 208 Q100 232 122 208" fill="${sk}"/>
+  <rect x="86" y="175" width="28" height="40" rx="12" fill="#5E3820"/>
+  <circle cx="44" cy="120" r="12" fill="${sk}"/><circle cx="156" cy="120" r="12" fill="${sk}"/>
+  <ellipse cx="100" cy="115" rx="58" ry="66" fill="${sk}"/>
+  <path d="M42 108 Q44 48 100 46 Q156 48 158 108 Q150 74 100 72 Q52 74 42 108Z" fill="#1A100A"/>
+  <ellipse cx="78" cy="120" rx="10" ry="${b?2:12}" fill="#fff"/><ellipse cx="122" cy="120" rx="10" ry="${b?2:12}" fill="#fff"/>
+  ${b?'':`<circle cx="79" cy="122" r="7" fill="#1A100A"/><circle cx="123" cy="122" r="7" fill="#1A100A"/><circle cx="81" cy="119" r="2.5" fill="#fff"/><circle cx="125" cy="119" r="2.5" fill="#fff"/>`}
+  <path d="M66 100 Q78 94 90 100" stroke="#1A100A" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M110 100 Q122 94 134 100" stroke="#1A100A" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M84 150 Q100 166 116 150" stroke="#4A2412" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="64" cy="146" rx="11" ry="7" fill="#C2664A" opacity=".3"/><ellipse cx="136" cy="146" rx="11" ry="7" fill="#C2664A" opacity=".3"/>
+ </svg>`;}
+function pip(o={}){const sk='#9A6038',b=o.blink,h='#24150D';return `<svg viewBox="0 0 200 300" width="100%" height="100%">
+  <circle cx="44" cy="62" r="34" fill="${h}"/><circle cx="156" cy="62" r="34" fill="${h}"/>
+  <circle cx="58" cy="74" r="8" fill="#E58FA3"/><circle cx="142" cy="74" r="8" fill="#E58FA3"/>
+  <path d="M34 300 C36 236 64 212 100 212 C136 212 164 236 166 300Z" fill="#E58FA3"/>
+  <rect x="88" y="180" width="24" height="40" rx="10" fill="#875230"/>
+  <ellipse cx="100" cy="122" rx="56" ry="62" fill="${sk}"/>
+  <path d="M46 116 Q48 62 100 60 Q152 62 154 116 Q140 84 100 84 Q60 84 46 116Z" fill="${h}"/>
+  <ellipse cx="79" cy="128" rx="10" ry="${b?2:12}" fill="#fff"/><ellipse cx="121" cy="128" rx="10" ry="${b?2:12}" fill="#fff"/>
+  ${b?'':`<circle cx="80" cy="130" r="7" fill="${h}"/><circle cx="122" cy="130" r="7" fill="${h}"/><circle cx="82" cy="127" r="2.5" fill="#fff"/><circle cx="124" cy="127" r="2.5" fill="#fff"/>`}
+  <path d="M84 156 Q100 172 116 156 Q100 162 84 156Z" fill="#6B2A20"/>
+  <ellipse cx="64" cy="152" rx="11" ry="7" fill="#C2664A" opacity=".35"/><ellipse cx="136" cy="152" rx="11" ry="7" fill="#C2664A" opacity=".35"/>
+ </svg>`;}
+function baby(o={}){const sk='#A46A3F',b=o.blink;return `<svg viewBox="0 0 200 220" width="100%" height="100%">
+  <path d="M100 34 Q86 6 70 10" stroke="${NAVY}" stroke-width="5" fill="none"/><circle cx="70" cy="10" r="8" fill="${NAVY}"/>
+  <path d="M100 34 Q114 6 130 10" stroke="${NAVY}" stroke-width="5" fill="none"/><circle cx="130" cy="10" r="8" fill="${NAVY}"/>
+  <ellipse cx="100" cy="190" rx="78" ry="44" fill="#F4C84A"/>
+  <path d="M40 180 Q100 168 160 180" stroke="${NAVY}" stroke-width="12" fill="none"/>
+  <path d="M34 204 Q100 192 166 204" stroke="${NAVY}" stroke-width="12" fill="none"/>
+  <circle cx="100" cy="92" r="64" fill="${sk}"/>
+  <path d="M92 32 Q104 22 108 36 Q100 30 96 40Z" fill="#2A1A12"/>
+  <path d="M70 92 Q80 ${b?96:84} 90 92" stroke="#2A1A12" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M110 92 Q120 ${b?96:84} 130 92" stroke="#2A1A12" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M88 118 Q100 130 112 118" stroke="#5A2412" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <ellipse cx="66" cy="112" rx="12" ry="8" fill="#D2705A" opacity=".4"/><ellipse cx="134" cy="112" rx="12" ry="8" fill="#D2705A" opacity=".4"/>
+ </svg>`;}
+function biscuit(o={}){const wag=o.wag||0;return `<svg viewBox="0 0 220 200" width="100%" height="100%">
+  <path d="M168 120 Q${200+wag*14} ${80-Math.abs(wag)*6} ${206+wag*10} 70" stroke="#C48A4E" stroke-width="14" fill="none" stroke-linecap="round"/>
+  <ellipse cx="120" cy="140" rx="64" ry="46" fill="#D9A066"/>
+  <rect x="78" y="160" width="22" height="38" rx="10" fill="#D9A066"/><rect x="140" y="160" width="22" height="38" rx="10" fill="#D9A066"/>
+  <circle cx="70" cy="86" r="50" fill="#E2B07A"/>
+  <ellipse cx="30" cy="92" rx="18" ry="34" fill="#A8703E" transform="rotate(14 30 92)"/>
+  <ellipse cx="110" cy="92" rx="18" ry="34" fill="#A8703E" transform="rotate(-14 110 92)"/>
+  <ellipse cx="70" cy="110" rx="26" ry="18" fill="#F3D3A8"/>
+  <ellipse cx="70" cy="100" rx="10" ry="7" fill="#2A1A12"/>
+  <circle cx="54" cy="78" r="7" fill="#2A1A12"/><circle cx="86" cy="78" r="7" fill="#2A1A12"/>
+  <circle cx="56" cy="76" r="2" fill="#fff"/><circle cx="88" cy="76" r="2" fill="#fff"/>
+  <path d="M62 118 Q70 126 78 118" stroke="#2A1A12" stroke-width="3" fill="none"/>
+ </svg>`;}
+function heart(c=GOLD){return `<svg viewBox="0 0 100 90" width="100%" height="100%"><path d="M50 86 C10 58 0 36 8 20 C18 0 42 2 50 20 C58 2 82 0 92 20 C100 36 90 58 50 86Z" fill="${c}"/></svg>`;}
+function tap(x,y,t,s){ // ripple at time s
+  if(t<s-.35||t>s+.9) return '';
+  const a=t<s?ramp(t,s-.35,.35):1-ramp(t,s+.4,.5); const r=t<s?0:easeOut((t-s)/.6)*90;
+  return `<div class="abs" style="left:${x-36}px;top:${y-36}px;width:72px;height:72px;border-radius:50%;background:rgba(201,169,97,.75);opacity:${a};transform:scale(${t<s?1:.85})"></div>
+  <div class="abs" style="left:${x-r}px;top:${y-r}px;width:${2*r}px;height:${2*r}px;border-radius:50%;border:5px solid ${GOLD};opacity:${a*(1-r/95)}"></div>`;
+}
+function sparkles(t){let s='';for(let i=0;i<16;i++){const x=(i*137)%1080, y0=(i*331)%1500; const y=(y0- t*18*(1+(i%3)*.4)+1500)%1500;
+  const a=.25+.25*Math.sin(t*1.5+i);s+=`<div class="abs" style="left:${x}px;top:${y}px;width:${8+(i%3)*5}px;height:${8+(i%3)*5}px;background:${GOLD};opacity:${a};transform:rotate(45deg);border-radius:2px"></div>`;}return s;}
+function bookCover(w,title,c1,c2,inner=''){return `<div style="width:${w}px;height:${w*1.3}px;border-radius:${w*.06}px;background:linear-gradient(160deg,${c1},${c2});box-shadow:0 12px 26px rgba(27,41,81,.25);position:relative;overflow:hidden;border:${Math.max(3,w*.02)}px solid ${GOLD}">
+  <div style="position:absolute;left:8%;right:8%;top:7%;font-family:Lora,serif;font-weight:700;color:${CREAM};font-size:${w*.11}px;line-height:1.15;text-align:center">${title}</div>${inner}</div>`;}
+
+/* ---------- scenes ---------- */
+function S1(t,D,sc){ // hook: real photo
+  const ul=ease(ramp(t,1.2,.8)), z=1.04+.06*clamp(t/D);
+  return `<div class="abs" style="inset:0;background:#2a2a2a"></div>
+   <img src="photo_free1.jpg" class="abs" style="left:-150px;top:0;width:1380px;height:1935px;object-fit:cover;transform:scale(${z});transform-origin:45% 40%">
+   <div class="abs" style="left:0;right:0;top:0;height:560px;background:linear-gradient(rgba(27,41,81,.85),rgba(27,41,81,0))"></div>
+   <div class="abs center serif" style="top:90px;font-size:76px;font-weight:700;line-height:1.15;color:${CREAM};text-shadow:0 2px 14px rgba(0,0,0,.4);opacity:${ramp(t,.15,.5)}">
+     This book is<br>not for <span style="color:${GOLD};font-style:italic">perfectionists.</span>
+     <svg class="abs" style="left:440px;top:206px" width="420" height="40" viewBox="0 0 420 40"><path d="M8 26 Q120 6 210 22 T412 16" stroke="${GOLD}" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="460" stroke-dashoffset="${460*(1-ul)}"/></svg></div>
+   <div class="abs" style="right:36px;bottom:36px;font-size:24px;color:#fff;background:rgba(0,0,0,.45);padding:6px 16px;border-radius:20px">Photo: Designed by Magnific</div>`;
+}
+function S2(t,D,sc,ch){
+  const cs=[ch[2]?.start??5,ch[3]?.start??7,ch[4]?.start??10,ch[5]?.start??12];
+  const icons=[
+    `<svg viewBox="0 0 100 100" width="130" height="130"><rect x="16" y="12" width="68" height="80" rx="10" fill="${NAVY}"/><rect x="34" y="4" width="32" height="16" rx="6" fill="${GOLD}"/><rect x="28" y="36" width="44" height="7" rx="3" fill="${CREAM}"/><rect x="28" y="54" width="44" height="7" rx="3" fill="${CREAM}"/><rect x="28" y="72" width="30" height="7" rx="3" fill="${CREAM}"/></svg>`,
+    `<svg viewBox="0 0 100 100" width="130" height="130"><rect x="22" y="8" width="56" height="86" rx="6" fill="${NAVY}"/><rect x="30" y="16" width="40" height="78" fill="${GOLD}"/><circle cx="62" cy="56" r="4" fill="${NAVY}"/></svg>`,
+    `<svg viewBox="0 0 100 100" width="130" height="130"><circle cx="50" cy="50" r="44" fill="${GOLD}"/><path d="M28 52 L44 68 L74 34" stroke="${NAVY}" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`];
+  const labels=['I give you a task.','I leave you to it,<br><span style="font-weight:400;font-size:40px">because I taught you how.</span>','I return. It’s done.'];
+  let cards='';
+  for(let i=0;i<3;i++){const a=ramp(t,cs[i]-.15,.45);const y=560+i*270;
+    cards+=`<div class="card" style="top:${y}px;opacity:${a};transform:translateX(${(1-easeOut(a))*-120}px)">${icons[i]}<div class="txt">${labels[i]}</div></div>`;}
+  const st=ramp(t,cs[3]-.1,.35);
+  const stamp=`<div class="abs" style="left:560px;top:1230px;transform:rotate(-8deg) scale(${st?(1.6-0.6*back(st)):0});opacity:${st};
+     border:7px solid #A8873F;color:#A8873F;border-radius:20px;padding:8px 30px;font-size:58px;font-weight:700;letter-spacing:3px;background:rgba(255,255,255,.85)">THOROUGHLY</div>`;
+  return `<div class="abs center serif" style="top:150px;font-size:70px;font-weight:700;opacity:${ramp(t,.1,.5)}">“I have to be able<br>to trust you.”</div>
+    <div class="abs center" style="top:370px;font-size:44px;color:#A8873F;font-weight:600;letter-spacing:2px;opacity:${ramp(t,ch[1]?.start-.2||3,.5)}">TRUST LOOKS LIKE THIS</div>
+    <div class="abs" style="left:70px;top:420px;width:120px;height:180px;opacity:0"></div>
+    ${cards}${stamp}`;
+}
+function S3(t,D,sc,ch){
+  const bk=ramp(t,(ch[2]?.start||3)-.3,.9);const rot=-18+18*easeOut(bk)+3*Math.sin(t*1.2)*bk;
+  const inner=`<div style="position:absolute;left:6%;right:6%;bottom:0;height:62%;display:flex;align-items:flex-end;justify-content:center">
+     <div style="width:44%;height:100%;margin-right:-6%">${jojo({blink:blinkAt(t,1)})}</div>
+     <div style="width:62%;height:118%;position:relative;z-index:1">${mom({blink:blinkAt(t)})}</div>
+     <div style="width:40%;height:92%;margin-left:-6%;z-index:2">${pip({blink:blinkAt(t,2)})}</div></div>`;
+  return `<div class="abs center serif" style="top:160px;font-size:76px;font-weight:700;line-height:1.15;opacity:${ramp(t,.1,.5)}">But trust goes<br><span style="color:#A8873F;font-style:italic">both ways.</span></div>
+    <div class="abs center" style="top:400px;font-size:46px;font-weight:500;opacity:${ramp(t,(ch[1]?.start||1.5)-.1,.5)}">My children need to know me, too.</div>
+    <div class="abs" style="left:240px;top:${560+(1-easeOut(bk))*160}px;opacity:${bk};perspective:1600px">
+      <div style="transform:rotateY(${rot}deg);transform-origin:0 50%">${bookCover(600,'Mommy Is<br>Human Too','#24366A',NAVY,inner)}</div></div>`;
+}
+function S4(t,D,sc,ch){
+  const words=[['Tired.','#EADBBE',NAVY],['Learning.','#D7E4E6',NAVY],['Still loving.',GOLD,NAVY]];
+  let chips='';words.forEach((w,i)=>{const s=ch[1+i]?.start||4+i;const a=ramp(t,s-.15,.4);
+    chips+=`<span class="chip" style="background:${w[1]};color:${w[2]};opacity:${a};transform:scale(${a?.6+.4*back(a):.6})">${w[0]}</span>`;});
+  const hb=ramp(t,(ch[3]?.start||6)+.1,.4);const pulse=1+.08*Math.sin(t*6)*hb;
+  const z=1.18+.05*clamp(t/D);
+  return `<div class="abs" style="inset:0;background:linear-gradient(#1E2A52 0 1400px,#4A3A4E 1400px)"></div>
+   <div class="abs" style="left:0;top:180px;width:1080px;height:1440px;transform:scale(${z});transform-origin:52% 48%">${nursery(t+5)}</div>
+   <div class="abs" style="left:0;right:0;top:0;height:420px;background:linear-gradient(#1E2A52 70%,rgba(30,42,82,0))"></div>
+   <div class="abs center" style="top:110px;font-size:40px;color:${GOLD};font-weight:700;letter-spacing:3px;opacity:${ramp(t,.1,.4)}">FOR NEW &amp; POSTPARTUM MOMS</div>
+   <div class="abs center serif" style="top:180px;font-size:64px;font-weight:700;line-height:1.15;color:${CREAM};opacity:${ramp(t,.3,.5)}">A gentle way to show<br>your human side.</div>
+   <div class="abs" style="left:800px;top:560px;width:110px;height:99px;opacity:${hb};transform:scale(${pulse})">${heart('#E8957E')}</div>
+   <div class="abs center" style="top:1290px;">${chips}</div>`;
+}
+function S5(t,D,sc,ch){
+  const a=easeOut(ramp(t,.2,.8));
+  return `<div class="abs center" style="top:140px;font-size:42px;color:#A8873F;font-weight:700;letter-spacing:3px;opacity:${ramp(t,.1,.4)}">FOR CHILDREN</div>
+   <div class="abs center serif" style="top:210px;font-size:64px;font-weight:700;line-height:1.15;opacity:${ramp(t,.3,.5)}">A way to understand<br>the mother who<br><span style="color:#A8873F;font-style:italic">labors among them.</span></div>
+   <div class="abs" style="left:250px;top:560px;width:580px;height:754px">${mom({blink:blinkAt(t,.4)})}</div>
+   <div class="abs" style="left:${80+ (1-a)*-200}px;top:900px;width:330px;height:495px;transform:rotate(${6-2*Math.sin(t*2)}deg)">${jojo({blink:blinkAt(t,1.3)})}</div>
+   <div class="abs" style="left:${690+(1-a)*200}px;top:960px;width:300px;height:450px;transform:rotate(${-6+2*Math.sin(t*2)}deg)">${pip({blink:blinkAt(t,2.2)})}</div>
+   <div class="abs" style="left:500px;top:520px;width:90px;height:81px;opacity:${ramp(t,1.6,.4)};transform:translateY(${-ramp(t,1.6,3)*60}px)">${heart('#D9826B')}</div>`;
+}
+function howHdr(t,n,label,first){return `<div class="abs center serif" style="top:70px;font-size:60px;font-weight:700;opacity:${first?ramp(t,.05,.4):1}">How it works</div>
+  <div class="abs center" style="top:170px;"><span style="display:inline-flex;align-items:center;gap:18px;background:#fff;border:3px solid #EFE4CC;border-radius:60px;padding:10px 34px 10px 12px;font-size:40px;font-weight:600;opacity:${ramp(t,.1,.4)}">
+  <span style="width:62px;height:62px;border-radius:50%;background:${GOLD};color:${NAVY};display:inline-flex;align-items:center;justify-content:center;font-weight:700">${n}</span>${label}</span></div>`;}
+function phone(inner,t){const y=Math.sin(t*1.2)*4;return `<div class="phone" style="transform:translateY(${y}px)"><div class="screen">${inner}</div></div>`;}
+function S6(t,D,sc,ch){
+  const covers=[['Mommy Is<br>Human Too','#2D4A8A',NAVY],['Mommy Needs<br>Things Too','#B5704F','#7A3F2A'],['Don’t Be<br>Bothered','#3A8A86','#1F5552'],['The Moon<br>Came Back','#5B4E9A','#2E2760'],['Leo Louis<br>Lion','#C98A2E','#8A5A16'],['Coming<br>Soon','#9AA3B5','#6B7486']];
+  const ts=(ch[1]?.start||1.6)+.9;const sel=ramp(t,ts,.3);
+  let g='';covers.forEach((c,i)=>{const a=ramp(t,.2+i*.1,.35);const s=i==0?1+.08*Math.sin(Math.PI*clamp((t-ts)/.5))*(t>ts):1;
+    g+=`<div style="opacity:${a};transform:translateY(${(1-easeOut(a))*40}px) scale(${s})">${bookCover(196,c[0],c[1],c[2])}</div>`;});
+  const open=ramp(t,ts+.6,.5);
+  return howHdr(t,1,'Choose a book from the shelf',true)+phone(`<div class="apphdr"><small>MY SHELF</small>Mommy Is Human Too</div>
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px 20px;padding:28px 40px;justify-items:center">${g}</div>
+     <div class="abs" style="left:0;right:0;bottom:0;height:${open*100}%;background:${NAVY};opacity:${open}"></div>`,t)+tap(400,620,t,ts);
+}
+function S7(t,D,sc,ch){
+  const words='Mommy needs things too, and that is okay.'.split(' ');
+  const ps=(ch[0]?.start||.5)+.6;const hl=Math.floor(clamp((t-ps-.3)/.32,0,words.length));
+  const ts=(ch[1]?.start||2.5)+.5;const bub=ramp(t,ts+.15,.3)*(1-ramp(t,D-.6,.3));
+  let line='';words.forEach((w,i)=>{const on=(i<hl&&t<ts)||(i==1&&t>=ts);
+    line+=`<span style="padding:2px 6px;border-radius:10px;background:${on?(i==1&&t>=ts?GOLD:'#F6E7C2'):'transparent'}">${w}</span> `;});
+  const scene=`<div style="position:relative;height:520px;background:linear-gradient(#DCEBEF,#F6EEDC);overflow:hidden">
+     <div class="abs" style="left:0;right:0;bottom:0;height:120px;background:#E4D2AE"></div>
+     <div class="abs" style="left:50px;top:60px;width:300px;height:390px">${mom({blink:blinkAt(t)})}</div>
+     <div class="abs" style="left:300px;top:250px;width:170px;height:255px">${jojo({blink:blinkAt(t,1.5)})}</div>
+     <div class="abs" style="left:380px;top:40px;width:120px;height:90px;border-radius:14px;background:#fff;border:6px solid #C9A961"></div></div>`;
+  const pressed=t>ps&&t<ps+.25;
+  return howHdr(t,2,'Listen &amp; sound it out')+phone(`<div class="apphdr"><small>BOOK 6 · PAGE 3</small>Mommy Needs Things Too</div>${scene}
+     <div style="padding:34px 34px 0;font-family:Lora,serif;font-size:38px;line-height:1.5;font-weight:600;color:${NAVY}">${line}</div>
+     <div class="abs" style="left:0;right:0;bottom:60px;display:flex;justify-content:center;gap:40px;align-items:center">
+       <div style="width:120px;height:120px;border-radius:50%;background:${GOLD};display:flex;align-items:center;justify-content:center;transform:scale(${pressed?.9:1})">
+       ${t>ps?`<svg width="50" height="50" viewBox="0 0 10 10"><rect x="2" y="1" width="2" height="8" fill="${NAVY}"/><rect x="6" y="1" width="2" height="8" fill="${NAVY}"/></svg>`:`<svg width="54" height="54" viewBox="0 0 10 10"><path d="M2 1 L9 5 L2 9Z" fill="${NAVY}"/></svg>`}</div></div>
+     <div class="abs" style="left:150px;top:590px;opacity:${bub};transform:scale(${.7+.3*back(ramp(t,ts+.15,.3))});background:${NAVY};color:${CREAM};border-radius:26px;padding:16px 30px;font-size:44px;font-weight:700;letter-spacing:4px">n · ee · d · s</div>`,t)
+     +tap(540,1300,t,ps)+tap(468,1080,t,ts);
+}
+function S8(t,D,sc,ch){
+  const tray=[['jojo',jojo],['pip',pip],['baby',baby],['dog',biscuit]];
+  const t1=.9,t2=2.2,t3=3.3; // drag times
+  const drag=(s,x0,y0,x1,y1)=>{const p=ease(ramp(t,s,.9));return [x0+(x1-x0)*p,y0+(y1-y0)*p,p];};
+  const [dx,dy,dp]=drag(t1,410,880,320,480);
+  const [px,py,pp]=drag(t2,180,880,80,430);
+  const [bx,by,bp]=drag(t3,300,880,200,560);
+  const canvas=`<div style="position:relative;height:560px;margin:24px;border-radius:30px;overflow:hidden;background:linear-gradient(#BFE0EE,#EAF5F7 60%)">
+     <div class="abs" style="left:-40px;right:-40px;bottom:-60px;height:260px;border-radius:50%;background:#9CCB7A"></div>
+     <div class="abs" style="left:360px;top:50px;width:90px;height:90px;border-radius:50%;background:#F7D774"></div>
+     <div class="abs" style="left:40px;top:70px;width:140px;height:48px;border-radius:30px;background:#fff"></div>
+     <div class="abs" style="left:150px;top:270px;width:200px;height:300px">${mom({blink:blinkAt(t)})}</div></div>`;
+  let trayH='';tray.forEach((c,i)=>{trayH+=`<div style="width:100px;height:110px;border-radius:20px;background:#fff;border:3px solid #EFE4CC;padding:6px">${c[1]({})}</div>`;});
+  const piece=(x,y,p,w,h,html)=>p>0?`<div class="abs" style="left:${x-w/2}px;top:${y-h/2}px;width:${w}px;height:${h}px;transform:scale(${1+.15*Math.sin(Math.PI*p)})">${html}</div>`:'';
+  const finger=(x,y,s)=> (t>s-.2&&t<s+1.2)?`<div class="abs" style="left:${250+x-30}px;top:${302+y-30}px;width:60px;height:60px;border-radius:50%;background:rgba(201,169,97,.6);border:4px solid ${GOLD}"></div>`:'';
+  return howHdr(t,3,'Make your own picture')+phone(`<div class="apphdr"><small>MAKE A PICTURE</small>My pictures</div>${canvas}
+     <div style="display:flex;justify-content:space-around;padding:10px 26px">${trayH}</div>
+     ${piece(dx,dy,dp,150,136,biscuit({wag:Math.sin(t*10)}))}${piece(px,py,pp,130,195,pip({blink:blinkAt(t,2)}))}${piece(bx,by,bp,120,132,baby({blink:blinkAt(t,1)}))}
+     <div class="abs" style="left:60px;right:60px;bottom:36px;height:84px;border-radius:42px;background:${GOLD};display:flex;align-items:center;justify-content:center;font-size:30px;white-space:nowrap;font-weight:700;opacity:${ramp(t,3.8,.4)}">Save to My pictures</div>`,t)
+     +finger(dx,dy,t1)+finger(px,py,t2)+finger(bx,by,t3);
+}
+function S9(t,D,sc,ch){
+  const a=ramp(t,.3,.5),b=ramp(t,(ch[0]?.start||.5)+1.8,.5),c=ramp(t,(ch[0]?.start||.5)+3,.5);
+  return howHdr(t,4,'Talk about it together')+phone(`<div class="apphdr"><small>THE END · CLOSING VERSE</small>Mommy Needs Things Too</div>
+    <div style="padding:46px 44px;text-align:center">
+     <div style="opacity:${a};font-size:26px;letter-spacing:3px;color:#A8873F;font-weight:700">PSALM 139:14 · KJV</div>
+     <div style="opacity:${a};font-family:Lora,serif;font-style:italic;font-size:42px;line-height:1.35;margin:18px 0 40px">“I will praise thee; for I am fearfully and wonderfully made.”</div>
+     <div style="opacity:${b};background:#fff;border:3px solid #EFE4CC;border-radius:30px;padding:28px;text-align:left">
+       <div style="font-size:26px;letter-spacing:3px;color:#A8873F;font-weight:700;margin-bottom:10px">REFLECTION</div>
+       <div style="font-size:32px;line-height:1.4">Mommy needs rest, too. How can we show her love this week?</div></div>
+     <div style="opacity:${c};display:flex;justify-content:center;gap:10px;margin-top:40px;height:200px">
+       <div style="width:130px">${jojo({blink:blinkAt(t,1)})}</div><div style="width:150px">${mom({blink:blinkAt(t)})}</div><div style="width:125px">${pip({blink:blinkAt(t,2)})}</div></div>
+    </div>`,t);
+}
+function S10(t,D,sc,ch){
+  const a=ramp(t,.2,.7);
+  return `<div class="abs" style="left:110px;right:110px;top:330px;height:820px;border-radius:50px;background:${NAVY};box-shadow:0 30px 70px rgba(27,41,81,.3);opacity:${a};transform:scale(${.94+.06*easeOut(a)})">
+     <div class="abs" style="inset:26px;border:4px solid ${GOLD};border-radius:34px"></div>
+     <div class="abs center" style="top:110px;color:${GOLD};font-size:40px;font-weight:700;letter-spacing:4px">1 THESSALONIANS 5:12</div>
+     <div class="abs center serif" style="top:230px;padding:0 70px;color:${CREAM};font-size:84px;font-style:italic;font-weight:600;line-height:1.25;opacity:${ramp(t,.8,.8)}">“Know them which labour among you.”</div>
+     <div class="abs center" style="top:690px;color:${GOLD};font-size:34px;letter-spacing:3px">KING JAMES VERSION</div></div>`;
+}
+function S11(t,D,sc,ch){
+  const L=['Grace for mothers.','Understanding for children.','Trust for the whole family.'];
+  let ls='';L.forEach((l,i)=>{const a=ramp(t,(ch[i]?.start||i)-.15,.4);ls+=`<div style="opacity:${a};transform:translateY(${(1-easeOut(a))*24}px);margin:6px 0">${l}</div>`;});
+  const T=ramp(t,(ch[3]?.start||5)-.2,.6), C=ramp(t,(ch[4]?.start||7)-.2,.5);
+  const fam=easeOut(ramp(t,.2,1));
+  return `<div class="abs center serif" style="top:120px;font-size:58px;font-weight:600;line-height:1.25">${ls}</div>
+   <div class="abs center serif" style="top:440px;font-size:112px;font-weight:700;line-height:1.02;opacity:${T};transform:scale(${.9+.1*easeOut(T)})">Mommy Is<br><span style="color:#A8873F">Human Too</span></div>
+   <div class="abs center" style="top:700px;font-size:38px;font-weight:600;letter-spacing:3px;opacity:${T}">A PICTURE BOOK SERIES &amp; READ-ALONG APP</div>
+   <div class="abs center" style="top:790px;opacity:${C}"><span style="display:inline-block;background:${GOLD};color:${NAVY};font-size:52px;font-weight:700;border-radius:70px;padding:26px 70px;transform:scale(${C?.8+.2*back(C):.8});box-shadow:0 12px 30px rgba(201,169,97,.45)">Download the free app</span>
+     <div style="margin-top:26px;font-size:36px;font-style:italic;font-family:Lora,serif">Not for perfectionists. For families.</div></div>
+   <div class="abs" style="left:0;right:0;top:${1020+(1-fam)*120}px;height:420px;opacity:${fam};display:flex;justify-content:center;align-items:flex-end">
+     <div style="width:200px;height:300px;margin-right:-30px">${jojo({blink:blinkAt(t,1)})}</div>
+     <div style="width:300px;height:390px;position:relative">${mom({blink:blinkAt(t)})}<div class="abs" style="left:96px;top:250px;width:120px;height:132px">${baby({})}</div></div>
+     <div style="width:180px;height:270px;margin-left:-30px">${pip({blink:blinkAt(t,2)})}</div>
+     <div style="width:170px;height:155px">${biscuit({wag:Math.sin(t*9)})}</div></div>`;
+}
+const FN=[S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11];
+function render(i,t){
+  const sc=SC[i],D=sc.D,ch=chunks(sc);
+  let cap='';const cur=ch.find(c=>t>=c.start-.05&&t<c.end+.25)||null;
+  if(cur){cap=`<div class="cap"><div class="capbox">${cur.text}</div></div>`;}
+  const fo=i==SC.length-1?1:1-ramp(t,D-.3,.3), fi=i==0?1:ramp(t,0,.25);
+  document.getElementById('stage').innerHTML=sparkles(t+i*7)+`<div class="abs" style="inset:0;opacity:${Math.min(fo,fi)}">${FN[i](t,D,sc,ch)}${cap}</div>`;
+}
+</script>
+<script src="real.js"></script><script src="real2.js"></script><script src="real3.js"></script></body></html>
