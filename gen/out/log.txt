@@ -1,28 +1,28 @@
-bg_gas_station ok 61667
-bg_church_outside err HTTP Error 402: Payment Required
-bg_church_outside err HTTP Error 402: Payment Required
-bg_church_outside ok 81583
-bg_bedroom err HTTP Error 402: Payment Required
-bg_bedroom err HTTP Error 402: Payment Required
-bg_bedroom ok 53803
-bg_desk_night err HTTP Error 402: Payment Required
-bg_desk_night err HTTP Error 402: Payment Required
-bg_desk_night ok 57384
-prop_bills err HTTP Error 402: Payment Required
-prop_bills err HTTP Error 402: Payment Required
-prop_bills ok 38283
-prop_books err HTTP Error 402: Payment Required
-prop_books err HTTP Error 402: Payment Required
-prop_books ok 43074
-prop_sign err HTTP Error 402: Payment Required
-prop_sign err HTTP Error 402: Payment Required
-prop_sign ok 70689
-prop_soup err HTTP Error 402: Payment Required
-prop_soup err HTTP Error 402: Payment Required
-prop_soup ok 38509
-prop_thermometer err HTTP Error 402: Payment Required
-prop_thermometer err HTTP Error 402: Payment Required
-prop_thermometer ok 30602
-prop_map err HTTP Error 402: Payment Required
-prop_map err HTTP Error 402: Payment Required
-prop_map ok 45573
+char_leo ok 48938
+char_leo2 err HTTP Error 402: Payment Required
+char_leo2 err HTTP Error 402: Payment Required
+char_leo2 ok 48338
+char_mamalion err HTTP Error 402: Payment Required
+char_mamalion err HTTP Error 402: Payment Required
+char_mamalion ok 48323
+bg_savanna_smoke err HTTP Error 402: Payment Required
+bg_savanna_smoke err HTTP Error 402: Payment Required
+bg_savanna_smoke ok 40908
+bg_savanna_fire err HTTP Error 402: Payment Required
+bg_savanna_fire err HTTP Error 402: Payment Required
+bg_savanna_fire ok 42121
+bg_savanna_blue err HTTP Error 402: Payment Required
+bg_savanna_blue err HTTP Error 402: Payment Required
+bg_savanna_blue ok 61474
+bg_sky_daynight err HTTP Error 402: Payment Required
+bg_sky_daynight err HTTP Error 402: Payment Required
+bg_sky_daynight ok 57844
+prop_seedling err HTTP Error 402: Payment Required
+prop_seedling err The read operation timed out
+prop_seedling ok 38704
+prop_earth err HTTP Error 402: Payment Required
+prop_earth err HTTP Error 402: Payment Required
+prop_earth ok 36298
+prop_cape err HTTP Error 402: Payment Required
+prop_cape err HTTP Error 402: Payment Required
+prop_cape ok 50839
