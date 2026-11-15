@@ -35,6 +35,30 @@
    "title": "Mommy Needs Things Too",
    "vol": "Book Six",
    "replaces": ""
+  },
+  {
+   "id": "moon-came-back",
+   "title": "The Moon Came Back",
+   "vol": "Book Seven",
+   "replaces": ""
+  },
+  {
+   "id": "dont-be-bothered",
+   "title": "Don't Be Bothered",
+   "vol": "Book Eight",
+   "replaces": ""
+  },
+  {
+   "id": "trust-looks-like",
+   "title": "Trust Looks Like This",
+   "vol": "Book Nine",
+   "replaces": ""
+  },
+  {
+   "id": "lost-your-mind",
+   "title": "I Think You Lost Your Mind",
+   "vol": "Book Ten",
+   "replaces": ""
   }
  ]
 }

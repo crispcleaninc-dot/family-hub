@@ -160,7 +160,7 @@ var STUDIO3D=(function(){
   var pages=[{kind:'cover',text:p.title,scene:{bg:first.bg,cast:[['mom',30,'bounce',{}],['jojo',56,'bounce',{delay:.2}],['pip',72,'bounce',{delay:.4}]],props:[],fx:['sparkles']}}];
   p.pages.forEach(function(g){ pages.push({kind:'page',text:g.text,dur:Math.max(4,g.text.split(/\s+/).length*0.42),scene:scene(g)}); });
   pages.push({kind:'end',text:'',say:v[1]+' '+v[0],dur:9,scene:{bg:'bg_ice_sunset',cast:[['mom',34,'hug',{}],['jojo',58,'hugIn',{delay:.2}],['pip',72,'hugIn',{delay:.4}]],props:[],fx:['hearts','warm']}});
-  if(window.STORY2)pages.push({kind:'family',text:'',say:'Our family verses. '+STORY2.FAMILY.map(function(f){ return f[0]+' '+f[1]+'.'; }).join(' '),dur:30,verses:STORY2.FAMILY,scene:{bg:'bg_porch',cast:[['mom',26,'hug',{}],['jojo',52,'hugIn',{}],['pip',68,'hugIn',{delay:.25}],['bee',82,'hugIn',{delay:.5}]],props:[],fx:['hearts','warm']}});
+  if(window.STORY2){ var CV=STORY2.COV[p.verse]||STORY2.FAMILY; pages.push({kind:'covenant',text:'',say:'Covenant verses. '+CV.map(function(f){ return f[0]+' '+f[1]+'.'; }).join(' '),dur:30,verses:CV,scene:{bg:'bg_porch',cast:[['mom',26,'hug',{}],['jojo',52,'hugIn',{}],['pip',68,'hugIn',{delay:.25}],['bee',82,'hugIn',{delay:.5}]],props:[],fx:['hearts','warm']}}); }
   return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:['"'+v[1]+'"',v[0]+' (KJV)'],pages:pages}; }
  function play(p,quick){ loadVoices(); if(!window.STORY||!STORY.openBook){ note('Story player is still loading. Try again in a second.'); return; } var bk=toBook(p);
   var go=function(){ if(window.STORY2)STORY2.prog(false); try{ $('cs').classList.add('hide'); }catch(e){} STORY.openBook(bk,true); };
