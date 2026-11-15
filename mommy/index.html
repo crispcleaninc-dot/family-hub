@@ -35,7 +35,39 @@
   #vload{position:absolute;left:0;right:0;top:calc(60px + env(safe-area-inset-top));text-align:center;color:var(--navy);font-size:15px;pointer-events:none}
   #vhelp{background:#fff6e6;color:#5a4a1e;font-size:13px;padding:8px 12px;border-bottom:1px solid #ecd49a}
   #vhelp a{color:var(--navy);font-weight:700}
+
+  /* ---- Glow-up (Nov 2026) ---- */
+  html,body{background:linear-gradient(160deg,#1B2951 0%,#3b2f7a 60%,#8a3f7e 100%) fixed}
+  .wrap img{width:120px;height:120px;border-radius:30px;box-shadow:0 18px 40px rgba(0,0,0,.35),0 0 0 6px rgba(255,210,122,.18);animation:mFloat 3.4s ease-in-out infinite}
+  @keyframes mFloat{50%{transform:translateY(-8px) rotate(-2deg)}}
+  h1{font-family:"Fredoka","Comic Sans MS","Chalkboard SE",Georgia,serif;font-size:32px;background:linear-gradient(90deg,#ffe2a0,#fff,#ffd27a);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .btn{border-radius:18px;box-shadow:0 5px 0 rgba(0,0,0,.25)}
+  .gold{background:linear-gradient(135deg,#ffd27a,#e0952f)}
+  #vbar{background:linear-gradient(110deg,#1B2951,#3b2f7a 60%,#5a2d6e)}
+  #vbar .t{font-family:"Fredoka","Comic Sans MS",Georgia,serif;font-weight:600;background:linear-gradient(90deg,#ffe2a0,#fff 50%,#ffe2a0);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:mShine 6s linear infinite}
+  @keyframes mShine{to{background-position:-200% 0}}
+  #vbar button,#vbar a{border-radius:20px;background:rgba(255,255,255,.12);border:1px solid rgba(255,226,160,.4)}
+  #vload{position:absolute;top:calc(46px + env(safe-area-inset-top));left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;background:radial-gradient(circle at 50% 38%,#4a3a8a 0%,#2a2a63 45%,#1B2951 100%);color:#fff;z-index:3;font-size:16px;pointer-events:none;overflow:hidden}
+  #vload.hidden{display:none}
+  #vload .ld-book{position:relative;width:150px;height:104px;perspective:600px;margin-top:-30px}
+  #vload .ld-glow{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px;border-radius:50%;background:radial-gradient(circle,rgba(255,210,122,.45),rgba(255,210,122,0) 65%);animation:mPulse 2.4s ease-in-out infinite}
+  @keyframes mPulse{50%{transform:scale(1.2);opacity:.6}}
+  #vload .ld-l,#vload .ld-r,#vload .ld-p{position:absolute;top:0;width:75px;height:104px;background:linear-gradient(#fffaf0,#efdfc2);border:4px solid #e3a947}
+  #vload .ld-l{left:0;border-radius:10px 2px 2px 10px;border-right-width:2px}
+  #vload .ld-r{right:0;border-radius:2px 10px 10px 2px;border-left-width:2px}
+  #vload .ld-p{right:0;border-radius:2px 10px 10px 2px;transform-origin:left center;animation:mFlip 1.4s cubic-bezier(.4,.1,.3,1) infinite;background:linear-gradient(90deg,#f6e8cc,#fffaf0)}
+  #vload .ld-p:nth-child(4){animation-delay:.47s}#vload .ld-p:nth-child(5){animation-delay:.94s}
+  @keyframes mFlip{0%{transform:rotateY(0)}60%,100%{transform:rotateY(-180deg)}}
+  #vload .ld-heart{position:absolute;left:50%;top:-46px;margin-left:-18px;font-size:34px;animation:mFloat 2s ease-in-out infinite}
+  #vload .ld-t{font-family:"Fredoka","Comic Sans MS",Georgia,serif;font-size:22px;font-weight:600;color:#ffe2a0;z-index:1}
+  #vload .ld-tip{font-size:14.5px;color:#d9dcf2;max-width:290px;text-align:center;min-height:42px;z-index:1;transition:opacity .4s}
+  #vload .ld-bar{width:220px;height:8px;border-radius:8px;background:rgba(255,255,255,.15);overflow:hidden;z-index:1}
+  #vload .ld-bar i{display:block;height:100%;width:40%;border-radius:8px;background:linear-gradient(90deg,#ffd27a,#ff9f6b);animation:mBar 1.6s ease-in-out infinite}
+  @keyframes mBar{0%{transform:translateX(-110%)}100%{transform:translateX(260%)}}
+  #vload .sp{position:absolute;color:#ffe2a0;animation:mTw 2.4s ease-in-out infinite}
+  @keyframes mTw{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
 <script src="../samsung-guard.js"></script>
 </head>
 <body>
@@ -68,7 +100,13 @@
     <a id="vOut" href="#" target="_blank" rel="noopener">Open in browser</a>
   </div>
   <div id="vhelp" class="hidden">Still loading or seeing “Sorry, unable to open the file”? Tap ↻ Reload, or <a id="vOut2" href="#" target="_blank" rel="noopener">Open in browser</a>.</div>
-  <div id="vload">Opening the bookshelf…</div>
+  <div id="vload"><div class="ld-glow"></div>
+    <span class="sp" style="left:14%;top:22%;font-size:22px">✦</span><span class="sp" style="right:16%;top:30%;font-size:16px;animation-delay:.8s">✦</span><span class="sp" style="left:22%;bottom:24%;font-size:14px;animation-delay:1.4s">✦</span><span class="sp" style="right:22%;bottom:30%;font-size:20px;animation-delay:.4s">✦</span>
+    <div class="ld-book"><div class="ld-heart">💛</div><div class="ld-l"></div><div class="ld-r"></div><div class="ld-p"></div><div class="ld-p"></div><div class="ld-p"></div></div>
+    <div class="ld-t">Opening the bookshelf…</div>
+    <div class="ld-bar"><i></i></div>
+    <div class="ld-tip" id="ldTip">Tip: tap any word in a story to hear it sounded out.</div>
+  </div>
   <iframe id="frame" title="Mommy Is Human Too" allow="clipboard-write; fullscreen; autoplay"></iframe>
 </div>
 <script>
@@ -92,6 +130,9 @@
     old.parentNode.replaceChild(f, old);
     f.src = APP_URL;
   }
+
+  var TIPS=['Tip: tap any word in a story to hear it sounded out.','Earn ⭐ stars for every book you open and finish.','Find today’s glimpse: one small wonder to be thankful for.','Make the family walk, run and dance in “Make it move”.','Mommy is human too. Grace for her, grace for you. 💛'],ti=0;
+  setInterval(function(){ var t=$('ldTip'); if(!t||$('vload').classList.contains('hidden'))return; t.style.opacity=0; setTimeout(function(){ ti=(ti+1)%TIPS.length; t.textContent=TIPS[ti]; t.style.opacity=1; },400); },3200);
   $('vReload').onclick = go; $('retry').onclick = go; $('openBtn').onclick = go;
   window.addEventListener('online', function(){ if(!$('offline').classList.contains('hidden')) go(); });
   var deferred = null;
@@ -100,7 +141,7 @@
   if(installed) go(); else show('install');
   window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
-  var APP_VERSION = '1';
+  var APP_VERSION = '2';
   if (navigator.onLine && location.protocol === 'https:') {
     fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
       v = (v || '').trim(); if (!v || v === APP_VERSION) return;
