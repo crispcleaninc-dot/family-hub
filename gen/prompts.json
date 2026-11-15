@@ -1,0 +1,18 @@
+{
+ "style": "photorealistic cinematic film still, 35mm photo, natural skin texture, soft warm window light, shallow depth of field, candid moment, high detail, vertical portrait composition",
+ "neg": "",
+ "shots": [
+  {"id":"m1_night","seed":1101,"p":"a young Black mother in her late 20s with freshly done knotless braids neatly styled in a high bun with laid edges and small gold hoop earrings, wearing a cream robe, sitting in a wooden rocking chair in a dim nursery at night holding her newborn baby against her shoulder, eyes closed, tired but peaceful, warm lamp glow, moonlight from window"},
+  {"id":"m1_tear","seed":1102,"p":"a young Black mother in her late 20s with freshly done knotless braids in a neat high bun with laid edges, cream robe, sitting at a kitchen table in morning light beside a sleeping newborn in a bassinet, a single tear on her cheek, gentle hopeful smile, holding a mug"},
+  {"id":"m2_task","seed":2101,"p":"a Black mother in her mid 30s with a sleek shoulder-length silk press hairstyle with a side part, wearing navy medical scrubs, kneeling at eye level with her 9 year old son in a bright kitchen, handing him a handwritten chore list, warm firm loving look, son nodding"},
+  {"id":"m2_hug","seed":2102,"p":"a Black mother in her mid 30s with a sleek shoulder-length silk press with side part, wearing navy medical scrubs, laughing and hugging her proud 9 year old son in a spotless clean kitchen, purse dropped on the counter, joyful"},
+  {"id":"m3_stairs","seed":3101,"p":"a Black mother in her early 30s with a full glossy defined twist-out hairstyle and gold stud earrings, wearing a denim shirt, sitting on the bottom stair of a cozy home in the evening, emotional and teary, her three young children sitting around her and hugging her"},
+  {"id":"m4_pancakes","seed":4101,"p":"a joyful plus-size Black mother in her late 30s with styled locs in an elegant updo with gold loc jewelry, wearing a bright mustard sweater, laughing while making pancakes with her son and daughter in a sunny kitchen, flour on the counter, kids giggling"},
+  {"id":"m5_app","seed":5101,"p":"a Black mother in her early 30s with long sleek body wave hair freshly styled, wearing a cozy beige knit set, sitting on a couch with her son and daughter snuggled on each side, all looking at a smartphone she is holding, kids excited and smiling"},
+  {"id":"m6_pray","seed":6101,"p":"a Black grandmother in her early 60s with a neat short tapered silver natural haircut and pearl earrings, wearing a soft lavender cardigan, sitting on a bed at night with her two grandchildren in pajamas, holding hands with heads bowed in prayer, warm lamplight"},
+  {"id":"m1_smile","seed":1103,"p":"close portrait of a young Black mother with freshly done knotless braids in a neat high bun with laid edges and gold hoops, holding her newborn baby to her cheek, smiling at the camera, golden hour light"},
+  {"id":"m3_smile","seed":3102,"p":"portrait of a Black mother with a full glossy defined twist-out and gold studs, smiling at the camera with her three children close around her on a porch at golden hour"},
+  {"id":"m4_smile","seed":4102,"p":"portrait of a plus-size Black mother with styled locs in an elegant updo with gold loc jewelry, mustard sweater, laughing at the camera with her son and daughter, golden hour"},
+  {"id":"m6_smile","seed":6102,"p":"portrait of a Black grandmother with a neat short tapered silver natural haircut and pearl earrings, smiling warmly at the camera with her two grandchildren, golden hour garden"}
+ ]
+}
