@@ -1,7 +1,7 @@
 # Captures real screens from the current app build for the commercial's "how it works" scenes.
 import os, mimetypes, json, sys
 from playwright.sync_api import sync_playwright
-BUILD=sys.argv[1] if len(sys.argv)>1 else '/home/claude/gas/Index_v23.html'
+BUILD=sys.argv[1] if len(sys.argv)>1 else '/home/claude/gas/Index_v24.html'
 html=open(BUILD).read()
 stub=open('/home/claude/gas/test.py').read().split('stub="""')[1].split('"""')[0]
 open('/tmp/cap.html','w').write(html.replace('<head>',"<head>"+stub,1))
