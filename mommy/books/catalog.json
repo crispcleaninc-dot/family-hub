@@ -59,6 +59,30 @@
    "title": "I Think You Lost Your Mind",
    "vol": "Book Ten",
    "replaces": ""
+  },
+  {
+   "id": "mommy-got-sick",
+   "title": "Mommy Got Sick",
+   "vol": "Book Eleven",
+   "replaces": ""
+  },
+  {
+   "id": "mommy-got-lost",
+   "title": "Mommy Got Lost",
+   "vol": "Book Twelve",
+   "replaces": ""
+  },
+  {
+   "id": "mommy-has-dreams",
+   "title": "Mommy Has Dreams Too",
+   "vol": "Book Thirteen",
+   "replaces": ""
+  },
+  {
+   "id": "mommy-prays",
+   "title": "Mommy Prays Too",
+   "vol": "Book Fourteen",
+   "replaces": ""
   }
  ]
 }

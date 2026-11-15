@@ -63,7 +63,7 @@ var STUDIO3D=(function(){
  var CUR=null, TOKEN=0, MAN=null;
  function stopAll(){ TOKEN++; try{ if(CUR)CUR.stop(); }catch(e){} CUR=null; try{ ORIGCANCEL(); }catch(e){} }
  function playBuf(buf,rate,done){ var a=ac(); if(!a){ done&&done(); return; } try{ if(CUR)CUR.stop(); }catch(e){} var src=a.createBufferSource(); src.buffer=buf; src.playbackRate.value=rate||1; src.connect(a.destination); src.onended=function(){ if(CUR===src){ CUR=null; done&&done(); } }; CUR=src; src.start(); }
- function clip(file,done){ var my=TOKEN; fetch(BASE+'art/chat/'+file+'.mp3').then(function(r){ return r.arrayBuffer(); }).then(function(ab){ return new Promise(function(res,rej){ ac().decodeAudioData(ab,res,rej); }); }).then(function(b){ if(my===TOKEN)playBuf(b,1,done); }).catch(function(){ done&&done('fail'); }); }
+ function clip(file,done){ var my=TOKEN; fetch(BASE+'art/chat/'+file+'.mp3?v=2').then(function(r){ return r.arrayBuffer(); }).then(function(ab){ return new Promise(function(res,rej){ ac().decodeAudioData(ab,res,rej); }); }).then(function(b){ if(my===TOKEN)playBuf(b,1,done); }).catch(function(){ done&&done('fail'); }); }
  function norm(t){ return String(t||'').replace(/\*[^*]*\*/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim(); }
  function sayable(t){ return String(t||'').replace(/\*[^*]*\*/g,' ').replace(/(\d+):(\d+)/g,'$1, verse $2').replace(/LORD/g,'Lord').replace(/[\u{1F000}-\u{1FFFF}☀-➿️‍]/gu,'').replace(/\(my AI helper[^)]*\)/,'').replace(/\s+/g,' ').trim(); }
  function manifest(){ if(MAN)return Promise.resolve(MAN); return fetch(BASE+'art/chat/index.json').then(function(r){ return r.json(); }).then(function(j){ MAN=j; return j; }).catch(function(){ MAN={}; return MAN; }); }
