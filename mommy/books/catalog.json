@@ -1,6 +1,12 @@
 {
  "books": [
   {
+   "id": "mommy-is-human",
+   "title": "Mommy Is Human",
+   "vol": "Where It All Begins",
+   "replaces": ""
+  },
+  {
    "id": "just-one-scoop",
    "title": "Just One Scoop",
    "vol": "Book One",
@@ -82,6 +88,12 @@
    "id": "mommy-prays",
    "title": "Mommy Prays Too",
    "vol": "Book Fourteen",
+   "replaces": ""
+  },
+  {
+   "id": "leo-louis-lion",
+   "title": "Leo Louis Lion and the Sky That Turned to Smoke",
+   "vol": "Leo Louis Lion",
    "replaces": ""
   }
  ]

@@ -144,7 +144,7 @@
 /* ===== STORY BOOKS ADD-ON (Nov 2026) ===== */
 var STORY=(function(){
  var BASE='https://crispcleaninc-dot.github.io/family-hub/mommy/';
- var CAST={mom:['art/mommy.webp',80,-20],jojo:['art/jojo.webp',46,4],pip:['art/pip.webp',40,4],bee:['art/bee.webp',34,4],dog:['art/props/prop_dog.webp',24,4],uncle:['art/uncle.webp',74,2]};
+ var CAST={mom:['art/mommy.webp',80,-20],jojo:['art/jojo.webp',46,4],pip:['art/pip.webp',40,4],bee:['art/bee.webp',34,4],dog:['art/props/prop_dog.webp',24,4],uncle:['art/uncle.webp',74,2],leo:['art/leo.webp',34,4],mama:['art/mamalion.webp',46,2]};
  var CATALOG=null, BOOK=null, IDX=0, AUD=new Audio(), AUTO=false, RAF=0, HOSTED_TITLES=[];
  function $(i){ return document.getElementById(i); }
  function esc2(s){ return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -229,7 +229,7 @@ var STORY=(function(){
  var SAY={mom:['say-mom','say-mom2'],jojo:['say-jojo','say-jojo2'],pip:['say-pip','say-pip2'],bee:['say-bee','say-bee2']}, SAYI={}, VOICE=new Audio();
  var SAYTXT={mom:['Hi, baby! Give yourself some grace today. 💛','Mommy is human too, you know. 💛'],jojo:["Mommy gets tired too. Let's give her a big hug! 🤗","Hey, I'm Jojo! When Mommy gives me a job, I finish it all the way! 💪🏾"],pip:["I can help Mommy! I'm a big helper! ✨","Hi! I'm Pip! Wanna read a story with me? Pleeease? 📖"],bee:['Ba ba boo! Hi hi! 🐝','Hee hee! Mama! I love you! 💛']};
  function homeVoices(){ var h=$('bkHero'); if(!h||h.__sb)return; h.__sb=1;
-  h.addEventListener('pointerdown',function(ev){ var tg=ev&&ev.target&&ev.target.closest&&ev.target.closest('.bh-c'); setTimeout(function(){ var j=tg||h.querySelector('.bh-c.jump'); if(!j)return; var k=j.dataset.k, list=SAY[k]; if(!list)return; SAYI[k]=((SAYI[k]||0)+1)%list.length; try{ VOICE.pause(); VOICE.src=BASE+'art/'+list[SAYI[k]]+'.mp3?v=4'; VOICE.play().catch(function(){}); }catch(e){} try{ var bb=h.querySelector('.bh-bub'); if(bb&&SAYTXT[k]){ var nb=bb.cloneNode(false); nb.textContent=SAYTXT[k][SAYI[k]]; bb.parentNode.replaceChild(nb,bb); var ms=Math.max(2600,nb.textContent.length*75); nb.style.animationDuration=(ms/1000)+'s'; setTimeout(function(){ nb.remove(); },ms); } }catch(e){} },40); }); }
+  h.addEventListener('pointerdown',function(ev){ var tg=ev&&ev.target&&ev.target.closest&&ev.target.closest('.bh-c'); setTimeout(function(){ var j=tg||h.querySelector('.bh-c.jump'); if(!j)return; var k=j.dataset.k, list=SAY[k]; if(!list)return; SAYI[k]=((SAYI[k]||0)+1)%list.length; try{ VOICE.pause(); VOICE.src=BASE+'art/'+list[SAYI[k]]+'.mp3?v=5'; VOICE.play().catch(function(){}); }catch(e){} try{ var bb=h.querySelector('.bh-bub'); if(bb&&SAYTXT[k]){ var nb=bb.cloneNode(false); nb.textContent=SAYTXT[k][SAYI[k]]; bb.parentNode.replaceChild(nb,bb); var ms=Math.max(2600,nb.textContent.length*75); nb.style.animationDuration=(ms/1000)+'s'; setTimeout(function(){ nb.remove(); },ms); } }catch(e){} },40); }); }
  /* ---------- tap feedback for every book ---------- */
  function taps(){ if(document.__sbTaps)return; document.__sbTaps=1;
   document.addEventListener('pointerdown',function(e){ var c=e.target.closest&&e.target.closest('.bookcard'); if(c){ c.classList.add('sb-press'); setTimeout(function(){ c.classList.remove('sb-press'); },220); } },true);
