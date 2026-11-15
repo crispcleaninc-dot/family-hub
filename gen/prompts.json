@@ -3,94 +3,64 @@
 "propstyle": ", 3D Pixar style render, single object centered, isolated on a plain white background, soft studio light, no text",
 "shots": [
 [
-"bg_night_window",
-71,
+"bg_gas_station",
+91,
 "bg",
-"cozy kids bedroom window at night with a big glowing full moon over rooftops, soft blue moonlight, curtains, a small night light"
+"small red roadside gas station on a quiet street, seen from a car, afternoon"
 ],
 [
-"bg_lawn_sprinkler",
-72,
+"bg_church_outside",
+92,
 "bg",
-"sunny suburban street seen from a car window, a front lawn with a sprinkler spraying water and a small rainbow in the mist"
+"pretty white neighborhood church with a steeple on a sunny street corner, trees and flowers"
 ],
 [
-"prop_rainbow",
-73,
-"prop",
-"small bright cute rainbow arc with little clouds on each end"
+"bg_bedroom",
+93,
+"bg",
+"cozy mom's bedroom with a made bed, soft morning light through curtains, a rug to kneel on"
 ],
 [
-"prop_feather",
-74,
-"prop",
-"single soft white bird feather"
+"bg_desk_night",
+94,
+"bg",
+"kitchen table at night with an open textbook, notebook, lamp glowing, quiet house"
 ],
 [
-"prop_flower",
-75,
+"prop_bills",
+95,
 "prop",
-"small yellow flower growing out of a crack in a sidewalk"
+"small stack of paper bills and envelopes"
 ],
 [
-"prop_moon",
-76,
+"prop_books",
+96,
 "prop",
-"glowing full moon with soft craters, warm and friendly"
+"stack of school textbooks and a notebook with a pencil"
 ],
 [
-"prop_jar",
-77,
+"prop_sign",
+97,
 "prop",
-"glass mason jar full of tiny paper notes and drawings with a ribbon, glimpse jar"
+"handmade colorful poster sign with glitter and stars, blank, no text"
 ],
 [
-"prop_blocks",
-78,
+"prop_soup",
+98,
 "prop",
-"colorful toy blocks and toy cars lined up perfectly in a straight row by size"
+"bowl of warm chicken noodle soup with a spoon, steam"
 ],
 [
-"prop_dishes",
-79,
+"prop_thermometer",
+99,
 "prop",
-"stack of clean plates cups and a spoon drying on a dish rack"
+"simple kids medical thermometer"
 ],
 [
-"prop_toybin",
-80,
+"prop_map",
+100,
 "prop",
-"kids toy chest box full of toys and a teddy bear"
-],
-[
-"prop_milk",
-81,
-"prop",
-"carton of milk and a box of cereal"
-],
-[
-"prop_waterbowl",
-82,
-"prop",
-"dog water bowl filled with water, blue"
-],
-[
-"prop_uniform",
-83,
-"prop",
-"neatly folded green military dress uniform with a cap on top"
-],
-[
-"char_uncle",
-84,
-"prop",
-"full body 3D Pixar style cartoon character, friendly Black man in his thirties with a short neat haircut and trimmed beard, standing very straight with good posture, wearing a neatly tucked navy polo shirt, khaki pants and clean shoes, kind but serious face, standing on plain background"
-],
-[
-"char_uncle2",
-85,
-"prop",
-"full body 3D Disney Pixar style animated character of a tall Black man uncle, short fade haircut, neat beard, standing upright, arms at his sides, tucked in navy polo shirt, khaki pants, brown shoes, warm eyes, plain white background"
+"folded paper road map"
 ]
 ]
 }
