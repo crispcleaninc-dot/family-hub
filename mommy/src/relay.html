@@ -1,0 +1,7 @@
+<!DOCTYPE html><meta charset="utf-8"><title>relay</title>
+<script>
+// Hands a source file from this folder to the Apps Script editor that opened it (used only when updating the app).
+(function(){ var f=(location.hash||'').slice(1); if(!/^[\w.-]+$/.test(f))return;
+ fetch(f+'?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.text();}).then(function(t){
+  var target=window.opener||window.parent; target.postMessage({mihRelay:f,text:t},'https://script.google.com'); document.body.textContent='sent '+t.length; }); })();
+</script>
