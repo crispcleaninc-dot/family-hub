@@ -1,0 +1,17 @@
+name: art-gen
+on:
+  push:
+    branches: [art-gen]
+    paths: ['gen/prompts.json']
+permissions:
+  contents: write
+jobs:
+  gen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 gen/run.py
+      - run: |
+          git config user.name "art-bot"; git config user.email "art-bot@users.noreply.github.com"
+          git add gen/out && git commit -m "generated art" && git push || echo nothing
