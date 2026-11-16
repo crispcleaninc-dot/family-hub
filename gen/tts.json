@@ -650,6 +650,13 @@
 "voice": "en-US-AnaNeural",
 "pitch": "-25Hz",
 "rate": "-3%"
+},
+{
+"id": "k_efd85592c9a9",
+"text": "Mommy? Where are you?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
 }
 ]
 }
