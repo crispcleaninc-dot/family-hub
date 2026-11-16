@@ -325,8 +325,213 @@
    9393,
    "scene",
    "a Black mother in her mid 30s with medium brown skin and shoulder-length locs tied back with a patterned headwrap, wearing a red sweater with an 8-year-old Black boy and a 5-year-old Black girl walking out the front door of a real suburban house in the morning, smiling, school backpacks"
+  ],
+  [
+   "e2c_mom",
+   2201,
+   "char",
+   "a Latina mother in her early 30s with long wavy dark brown hair, warm tan skin, big friendly smile, wearing a teal knit sweater, blue jeans and white sneakers"
+  ],
+  [
+   "e2c_momb",
+   3302,
+   "char",
+   "a Latina mother in her early 30s with long wavy dark brown hair, warm tan skin, big friendly smile, wearing a teal knit sweater, blue jeans and white sneakers"
+  ],
+  [
+   "e2c_momc",
+   4403,
+   "char",
+   "a Latina mother in her early 30s with long wavy dark brown hair, warm tan skin, big friendly smile, wearing a teal knit sweater, blue jeans and white sneakers"
+  ],
+  [
+   "e2c_dad",
+   2201,
+   "char",
+   "a white father in his mid 30s with short light brown hair and a short trimmed beard, kind smile, wearing a red and navy plaid flannel shirt, blue jeans and brown boots"
+  ],
+  [
+   "e2c_dadb",
+   3302,
+   "char",
+   "a white father in his mid 30s with short light brown hair and a short trimmed beard, kind smile, wearing a red and navy plaid flannel shirt, blue jeans and brown boots"
+  ],
+  [
+   "e2c_dadc",
+   4403,
+   "char",
+   "a white father in his mid 30s with short light brown hair and a short trimmed beard, kind smile, wearing a red and navy plaid flannel shirt, blue jeans and brown boots"
+  ],
+  [
+   "e2c_jojo",
+   2201,
+   "char",
+   "a 7-year-old biracial boy with light brown skin and curly light brown hair, big smile, wearing a green t-shirt, denim shorts and colorful sneakers"
+  ],
+  [
+   "e2c_jojob",
+   3302,
+   "char",
+   "a 7-year-old biracial boy with light brown skin and curly light brown hair, big smile, wearing a green t-shirt, denim shorts and colorful sneakers"
+  ],
+  [
+   "e2c_jojoc",
+   4403,
+   "char",
+   "a 7-year-old biracial boy with light brown skin and curly light brown hair, big smile, wearing a green t-shirt, denim shorts and colorful sneakers"
+  ],
+  [
+   "e2c_pip",
+   2201,
+   "char",
+   "a 4-year-old East Asian girl with a short black bob haircut with bangs, cheerful smile, wearing denim overalls over a striped shirt and pink sneakers"
+  ],
+  [
+   "e2c_pipb",
+   3302,
+   "char",
+   "a 4-year-old East Asian girl with a short black bob haircut with bangs, cheerful smile, wearing denim overalls over a striped shirt and pink sneakers"
+  ],
+  [
+   "e2c_pipc",
+   4403,
+   "char",
+   "a 4-year-old East Asian girl with a short black bob haircut with bangs, cheerful smile, wearing denim overalls over a striped shirt and pink sneakers"
+  ],
+  [
+   "e2c_bee",
+   2201,
+   "char",
+   "a 2-year-old toddler girl with curly red hair and freckles, chubby cheeks, wearing a cream dress and little sandals"
+  ],
+  [
+   "e2c_beeb",
+   3302,
+   "char",
+   "a 2-year-old toddler girl with curly red hair and freckles, chubby cheeks, wearing a cream dress and little sandals"
+  ],
+  [
+   "e2c_beec",
+   4403,
+   "char",
+   "a 2-year-old toddler girl with curly red hair and freckles, chubby cheeks, wearing a cream dress and little sandals"
+  ],
+  [
+   "e2c_uncle",
+   2201,
+   "char",
+   "a South Asian man in his 40s with short black hair and a neat beard, standing tall with straight military posture, wearing a navy polo shirt and khaki pants"
+  ],
+  [
+   "e2c_uncleb",
+   3302,
+   "char",
+   "a South Asian man in his 40s with short black hair and a neat beard, standing tall with straight military posture, wearing a navy polo shirt and khaki pants"
+  ],
+  [
+   "e2c_unclec",
+   4403,
+   "char",
+   "a South Asian man in his 40s with short black hair and a neat beard, standing tall with straight military posture, wearing a navy polo shirt and khaki pants"
+  ],
+  [
+   "e2_s1",
+   6161,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater sinking into a living room couch with her eyes closed holding a mug of tea, exhausted, toys scattered on the rug, real home"
+  ],
+  [
+   "e2_s1b",
+   8282,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater sinking into a living room couch with her eyes closed holding a mug of tea, exhausted, toys scattered on the rug, real home"
+  ],
+  [
+   "e2_s2",
+   6161,
+   "scene",
+   "busy real family living room, a 7-year-old biracial boy with curly light brown hair in a green t-shirt holding up homework, a 2-year-old toddler girl with curly red hair crying on the rug, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls tugging at a blanket, a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater in the middle looking overwhelmed"
+  ],
+  [
+   "e2_s2b",
+   8282,
+   "scene",
+   "busy real family living room, a 7-year-old biracial boy with curly light brown hair in a green t-shirt holding up homework, a 2-year-old toddler girl with curly red hair crying on the rug, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls tugging at a blanket, a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater in the middle looking overwhelmed"
+  ],
+  [
+   "e2_s3",
+   6161,
+   "scene",
+   "a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls peeking around a doorway with big curious eyes, real home hallway"
+  ],
+  [
+   "e2_s3b",
+   8282,
+   "scene",
+   "a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls peeking around a doorway with big curious eyes, real home hallway"
+  ],
+  [
+   "e2_s4",
+   6161,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater kneeling in a living room holding up five fingers and smiling gently at a 7-year-old biracial boy with curly light brown hair in a green t-shirt and a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls, real home"
+  ],
+  [
+   "e2_s4b",
+   8282,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater kneeling in a living room holding up five fingers and smiling gently at a 7-year-old biracial boy with curly light brown hair in a green t-shirt and a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls, real home"
+  ],
+  [
+   "e2_s5",
+   6161,
+   "scene",
+   "a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt scooping up a 2-year-old toddler girl with curly red hair with one arm and leading a 7-year-old biracial boy with curly light brown hair in a green t-shirt and a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls out the back door to the yard, playful smile, real home"
+  ],
+  [
+   "e2_s5b",
+   8282,
+   "scene",
+   "a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt scooping up a 2-year-old toddler girl with curly red hair with one arm and leading a 7-year-old biracial boy with curly light brown hair in a green t-shirt and a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls out the back door to the yard, playful smile, real home"
+  ],
+  [
+   "e2_s6",
+   6161,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater sitting peacefully alone on a back porch step with a mug of tea, eyes closed, calm, golden afternoon light"
+  ],
+  [
+   "e2_s6b",
+   8282,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater sitting peacefully alone on a back porch step with a mug of tea, eyes closed, calm, golden afternoon light"
+  ],
+  [
+   "e2_s7",
+   6161,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater and a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt hugging a 7-year-old biracial boy with curly light brown hair in a green t-shirt, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls and a 2-year-old toddler girl with curly red hair together in a real backyard, everyone laughing, golden hour"
+  ],
+  [
+   "e2_s7b",
+   8282,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater and a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt hugging a 7-year-old biracial boy with curly light brown hair in a green t-shirt, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls and a 2-year-old toddler girl with curly red hair together in a real backyard, everyone laughing, golden hour"
+  ],
+  [
+   "e2_s8",
+   6161,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater and a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt on a living room couch reading a picture book on a smartphone with a 7-year-old biracial boy with curly light brown hair in a green t-shirt, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls and a 2-year-old toddler girl with curly red hair snuggled between them, cozy evening lamp light"
+  ],
+  [
+   "e2_s8b",
+   8282,
+   "scene",
+   "a Latina mother in her early 30s with long wavy dark brown hair wearing a teal sweater and a white father in his mid 30s with short light brown hair and a trimmed beard wearing a plaid flannel shirt on a living room couch reading a picture book on a smartphone with a 7-year-old biracial boy with curly light brown hair in a green t-shirt, a 4-year-old East Asian girl with a black bob haircut with bangs in denim overalls and a 2-year-old toddler girl with curly red hair snuggled between them, cozy evening lamp light"
   ]
  ],
  "scenestyle": ", cinematic 3D animated Pixar-style characters in a photorealistic real-world setting, shallow depth of field, warm natural light, film still, vertical portrait composition, highly detailed, no text, no captions, no watermark",
- "rev": 2
+ "rev": 2,
+ "charstyle": ", full body head to toe, 3D Disney Pixar animated movie character, soft studio lighting, standing facing the viewer, isolated on a plain pure white background, no shadow, no text"
 }

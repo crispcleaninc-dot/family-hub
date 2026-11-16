@@ -3,7 +3,7 @@ cfg=json.load(open('gen/prompts.json')); os.makedirs('gen/out',exist_ok=True); l
 for sid,seed,kind,p in cfg['shots']:
     path=f'gen/out/{sid}.jpg'
     if os.path.exists(path): continue
-    w,h={'bg':(1024,1100),'scene':(896,1120)}.get(kind,(768,768))
+    w,h={'bg':(1024,1100),'scene':(896,1120),'char':(640,1024)}.get(kind,(768,768))
     url='https://image.pollinations.ai/prompt/'+urllib.parse.quote(p+cfg[kind+'style'])+f'?width={w}&height={h}&seed={seed}&model=flux&nologo=true&private=true'
     for a in range(8):
         try:
