@@ -1,0 +1,40 @@
+
+/* ===== PAYWALL (Nov 16 2026) — $9.99 to unlock all books, then $1/month keeps access.
+   Free readers get ONE book of their choice. Records live in the "Access" tab of the Readers sheet.
+   Script properties: SQUARE_LINK (checkout link), UNLOCK_CODE (made automatically; the Square link's
+   "redirect after payment" URL carries it so a finished checkout unlocks instantly). Unlock claims without the code wait
+   as "pending" for the author to approve in the app (Author → Payments) or by typing paid in the Access tab.
+   To cut someone off (e.g. $1/month stopped), type lapsed in their Status cell. */
+function payCfg_(){ return { link:PROPS.getProperty('SQUARE_LINK')||'', price:PROPS.getProperty('PAY_PRICE')||'$9.99',
+  monthly:PROPS.getProperty('PAY_MONTHLY')||'$1/month' }; }
+function accessSheet_(){ var ss=usersSheet_().getParent(), sh=ss.getSheetByName('Access');
+  if(!sh){ sh=ss.insertSheet('Access'); sh.appendRow(['key','username','email','freeBook','status','paidUntil','source','updated','note']);
+    sh.getRange(1,1,1,9).setFontWeight('bold'); sh.setFrozenRows(1); }
+  return sh; }
+function accFind_(sh,key){ var v=sh.getDataRange().getValues(); for(var i=1;i<v.length;i++){ if(String(v[i][0])===key) return {row:i+1,v:v[i]}; } return null; }
+function accKeys_(user,device){ var k=[]; if(user&&!/^guest$/i.test(user)) k.push('u:'+String(user).toLowerCase()); if(device) k.push('d:'+String(device).slice(0,64)); return k; }
+function accPaid_(v){ if(String(v[4]).toLowerCase()!=='paid') return false; var pu=v[5]; if(!pu) return true; return new Date(pu).getTime()>Date.now(); }
+function accessStatus(user,device){ var sh=accessSheet_(), keys=accKeys_(user,device), free='', paid=false, pending=false, email='';
+  keys.forEach(function(k){ var r=accFind_(sh,k); if(!r) return; if(r.v[3]&&!free) free=String(r.v[3]); if(r.v[2]) email=String(r.v[2]);
+    if(accPaid_(r.v)) paid=true;
+    if(String(r.v[4]).toLowerCase()==='pending') pending=true; });
+  var c=payCfg_(); return {paid:paid, freeBook:free, pending:pending&&!paid, email:email, link:c.link, price:c.price, monthly:c.monthly}; }
+function accUpsert_(sh,key,user,fields){ var r=accFind_(sh,key), row;
+  if(!r){ sh.appendRow([key,user||'','','','','','','','']); row=sh.getLastRow(); } else row=r.row;
+  Object.keys(fields).forEach(function(c){ sh.getRange(row,+c).setValue(fields[c]); }); sh.getRange(row,8).setValue(new Date()); return row; }
+function chooseFreeBook(user,device,bookId){ var st=accessStatus(user,device); if(st.paid) return st;
+  if(st.freeBook && st.freeBook!==bookId) throw new Error('Your free book is already chosen.');
+  var sh=accessSheet_(); accKeys_(user,device).forEach(function(k){ accUpsert_(sh,k,user,{4:bookId}); });
+  st.freeBook=bookId; return st; }
+function payCode_(){ var c=PROPS.getProperty('UNLOCK_CODE'); if(!c){ c=Utilities.getUuid().replace(/-/g,'').slice(0,12); PROPS.setProperty('UNLOCK_CODE',c); } return c; }
+function claimPaid(user,device,email,code){ email=String(email||'').trim().toLowerCase(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Enter the email you used at checkout.');
+  var sh=accessSheet_(), keys=accKeys_(user,device), ok=code && String(code)===payCode_();
+  keys.forEach(function(k){ var r=accFind_(sh,k); if(r&&accPaid_(r.v)) return;
+    accUpsert_(sh,k,user,ok?{3:email,5:'paid',6:'',7:'square-checkout',9:'Unlocked by Square checkout return '+new Date().toDateString()}:{3:email,5:'pending',7:'claimed'}); });
+  return accessStatus(user,device); }
+function payRequests(pin){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var v=accessSheet_().getDataRange().getValues(), out=[];
+  for(var i=1;i<v.length;i++){ if(v[i][2]||v[i][4]) out.push({key:v[i][0],user:v[i][1],email:v[i][2],status:v[i][4],paidUntil:v[i][5]?String(v[i][5]):'',source:v[i][6],updated:String(v[i][7])}); }
+  return {rows:out.reverse().slice(0,200), sheet:usersSheet_().getParent().getUrl(), code:payCode_(), link:payCfg_().link}; }
+function setPayStatus(pin,key,status){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var sh=accessSheet_(), r=accFind_(sh,key); if(!r) throw new Error('Not found');
+  sh.getRange(r.row,5).setValue(status); sh.getRange(r.row,7).setValue('author'); sh.getRange(r.row,8).setValue(new Date()); return payRequests(pin); }
+function setSquareLink(pin,url){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); PROPS.setProperty('SQUARE_LINK',String(url||'').trim()); return payCfg_(); }

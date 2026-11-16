@@ -128,8 +128,13 @@
     f.setAttribute('credentialless', ''); f.removeAttribute('src');
     f.addEventListener('load', function(){ if(f.getAttribute('src')){ $('vload').classList.add('hidden'); clearTimeout(helpTimer); } });
     old.parentNode.replaceChild(f, old);
-    f.src = APP_URL;
+    // Paywall (Nov 2026): a lasting device id (the app frame's own storage is wiped each launch) and the Square "paid" return code.
+    var dv=''; try{ dv=localStorage.getItem('mihDevice'); if(!dv){ dv='w'+Date.now().toString(36)+Math.random().toString(36).slice(2,10); localStorage.setItem('mihDevice',dv); } }catch(e){}
+    var pm=/[?&]paid=([A-Za-z0-9]+)/.exec(location.search), q=[];
+    if(dv) q.push('dev='+encodeURIComponent(dv)); if(pm) q.push('paid='+pm[1]);
+    f.src = APP_URL + (q.length ? '?' + q.join('&') : '');
   }
+  if(/[?&]paid=/.test(location.search)) setTimeout(function(){ if($('view').classList.contains('hidden')) go(); }, 300);
 
   var TIPS=['Tip: tap any word in a story to hear it sounded out.','Earn ⭐ stars for every book you open and finish.','Find today’s glimpse: one small wonder to be thankful for.','Make the family walk, run and dance in “Make it move”.','Mommy is human too. Grace for her, grace for you. 💛'],ti=0;
   setInterval(function(){ var t=$('ldTip'); if(!t||$('vload').classList.contains('hidden'))return; t.style.opacity=0; setTimeout(function(){ ti=(ti+1)%TIPS.length; t.textContent=TIPS[ti]; t.style.opacity=1; },400); },3200);
@@ -141,7 +146,7 @@
   if(installed) go(); else show('install');
   window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
-  var APP_VERSION = '3';
+  var APP_VERSION = '4';
   if (navigator.onLine && location.protocol === 'https:') {
     fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
       v = (v || '').trim(); if (!v || v === APP_VERSION) return;
