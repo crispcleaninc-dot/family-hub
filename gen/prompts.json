@@ -1,66 +1,163 @@
 {
-"bgstyle": ", 3D animated Pixar movie background, soft warm cinematic lighting, vibrant colors, highly detailed, empty scene, no people, no characters, no animals, no text",
-"propstyle": ", 3D Pixar style render, single object centered, isolated on a plain white background, soft studio light, no text",
-"shots": [
-[
-"char_leo",
-111,
-"prop",
-"full body 3D Pixar style cute lion cub character standing on four paws, big friendly eyes, fluffy little mane tuft, golden fur, brave and curious, plain white background"
-],
-[
-"char_leo2",
-112,
-"prop",
-"cute 3D Disney Pixar animated lion cub sitting upright and smiling, big expressive eyes, golden fur, small fluffy mane, full body, isolated on white background"
-],
-[
-"char_mamalion",
-113,
-"prop",
-"full body 3D Pixar style gentle mother lioness character standing, warm kind eyes, golden fur, calm and loving, plain white background"
-],
-[
-"bg_savanna_smoke",
-114,
-"bg",
-"African savanna at dawn under a hazy smoky gray sky, a big warm rock in front, acacia trees, soft muted colors"
-],
-[
-"bg_savanna_fire",
-115,
-"bg",
-"wide African savanna with a faint orange glow and gentle smoke on the far horizon, hazy sky, grass in front"
-],
-[
-"bg_savanna_blue",
-116,
-"bg",
-"African savanna with the sky opening to bright blue and gold sunrise, green grass, acacia trees, hopeful"
-],
-[
-"bg_sky_daynight",
-117,
-"bg",
-"dreamy sky split in half, one side bright blue day with soft clouds and sun, other side starry night with moon"
-],
-[
-"prop_seedling",
-118,
-"prop",
-"small green tree seedling sprout in a little mound of soil"
-],
-[
-"prop_earth",
-119,
-"prop",
-"cute cartoon planet earth wrapped in a soft see-through light blue blanket of air"
-],
-[
-"prop_cape",
-120,
-"prop",
-"red superhero cape made from a bath towel"
-]
-]
+ "bgstyle": ", 3D animated Pixar movie background, soft warm cinematic lighting, vibrant colors, highly detailed, empty scene, no people, no characters, no animals, no text",
+ "propstyle": ", 3D Pixar style render, single object centered, isolated on a plain white background, soft studio light, no text",
+ "shots": [
+  [
+   "char_leo",
+   111,
+   "prop",
+   "full body 3D Pixar style cute lion cub character standing on four paws, big friendly eyes, fluffy little mane tuft, golden fur, brave and curious, plain white background"
+  ],
+  [
+   "char_leo2",
+   112,
+   "prop",
+   "cute 3D Disney Pixar animated lion cub sitting upright and smiling, big expressive eyes, golden fur, small fluffy mane, full body, isolated on white background"
+  ],
+  [
+   "char_mamalion",
+   113,
+   "prop",
+   "full body 3D Pixar style gentle mother lioness character standing, warm kind eyes, golden fur, calm and loving, plain white background"
+  ],
+  [
+   "bg_savanna_smoke",
+   114,
+   "bg",
+   "African savanna at dawn under a hazy smoky gray sky, a big warm rock in front, acacia trees, soft muted colors"
+  ],
+  [
+   "bg_savanna_fire",
+   115,
+   "bg",
+   "wide African savanna with a faint orange glow and gentle smoke on the far horizon, hazy sky, grass in front"
+  ],
+  [
+   "bg_savanna_blue",
+   116,
+   "bg",
+   "African savanna with the sky opening to bright blue and gold sunrise, green grass, acacia trees, hopeful"
+  ],
+  [
+   "bg_sky_daynight",
+   117,
+   "bg",
+   "dreamy sky split in half, one side bright blue day with soft clouds and sun, other side starry night with moon"
+  ],
+  [
+   "prop_seedling",
+   118,
+   "prop",
+   "small green tree seedling sprout in a little mound of soil"
+  ],
+  [
+   "prop_earth",
+   119,
+   "prop",
+   "cute cartoon planet earth wrapped in a soft see-through light blue blanket of air"
+  ],
+  [
+   "prop_cape",
+   120,
+   "prop",
+   "red superhero cape made from a bath towel"
+  ],
+  [
+   "ad_s1",
+   4101,
+   "scene",
+   "busy morning in a real suburban family kitchen, a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans frantically searching the counter while the car keys are already in her hand, a milk carton sitting on a pantry shelf, cereal box open, school backpacks on chairs, clock showing 7:40"
+  ],
+  [
+   "ad_s1b",
+   7707,
+   "scene",
+   "busy morning in a real suburban family kitchen, a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans frantically searching the counter while the car keys are already in her hand, a milk carton sitting on a pantry shelf, cereal box open, school backpacks on chairs, clock showing 7:40"
+  ],
+  [
+   "ad_s2",
+   4101,
+   "scene",
+   "a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls standing in a kitchen doorway with her hands on her hips, eyebrows raised, sassy honest expression, looking up at her mother, real home interior background"
+  ],
+  [
+   "ad_s2b",
+   7707,
+   "scene",
+   "a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls standing in a kitchen doorway with her hands on her hips, eyebrows raised, sassy honest expression, looking up at her mother, real home interior background"
+  ],
+  [
+   "ad_s3",
+   4101,
+   "scene",
+   "close-up of a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans frozen in a kitchen, eyes wide, mouth open about to snap back, finger half raised, stressed morning, real kitchen background"
+  ],
+  [
+   "ad_s3b",
+   7707,
+   "scene",
+   "close-up of a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans frozen in a kitchen, eyes wide, mouth open about to snap back, finger half raised, stressed morning, real kitchen background"
+  ],
+  [
+   "ad_s4",
+   4101,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans standing at a kitchen counter with her eyes closed taking a slow deep breath, hand on her chest, morning sunlight through the window, calm moment, real kitchen"
+  ],
+  [
+   "ad_s4b",
+   7707,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans standing at a kitchen counter with her eyes closed taking a slow deep breath, hand on her chest, morning sunlight through the window, calm moment, real kitchen"
+  ],
+  [
+   "ad_s5",
+   4101,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans kneeling down to eye level with a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls in a real kitchen, holding both of her daughter's hands, both starting to smile, tender honest moment"
+  ],
+  [
+   "ad_s5b",
+   7707,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans kneeling down to eye level with a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls in a real kitchen, holding both of her daughter's hands, both starting to smile, tender honest moment"
+  ],
+  [
+   "ad_s6",
+   4101,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans and a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls laughing together in a real kitchen as the mother puts a milk carton back into the refrigerator, joyful morning"
+  ],
+  [
+   "ad_s6b",
+   7707,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans and a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls laughing together in a real kitchen as the mother puts a milk carton back into the refrigerator, joyful morning"
+  ],
+  [
+   "ad_s7",
+   4101,
+   "scene",
+   "bedtime in a cozy real bedroom, a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans sitting on a bed reading a picture book on a smartphone to a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls and a 4-year-old Black boy with a short neat haircut wearing green dinosaur pajamas snuggled under a quilt, warm lamp light, night"
+  ],
+  [
+   "ad_s7b",
+   7707,
+   "scene",
+   "bedtime in a cozy real bedroom, a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans sitting on a bed reading a picture book on a smartphone to a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls and a 4-year-old Black boy with a short neat haircut wearing green dinosaur pajamas snuggled under a quilt, warm lamp light, night"
+  ],
+  [
+   "ad_s8",
+   4101,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans hugging a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls and a 4-year-old Black boy with a short neat haircut wearing green dinosaur pajamas on the front porch of a real suburban house at golden hour sunset, everyone smiling, warm family moment"
+  ],
+  [
+   "ad_s8b",
+   7707,
+   "scene",
+   "a Black mother in her early 30s with warm brown skin, neat long black box braids pulled up into a high bun, small gold hoop earrings, wearing a mustard yellow cardigan over a white t-shirt and jeans hugging a 7-year-old Black girl with two neat round puff ponytails tied with yellow hair ties, wearing a pink t-shirt and denim overalls and a 4-year-old Black boy with a short neat haircut wearing green dinosaur pajamas on the front porch of a real suburban house at golden hour sunset, everyone smiling, warm family moment"
+  ]
+ ],
+ "scenestyle": ", cinematic 3D animated Pixar-style characters in a photorealistic real-world setting, shallow depth of field, warm natural light, film still, vertical portrait composition, highly detailed, no text, no captions, no watermark"
 }
