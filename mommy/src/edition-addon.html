@@ -1,0 +1,63 @@
+<!-- ===== EDITIONS (Nov 16 2026): Faith edition (default) and Everyday edition (no Bible verses or religious references,
+     blended family with Dad). The switch is on the home screen. Everyday swaps cast art, covers, books, commercial and chat rules. -->
+<style>
+#edSwitch{position:relative;margin:10px auto 4px;width:max-content;z-index:30;display:flex;align-items:center;gap:2px;background:rgba(255,255,255,.88);border-radius:22px;padding:3px;box-shadow:0 4px 14px rgba(0,0,0,.18);font:800 12.5px Nunito,Fredoka,sans-serif}
+#edSwitch button{border:0;background:none;padding:6px 10px;border-radius:18px;color:#1B2951;cursor:pointer;font:inherit;white-space:nowrap}
+#edSwitch button.on{background:#1B2951;color:#fff}
+body.ed2 #bkHero .bh-c.mom{left:-3%}
+#bkHero .bh-c.dad{left:17%;bottom:-17%;height:107%;animation:bhSway 5.2s ease-in-out infinite;animation-delay:-1s}
+body.ed2 #bkHero .bh-c.jojo{left:44%} body.ed2 #bkHero .bh-c.pip{left:63%} body.ed2 #bkHero .bh-c.bee{left:81%}
+#edToast{position:fixed;left:50%;top:18px;transform:translateX(-50%);z-index:99999;background:#1B2951;color:#fff;padding:10px 16px;border-radius:14px;font:700 14px Nunito,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.3);display:none}
+</style>
+<div id="edToast"></div>
+<script>
+window.MIH_ED=(function(){
+  var ED='faith', EXEC='https://script.google.com/macros/s/AKfycbw1cbvdKDECViYjLIZUwB76wdY_v8s_noVTIGjLWwb6SVqQtll_RtV4JKH17af2Qfd4Bw/exec';
+  try{ ED=localStorage.getItem('mihEdition')==='everyday'?'everyday':'faith'; }catch(e){}
+  function every(){ return ED==='everyday'; }
+  var R=[[/art\/(mommy|jojo|pip|bee|uncle)\.webp/,'art/ed2/$1.webp',/art\/ed2\/(mommy|jojo|pip|bee|uncle)\.webp/,'art/$1.webp'],
+         [/books\/([\w-]+)\/cover\.jpg/,'books/$1/cover2.jpg',/books\/([\w-]+)\/cover2\.jpg/,'books/$1/cover.jpg'],
+         [/books\/([\w-]+)\/book\.json/,'books/$1/book2.json',/books\/([\w-]+)\/book2\.json/,'books/$1/book.json'],
+         [/books\/catalog\.json/,'books/catalog2.json',/books\/catalog2\.json/,'books/catalog.json'],
+         [/art\/commercial\.(mp4|jpg)/,'art/commercial2.$1',/art\/commercial2\.(mp4|jpg)/,'art/commercial.$1'],
+         [/art\/say-mom(2?)\.mp3/,'art/ed2/say-mom$1.mp3',/art\/ed2\/say-mom(2?)\.mp3/,'art/say-mom$1.mp3']];
+  function u(x){ if(typeof x!=='string'||x.indexOf('crispcleaninc-dot.github.io/family-hub/mommy/')<0) return x;
+    R.forEach(function(r){ x=every()?x.replace(r[0],r[1]):x.replace(r[2],r[3]); }); return x; }
+  // route every image, sound, video and data request through u()
+  function patch(proto,prop){ var d=Object.getOwnPropertyDescriptor(proto,prop); if(!d||!d.set)return;
+    Object.defineProperty(proto,prop,{configurable:true,enumerable:d.enumerable,get:d.get,set:function(v){ d.set.call(this,u(v)); }}); }
+  try{ patch(HTMLImageElement.prototype,'src'); patch(HTMLMediaElement.prototype,'src'); patch(HTMLSourceElement.prototype,'src'); }catch(e){}
+  var F=window.fetch; if(F) window.fetch=function(a,b){ if(typeof a==='string')a=u(a); return F.call(this,a,b); };
+  var SA=Element.prototype.setAttribute; Element.prototype.setAttribute=function(n,v){ if((n==='src'||n==='poster')&&typeof v==='string')v=u(v); return SA.call(this,n,v); };
+  function fix(el){ if(!el||el.nodeType!==1)return; ['src','poster'].forEach(function(a){ var v=el.getAttribute&&el.getAttribute(a); if(v){ var w=u(v); if(w!==v){ SA.call(el,a,w); if(el.tagName==='SOURCE'&&el.parentNode&&el.parentNode.load)try{ el.parentNode.load(); }catch(e){} } } }); }
+  function sweep(root){ (root||document).querySelectorAll('img,source,video,audio').forEach(fix); }
+  try{ new MutationObserver(function(ms){ ms.forEach(function(m){ if(m.type==='attributes')fix(m.target); else m.addedNodes.forEach(function(n){ if(n.nodeType===1){ fix(n); if(n.querySelectorAll)sweep(n); } }); }); })
+    .observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['src','poster']}); }catch(e){}
+  // Dad on the home screen (Everyday edition)
+  var DAD=['Hey, champ! Let\'s give Mom a break today. 💪','Team family! Everybody helps. 🙌'], DI=0, DV=new Audio();
+  function dad(){ var h=document.getElementById('bkHero'); if(!h)return; var d=h.querySelector('.bh-c.dad');
+    if(every()&&!d){ var mom=h.querySelector('.bh-c.mom'); d=document.createElement('img'); d.className='bh-c dad'; d.dataset.k='dad'; d.alt='Dad'; d.draggable=false;
+      d.src='https://crispcleaninc-dot.github.io/family-hub/mommy/art/ed2/dad.webp'; if(mom&&mom.nextSibling)h.insertBefore(d,mom.nextSibling); else h.appendChild(d);
+      d.addEventListener('pointerdown',function(e){ e.stopPropagation(); d.classList.remove('jump'); void d.offsetWidth; d.classList.add('jump');
+        h.querySelectorAll('.bh-bub').forEach(function(b){ b.remove(); }); var b=document.createElement('div'); b.className='bh-bub'; b.textContent=DAD[DI];
+        var r=h.getBoundingClientRect(), tr=d.getBoundingClientRect(); b.style.left=Math.min(Math.max(tr.left+tr.width/2-r.left,90),r.width-90)+'px'; b.style.top='46px'; h.appendChild(b); setTimeout(function(){ b.remove(); },2800);
+        try{ DV.pause(); DV.src='https://crispcleaninc-dot.github.io/family-hub/mommy/art/ed2/say-dad'+(DI?'2':'')+'.mp3?v=1'; DV.play().catch(function(){}); }catch(x){} DI=(DI+1)%2; },true); }
+    if(!every()&&d) d.remove();
+    var sw=document.getElementById('edSwitch'); if(!sw){ sw=document.createElement('div'); sw.id='edSwitch';
+      sw.innerHTML='<span style="padding:0 8px 0 10px;color:#6b5d45">Edition</span><button type="button" data-e="faith">✝️ Faith</button><button type="button" data-e="everyday">🌍 Everyday</button>';
+      sw.addEventListener('pointerdown',function(e){ e.stopPropagation(); },true);
+      sw.onclick=function(e){ var b=e.target.closest('button'); if(b)set(b.dataset.e); }; h.parentNode.insertBefore(sw,h.nextSibling); }
+    sw.querySelectorAll('button').forEach(function(b){ b.classList.toggle('on',b.dataset.e===ED); }); }
+  function toast(t){ var el=document.getElementById('edToast'); if(!el)return; el.textContent=t; el.style.display='block'; clearTimeout(toast.t); toast.t=setTimeout(function(){ el.style.display='none'; },2600); }
+  function apply(){ document.body.classList.toggle('ed2',every()); sweep(); dad();
+    var v=document.getElementById('mihAdV'); if(v){ try{ v.load(); v.play().catch(function(){}); }catch(e){} }
+    try{ if(window.STORY&&STORY.reset)STORY.reset(); }catch(e){} }
+  function set(e,quiet){ e=e==='everyday'?'everyday':'faith'; if(e===ED){ dad(); return; } ED=e; try{ localStorage.setItem('mihEdition',ED); }catch(x){}
+    try{ window.top.postMessage({mihEdition:ED},'*'); }catch(x){} apply();
+    if(!quiet) toast(every()?'🌍 Everyday edition: same stories and wisdom, no Bible verses':'✝️ Faith edition: stories with Covenant verses'); }
+  function init(){ document.body.classList.toggle('ed2',every()); sweep(); var n=0, iv=setInterval(function(){ dad(); if(++n>40)clearInterval(iv); },500);
+    try{ google.script.url.getLocation(function(loc){ var p=loc&&loc.parameter&&loc.parameter.ed; if(p)set(p,true); }); }catch(e){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else setTimeout(init,0);
+  return {everyday:every, edition:function(){ return ED; }, set:set, url:u};
+})();
+</script>

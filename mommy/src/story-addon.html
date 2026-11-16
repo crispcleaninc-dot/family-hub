@@ -144,7 +144,7 @@
 /* ===== STORY BOOKS ADD-ON (Nov 2026) ===== */
 var STORY=(function(){
  var BASE='https://crispcleaninc-dot.github.io/family-hub/mommy/';
- var CAST={mom:['art/mommy.webp',80,-20],jojo:['art/jojo.webp',46,4],pip:['art/pip.webp',40,4],bee:['art/bee.webp',34,4],dog:['art/props/prop_dog.webp',24,4],uncle:['art/uncle.webp',74,2],leo:['art/leo.webp',34,4],mama:['art/mamalion.webp',46,2]};
+ var CAST={mom:['art/mommy.webp',80,-20],jojo:['art/jojo.webp',46,4],pip:['art/pip.webp',40,4],bee:['art/bee.webp',34,4],dog:['art/props/prop_dog.webp',24,4],uncle:['art/uncle.webp',74,2],leo:['art/leo.webp',34,4],mama:['art/mamalion.webp',46,2],dad:['art/ed2/dad.webp',84,-18]};
  var CATALOG=null, BOOK=null, IDX=0, AUD=new Audio(), AUTO=false, RAF=0, HOSTED_TITLES=[];
  function $(i){ return document.getElementById(i); }
  function esc2(s){ return String(s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
@@ -210,11 +210,12 @@ var STORY=(function(){
  function go(i){ if(!BOOK)return; if(i<0)return; if(i>=BOOK.pages.length){ return; } IDX=i; var p=BOOK.pages[i];
   stage(p.scene,$('sbStage')); var st=$('sbStage');
   if(p.kind==='cover')st.insertAdjacentHTML('beforeend','<div class="sb-title"><b>'+esc2(BOOK.title)+'</b><br><span>'+esc2(BOOK.vol)+'</span></div>');
+  if(p.kind==='talk'||p.kind==='try')st.insertAdjacentHTML('beforeend','<div class="sb-verse sb-more"><div class="v0">'+(p.kind==='talk'?'Talk about it 💬':'Try this together 🌱')+'</div>'+(p.items||[]).map(function(v){ return '<div class="v1" style="font-style:normal;font-family:Nunito,sans-serif">• '+esc2(v)+'</div>'; }).join('')+'</div>');
   if(p.kind==='more'||p.kind==='family'||p.kind==='covenant')st.insertAdjacentHTML('beforeend','<div class="sb-verse sb-more"><div class="v0">'+(p.kind==='more'?'More from the Word 📖':'Covenant verses 📜')+'</div>'+(p.verses||[]).map(function(v){ return '<div class="v1">"'+esc2(v[0])+'"</div><div class="v2">'+esc2(v[1])+' (KJV)</div>'; }).join('')+'</div>');
   if(p.kind==='end')st.insertAdjacentHTML('beforeend','<div class="sb-verse"><div class="v0">The End 💛</div><div class="v1">'+esc2(BOOK.verse[0])+'</div><div class="v2">'+esc2(BOOK.verse[1])+'</div></div>');
   var text=p.text||''; var parts=text.split(/(\s+)/); WORDS=[]; var h=parts.map(function(w){ if(/\S/.test(w)){ WORDS.push(w); return '<span>'+esc2(w)+'</span>'; } return esc2(w); }).join('');
   $('sbCap').innerHTML=h; var tot=0,lens=WORDS.map(function(w){ var l=w.length+2+(/[,;:—]$/.test(w)?4:0)+(/[.!?…]["”]?$/.test(w)?7:0); tot+=l; return l; }); var acc=0, span=Math.max(.5,(p.dur||5)-.6); TIMES=lens.map(function(l){ var t=.15+span*acc/tot; acc+=l; return t; });
-  var NP=BOOK.pages.filter(function(x){ return x.kind==='page'; }).length; $('sbNum').textContent=p.kind==='cover'?'Cover':(p.kind==='end'?'The End':(p.kind==='more'?'More Scripture':((p.kind==='family'||p.kind==='covenant')?'Covenant verses':'Page '+i+' / '+NP))); $('sbFolio').textContent=p.kind==='page'?String(i):'';
+  var NP=BOOK.pages.filter(function(x){ return x.kind==='page'; }).length; $('sbNum').textContent=p.kind==='cover'?'Cover':(p.kind==='end'?'The End':(p.kind==='more'?'More Scripture':((p.kind==='family'||p.kind==='covenant')?'Covenant verses':(p.kind==='talk'?'Talk about it':(p.kind==='try'?'Try this together':'Page '+i+' / '+NP))))); $('sbFolio').textContent=p.kind==='page'?String(i):'';
   var d=''; for(var k=0;k<BOOK.pages.length;k++)d+='<i class="'+(k===i?'on':'')+'" data-i="'+k+'"></i>'; $('sbDots').innerHTML=d;
   $('sbPrev').style.opacity=i===0?.4:1; $('sbNext').style.opacity=i===BOOK.pages.length-1?.4:1;
   var n=BOOK.pages[i+1]; if(n){ var im=new Image(); im.src=BASE+'art/bg/'+n.scene.bg+'.jpg'; }
@@ -242,6 +243,7 @@ var STORY=(function(){
   var el=$('shelf'); if(el){ try{ new MutationObserver(function(){ if(!el.querySelector('.sb-card')&&!/Loading/.test(el.textContent))shelf(); else shelf(); }).observe(el,{childList:true}); }catch(e){} }
   var n=0,iv=setInterval(function(){ homeVoices(); shelf(); if(++n>20)clearInterval(iv); },600); catalog().catch(function(){}); }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,700); }); else setTimeout(init,700);
- return {open:open,openBook:openBook,close:close,stop:stop};
+ function reset(){ CATALOG=null; try{ close(); }catch(e){} var el=$('shelf'); if(el){ el.querySelectorAll('.sb-card').forEach(function(c){ c.remove(); }); try{ shelf(); }catch(e){} } }
+ return {open:open,openBook:openBook,close:close,stop:stop,reset:reset};
 })();
 </script>

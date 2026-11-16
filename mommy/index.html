@@ -132,8 +132,11 @@
     var dv=''; try{ dv=localStorage.getItem('mihDevice'); if(!dv){ dv='w'+Date.now().toString(36)+Math.random().toString(36).slice(2,10); localStorage.setItem('mihDevice',dv); } }catch(e){}
     var pm=/[?&]paid=([A-Za-z0-9]+)/.exec(location.search), q=[];
     if(dv) q.push('dev='+encodeURIComponent(dv)); if(pm) q.push('paid='+pm[1]);
+    var ed=''; try{ ed=localStorage.getItem('mihEdition')||''; }catch(e){} var em=/[?&]ed=(faith|everyday)/.exec(location.search); if(em) ed=em[1]; if(ed) q.push('ed='+ed);
     f.src = APP_URL + (q.length ? '?' + q.join('&') : '');
   }
+  // Edition switch inside the app (Faith / Everyday) is remembered here so it sticks between launches.
+  window.addEventListener('message',function(e){ var d=e&&e.data; if(d&&d.mihEdition&&/^(faith|everyday)$/.test(d.mihEdition)){ try{ localStorage.setItem('mihEdition',d.mihEdition); }catch(x){} } });
   if(/[?&]paid=/.test(location.search)) setTimeout(function(){ if($('view').classList.contains('hidden')) go(); }, 300);
 
   var TIPS=['Tip: tap any word in a story to hear it sounded out.','Earn ⭐ stars for every book you open and finish.','Find today’s glimpse: one small wonder to be thankful for.','Make the family walk, run and dance in “Make it move”.','Mommy is human too. Grace for her, grace for you. 💛'],ti=0;
@@ -146,7 +149,7 @@
   if(installed) go(); else show('install');
   window.addEventListener('pageshow', function(e){ if(e.persisted && installed) go(); });
   if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js', {updateViaCache:'none'}).then(function(r){ try{ r.update(); }catch(e){} }).catch(function(){});
-  var APP_VERSION = '4';
+  var APP_VERSION = '5';
   if (navigator.onLine && location.protocol === 'https:') {
     fetch('version.txt?t=' + Date.now(), {cache:'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(v){
       v = (v || '').trim(); if (!v || v === APP_VERSION) return;

@@ -161,6 +161,10 @@ var STUDIO3D=(function(){
   p.pages.forEach(function(g){ pages.push({kind:'page',text:g.text,dur:Math.max(4,g.text.split(/\s+/).length*0.42),scene:scene(g)}); });
   pages.push({kind:'end',text:'',say:v[1]+' '+v[0],dur:9,scene:{bg:'bg_ice_sunset',cast:[['mom',34,'hug',{}],['jojo',58,'hugIn',{delay:.2}],['pip',72,'hugIn',{delay:.4}]],props:[],fx:['hearts','warm']}});
   if(window.STORY2){ var CV=STORY2.COV[p.verse]||STORY2.FAMILY; pages.push({kind:'covenant',text:'',say:'Covenant verses. '+CV.map(function(f){ return f[0]+' '+f[1]+'.'; }).join(' '),dur:30,verses:CV,scene:{bg:'bg_porch',cast:[['mom',26,'hug',{}],['jojo',52,'hugIn',{}],['pip',68,'hugIn',{delay:.25}],['bee',82,'hugIn',{delay:.5}]],props:[],fx:['hearts','warm']}}); }
+  if(window.MIH_ED&&MIH_ED.everyday()){ var TH='Nobody is perfect. Everyone gets tired, makes mistakes and needs help sometimes, and that is what makes us human.';
+   pages=pages.filter(function(x){ return x.kind!=='covenant'; }); pages.forEach(function(x){ if(x.kind==='end')x.say='A thought to keep. '+TH; });
+   var lp=pages[pages.length-1]; pages.push({kind:'talk',text:'',items:['What part of the story felt like our family?','What can we do when Mom is tired?','How can we help each other this week?'],say:'Talk about it. What part of the story felt like our family? What can we do when Mom is tired? How can we help each other this week?',dur:12,scene:lp.scene});
+   return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:[TH,'A thought to keep 💡'],pages:pages}; }
   return {id:'mine-'+(p.id||Date.now()),title:p.title,vol:'Our story · made in Talk with the family',verse:['"'+v[1]+'"',v[0]+' (KJV)'],pages:pages}; }
  function play(p,quick){ loadVoices(); if(!window.STORY||!STORY.openBook){ note('Story player is still loading. Try again in a second.'); return; } var bk=toBook(p);
   var go=function(){ if(window.STORY2)STORY2.prog(false); try{ $('cs').classList.add('hide'); }catch(e){} STORY.openBook(bk,true); };
