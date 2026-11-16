@@ -1,28 +1,52 @@
-char_leo ok 48938
-char_leo2 err HTTP Error 402: Payment Required
-char_leo2 err HTTP Error 402: Payment Required
-char_leo2 ok 48338
-char_mamalion err HTTP Error 402: Payment Required
-char_mamalion err HTTP Error 402: Payment Required
-char_mamalion ok 48323
-bg_savanna_smoke err HTTP Error 402: Payment Required
-bg_savanna_smoke err HTTP Error 402: Payment Required
-bg_savanna_smoke ok 40908
-bg_savanna_fire err HTTP Error 402: Payment Required
-bg_savanna_fire err HTTP Error 402: Payment Required
-bg_savanna_fire ok 42121
-bg_savanna_blue err HTTP Error 402: Payment Required
-bg_savanna_blue err HTTP Error 402: Payment Required
-bg_savanna_blue ok 61474
-bg_sky_daynight err HTTP Error 402: Payment Required
-bg_sky_daynight err HTTP Error 402: Payment Required
-bg_sky_daynight ok 57844
-prop_seedling err HTTP Error 402: Payment Required
-prop_seedling err The read operation timed out
-prop_seedling ok 38704
-prop_earth err HTTP Error 402: Payment Required
-prop_earth err HTTP Error 402: Payment Required
-prop_earth ok 36298
-prop_cape err HTTP Error 402: Payment Required
-prop_cape err HTTP Error 402: Payment Required
-prop_cape ok 50839
+ad_s1 ok 61664
+ad_s1b err HTTP Error 402: Payment Required
+ad_s1b err HTTP Error 402: Payment Required
+ad_s1b ok 67471
+ad_s2 err HTTP Error 402: Payment Required
+ad_s2 err HTTP Error 402: Payment Required
+ad_s2 ok 61556
+ad_s2b err HTTP Error 402: Payment Required
+ad_s2b err HTTP Error 402: Payment Required
+ad_s2b ok 62144
+ad_s3 err HTTP Error 402: Payment Required
+ad_s3 err HTTP Error 402: Payment Required
+ad_s3 err HTTP Error 503: Service Unavailable
+ad_s3 err HTTP Error 402: Payment Required
+ad_s3 ok 62142
+ad_s3b err HTTP Error 402: Payment Required
+ad_s3b err HTTP Error 402: Payment Required
+ad_s3b ok 64840
+ad_s4 err HTTP Error 402: Payment Required
+ad_s4 err HTTP Error 402: Payment Required
+ad_s4 ok 64882
+ad_s4b err HTTP Error 402: Payment Required
+ad_s4b err HTTP Error 402: Payment Required
+ad_s4b ok 62706
+ad_s5 err HTTP Error 402: Payment Required
+ad_s5 err HTTP Error 402: Payment Required
+ad_s5 ok 61979
+ad_s5b err HTTP Error 402: Payment Required
+ad_s5b err HTTP Error 402: Payment Required
+ad_s5b ok 68327
+ad_s6 err HTTP Error 402: Payment Required
+ad_s6 err HTTP Error 402: Payment Required
+ad_s6 err HTTP Error 503: Service Unavailable
+ad_s6 err HTTP Error 402: Payment Required
+ad_s6 ok 64717
+ad_s6b err HTTP Error 402: Payment Required
+ad_s6b err HTTP Error 402: Payment Required
+ad_s6b ok 73755
+ad_s7 err HTTP Error 402: Payment Required
+ad_s7 err HTTP Error 402: Payment Required
+ad_s7 ok 59619
+ad_s7b err HTTP Error 402: Payment Required
+ad_s7b err HTTP Error 402: Payment Required
+ad_s7b err HTTP Error 503: Service Unavailable
+ad_s7b err HTTP Error 402: Payment Required
+ad_s7b ok 67270
+ad_s8 err HTTP Error 402: Payment Required
+ad_s8 err HTTP Error 402: Payment Required
+ad_s8 ok 61363
+ad_s8b err HTTP Error 402: Payment Required
+ad_s8b err HTTP Error 402: Payment Required
+ad_s8b ok 74307
