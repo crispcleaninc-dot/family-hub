@@ -622,6 +622,20 @@
 "voice": "en-US-AnaNeural",
 "pitch": "+0Hz",
 "rate": "+0%"
+},
+{
+"id": "k_34303c975f47",
+"text": "Mommy, why are you so loud?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_1438bb4da627",
+"text": "Yes, Mommy. I forgive you.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
 }
 ]
 }
