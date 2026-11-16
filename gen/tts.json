@@ -1,7 +1,627 @@
-{"lines":[
-{"id":"smp_pip","text":"Mommy, I think you lost your mind!","voice":"en-US-AnaNeural"},
-{"id":"smp_pip2","text":"Hi! I'm Pip! Wanna read a story with me? Pleeease?","voice":"en-US-AnaNeural"},
-{"id":"smp_jojo","text":"Hey, I'm Jojo! When Mommy gives me a job, I finish it all the way!","voice":"en-US-AnaNeural","pitch":"-25Hz","rate":"-3%"},
-{"id":"smp_bee","text":"Hee hee! Mama! Up! Up!","voice":"en-US-AnaNeural","pitch":"+15Hz","rate":"-12%"},
-{"id":"smp_leo","text":"I'm Leo Louis Lion, and I'm not afraid of the smoke!","voice":"en-US-AnaNeural","pitch":"-35Hz","rate":"-2%"}
-]}
+{
+"lines": [
+{
+"id": "k_046d6a6a34b8",
+"text": "Mom! Is that Ice Cream?!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_d3f2c398887f",
+"text": "You Said you were on a diet!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_1c190bdd2c19",
+"text": "Where",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_eb2e7879a852",
+"text": "is Mine to eat?!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_f2d13ef9ca06",
+"text": "Are you mad?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_cd25d807236a",
+"text": "She's leaking!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_7829a685dc85",
+"text": "Are you hurt?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_68cf0fe37a65",
+"text": "Did we do something bad?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_6f58d81227b9",
+"text": "Is it my fault?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_332d71e50d32",
+"text": "Is that why you are sad?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_050317e4e1e7",
+"text": "There's Show-and-Tell on Thursday, Mom!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_e8e8d3623fcb",
+"text": "It's Show-and-Tell",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_1482e24d2fc0",
+"text": "Okay, Mom.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_7770e1cdb3ef",
+"text": "Mom, what are You getting, though?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_a287b0e0ab08",
+"text": "Mom, yours have holes",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_906a94880699",
+"text": "way bigger than I've grown.",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_16e712b2b64d",
+"text": "Mom, you buy us everything. Do you get stuff, sometime? Once in a while?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_917bad5e3e65",
+"text": "Yay!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_903e079e3750",
+"text": "But what about the nighttime?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_d790d9cf5422",
+"text": "When light won't stay?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_5b3014c5c4f5",
+"text": "Jojo, Uncle yelled at me for moving the toys off the wall!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_6b40ee8cf1ce",
+"text": "Pip, the Bible says to know the ones you labour with. Let me help you understand.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_55470cc650c9",
+"text": "Uncle wasn't angry At you, Pip. He was angry at the chaos all around. His mind says order keeps him safe. That's how his peace is found.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_a70a9e328254",
+"text": "There's a time to play, and a time to respect what others need. When Uncle asks us to keep things ordered, that's how we plant love's seed.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_e5ecb47ea28f",
+"text": "Loving people isn't always easy. But it means you learn their way. You don't have to be like Uncle , but you honor him today.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_58159075adf1",
+"text": "I'll get to it. There's plenty time , it's true.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_1ab74b78ed4a",
+"text": "Oh no , that job is mine!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_71f75523bac2",
+"text": "I can. I will. I must.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_656b069fdf4d",
+"text": "I played at first.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_4c1301275185",
+"text": "Mommy , I think you lost your mind!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_c8867e925418",
+"text": "Mommy, are you okay?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_137f3aa6eecc",
+"text": "Sick? But Mommy, you're the one who makes it okay!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_bfd3065bd7fa",
+"text": "Mommy, does it hurt?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_94e293047ae8",
+"text": "But you're the Mommy",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_d6761ac37192",
+"text": "Mommies don't get sick!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_34360e0d1ef7",
+"text": "Are we there yet?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_36a0972ed0ce",
+"text": "Are we there yet?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_9ac02e88036f",
+"text": "Hey, Mommy",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_9655ed8277ea",
+"text": "I think we passed that store before!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_32c7d71ac36c",
+"text": "But Mommies always know the way",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_a1354a149570",
+"text": "When I get lost, I'll ask for help, like you.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_4c48759ec365",
+"text": "Mommy, what are you doing?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_78555ad0dfbd",
+"text": "School? But Mommy, you're a grown-up! Aren't you done with school?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_7d8032aed48f",
+"text": "But Mommy, you look tired",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_b53cee544c27",
+"text": "Mommy's sleepy!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_7eaa928dd212",
+"text": "We can help you, Mommy, too! We'll do our homework next to you, while you study like you do!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_a3337c2e65a2",
+"text": "Mommy, are you worried?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_e140e202520b",
+"text": "What were you doing?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_5cf959db37ff",
+"text": "Do grown-ups have to pray?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_7b22a0d680fa",
+"text": "Don't you know it all?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_a3c462e700a7",
+"text": "Can we pray with you?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_6d362434bd6d",
+"text": "Amen!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_a756c76f8173",
+"text": "I think Mommy can fly! She's here, then she's there, in the blink of an eye.",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_3292cf1864bb",
+"text": "Is there anything",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_870b7e0f4814",
+"text": "that Mommy cannot?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_0baa73379446",
+"text": "My Mommy's a superhero!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_e7eb94329586",
+"text": "Is Mommy broke? Did her powers disappear like a puff of smoke?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_6feb72d073e9",
+"text": "Let's go and ask Mommy",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_bd99b7d9c16b",
+"text": "I love you, Mommy. Just human. Just right.",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_ce6a8e7653c6",
+"text": "Mama",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_bbdcca6acf4c",
+"text": "the sky looks sick.",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_69e6a641f294",
+"text": "But it's not even hot here",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_a900bf7020bc",
+"text": "But why, Mama? Why did the forests get so dry?",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_8beb993c8516",
+"text": "So the smoke... came from the blanket?",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_0126d6947872",
+"text": "Then what can we do?",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_7d2d9596a398",
+"text": "We're just lions.",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_fc5118a05ef5",
+"text": "Mama... will it be all fixed tomorrow?",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_46ebdbb070a1",
+"text": "Then I'll tell the others",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_82fed696700e",
+"text": "I'll teach every cub I know.",
+"voice": "en-US-AnaNeural",
+"pitch": "-35Hz",
+"rate": "-2%"
+},
+{
+"id": "k_b1c269017701",
+"text": "Mommy gets tired too. Let's give her a big hug!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_f310c4cbe79d",
+"text": "Hey, I'm Jojo! When Mommy gives me a job, I finish it all the way!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_f0620c543f53",
+"text": "I can help Mommy! I'm a big helper!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_5a9a23ef0305",
+"text": "Hi! I'm Pip! Wanna read a story with me? Pleeease?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_b5fdd132a170",
+"text": "Ba ba boo! Hi hi!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_13cc8a35faf2",
+"text": "Hee hee! Mama! I love you!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_4216596972be",
+"text": "Hi there! I'm Jojo. What do you want to talk about?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_20430c16bc89",
+"text": "Whoa, cool! Want to read a story with me?",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_afb2cde20949",
+"text": "I'm learning to be patient. It's hard sometimes, but I keep trying!",
+"voice": "en-US-AnaNeural",
+"pitch": "-25Hz",
+"rate": "-3%"
+},
+{
+"id": "k_d89b9c6164e9",
+"text": "Hi there! I'm Pip. What do you want to talk about?",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_1499e95ba74d",
+"text": "Hee hee! Let's color something together!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_1d5c8be3d8d4",
+"text": "I love that! Tell me more!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+},
+{
+"id": "k_14f121bb93e9",
+"text": "Hi there! I'm Baby Bee. What do you want to talk about?",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_439829a7b9e2",
+"text": "Ba-ba-boo!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_299daba2d699",
+"text": "Hee hee!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_c9c87fcc7382",
+"text": "Mama!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_bc8d5ec651e8",
+"text": "Hee hee hee!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_ecc7e886fd37",
+"text": "Bzzz bzzz!",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_942308b8808d",
+"text": "Goo goo\u2026 story?",
+"voice": "en-US-AnaNeural",
+"pitch": "+30Hz",
+"rate": "-8%"
+},
+{
+"id": "k_1415bd1268b3",
+"text": "Mommy, I think you lost your mind!",
+"voice": "en-US-AnaNeural",
+"pitch": "+0Hz",
+"rate": "+0%"
+}
+]
+}
