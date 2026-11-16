@@ -1,0 +1,7 @@
+{"lines":[
+{"id":"smp_pip","text":"Mommy, I think you lost your mind!","voice":"en-US-AnaNeural"},
+{"id":"smp_pip2","text":"Hi! I'm Pip! Wanna read a story with me? Pleeease?","voice":"en-US-AnaNeural"},
+{"id":"smp_jojo","text":"Hey, I'm Jojo! When Mommy gives me a job, I finish it all the way!","voice":"en-US-AnaNeural","pitch":"-25Hz","rate":"-3%"},
+{"id":"smp_bee","text":"Hee hee! Mama! Up! Up!","voice":"en-US-AnaNeural","pitch":"+15Hz","rate":"-12%"},
+{"id":"smp_leo","text":"I'm Leo Louis Lion, and I'm not afraid of the smoke!","voice":"en-US-AnaNeural","pitch":"-35Hz","rate":"-2%"}
+]}

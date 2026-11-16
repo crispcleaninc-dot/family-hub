@@ -1,0 +1,19 @@
+name: tts-gen
+on:
+  push:
+    branches: [art-gen]
+    paths: ['gen/tts.json']
+permissions:
+  contents: write
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install edge-tts
+      - run: python3 gen/tts.py
+      - run: |
+          git config user.name "art-bot"; git config user.email "art-bot@users.noreply.github.com"
+          git pull --rebase || true
+          git add gen/tts_out && git commit -m "generated voices" && git push || echo nothing
