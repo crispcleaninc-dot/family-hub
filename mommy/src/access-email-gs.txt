@@ -1,0 +1,67 @@
+/**
+ * Mommy Is Human Too — automatic access email
+ * Runs every 5 minutes in crispcleaninc@gmail.com.
+ * Finds Square "$9.99 payment received" Payment Link notices,
+ * pulls the buyer's email, and sends them the app link.
+ */
+const APP_URL   = 'https://mommy.crispusmundo.com';
+const BUY_URL   = 'https://square.link/u/DcZpPdcA';
+const DONE_LBL  = 'MIHT-Access-Sent';
+const QUERY     = 'from:noreply@messaging.squareup.com subject:"$9.99 payment received" newer_than:7d -label:' + DONE_LBL;
+
+function setup() {
+  ScriptApp.getProjectTriggers().forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger('sendAccessEmails').timeBased().everyMinutes(5).create();
+  getLabel_();
+  sendAccessEmails();
+}
+
+function getLabel_() {
+  return GmailApp.getUserLabelByName(DONE_LBL) || GmailApp.createLabel(DONE_LBL);
+}
+
+function sendAccessEmails() {
+  const label = getLabel_();
+  GmailApp.search(QUERY, 0, 50).forEach(thread => {
+    thread.getMessages().forEach(msg => {
+      const body = msg.getPlainBody();
+      const emails = (body.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi) || [])
+        .filter(e => !/squareup\.com|square\.com|crispcleaninc@gmail\.com/i.test(e));
+      if (!emails.length) return;
+      const to = emails[0];
+      const nameMatch = msg.getSubject().match(/received from (.+)$/i);
+      const first = nameMatch ? nameMatch[1].trim().split(' ')[0] : 'there';
+      sendOne_(to, first);
+    });
+    thread.addLabel(label);
+  });
+}
+
+function sendOne_(to, first) {
+  const html = `
+  <div style="font-family:Georgia,serif;max-width:560px;margin:auto;border:1px solid #eadff0;border-radius:12px;overflow:hidden">
+    <div style="background:#7b4fa0;color:#fff;padding:18px 22px;font-size:20px">Mommy Is Human Too</div>
+    <div style="padding:22px;color:#333;font-size:15px;line-height:1.6">
+      <p>Hi ${first},</p>
+      <p>Thank you for your purchase. Your access to the full <b>Mommy Is Human Too</b> book series is ready.</p>
+      <p style="text-align:center;margin:26px 0">
+        <a href="${APP_URL}" style="background:#7b4fa0;color:#fff;padding:13px 26px;border-radius:8px;text-decoration:none;font-weight:bold">Open the Book Series</a>
+      </p>
+      <p><b>How to keep it on your phone:</b><br>
+      iPhone (Safari): tap Share, then "Add to Home Screen".<br>
+      Android (Chrome): tap the ⋮ menu, then "Add to Home screen" or "Install app".<br>
+      Computer: open the link and bookmark it.</p>
+      <p>Your link: <a href="${APP_URL}">${APP_URL}</a><br>Save this email so you can come back anytime.</p>
+      <p>Know a church, school or group that would love the series? Bulk and group pricing is available — just reply to this email.</p>
+      <p>With gratitude,<br>CMCC Training Institute</p>
+    </div>
+    <div style="background:#f6f1f9;color:#777;font-size:11px;padding:14px 22px;line-height:1.5">
+      This message was sent automatically after your purchase and prepared with the help of an assistant as an ADA accommodation (42 U.S.C. §12101 et seq.). The owner reviews this process and remains fully responsible for it. If anything is incorrect, please reply in writing so it can be corrected in writing.
+    </div>
+  </div>`;
+  GmailApp.sendEmail(to, 'Your Mommy Is Human Too access is ready',
+    'Thank you for your purchase. Open the full Mommy Is Human Too book series here: ' + APP_URL,
+    { htmlBody: html, name: 'Mommy Is Human Too — CMCC Training Institute' });
+  GmailApp.sendEmail('crispcleaninc@gmail.com', 'MIHT sale: access email sent to ' + to,
+    'A $9.99 Mommy Is Human Too sale came in and the access email went to ' + to + '.\nSquare payment links: https://app.squareup.com/dashboard/payment-links');
+}

@@ -6,7 +6,7 @@
    as "pending" for the author to approve in the app (Author → Payments) or by typing paid in the Access tab.
    To cut someone off (e.g. $1/month stopped), type lapsed in their Status cell. */
 function payCfg_(){ return { link:PROPS.getProperty('SQUARE_LINK')||'', price:PROPS.getProperty('PAY_PRICE')||'$9.99',
-  monthly:PROPS.getProperty('PAY_MONTHLY')||'$1/month' }; }
+  monthly:PROPS.getProperty('PAY_MONTHLY')||'$12/year', renew:PROPS.getProperty('RENEW_LINK')||'https://square.link/u/zPHUUsFE' }; }
 function accessSheet_(){ var ss=usersSheet_().getParent(), sh=ss.getSheetByName('Access');
   if(!sh){ sh=ss.insertSheet('Access'); sh.appendRow(['key','username','email','freeBook','status','paidUntil','source','updated','note']);
     sh.getRange(1,1,1,9).setFontWeight('bold'); sh.setFrozenRows(1); }
@@ -14,11 +14,11 @@ function accessSheet_(){ var ss=usersSheet_().getParent(), sh=ss.getSheetByName(
 function accFind_(sh,key){ var v=sh.getDataRange().getValues(); for(var i=1;i<v.length;i++){ if(String(v[i][0])===key) return {row:i+1,v:v[i]}; } return null; }
 function accKeys_(user,device){ var k=[]; if(user&&!/^guest$/i.test(user)) k.push('u:'+String(user).toLowerCase()); if(device) k.push('d:'+String(device).slice(0,64)); return k; }
 function accPaid_(v){ if(String(v[4]).toLowerCase()!=='paid') return false; var pu=v[5]; if(!pu) return true; return new Date(pu).getTime()>Date.now(); }
-function accessStatus(user,device){ var sh=accessSheet_(), keys=accKeys_(user,device), free='', paid=false, pending=false, email='';
+function accessStatus(user,device){ var sh=accessSheet_(), keys=accKeys_(user,device), free='', paid=false, pending=false, email='', expired=false;
   keys.forEach(function(k){ var r=accFind_(sh,k); if(!r) return; if(r.v[3]&&!free) free=String(r.v[3]); if(r.v[2]) email=String(r.v[2]);
-    if(accPaid_(r.v)) paid=true;
+    if(accPaid_(r.v)) paid=true; else if(String(r.v[4]).toLowerCase()==='paid' && r.v[5]) expired=true;
     if(String(r.v[4]).toLowerCase()==='pending') pending=true; });
-  var c=payCfg_(); return {paid:paid, freeBook:free, pending:pending&&!paid, email:email, link:c.link, price:c.price, monthly:c.monthly}; }
+  var c=payCfg_(); return {paid:paid, freeBook:free, pending:pending&&!paid, email:email, link:c.link, price:c.price, monthly:c.monthly, renew:c.renew, expired:expired&&!paid}; }
 function accUpsert_(sh,key,user,fields){ var r=accFind_(sh,key), row;
   if(!r){ sh.appendRow([key,user||'','','','','','','','']); row=sh.getLastRow(); } else row=r.row;
   Object.keys(fields).forEach(function(c){ sh.getRange(row,+c).setValue(fields[c]); }); sh.getRange(row,8).setValue(new Date()); return row; }
@@ -29,8 +29,8 @@ function chooseFreeBook(user,device,bookId){ var st=accessStatus(user,device); i
 function payCode_(){ var c=PROPS.getProperty('UNLOCK_CODE'); if(!c){ c=Utilities.getUuid().replace(/-/g,'').slice(0,12); PROPS.setProperty('UNLOCK_CODE',c); } return c; }
 function claimPaid(user,device,email,code){ email=String(email||'').trim().toLowerCase(); if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error('Enter the email you used at checkout.');
   var sh=accessSheet_(), keys=accKeys_(user,device), ok=code && String(code)===payCode_();
-  keys.forEach(function(k){ var r=accFind_(sh,k); if(r&&accPaid_(r.v)) return;
-    accUpsert_(sh,k,user,ok?{3:email,5:'paid',6:'',7:'square-checkout',9:'Unlocked by Square checkout return '+new Date().toDateString()}:{3:email,5:'pending',7:'claimed'}); });
+  keys.forEach(function(k){ var r=accFind_(sh,k); if(r&&accPaid_(r.v)&&!(ok&&yearDue_(r.v))) return;
+    accUpsert_(sh,k,user,ok?{3:email,5:'paid',6:yearFrom_(r&&r.v),7:'square-checkout',9:'Unlocked by Square checkout return '+new Date().toDateString()}:{3:email,5:'pending',7:'claimed'}); });
   return accessStatus(user,device); }
 function payRequests(pin){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var v=accessSheet_().getDataRange().getValues(), out=[];
   for(var i=1;i<v.length;i++){ if(v[i][2]||v[i][4]) out.push({key:v[i][0],user:v[i][1],email:v[i][2],status:v[i][4],paidUntil:v[i][5]?String(v[i][5]):'',source:v[i][6],updated:String(v[i][7])}); }
@@ -70,3 +70,14 @@ function redeemReaderCode(user,device,code){ code=String(code||'').trim().toUppe
 /* One-time setup (Nov 19 2026): turns the lock on with the $9.99 Square link and prints the checkout-return code. */
 function setupPaywallNov19(){ PROPS.setProperty('SQUARE_LINK','https://square.link/u/DcZpPdcA'); codesSheet_();
   Logger.log('UNLOCK_CODE=' + payCode_()); }
+
+/* ===== YEARLY ACCESS (Nov 19 2026): $9.99 unlocks for one year; $12/year (Square yearly subscription https://square.link/u/zPHUUsFE) keeps it.
+   Reader codes still unlock with no end date. Auto-renewals are extended by the access-email script, which posts {renewKey,email}
+   to this web app; the existing doPost(e) checks `if (d.renewKey) return renewPost_(d);` right after parsing. ===== */
+function yearFrom_(v){ var base=Date.now(); if(v&&v[5]){ var t=new Date(v[5]).getTime(); if(t>base) base=t; } return new Date(base+365*24*3600*1000); }
+function yearDue_(v){ if(!v||!v[5]) return false; return new Date(v[5]).getTime()-Date.now() < 30*24*3600*1000; }
+function renewByEmail(email){ email=String(email||'').trim().toLowerCase(); if(!email) return 0; var sh=accessSheet_(), v=sh.getDataRange().getValues(), n=0;
+  for(var i=1;i<v.length;i++){ if(String(v[i][2]).toLowerCase()===email && v[i][5]){ sh.getRange(i+1,5).setValue('paid'); sh.getRange(i+1,6).setValue(yearFrom_(v[i])); sh.getRange(i+1,7).setValue('square-renewal'); sh.getRange(i+1,8).setValue(new Date()); n++; } }
+  return n; }
+function renewPost_(d){ if(!d.renewKey || d.renewKey!==payCode_()) return ContentService.createTextOutput('no');
+  return ContentService.createTextOutput('renewed ' + renewByEmail(d.email)); }

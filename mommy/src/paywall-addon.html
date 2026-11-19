@@ -57,9 +57,9 @@ window.PAYWALL=(function(){
   function payHtml(id){ var c=ACC||{}, link=c.link;
     return (id?cover(id):'')+'<h3>Unlock every book 📚</h3>'+
       (c.freeBook?'<p>Your free book is <b>'+esc(title(c.freeBook))+'</b>. To read <b>'+esc(title(id))+'</b> and all the others, unlock the full library.</p>':'<p>Unlock the full Mommy Is Human Too library.</p>')+
-      '<div class="pw-price">'+esc(c.price||'$9.99')+'</div><div class="pw-sub">to start, then '+esc(c.monthly||'$1/month')+' to keep access</div>'+
+      (c.expired?'<p><b>Your year of full access is up.</b> Renew to keep every book open.</p><div class="pw-price">'+esc(c.monthly||'$12/year')+'</div><div class="pw-sub">renews each year · cancel anytime</div>':'<div class="pw-price">'+esc(c.price||'$9.99')+'</div><div class="pw-sub">for your first year, then '+esc(c.monthly||'$12/year')+' to keep access</div>')+
       '<ul><li>All the read-aloud picture books, with new ones added</li><li>Every character in their own voice</li><li>Covenant verses at the end of every book</li><li>Keep reading straight from one book to the next</li></ul>'+
-      (link?'<button class="pw-go" onclick="PAYWALL.pay()">Unlock with Square · '+esc(c.price||'$9.99')+'</button>':'<button class="pw-go" disabled style="opacity:.6">Checkout opens soon</button>')+
+      (c.expired&&c.renew?'<button class="pw-go" onclick="PAYWALL.pay()">Renew with Square · '+esc(c.monthly||'$12/year')+'</button>':link?'<button class="pw-go" onclick="PAYWALL.pay()">Unlock with Square · '+esc(c.price||'$9.99')+'</button>':'<button class="pw-go" disabled style="opacity:.6">Checkout opens soon</button>')+
       '<button class="pw-alt" onclick="PAYWALL.claimForm()">I already paid</button>'+
       '<button class="pw-alt" onclick="PAYWALL.codeForm()">🎟️ I have a reader code</button>'+
       (c.pending?'<p class="pw-sub">We got your unlock request. It will open as soon as your payment is confirmed.</p>':'')+
@@ -79,7 +79,7 @@ window.PAYWALL=(function(){
           .withFailureHandler(function(x){ $('pwErr').textContent=String((x&&x.message)||x); refresh(); }).chooseFreeBook(user(),dev(),id); };
       return false; }
     open(payHtml(id)); return false; }
-  function pay(){ if(ACC&&ACC.link){ window.open(ACC.link,'_blank'); open('<h3>Finish checkout in the new tab</h3><p>When Square says your payment went through, come back here and tap the button below with the email you used at checkout.</p><button class="pw-go" onclick="PAYWALL.claimForm()">I paid, unlock my books</button><button class="pw-link" onclick="PAYWALL.close()">Close</button>'); } }
+  function pay(){ if(ACC&&(ACC.link||ACC.renew)){ window.open((ACC.expired&&ACC.renew)?ACC.renew:ACC.link,'_blank'); open('<h3>Finish checkout in the new tab</h3><p>When Square says your payment went through, come back here and tap the button below with the email you used at checkout.</p><button class="pw-go" onclick="PAYWALL.claimForm()">I paid, unlock my books</button><button class="pw-link" onclick="PAYWALL.close()">Close</button>'); } }
   function claimForm(){ open('<h3>Unlock your books</h3><p>Type the email you used at Square checkout.</p><input id="pwEmail" type="email" autocomplete="email" placeholder="you@email.com" value="'+esc((ACC&&ACC.email)||'')+'">'+
       '<button class="pw-go" id="pwClaim">Unlock</button><button class="pw-link" onclick="PAYWALL.close()">Cancel</button><div class="pw-err" id="pwErr"></div>');
     $('pwClaim').onclick=function(){ var b=this; b.disabled=true; b.textContent='Checking…';
@@ -105,10 +105,10 @@ window.PAYWALL=(function(){
     if(!box){ box=document.createElement('div'); box.id='pwAuthor'; host.insertBefore(box,host.children[1]||null); }
     box.innerHTML='<b>💳 Payments</b> <span class="pw-sub">loading…</span>';
     google.script.run.withSuccessHandler(function(r){ var redirect='https://crispcleaninc-dot.github.io/family-hub/mommy/?paid='+r.code;
-        box.innerHTML='<b>💳 Payments · $9.99 then $1/month</b>'+
+        box.innerHTML='<b>💳 Payments · $9.99 first year, then $12/year</b>'+
         '<p style="margin:8px 0 4px">Square checkout link</p><input id="pwLinkIn" value="'+esc(r.link||'')+'" placeholder="https://square.link/u/…"><button id="pwLinkSave">Save link</button>'+
         '<p style="margin:10px 0 4px">In Square, set "redirect after payment" to this so buyers unlock right away:</p><code>'+esc(redirect)+'</code>'+
-        '<p style="margin:10px 0 4px">Readers (newest first). Type <b>lapsed</b> to cut off someone whose $1/month stopped.</p>'+
+        '<p style="margin:10px 0 4px">Readers (newest first). Type <b>lapsed</b> to cut off someone whose $12/year stopped.</p>'+
         '<table><tr><th>Reader</th><th>Email</th><th>Status</th><th></th></tr>'+r.rows.map(function(x){ return '<tr><td>'+esc(x.user||x.key)+'</td><td>'+esc(x.email)+'</td><td>'+esc(x.status||'free')+'</td><td>'+
           '<button data-k="'+esc(x.key)+'" data-s="paid">Paid</button><button data-k="'+esc(x.key)+'" data-s="lapsed" style="background:#b42318">Lapsed</button></td></tr>'; }).join('')+'</table>'+
         '<p><a href="'+esc(r.sheet)+'" target="_blank">Open the Readers sheet (Access tab)</a></p>'+
