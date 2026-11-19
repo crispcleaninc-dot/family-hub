@@ -1,5 +1,5 @@
-name: safe-edge
-on: { push: { branches: [safe-edge] } }
+name: kid-edge-es
+on: { push: { branches: [kid-edge-es] } }
 permissions: { contents: write }
 jobs:
   t:
@@ -10,4 +10,4 @@ jobs:
       - if: always()
         run: |
           git config user.name "sk"; git config user.email "noreply@anthropic.com"
-          git checkout -b safe-edge-out && git add out && git commit -qm t && git push -f origin safe-edge-out
+          git checkout -b kid-edge-es-out && git add out && git commit -qm t && git push -f origin kid-edge-es-out
