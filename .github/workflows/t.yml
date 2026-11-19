@@ -1,13 +1,13 @@
-name: safe-edge
-on: { push: { branches: [safe-edge] } }
+name: asr-job
+on: { push: { branches: [asr-job] } }
 permissions: { contents: write }
 jobs:
   t:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/tts.py > run.txt 2>&1 || true; mkdir -p out; mv run.txt out/
+      - run: mkdir -p out; pip install -q faster-whisper && python3 gen/asr.py > out/run.txt 2>&1 || true
       - if: always()
         run: |
           git config user.name "sk"; git config user.email "noreply@anthropic.com"
-          git checkout -b safe-edge-out && git add out && git commit -qm t && git push -f origin safe-edge-out
+          git checkout -b asr-job-out && git add out && git commit -qm t && git push -f origin asr-job-out
