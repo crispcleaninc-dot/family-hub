@@ -61,6 +61,7 @@ window.PAYWALL=(function(){
       '<ul><li>All the read-aloud picture books, with new ones added</li><li>Every character in their own voice</li><li>Covenant verses at the end of every book</li><li>Keep reading straight from one book to the next</li></ul>'+
       (link?'<button class="pw-go" onclick="PAYWALL.pay()">Unlock with Square · '+esc(c.price||'$9.99')+'</button>':'<button class="pw-go" disabled style="opacity:.6">Checkout opens soon</button>')+
       '<button class="pw-alt" onclick="PAYWALL.claimForm()">I already paid</button>'+
+      '<button class="pw-alt" onclick="PAYWALL.codeForm()">🎟️ I have a reader code</button>'+
       (c.pending?'<p class="pw-sub">We got your unlock request. It will open as soon as your payment is confirmed.</p>':'')+
       '<button class="pw-link" onclick="PAYWALL.close()">Not now</button>'; }
   function ok(id,proceed){
@@ -72,7 +73,7 @@ window.PAYWALL=(function(){
     if(!ACC.freeBook){ learnTitles();
       open(cover(id)+'<h3>Pick your free book</h3><p>Without the full library you can read <b>one</b> book for free. Make <b>'+esc(title(id))+'</b> your free book?</p>'+
         '<p class="pw-sub">You can\'t switch it later. Unlock everything for '+esc(ACC.price||'$9.99')+' (then '+esc(ACC.monthly||'$1/month')+').</p>'+
-        '<button class="pw-go" id="pwPick">Yes, make this my free book</button><button class="pw-alt" onclick="PAYWALL.show()">Unlock every book instead</button><button class="pw-link" onclick="PAYWALL.close()">Let me look at the others</button><div class="pw-err" id="pwErr"></div>');
+        '<button class="pw-go" id="pwPick">Yes, make this my free book</button><button class="pw-alt" onclick="PAYWALL.show()">Unlock every book instead</button><button class="pw-alt" onclick="PAYWALL.codeForm()">🎟️ I have a reader code</button><button class="pw-link" onclick="PAYWALL.close()">Let me look at the others</button><div class="pw-err" id="pwErr"></div>');
       $('pwPick').onclick=function(){ this.disabled=true; this.textContent='Saving…';
         google.script.run.withSuccessHandler(function(a){ ACC=a; try{ localStorage.setItem('mihFreeBook',id); }catch(e){} close(); decorate(); proceed(); })
           .withFailureHandler(function(x){ $('pwErr').textContent=String((x&&x.message)||x); refresh(); }).chooseFreeBook(user(),dev(),id); };
@@ -87,6 +88,18 @@ window.PAYWALL=(function(){
           else open('<h3>Thank you 💛</h3><p>Your unlock request is in. Your books will open as soon as the payment is confirmed. Check back soon.</p><button class="pw-go" onclick="PAYWALL.close()">OK</button>'); })
         .withFailureHandler(function(x){ b.disabled=false; b.textContent='Unlock'; $('pwErr').textContent=String((x&&x.message)||x); })
         .claimPaid(user(),dev(),$('pwEmail').value,CODE||(function(){ try{ return localStorage.getItem('mihPaidCode')||''; }catch(e){ return ''; } })()); }; }
+  // reader codes (Nov 19 2026): the author gives a code, the reader types it, the whole series unlocks with no payment
+  function codeForm(){ open('<h3>Enter your reader code 🎟️</h3><p>Type the code you were given to unlock every book.</p><input id="pwCode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="MIH-XXXXXX">'+
+      '<button class="pw-go" id="pwRedeem">Unlock my books</button><button class="pw-link" onclick="PAYWALL.close()">Cancel</button><div class="pw-err" id="pwErr"></div>');
+    $('pwRedeem').onclick=function(){ var b=this; b.disabled=true; b.textContent='Checking…';
+      google.script.run.withSuccessHandler(function(a){ ACC=a; decorate();
+          open('<h3>All unlocked! 🎉</h3><p>Every book is open. Enjoy the whole Mommy Is Human Too library.</p><button class="pw-go" onclick="PAYWALL.close()">Start reading</button>'); if(window.GLOW&&GLOW.award)GLOW.award(5,'Library unlocked!','📚'); })
+        .withFailureHandler(function(x){ b.disabled=false; b.textContent='Unlock my books'; $('pwErr').textContent=String((x&&x.message)||x); })
+        .redeemReaderCode(user(),dev(),$('pwCode').value); }; }
+  function renderCodes(list){ var el=$('pwCodes'); if(!el)return; if(!list||!list.length){ el.innerHTML='No codes yet.'; return; }
+    el.innerHTML='<table><tr><th>Code</th><th>For</th><th>Used</th><th></th></tr>'+list.map(function(x){ return '<tr><td><code>'+esc(x.code)+'</code></td><td>'+esc(x.forWho)+'</td><td>'+esc(x.used)+' / '+esc(x.max)+(x.status!=='active'?' ('+esc(x.status)+')':'')+'</td><td>'+
+      (x.status==='active'?'<button data-c="'+esc(x.code)+'" data-cs="off" style="background:#b42318">Turn off</button>':'<button data-c="'+esc(x.code)+'" data-cs="active">Turn on</button>')+'</td></tr>'; }).join('')+'</table>';
+    el.querySelectorAll('button[data-c]').forEach(function(b){ b.onclick=function(){ google.script.run.withSuccessHandler(renderCodes).withFailureHandler(function(x){ alert(String((x&&x.message)||x)); }).setReaderCodeStatus(PIN,b.dataset.c,b.dataset.cs); }; }); }
   // author tools
   function authorPanel(){ var host=document.getElementById('author'); if(!host||!PIN)return; var box=$('pwAuthor');
     if(!box){ box=document.createElement('div'); box.id='pwAuthor'; host.insertBefore(box,host.children[1]||null); }
@@ -98,7 +111,12 @@ window.PAYWALL=(function(){
         '<p style="margin:10px 0 4px">Readers (newest first). Type <b>lapsed</b> to cut off someone whose $1/month stopped.</p>'+
         '<table><tr><th>Reader</th><th>Email</th><th>Status</th><th></th></tr>'+r.rows.map(function(x){ return '<tr><td>'+esc(x.user||x.key)+'</td><td>'+esc(x.email)+'</td><td>'+esc(x.status||'free')+'</td><td>'+
           '<button data-k="'+esc(x.key)+'" data-s="paid">Paid</button><button data-k="'+esc(x.key)+'" data-s="lapsed" style="background:#b42318">Lapsed</button></td></tr>'; }).join('')+'</table>'+
-        '<p><a href="'+esc(r.sheet)+'" target="_blank">Open the Readers sheet (Access tab)</a></p>';
+        '<p><a href="'+esc(r.sheet)+'" target="_blank">Open the Readers sheet (Access tab)</a></p>'+
+        '<p style="margin:14px 0 4px"><b>🎟️ Reader codes</b> · unlock the full series with no payment</p>'+
+        '<input id="pwCodeFor" placeholder="Who is it for? (e.g. Grace Church, Ms. Smith)"><input id="pwCodeN" type="number" min="1" max="1000" value="1" style="margin-top:6px" title="How many readers can use this code">'+
+        '<button id="pwCodeMake">Make a code</button><div id="pwCodes" class="pw-sub">loading codes…</div>';
+        $('pwCodeMake').onclick=function(){ google.script.run.withSuccessHandler(function(l){ renderCodes(l); if(window.toast)toast('Code made: '+((l[0]&&l[0].code)||'')); }).withFailureHandler(function(x){ alert(String((x&&x.message)||x)); }).makeReaderCode(PIN,$('pwCodeFor').value,$('pwCodeN').value); };
+        google.script.run.withSuccessHandler(renderCodes).withFailureHandler(function(){ var el=$('pwCodes'); if(el)el.textContent='Codes could not load.'; }).listReaderCodes(PIN);
         $('pwLinkSave').onclick=function(){ google.script.run.withSuccessHandler(function(){ if(window.toast)toast('Square link saved'); refresh(); }).withFailureHandler(function(x){ alert(String((x&&x.message)||x)); }).setSquareLink(PIN,$('pwLinkIn').value); };
         box.querySelectorAll('button[data-k]').forEach(function(b){ b.onclick=function(){ google.script.run.withSuccessHandler(function(){ authorPanel(); }).setPayStatus(PIN,b.dataset.k,b.dataset.s); }; }); })
       .withFailureHandler(function(x){ box.innerHTML='<b>💳 Payments</b> '+esc((x&&x.message)||x); }).payRequests(PIN); }
@@ -115,6 +133,6 @@ window.PAYWALL=(function(){
       var p=pr.paid; if(p){ CODE=p; try{ localStorage.setItem('mihPaidCode',p); }catch(e){} setTimeout(claimForm,1500); } go(); }); }catch(e){}
     setTimeout(go,2500); }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init); else setTimeout(init,0);
-  return {ok:ok,show:function(){ open(payHtml('')); },close:close,pay:pay,claimForm:claimForm,refresh:refresh,status:function(){ return ACC; }};
+  return {ok:ok,show:function(){ open(payHtml('')); },close:close,pay:pay,claimForm:claimForm,codeForm:codeForm,refresh:refresh,status:function(){ return ACC; }};
 })();
 </script>

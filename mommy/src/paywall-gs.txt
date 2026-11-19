@@ -38,3 +38,35 @@ function payRequests(pin){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); 
 function setPayStatus(pin,key,status){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var sh=accessSheet_(), r=accFind_(sh,key); if(!r) throw new Error('Not found');
   sh.getRange(r.row,5).setValue(status); sh.getRange(r.row,7).setValue('author'); sh.getRange(r.row,8).setValue(new Date()); return payRequests(pin); }
 function setSquareLink(pin,url){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); PROPS.setProperty('SQUARE_LINK',String(url||'').trim()); return payCfg_(); }
+
+/* ===== READER CODES (Nov 19 2026) — author-made codes unlock the full series with no payment.
+   Codes live in the "Codes" tab of the Readers sheet: code | for | maxUses | used | created | status | lastUsedBy.
+   Status "active" works; anything else (e.g. "off") stops the code. ===== */
+function codesSheet_(){ var ss=usersSheet_().getParent(), sh=ss.getSheetByName('Codes');
+  if(!sh){ sh=ss.insertSheet('Codes'); sh.appendRow(['code','for','maxUses','used','created','status','lastUsedBy']);
+    sh.getRange(1,1,1,7).setFontWeight('bold'); sh.setFrozenRows(1); }
+  return sh; }
+function listReaderCodes(pin){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var v=codesSheet_().getDataRange().getValues(), out=[];
+  for(var i=1;i<v.length;i++){ if(v[i][0]) out.push({code:String(v[i][0]),forWho:String(v[i][1]||''),max:+v[i][2]||1,used:+v[i][3]||0,status:String(v[i][5]||'active')}); }
+  return out.reverse().slice(0,150); }
+function makeReaderCode(pin,forWho,maxUses){ if(!authorLogin(pin)) throw new Error('Wrong PIN.');
+  var n=Math.max(1,Math.min(1000,parseInt(maxUses,10)||1)), c='MIH-'+Utilities.getUuid().replace(/-/g,'').slice(0,6).toUpperCase();
+  codesSheet_().appendRow([c,String(forWho||'').slice(0,80),n,0,new Date(),'active','']); return listReaderCodes(pin); }
+function setReaderCodeStatus(pin,code,status){ if(!authorLogin(pin)) throw new Error('Wrong PIN.'); var sh=codesSheet_(), v=sh.getDataRange().getValues();
+  for(var i=1;i<v.length;i++){ if(String(v[i][0])===String(code)){ sh.getRange(i+1,6).setValue(status==='active'?'active':'off'); break; } }
+  return listReaderCodes(pin); }
+function redeemReaderCode(user,device,code){ code=String(code||'').trim().toUpperCase(); if(!code) throw new Error('Type your code.');
+  var st=accessStatus(user,device); if(st.paid) return st;
+  var lock=LockService.getScriptLock(); lock.waitLock(15000);
+  try{ var sh=codesSheet_(), v=sh.getDataRange().getValues();
+    for(var i=1;i<v.length;i++){ if(String(v[i][0]).toUpperCase()!==code) continue;
+      if(String(v[i][5]||'active')!=='active') throw new Error('This code is turned off. Ask the person who gave it to you.');
+      var used=+v[i][3]||0, max=+v[i][2]||1; if(used>=max) throw new Error('This code has already been used the most times allowed.');
+      var as=accessSheet_(); accKeys_(user,device).forEach(function(k){ accUpsert_(as,k,user,{5:'paid',6:'',7:'code:'+code,9:'Unlocked with reader code '+code+(v[i][1]?' ('+v[i][1]+')':'')}); });
+      sh.getRange(i+1,4).setValue(used+1); sh.getRange(i+1,7).setValue(String(user||device||'').slice(0,64));
+      return accessStatus(user,device); }
+  } finally { lock.releaseLock(); }
+  throw new Error('That code was not found. Check the spelling and try again.'); }
+/* One-time setup (Nov 19 2026): turns the lock on with the $9.99 Square link and prints the checkout-return code. */
+function setupPaywallNov19(){ PROPS.setProperty('SQUARE_LINK','https://square.link/u/DcZpPdcA'); codesSheet_();
+  Logger.log('UNLOCK_CODE=' + payCode_()); }
