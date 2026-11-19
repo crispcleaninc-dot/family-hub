@@ -63,7 +63,8 @@ window.PAYWALL=(function(){
       '<button class="pw-alt" onclick="PAYWALL.claimForm()">I already paid</button>'+
       '<button class="pw-alt" onclick="PAYWALL.codeForm()">🎟️ I have a reader code</button>'+
       (c.pending?'<p class="pw-sub">We got your unlock request. It will open as soon as your payment is confirmed.</p>':'')+
-      '<button class="pw-link" onclick="PAYWALL.close()">Not now</button>'; }
+      '<button class="pw-link" onclick="PAYWALL.close()">Not now</button>'+
+      '<p class="pw-sub" style="margin-top:10px">Just want to help? <a href="https://square.link/u/yIoLFO6p" target="_blank" rel="noopener" style="color:#6d28d9;font-weight:700">💛 Send a gift of any amount, even $1</a>. Gifts support new books and translations; they do not unlock the app.</p>'; }
   function ok(id,proceed){
     if(AUTHOR) return true;
     if(!ACC){ waiting.push(function(){ if(ok(id,proceed))proceed(); }); refresh(); return false; }
