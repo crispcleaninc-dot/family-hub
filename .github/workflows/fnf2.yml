@@ -1,0 +1,17 @@
+name: fnf-chars
+on: { push: { branches: [fnf-chars] } }
+permissions: { contents: write }
+jobs:
+  chars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg && pip install -q edge-tts faster-whisper jiwer
+      - run: git fetch -q --depth 1 origin fnf-out-aud && git checkout FETCH_HEAD -- out/aud && mv out/aud aud && ls aud | wc -l
+      - run: mkdir -p out && python3 gen/chars.py > out/chars_log.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-chars && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-chars
