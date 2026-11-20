@@ -1,0 +1,14 @@
+name: fnf-img2
+on: { push: { branches: [fnf-img2] } }
+permissions: { contents: write }
+jobs:
+  img2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - run: mkdir -p out; python3 gen/img2.py > out/img2_log.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-img2 && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-img2
