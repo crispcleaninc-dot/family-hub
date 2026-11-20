@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voice & Avatar Studio</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14213d">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--navy:#14213d;--gold:#d8b66a;--ink:#f4efe6;--muted:#a9b0c2;--card:#1c2a4a;--line:#2b3a5e;--fs:26px}
+*{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;z-index:5;background:rgba(20,33,61,.97);border-bottom:1px solid var(--line);padding:calc(10px + env(safe-area-inset-top)) 14px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+header b{color:var(--gold);flex:1;font-size:16px}
+button,.btn{font:600 15px system-ui;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:999px;padding:9px 14px;cursor:pointer;text-decoration:none}
+button.solid{background:var(--gold);color:#1a1712}button.rec{background:#c0392b;border-color:#c0392b;color:#fff}
+nav{display:flex;gap:6px;padding:10px 14px;overflow:auto}nav button.on{background:var(--gold);color:#1a1712}
+main{max-width:780px;margin:0 auto;padding:10px 16px 140px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.hint{color:var(--muted);font-size:14px;line-height:1.5}
+#script p,#script li{font-family:Georgia,serif;font-size:var(--fs);line-height:1.55}
+#script h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:34px 0 8px}
+#script .other{border-left:3px solid var(--gold);padding-left:12px}#script .who{display:block;font:700 12px system-ui;color:var(--muted)}
+#script .verse{font-style:italic;color:#efe1bd}.num{display:inline-block;min-width:1.6em;color:var(--gold);font:700 .7em system-ui}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(20,33,61,.98);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:center}
+#timer{font:700 18px ui-monospace,monospace;min-width:70px;text-align:center}
+#log div{padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}#log a{color:var(--gold)}
+.ok{color:#8fd19e}.err{color:#f19a8a}input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0f1930;color:var(--ink);font-size:18px}
+.looks{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.look{background:#0f1930;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
+.hide{display:none}
+</style></head><body>
+<header><b>Voice & Avatar Studio</b><button id="smaller">A−</button><button id="bigger">A+</button><button id="scrollBtn">Auto-scroll</button></header>
+<nav><button data-t="record" class="on">Record</button><button data-t="library">My files</button><button data-t="looks">Looks</button></nav>
+<main>
+<section id="signin" class="card hide"><h3 style="margin-top:0">Sign in with your Profit Engine PIN</h3><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><div style="margin-top:10px"><button class="solid" id="go">Sign in</button></div><div id="sinMsg" class="hint"></div></section>
+<section data-p="record">
+ <div class="card"><div class="hint">Pick what to read, tap the red button, and read. When you tap Stop, the recording saves itself to your private Drive folder. Nothing to attach.</div>
+ <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap"><button data-s="full" class="on">Full script</button><button data-s="retakes">Retakes (15 lines)</button></div></div>
+ <div id="script"></div>
+</section>
+<section data-p="library" class="hide"><div class="card"><h3 style="margin-top:0">My files</h3><div class="hint">Everything here is private to you, in Drive: "Voice & Avatar Studio (private)". Used only for your own videos and your avatar.</div><div id="log"></div><div style="margin-top:12px"><button id="refresh">Refresh</button> <label class="btn">Add a photo<input id="photo" type="file" accept="image/*" class="hide"></label></div></div></section>
+<section data-p="looks" class="hide"><div class="card"><h3 style="margin-top:0">Looks</h3><div class="hint">Your avatar's closet. Add one clear front-facing photo in My files first. Pick the looks you want, and they're made from your photo.</div><div class="looks" id="looks"></div><div id="lookMsg" class="hint" style="margin-top:10px"></div></div></section>
+</main>
+<div class="bar"><button class="rec" id="recBtn">● Record</button><span id="timer">0:00</span><span id="status" class="hint"></span></div>
+<template id="full"><h2>Opening</h2>
+  <p>In my family, when the phone rings after ten, somebody is sitting in a room with a table, two chairs, and a man telling them this is their only chance.</p>
+  <p>I know that room. I sat in it at seventeen.</p>
+  <p>Nobody asked me what happened. Not the police. Not the prosecutor. Not even the lawyer I paid.</p>
+  <p><b>Nobody Asked What Happened.</b></p>
+
+  <h2>Where we're from</h2>
+  <p>Let me tell you where we're from first, because nobody in those rooms ever did.</p>
+  <p>On our block you learn the sound of gunshots before you learn your times tables. Cars slow down for no reason. Somebody's cousin didn't make it home last summer. The police take forty minutes, if they come.</p>
+  <p>So people get protection however they can. From a friend. From a friend of a friend. From Lord knows who. Nobody's thinking about paperwork. They're thinking about getting their kids home alive.</p>
+  <p>When the danger is that close, being safe matters more than being legal. And a lot of the people in danger aren't even old enough to be legal yet.</p>
+  <p>That's not an excuse. It's the truth nobody puts in the report.</p>
+  <p>The Bible has a word for people like us: the oppressed. Under-protected when we call for help. Over-watched when we're just standing outside. Over-punished when we slip. And with no opportunities to get out from under any of it.</p>
+  <p>The police don't come when we need them. But they come for us.</p>
+
+  <h2>Part 1 — Renee, 17</h2>
+  <p>It started under a picture online. Two girls I barely knew decided I was the problem. Comments turned into messages. Messages turned into "I know where you stay."</p>
+  <p>Then came a house party. I didn't go looking for them. They came looking for me. Both of them were nineteen. I was seventeen.</p>
+  <p>The first one swung. The bottle was already in my hand. When it was over, her tooth was broken, and I was the one the police wanted.</p>
+  <p>They didn't find me on their own. The girls gave them my cousin Jada's number. Jada went to school with them. Her mother got on the phone and made her give the police my name and where I lived. Jada and I haven't really talked since. One phone call can change who your family is to you.</p>
+  <p>The report said I hit her with a bottle. That was true. It didn't say she came at me first. It didn't say there were two of them.</p>
+  <p>Felonious assault. One night in jail. My mother's face through the glass.</p>
+
+  <h2>The lawyer</h2>
+  <p>I didn't wait for a public defender. I paid for a lawyer myself. Me. Seventeen years old. Six thousand dollars, sixteen hundred of it up front. I worked for every dollar of it.</p>
+  <p>I met him for maybe ten minutes at a time, always in a hallway. He had a stack of folders under his arm, and mine was just one of them.</p>
+  <p>He never asked what happened. Not once. He never asked about the messages, or that there were two of them, or who swung first.</p>
+  <p class="other"><span class="who">THE LAWYER</span>There's a youth program. Plead, finish your probation, and it comes off your record. Fight it, and you're betting your whole life on a jury.</p>
+  <p>I paid him like a private lawyer, and he treated me like one more name on a list. Paid or free, it felt the same. The deal was already decided before he ever met me.</p>
+  <p>So I pleaded. Two years of probation. A restraining order. Close to ten thousand dollars in all, between him, the restitution and the fees.</p>
+  <p>Before all this, I was on the honor roll. I didn't drink. I didn't do drugs. I was the girl teachers didn't worry about.</p>
+  <p>After it, I was a seventeen-year-old paying off a criminal case. Lawyer payments. Restitution. Court costs. Probation fees. Anger management classes I paid for myself.</p>
+  <p>The no-contact order and the charge on my record kept me out of regular jobs. Nobody with an application and a background check would take me. So I took whatever work would pay me under the table, and I took all of it I could get.</p>
+  <p>I went to school tired, when I went at all. I left with a 1.5. I barely graduated.</p>
+  <p>That's what the deal cost. Not just the money. The girl I was going to be.</p>
+  <p>The record cleared. I didn't. For years I walked into every room expecting someone to point at me.</p>
+
+  <h2>Part 2 — Tasha, 26</h2>
+  <p>My cousin Tasha is the strong one. She works doubles and pays her own way. She lives on a street where two houses got shot up the summer before.</p>
+  <p>She didn't have a license for the gun in her purse. She had it because she was tired of being afraid to walk to her car.</p>
+  <p>At a party, her boyfriend got jumped. Three men had him on the ground, kicking his head. She screamed. Nobody stopped.</p>
+  <p>Six shots. One hit a man who was stomping him. One hit the man she was trying to save.</p>
+  <p class="other"><span class="who">TASHA</span>I told them they were killing him. They said, "Then why'd you keep shooting?" Then they asked where I got the gun, and that's all they wanted to talk about.</p>
+  <p>Her lawyer had her case and about a hundred others. He told her that without a license, self-defense was a hard sell. He told her what twenty years sounds like.</p>
+  <p>And here's what scared her most. She didn't know where that gun had really been. She'd bought it off somebody who knew somebody. Was the serial number clean? Was it stolen? Had it been used in something before it ever got to her? Nobody knew. None of that was in the discovery.</p>
+  <p>So the prosecutor was holding a blank check. Any day, a lab report could come back and turn one charge into five. Fighting meant betting on a gun whose history she couldn't see.</p>
+  <p>I told her, "Say it was self-defense. Say it out loud. Make them answer it." But she was scared. Who wouldn't be?</p>
+  <p class="other"><span class="who">TASHA</span>I took the plea, Renee. I just wanted to come home.</p>
+  <p>She came home. With a record, and a question she'll carry forever: what if I had said it?</p>
+
+  <h2>Part 3 — Marcus, 16</h2>
+  <p>Marcus is the baby. Sixteen. He plays video games with my son. Two boys from his school got shot that year. He stopped taking the bus.</p>
+  <p>Too young to carry legally. Old enough to be scared to death.</p>
+  <p>The police came with a warrant at six in the morning and found a gun on him. It wasn't registered to anybody.</p>
+  <p class="other"><span class="who">THE DETECTIVE</span>Just tell me it's yours and this all goes easier.</p>
+  <p>No parent in the room. No lawyer yet. A sixteen-year-old who wanted it to be over. He said it was his.</p>
+  <p>By the time his lawyer met him, that one sentence was the whole case. Nobody asked him why a sixteen-year-old felt he needed a gun just to get to school. No contest. He was sent to a placement two hours from his grandmother.</p>
+  <p>His lawyer couldn't tell the family where the gun came from either. No trace report, no serial number history, nothing in discovery. Just the warning that if it came back tied to something else, it would all get worse. A boy and his grandmother, asked to bet against a blank page.</p>
+  <p class="other"><span class="who">AUNT VEE</span>They didn't even let me sit with him, baby.</p>
+
+  <h2>Part 4 — What I know now</h2>
+  <p>I'm not saying none of us did anything. Guns without papers are still against the law, and I don't want one more child carrying one. I'm saying nobody asked what happened, or why, before they offered us the deal.</p>
+  <p>So here's what I teach my children now.</p>
+  <ul>
+    <li>You can stay silent. Say, "I want a lawyer," and then stop talking.</li>
+    <li>If you're under eighteen, ask for your parent.</li>
+    <li>If you were defending yourself or someone else, tell your lawyer everything, early.</li>
+    <li>Whether your lawyer is paid or free, they work for you. Ask them, "Have you heard my whole side?" If they haven't, make them sit down and listen. Write it out and hand it to them.</li>
+    <li>Don't sign anything you don't understand. Ask what it will do to your life in ten years.</li>
+    <li>Before you take any deal, ask your lawyer: "Have we seen all the evidence, including the gun trace and the lab reports?"</li>
+  </ul>
+  <p class="verse">"Defend the poor and fatherless: do justice to the afflicted and needy." Psalm 82:3.</p>
+  <p class="verse">"The Lord executeth righteousness and judgment for all that are oppressed." Psalm 103:6.</p>
+  <p class="verse">"The Lord also will be a refuge for the oppressed, a refuge in times of trouble." Psalm 9:9.</p>
+  <p>The Lord sees the room with the table and two chairs. He sees the street where you live. And He sees who was never asked.</p>
+  <p>Did your lawyer ever ask you what really happened? Tell me in the comments.</p>
+
+  <h2>App ending</h2>
+  <p>If your family is going through this right now, you don't have to carry it alone.</p>
+  <p>Open the Community Covenant app. The link is in the description. Tap Ask for Help, choose Legal, and pick your category, like criminal charges, juvenile cases or records. Tell us your state.</p>
+  <p>Here's what comes back. A prayer partner checks in with you the same day. You get the Word read aloud for the night you're in. And if you're in the United States, we can send your request to an attorney in your state who has signed up for these referrals.</p>
+  <p>We are not attorneys, and this is not legal advice. It's free. It's a resource, not a bill.</p>
+  <p>If you're an attorney and want to receive referrals in your state, the sign-up form is in the description.</p>
+  <p><b>— End —</b></p>
+
+  </template><template id="retakes"><h2>Retakes</h2><p><span class="num">1</span> On our block, you learn the sound of gunshots before you learn your times tables.</p><p><span class="num">2</span> Six shots. One hit a man who was stomping him. One hit the man she was trying to save.</p><p><span class="num">3</span> He told her that without a license, self-defense was a hard sell.</p><p><span class="num">4</span> I told her, say it was self-defense. Say it out loud. Make them answer it. But she was scared. Who wouldn't be?</p><p><span class="num">5</span> Two boys from his school got shot that year.</p><p><span class="num">6</span> Too young to carry legally. Old enough to be scared to death.</p><p><span class="num">7</span> A boy and his grandmother, asked to bet against a blank page.</p><p><span class="num">8</span> I'm saying nobody asked what happened, or why, before they offered us the deal.</p><p><span class="num">9</span> If you're under eighteen, ask for your parent.</p><p><span class="num">10</span> Ask them, have you heard my whole side? If they haven't, make them sit down and listen. Write it out and hand it to them.</p><p><span class="num">11</span> Don't sign anything you don't understand. Ask what it will do to your life in ten years.</p><p><span class="num">12</span> Defend the poor and fatherless: do justice to the afflicted and needy. Psalm 82:3.</p><p><span class="num">13</span> The Lord executeth righteousness and judgment for all that are oppressed. Psalm 103:6.</p><p><span class="num">14</span> The Lord also will be a refuge for the oppressed, a refuge in times of trouble. Psalm 9:9.</p><p><span class="num">15</span> Open the Community Covenant app. The link is in the description. Tap Legal Help, then request a free attorney referral in your state. We are not attorneys, and this is not legal advice. It's free. It's a resource, not a bill. For deeper help, the AI Litigator is $39.99 a month.</p></template>
+<script>
+(function(){
+var API='https://script.google.com/macros/s/AKfycbzSNCroImVI4ABbqGTC3xpyeRIqhTGGfbkvaj6U5K-LtSyRlhdfpIzTsCjgSvyHWPvBoA/exec';
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+var tok=ls('studio_tok')||'',fs=+(ls('studio_fs')||26),which='full',queue=[];
+function $(s){return document.querySelector(s)}
+function setFs(){document.documentElement.style.setProperty('--fs',fs+'px');ls('studio_fs',fs)}setFs();
+$('#bigger').onclick=function(){fs=Math.min(46,fs+2);setFs()};$('#smaller').onclick=function(){fs=Math.max(16,fs-2);setFs()};
+function show(){ $('#script').innerHTML=document.getElementById(which).innerHTML; }
+document.querySelectorAll('[data-s]').forEach(function(b){b.onclick=function(){which=b.dataset.s;document.querySelectorAll('[data-s]').forEach(function(x){x.classList.toggle('on',x===b)});show();window.scrollTo(0,0)}});show();
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){document.querySelectorAll('nav button').forEach(function(x){x.classList.toggle('on',x===b)});document.querySelectorAll('[data-p]').forEach(function(p){p.classList.toggle('hide',p.dataset.p!==b.dataset.t)});if(b.dataset.t==='library')list()}});
+var scrolling=null;$('#scrollBtn').onclick=function(){if(scrolling){clearInterval(scrolling);scrolling=null;this.textContent='Auto-scroll';return}this.textContent='Stop scroll';scrolling=setInterval(function(){window.scrollBy(0,1)},60)};
+function post(o){return fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(o)}).then(function(r){return r.json()})}
+function needSignin(m){$('#signin').classList.remove('hide');if(m)$('#sinMsg').textContent=m}
+if(!tok)needSignin();
+$('#go').onclick=function(){$('#sinMsg').textContent='Signing in…';post({action:'login',pin:$('#pin').value,device:'Studio '+(navigator.platform||'')}).then(function(r){if(r.ok&&r.token){tok=r.token;ls('studio_tok',tok);$('#signin').classList.add('hide');flush()}else $('#sinMsg').textContent=r.error||'Could not sign in.'}).catch(function(){$('#sinMsg').textContent='No connection. Try again when online.'})};
+function b64(blob){return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res(String(fr.result).split(',')[1])};fr.readAsDataURL(blob)})}
+function upload(item){return b64(item.blob).then(function(d){return post({action:'studioUpload',token:tok,kind:item.kind,mime:item.blob.type||'audio/webm',name:item.name,note:item.note,b64:d})})}
+function flush(){if(!queue.length)return;if(!tok){needSignin('Sign in to save your recording.');return}var it=queue[0];$('#status').textContent='Saving to Drive…';upload(it).then(function(r){if(r.ok){queue.shift();$('#status').innerHTML='<span class="ok">Saved ✓</span>';flush()}else if(r.auth===false){tok='';ls('studio_tok','');needSignin(r.error)}else $('#status').innerHTML='<span class="err">'+(r.error||'Not saved')+' — will retry</span>'}).catch(function(){$('#status').innerHTML='<span class="err">Offline — saved on this phone, sends when back online</span>'})}
+window.addEventListener('online',flush);setInterval(flush,30000);
+var rec=null,chunks=[],t0=0,tick=null;
+$('#recBtn').onclick=function(){
+ if(rec&&rec.state==='recording'){rec.stop();return}
+ navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:true,autoGainControl:true}}).then(function(st){
+  var mt=['audio/webm;codecs=opus','audio/mp4','audio/webm'].find(function(m){return window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m)})||'';
+  rec=new MediaRecorder(st,mt?{mimeType:mt,audioBitsPerSecond:96000}:undefined);chunks=[];
+  rec.ondataavailable=function(e){if(e.data.size)chunks.push(e.data)};
+  rec.onstop=function(){st.getTracks().forEach(function(t){t.stop()});clearInterval(tick);$('#recBtn').textContent='● Record';
+   var blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'}),ext=/mp4/.test(blob.type)?'m4a':'webm',d=new Date();
+   queue.push({kind:'voice',blob:blob,name:'Nobody Asked — '+(which==='full'?'full read':'retakes')+' — '+d.toLocaleString().replace(/[\/:,]/g,'-')+'.'+ext,note:'Script: '+which});flush()};
+  rec.start(1000);t0=Date.now();$('#recBtn').textContent='■ Stop';$('#status').textContent='Recording…';
+  tick=setInterval(function(){var s=Math.floor((Date.now()-t0)/1000);$('#timer').textContent=Math.floor(s/60)+':'+('0'+s%60).slice(-2)},500);
+ }).catch(function(){$('#status').innerHTML='<span class="err">Allow the microphone for this page, then try again.</span>'})};
+function list(){if(!tok){needSignin();return}$('#log').textContent='Loading…';post({action:'studioList',token:tok}).then(function(r){if(!r.ok){if(r.auth===false){tok='';ls('studio_tok','');needSignin(r.error)}$('#log').textContent=r.error||'';return}$('#log').innerHTML=(r.files||[]).map(function(f){return '<div>'+f.kind+' · <a href="'+f.url+'" target="_blank" rel="noopener">'+f.name.replace(/</g,'&lt;')+'</a> · '+Math.round(f.size/1024)+' KB</div>'}).join('')||'Nothing yet.'})}
+$('#refresh').onclick=list;
+$('#photo').onchange=function(){var f=this.files[0];if(!f)return;queue.push({kind:'photo',blob:f,name:'Avatar photo — '+f.name,note:'Avatar source photo'});flush();setTimeout(list,4000)};
+var LOOKS=['Fall','Winter','Christmas','Spring','Summer','Easter Sunday','Church','Business','Casual','Car selfie'];
+$('#looks').innerHTML=LOOKS.map(function(l){return '<div class="look"><div style="font-weight:700">'+l+'</div><button style="margin-top:8px" data-look="'+l+'">Request</button></div>'}).join('');
+document.querySelectorAll('[data-look]').forEach(function(b){b.onclick=function(){var blob=new Blob([JSON.stringify({look:b.dataset.look,at:new Date().toISOString()})],{type:'text/plain'});queue.push({kind:'photo',blob:blob,name:'Look request — '+b.dataset.look+'.txt',note:'Look request'});flush();$('#lookMsg').textContent='Requested: '+b.dataset.look+'. It will show in My files when it is made.'}});
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
+})();
+</script></body></html>
