@@ -4,7 +4,7 @@ permissions: { contents: write }
 jobs:
   img:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: [i09, i14, i19, i20, a01, a02, a03, a04, a05, a06, a07, a08, a09, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20] } }
+    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: [i10, i12, i16, i17, i20] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
@@ -12,12 +12,3 @@ jobs:
         run: |
           git config user.name "ig"; git config user.email "noreply@anthropic.com"
           git checkout -b story-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin story-img-${{ matrix.shot }}
-  tts:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/tts.py > run.txt 2>&1 || true; mkdir -p out; mv run.txt out/
-      - if: always()
-        run: |
-          git config user.name "ig"; git config user.email "noreply@anthropic.com"
-          git checkout -b africa-tts-out && git add -f out && git commit -qm t && git push -f origin africa-tts-out
