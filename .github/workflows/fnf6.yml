@@ -1,0 +1,28 @@
+name: fnf-read2
+on: { push: { branches: [fnf-read2] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 19
+      matrix:
+        n: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts pythonbible pythonbible-kjv
+      - run: |
+          K='["d03_close","d01_g01_v021,d03_g08_v020,d03_short","d01_g01_v022,d03_g08_v021","d01_g01_v023,d03_g08_v022","d01_g01_v024,d03_g09_v022","d01_g01_v025,d03_g09_v023","d01_g01_v026,d03_g09_v024","d01_g01_v027,d03_g09_v025","d01_g01_v028,d03_g09_v026","d01_g01_v029,d03_g09_v027","d01_g01_v030,d03_g09_v028","d01_g01_v031,d03_g09_v029","d02_g05_v026,d03_g10_v026","d02_g05_v027,d03_g10_v027","d02_g05_v028,d03_g10_v028","d02_g05_v029,d03_g10_v029","d02_g05_v030,d03_g10_v030","d02_g05_v031,d03_g10_v031","d02_g05_v032,d03_g10_v032"]'
+          export KEYS=$(python3 -c "import json,sys;print(json.loads(sys.argv[1])[${{ matrix.n }}])" "$K")
+          python3 -c "s=open('gen/read.py').read();s=s.replace('    if g != G: continue','    if k not in os.environ[\'KEYS\'].split(\',\'): continue');open('gen/read.py','w').write(s)"
+          grep -n "KEYS" gen/read.py
+          mkdir -p out; G=x python3 gen/read.py > out/read2_${{ matrix.n }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-read2-${{ matrix.n }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-read2-${{ matrix.n }}
