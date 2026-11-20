@@ -1,0 +1,18 @@
+name: fnf-img
+on: { push: { branches: [fnf-img] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 16, matrix: { shot: [d02_s4, d02_s5, d03_s1, d03_s2, d03_s3, d03_s4, d03_s5, d04_s1, d04_s2, d04_s3, d04_s4, d04_s5, d05_s1, d05_s2, d05_s3, d05_s4, d05_s5, d06_s1, d06_s2, d06_s3, d06_s4, d06_s5, d07_s1, d07_s2, d07_s3, d07_s4, d07_s5, d08_s1, d08_s2, d08_s3, d08_s4, d08_s5, d09_s1, d09_s2, d09_s3, d09_s4, d09_s5, d10_s1, d10_s2, d10_s3, d10_s4, d10_s5, d11_s1, d11_s2, d11_s3, d11_s4, d11_s5, d12_s1, d12_s2, d12_s3, d12_s4, d12_s5, d13_s1, d13_s2, d13_s3, d13_s4, d13_s5, d14_s1, d14_s2, d14_s3, d14_s4, d14_s5] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-img-${{ matrix.shot }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-img-${{ matrix.shot }}
