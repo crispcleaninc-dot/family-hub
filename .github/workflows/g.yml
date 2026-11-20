@@ -2,12 +2,13 @@ name: cc5-gen
 on: { push: { branches: [cc5-gen] } }
 permissions: { contents: write }
 jobs:
-  redo:
+  img:
     runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: ["e04","v02","v10","t02","t06","t01"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/redo.py || true
+      - run: pip install -q gradio_client && SEEDS=9103 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
       - if: always()
         run: |
           git config user.name "cc5"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc5-redo-out && git add -f out && git commit -qm "redo" && git push -f origin cc5-redo-out
+          git checkout -b cc5-img2-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc5-img2-${{ matrix.shot }}

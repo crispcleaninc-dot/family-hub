@@ -7,7 +7,7 @@ os.makedirs('out', exist_ok=True); log = []; c = None
 for a in range(5):
     try: c = Client("black-forest-labs/FLUX.1-schnell"); break
     except Exception as e: log.append('client '+str(e)[:200]); time.sleep(30)
-for sd in [9101, 9102]:
+for sd in [int(x) for x in os.environ.get('SEEDS','9101,9102').split(',')]:
     for a in range(4):
         try:
             r = c.predict(prompt=p, seed=sd, randomize_seed=False, width=1344, height=768, num_inference_steps=4, api_name="/infer")
