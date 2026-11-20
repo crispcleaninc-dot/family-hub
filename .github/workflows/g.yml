@@ -2,12 +2,13 @@ name: cc6-redo
 on: { push: { branches: [cc6-redo] } }
 permissions: { contents: write }
 jobs:
-  redo:
+  img:
     runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 7, matrix: { shot: ["m95","b96","s91","s93","s96","g92","g98"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/redo.py || true
+      - run: pip install -q gradio_client && SEEDS=9203 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
       - if: always()
         run: |
           git config user.name "cc6"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc6-redo-out && git add -f out && git commit -qm "redo" && git push -f origin cc6-redo-out
+          git checkout -b cc6-img2-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc6-img2-${{ matrix.shot }}
