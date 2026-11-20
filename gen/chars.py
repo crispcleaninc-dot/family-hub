@@ -37,7 +37,10 @@ L = json.load(open('gen/lines.json'))['chars']
 async def main():
     for k, r, t in L:
         v, rate, pitch = pick[r]
-        for a in range(4):
+        for a in range(5):
             try: await edge_tts.Communicate(t, v, rate=rate, pitch=pitch).save(f'out/chars/{k}.mp3'); print(k, r, v, 'ok', flush=True); break
-            except Exception as e: print(k, e, flush=True); await asyncio.sleep(3)
+            except Exception as e:
+                print(k, e, flush=True); await asyncio.sleep(3)
+                if a >= 1: rate, pitch = '-8%', '+0Hz'
+                if a >= 2: v = 'en-US-BrianMultilingualNeural'
 asyncio.run(main())
