@@ -1,0 +1,35 @@
+d11_open 0 /data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [04:01<00:00, 241.31s/it]
+100%|██████████| 1/1 [04:01<00:00, 241.31s/it]
+
+d11_s1_0 0 /data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [03:20<00:00, 200.40s/it]
+100%|██████████| 1/1 [03:20<00:00, 200.40s/it]
+
+d11_s4_3 0 /data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [03:08<00:00, 188.55s/it]
+100%|██████████| 1/1 [03:08<00:00, 188.55s/it]
+
+d11_s5_4 0 /data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/1 [00:00<?, ?it/s]
+100%|██████████| 1/1 [03:58<00:00, 238.56s/it]
+100%|██████████| 1/1 [03:58<00:00, 238.56s/it]
+
+d11_close 0 /data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [09:28<09:28, 568.17s/it]
+100%|██████████| 2/2 [09:28<00:00, 284.08s/it]
+
