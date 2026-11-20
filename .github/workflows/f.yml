@@ -1,0 +1,25 @@
+name: fx-gen
+on: { push: { branches: [fx-gen] } }
+permissions: { contents: write }
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py > tts.txt 2>&1 || true; mkdir -p out; cp tts.txt out/
+      - run: |
+          git config user.name "fx"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fx-tts-out && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fx-tts-out
+  music:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, matrix: { k: [c1, c2, c3] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.44.2 scipy
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/music.py > out/${{ matrix.k }}.txt 2>&1 || true
+      - run: |
+          git config user.name "fx"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fx-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fx-${{ matrix.k }}
