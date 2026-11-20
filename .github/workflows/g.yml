@@ -2,13 +2,12 @@ name: cc4-gen
 on: { push: { branches: [cc4-gen] } }
 permissions: { contents: write }
 jobs:
-  img:
+  aud:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["m05","m09","w01"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
+      - run: pip install -q edge-tts && python3 gen/aud.py || true
       - if: always()
         run: |
           git config user.name "cc4"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc4-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc4-img-${{ matrix.shot }}
+          git checkout -b cc4-aud-out && git add -f out && git commit -qm "audition" && git push -f origin cc4-aud-out
