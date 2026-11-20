@@ -1,0 +1,146 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover, day 1 of 365. Today we read Genesis 1 through 3, from the King James Version: creation, Eden, and the first question in the Bible:
+gen_text 1 Where art thou?. Today's reading is brought to you by Community Covenant, a daily Bible, prayer and accountability app, so you never walk this alone.
+gen_text 2 The link is in the post. Let's read.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [15:43<31:26, 943.42s/it]100%|██████████| 3/3 [15:43<00:00, 314.47s/it]
+d01_open True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick pause. If you want to keep today's verses, track your reading and pray with others, it's all in Community Covenant, at covenant dot crispusmundo dot com. Now,
+gen_text 1 let's keep reading.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:04<10:04, 604.43s/it]100%|██████████| 2/2 [10:04<00:00, 302.22s/it]
+d01_mid True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That completes today's reading. Where do you hear 'Did God really say?' in your own life? Answer in the comments, and if you'd like to talk about it live,
+gen_text 1 vote in today's poll. To join Community Covenant, go to covenant dot crispusmundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 2 and add it to your home screen. Tomorrow is Genesis 4 through 6, Cain and Abel and the days of Noah. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [19:15<38:31, 1155.71s/it] 67%|██████▋   | 2/3 [19:21<07:59, 479.00s/it] 100%|██████████| 3/3 [19:33<00:00, 266.07s/it]100%|██████████| 3/3 [19:33<00:00, 391.23s/it]
+d01_close True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So God created man in his own image, in the image of God created he him; male and female created he them. Genesis 1, verse 27. Before you did anything,
+gen_text 1 you already carried His image. Day 1 of 365. Read the whole Bible with us in Faith and Findings.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:23<11:23, 683.08s/it]100%|██████████| 2/2 [11:23<00:00, 341.54s/it]
+d01_short True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover, day 2 of 365. Today we read Genesis 4 through 6, from the King James Version: Cain and Abel, the line of Seth, and the days of Noah.
+gen_text 1 Today's reading is brought to you by Community Covenant, a daily Bible, prayer and accountability app, so you never walk this alone. The link is in the post.
+gen_text 2 Let's read.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [15:37<31:15, 937.52s/it]100%|██████████| 3/3 [15:37<00:00, 312.51s/it]
+d02_open True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick pause. If you want to keep today's verses, track your reading and pray with others, it's all in Community Covenant, at covenant dot crispusmundo dot com. Now,
+gen_text 1 let's keep reading.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:20<10:20, 620.04s/it]100%|██████████| 2/2 [10:20<00:00, 310.02s/it]
+d02_mid True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That completes today's reading. Who is God asking you to check on this week? Answer in the comments, and if you'd like to talk about it live, vote in today's poll.
+gen_text 1 To join Community Covenant, go to covenant dot crispusmundo dot com, tap Create Account, verify your email, choose your daily focus, and add it to your home screen.
+gen_text 2 Tomorrow is Genesis 7 through 10, the flood, the rainbow, and the nations. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [18:58<37:56, 1138.17s/it] 67%|██████▋   | 2/3 [19:07<07:53, 473.90s/it] 100%|██████████| 3/3 [19:07<00:00, 382.36s/it]
+d02_close True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But Noah found grace in the eyes of the Lord. Genesis 6, verse 8. In a world gone wrong, one man found grace. You can too. Day 2 of 365.
+gen_text 1 Read the whole Bible with us in Faith and Findings.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:45<09:45, 585.75s/it]100%|██████████| 2/2 [09:45<00:00, 292.87s/it]
+d02_short True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover, day 3 of 365. Today we read Genesis 7 through 10, from the King James Version: the flood, the covenant of the rainbow,
+gen_text 1 and the nations after Noah. Today's reading is brought to you by Community Covenant, a daily Bible, prayer and accountability app, so you never walk this alone.
+gen_text 2 The link is in the post. Let's read.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [15:02<30:04, 902.14s/it] 67%|██████▋   | 2/3 [15:46<06:37, 397.78s/it]100%|██████████| 3/3 [15:46<00:00, 315.62s/it]
+d03_open True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick pause. If you want to keep today's verses, track your reading and pray with others, it's all in Community Covenant, at covenant dot crispusmundo dot com. Now,
+gen_text 1 let's keep reading.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:17<10:17, 617.48s/it]100%|██████████| 2/2 [10:17<00:00, 308.74s/it]
+d03_mid True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That completes today's reading. What has God told you to build, even if people laugh? Answer in the comments, and if you'd like to talk about it live,
+gen_text 1 vote in today's poll. To join Community Covenant, go to covenant dot crispusmundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 2 and add it to your home screen. Tomorrow is Genesis 11 through 13, Babel, and the call of Abram. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s]
