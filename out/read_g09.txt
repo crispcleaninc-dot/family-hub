@@ -1,0 +1,266 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 9.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:03<00:00, 183.44s/it]100%|██████████| 1/1 [03:03<00:00, 183.44s/it]
+d03_g09_h True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God blessed Noah and his sons, and said unto them, Be fruitful, and multiply, and replenish the earth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:49<00:00, 349.82s/it]100%|██████████| 1/1 [05:49<00:00, 349.82s/it]
+d03_g09_v001 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the fear of you and the dread of you shall be upon every beast of the earth, and upon every fowl of the air, upon all that moveth upon the earth,
+gen_text 1 and upon all the fishes of the sea; into your hand are they delivered.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:52<10:52, 652.58s/it]100%|██████████| 2/2 [10:52<00:00, 326.29s/it]
+d03_g09_v002 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every moving thing that liveth shall be meat for you; even as the green herb have I given you all things.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:54<00:00, 354.59s/it]100%|██████████| 1/1 [05:54<00:00, 354.59s/it]
+d03_g09_v003 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But flesh with the life thereof, which is the blood thereof, shall ye not eat.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:49<00:00, 289.58s/it]100%|██████████| 1/1 [04:49<00:00, 289.58s/it]
+d03_g09_v004 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And surely your blood of your lives will I require; at the hand of every beast will I require it, and at the hand of man;
+gen_text 1 at the hand of every man’s brother will I require the life of man.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:34<09:34, 574.01s/it]100%|██████████| 2/2 [09:34<00:00, 287.00s/it]
+d03_g09_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Whoso sheddeth man’s blood, by man shall his blood be shed: for in the image of God made he man.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:41<00:00, 341.22s/it]100%|██████████| 1/1 [05:41<00:00, 341.22s/it]
+d03_g09_v006 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And you, be ye fruitful, and multiply; bring forth abundantly in the earth, and multiply therein.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:19<00:00, 319.51s/it]100%|██████████| 1/1 [05:19<00:00, 319.51s/it]
+d03_g09_v007 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God spake unto Noah, and to his sons with him, saying,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:13<00:00, 253.45s/it]100%|██████████| 1/1 [04:13<00:00, 253.45s/it]
+d03_g09_v008 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I, behold, I establish my covenant with you, and with your seed after you;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:52<00:00, 292.46s/it]100%|██████████| 1/1 [04:52<00:00, 292.46s/it]
+d03_g09_v009 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And with every living creature that is with you, of the fowl, of the cattle, and of every beast of the earth with you; from all that go out of the ark,
+gen_text 1 to every beast of the earth.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:55<09:55, 595.91s/it]100%|██████████| 2/2 [09:55<00:00, 297.95s/it]
+d03_g09_v010 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I will establish my covenant with you; neither shall all flesh be cut off any more by the waters of a flood;
+gen_text 1 neither shall there any more be a flood to destroy the earth.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:07<09:07, 547.69s/it]100%|██████████| 2/2 [09:07<00:00, 273.84s/it]
+d03_g09_v011 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said, This is the token of the covenant which I make between me and you and every living creature that is with you, for perpetual generations:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:25<00:00, 445.69s/it]100%|██████████| 1/1 [07:25<00:00, 445.69s/it]
+d03_g09_v012 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:39<00:00, 339.91s/it]100%|██████████| 1/1 [05:39<00:00, 339.92s/it]
+d03_g09_v013 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it shall come to pass, when I bring a cloud over the earth, that the bow shall be seen in the cloud:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:54<00:00, 354.53s/it]100%|██████████| 1/1 [05:54<00:00, 354.53s/it]
+d03_g09_v014 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I will remember my covenant, which is between me and you and every living creature of all flesh; and the waters shall no more become a flood to destroy all flesh.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:16<00:00, 496.17s/it]100%|██████████| 1/1 [08:16<00:00, 496.17s/it]
+d03_g09_v015 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the bow shall be in the cloud; and I will look upon it,
+gen_text 1 that I may remember the everlasting covenant between God and every living creature of all flesh that is upon the earth.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:34<07:34, 454.64s/it]100%|██████████| 2/2 [09:24<00:00, 252.10s/it]100%|██████████| 2/2 [09:24<00:00, 282.48s/it]
+d03_g09_v016 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Noah, This is the token of the covenant, which I have established between me and all flesh that is upon the earth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:54<00:00, 414.93s/it]100%|██████████| 1/1 [06:54<00:00, 414.93s/it]
+d03_g09_v017 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the sons of Noah, that went forth of the ark, were Shem, and Ham, and Japheth: and Ham is the father of Canaan.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:19<00:00, 379.18s/it]100%|██████████| 1/1 [06:19<00:00, 379.18s/it]
+d03_g09_v018 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 These are the three sons of Noah: and of them was the whole earth overspread.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:58<00:00, 298.80s/it]100%|██████████| 1/1 [04:58<00:00, 298.80s/it]
+d03_g09_v019 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Noah began to be an husbandman, and he planted a vineyard:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:26<00:00, 266.20s/it]100%|██████████| 1/1 [04:26<00:00, 266.20s/it]
+d03_g09_v020 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he drank of the wine, and was drunken; and he was uncovered within his tent.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:43<00:00, 283.61s/it]100%|██████████| 1/1 [04:43<00:00, 283.61s/it]
+d03_g09_v021 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Ham, the father of Canaan, saw the nakedness of his father, and told his two brethren without.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]
