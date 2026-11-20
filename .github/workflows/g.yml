@@ -1,0 +1,36 @@
+name: table-gen
+on: { push: { branches: [table-gen] } }
+permissions: { contents: write }
+jobs:
+  f5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy: { fail-fast: false, max-parallel: 20, matrix: { k: ["en0", "en1", "en2", "en3", "en4", "en5", "en6", "en7", "fr0", "fr1", "fr2", "fr3", "fr4", "fr5", "fr6", "es0", "es1", "es2", "es3", "es4", "es5", "es6", "es7"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/f5.py > out/log_${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "tb"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan tb-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin tb-${{ matrix.k }}
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py > tts.txt 2>&1 || true; mkdir -p out; cp tts.txt out/
+      - run: |
+          git config user.name "tb"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan tb-tts && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin tb-tts
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 4, matrix: { g: ["s01,s02,s03", "s04,s05,s06", "s07,s08,s09", "s10,s11,s12", "s13,s14,s15", "s16,s17,s18", "s19,s20,s21", "s22,s23,s24", "s25,s26,s27", "s28,s29,s30", "s31,s32,s33", "s34"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen/img.py || true
+      - run: |
+          git config user.name "tb"; git config user.email "noreply@anthropic.com"
+          N=$(echo ${{ matrix.g }} | cut -d, -f1)
+          git checkout --orphan tb-img-$N && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin tb-img-$N
