@@ -1,14 +1,13 @@
-name: cc7-redo
-on: { push: { branches: [cc7-redo] } }
+name: aud-grace
+on: { push: { branches: [aud-grace] } }
 permissions: { contents: write }
 jobs:
-  img:
+  tts:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["u36","u37","l50","l48"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q gradio_client && SEEDS=9303 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - run: pip install -q edge-tts && python3 gen/aud_grace.py || true
       - if: always()
         run: |
-          git config user.name "cc7"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc7-img2-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc7-img2-${{ matrix.shot }}
+          git config user.name "aud"; git config user.email "noreply@anthropic.com"
+          git checkout -b aud-grace-out && git add -f out && git commit -qm "voices" && git push -f origin aud-grace-out
