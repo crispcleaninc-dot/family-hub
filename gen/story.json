@@ -1,59 +1,270 @@
 [
- ["i01", "exterior of a modest four-storey apartment block in Lucknow India at early morning, clothes drying on small balconies, a scooter parked below, soft golden mist, no people",
-  [["mom", "मेरा नाम रूथ मसीह है। मैं लखनऊ में नर्स हूँ। और उस दिन मैंने सीखा कि बच्चे के नंबर और बच्चे की कीमत, दो अलग चीज़ें हैं।"]]],
- ["i02", "a 42 year old Indian woman with brown skin, long black hair in a neat braid, small gold earrings, wearing a simple light blue cotton salwar kameez with dupatta, standing in a small Indian kitchen making tea on a gas stove, steel utensils, morning light from a window, a small wooden cross on the wall",
-  [["mom", "उस सुबह मैंने हमेशा की तरह चाय चढ़ाई। पर मेरे हाथ काँप रहे थे। आज नीट का रिज़ल्ट आना था।"],
-   ["mom", "मेरा बेटा अमन, सत्रह साल का। दो साल से कोचिंग, सुबह छह से रात दस बजे तक। दूसरा अटेम्प्ट था।"]]],
- ["i03", "a 17 year old Indian boy with brown skin and short black hair, thin, tired eyes, wearing a grey t-shirt, sitting at a small study desk piled with thick exam books and notebooks, sticky notes on the wall, a laptop open, early morning light, small Indian bedroom",
-  [["mom", "उसकी दीवार पर पर्चियाँ चिपकी थीं। फ़िज़िक्स के फ़ॉर्मूले, केमिस्ट्री की लिस्ट, और एक पर्ची पर लिखा था, डॉक्टर अमन मसीह।"],
-   ["mom", "वो पर्ची उसने नहीं लिखी थी। वो उसके पापा ने लिखी थी।"]]],
- ["i04", "a 46 year old Indian man with brown skin, short greying hair and a neat moustache, wearing a light formal shirt, sitting at a small dining table reading a Hindi newspaper with a cup of chai, serious expression, modest Indian home",
-  [["mom", "डैनियल अच्छे इंसान हैं। बैंक में क्लर्क हैं। पर उनका सपना था कि हमारे घर से कोई डॉक्टर बने। उनके पापा नहीं बन पाए, वो नहीं बन पाए।"],
-   ["mom", "और फिर रिश्तेदार। हर शादी, हर त्योहार पर एक ही सवाल। अमन का क्या हुआ? चाची की बेटी तो एम्स में है।"]]],
- ["i05", "close up of a smartphone screen glowing in the hands of a 17 year old Indian boy sitting on the edge of a bed, his face lit by the screen, shocked and hollow expression, dim room",
-  [["mom", "ग्यारह बजे रिज़ल्ट आया। मैंने उसके कमरे से कोई आवाज़ नहीं सुनी। न चीख, न रोना। बस सन्नाटा।"],
-   ["mom", "फिर दरवाज़ा बंद होने की आवाज़ आई। और चिटकनी लगने की।"]]],
- ["i06", "a 42 year old Indian woman in a light blue salwar kameez standing outside a closed wooden bedroom door in a narrow Indian apartment corridor, one hand flat on the door, worried face, soft afternoon light",
-  [["mom", "मैंने आवाज़ दी। अमन, बेटा, दरवाज़ा खोलो। कोई जवाब नहीं।"],
-   ["mom", "उसका फ़ोन बंद था। मैं नर्स हूँ। मैंने अस्पताल में बहुत कुछ देखा है। उस पल मेरा दिल बैठ गया।"]]],
- ["i07", "a 42 year old Indian woman sitting on the floor of a narrow apartment corridor with her back against a closed bedroom door, knees drawn up, holding a small worn Hindi Bible, eyes closed in prayer, dupatta over her head, warm dim light",
-  [["mom", "मैं वहीं ज़मीन पर बैठ गई, दरवाज़े से पीठ लगाकर। मैंने ज़ोर से प्रार्थना नहीं की। बस धीरे से कहा, प्रभु, मेरे बेटे को थाम लीजिए। मैं नहीं थाम पा रही।"],
-   ["mom", "और फिर मुझे वो आयत याद आई जो मेरी माँ मुझे सुनाती थीं।"]]],
- ["i08", "an open Hindi Bible on a wooden floor beside a steel cup of tea, soft window light falling on the pages, shallow depth of field, no people",
-  [["verse", "मैं तेरा धन्यवाद करूँगा, इसलिये कि मैं भयानक और अद्भुत रीति से रचा गया हूँ। भजन संहिता एक सौ उनतालीस, चौदह।"]]],
- ["i09", "a 42 year old Indian woman sitting on the floor against a closed door, speaking softly toward the door with a gentle sad smile, tear on her cheek, warm dim light, Indian home",
-  [["mom", "मैंने दरवाज़े से कहा, अमन, तुम्हें पता है, मैं भी फ़ेल हुई थी। नर्सिंग का एंट्रेंस, पहली बार। तुम्हारे नाना ने पूरे मोहल्ले में मिठाई नहीं बाँटी थी।"],
-   ["mom", "मैं तीन दिन रोई थी। फिर मेरी माँ ने कहा, रूथ, परमेश्वर ने तुझे नंबरों से नहीं, अपने हाथों से बनाया है।"],
-   ["mom", "अंदर से कोई आवाज़ नहीं आई। पर मैंने बोलना बंद नहीं किया।"]]],
- ["i10", "a 42 year old Indian woman sitting on the floor holding a smartphone, typing a message, the screen glowing on her face, determined but tearful, dim corridor, Indian apartment",
-  [["mom", "फिर मैंने वो ऐप खोला जो मेरी बहन ने मेरे फ़ोन में डाला था। कम्युनिटी कोवेनेंट। उसमें एक डिब्बा है, आप कैसे हैं?"],
-   ["mom", "मैंने लिखा, मेरा बेटा टूट गया है। दरवाज़ा बंद है। मुझे नहीं पता क्या कहूँ। मैं डरी हुई हूँ।"]]],
- ["i11", "close up of a smartphone screen in a woman's hands showing a warm message reply in a chat app, soft glow, blurred Indian home background, no readable text",
-  [["reply", "रूथ, आप अकेली नहीं हैं। उसे अभी जवाब नहीं, आपकी मौजूदगी चाहिए। बस वहीं रहिए। उसे बताइए कि उसकी कीमत रिज़ल्ट से तय नहीं होती।"],
-   ["reply", "और अगर आपको लगे कि वो ख़तरे में है, तो अभी मदद बुलाइए। भारत में टेली मानस, एक चार चार एक छह, दिन रात खुला है।"]]],
- ["i12", "a 42 year old Indian woman sitting on the floor against a door, speaking clearly and lovingly toward it, hand resting on the door, evening light, Indian home",
-  [["mom", "तो मैंने वही कहा। अमन, मुझे डॉक्टर नहीं चाहिए। मुझे मेरा बेटा चाहिए। नंबर बदल सकते हैं। तुम नहीं बदल सकते। तुम मेरे हो।"]]],
- ["i13", "a wooden bedroom door opening slightly from inside, a 17 year old Indian boy with red swollen eyes peeking out, grey t-shirt, dim room behind him, emotional moment",
-  [["mom", "कुछ देर बाद चिटकनी खुली। उसकी आँखें सूजी हुई थीं। उसने बस इतना कहा, मम्मी, पापा क्या कहेंगे?"],
-   ["son", "मैंने सब बर्बाद कर दिया, मम्मी। दो साल। पापा के सारे पैसे।"]]],
- ["i14", "a 42 year old Indian mother hugging her 17 year old son tightly in a narrow apartment corridor, his face buried in her shoulder, her eyes closed, warm light, emotional",
-  [["mom", "मैंने उसे गले लगाया। कुछ नहीं कहा। कभी कभी माँ का काम बोलना नहीं, बस पकड़े रहना होता है।"]]],
- ["i15", "a 46 year old Indian man with greying hair in a formal shirt standing at an apartment front door holding a small paper box of jalebi, unsure tender expression, evening, Indian home entrance with shoes on a rack",
-  [["mom", "शाम को डैनियल आए। मुझे डर था। पर उनके हाथ में जलेबी का डिब्बा था।"],
-   ["dad", "अमन, इधर आ। मैंने आज बैंक में बैठे बैठे बहुत सोचा। तेरे दादा ने भी मुझ पर अपना सपना डाला था। मैंने वही गलती तुझ पर दोहराई।"],
-   ["dad", "मुझे माफ़ कर दे, बेटा। तू मेरा बेटा है, मेरा सपना नहीं।"]]],
- ["i16", "an Indian father, mother and teenage son sitting together on a floor mat in a modest living room sharing jalebi from a paper box, a younger girl of about 12 joining them, a small wooden cross on the wall, warm lamp light, gentle smiles through tears",
-  [["mom", "उस रात हमने रिज़ल्ट पर बात नहीं की। हमने जलेबी खाई। हमारी बेटी नेहा ने अपने स्कूल का बेकार सा जोक सुनाया, और अमन पहली बार दो साल में हँसा।"]]],
- ["i17", "an Indian family of four praying together with heads bowed and hands joined around a small table at night, Hindi Bible open, lamp light, peaceful",
-  [["mom", "फिर हमने साथ में प्रार्थना की। डैनियल ने वो आयत पढ़ी जो अब हमारे फ़्रिज पर लगी है।"],
-   ["verse", "क्योंकि यहोवा की यह वाणी है, कि जो कल्पनाएँ मैं तुम्हारे विषय करता हूँ उन्हें मैं जानता हूँ, वे हानि की नहीं, वरन कुशल ही की हैं। यिर्मयाह उनतीस, ग्यारह।"]]],
- ["i18", "a 17 year old Indian boy sitting at a tidy study desk in daylight with fewer books, writing in a notebook, calm focused expression, a small potted plant, window light, Indian bedroom",
-  [["mom", "कुछ हफ़्तों बाद अमन ने ख़ुद फ़ैसला किया। उसने कहा, मम्मी, मुझे लोगों की मदद करनी है, पर मुझे अपनी शांति भी चाहिए।"],
-   ["mom", "अब वो फ़िज़ियोथेरेपी पढ़ रहा है। कभी कभी मेरे अस्पताल आता है। बुज़ुर्ग मरीज़ उसे बहुत पसंद करते हैं।"]]],
- ["i19", "a 42 year old Indian woman in a nurse uniform with a light blue cardigan sitting on a hospital bench at dusk, looking at her phone with a soft smile, Indian hospital corridor",
-  [["mom", "मैं ये इसलिए बता रही हूँ, क्योंकि हर साल लाखों बच्चे इसी दिन से गुज़रते हैं। और हर साल लाखों माँ बाप के पास सिर्फ़ एक पल होता है, पहला वाक्य।"],
-   ["mom", "वो पहला वाक्य ये तय करता है कि बच्चा सुनेगा, मैं फ़ेल हूँ, या सुनेगा, तुम मेरे हो।"]]],
- ["i20", "an Indian mother and her teenage son walking side by side on a quiet Lucknow street at sunset, laughing, autumn light, trees, rickshaws blurred in background",
-  [["mom", "जो भी करो, तन मन से करो, यह समझकर कि मनुष्यों के लिये नहीं, परन्तु प्रभु के लिये करते हो। कुलुस्सियों तीन, तेईस।"],
-   ["mom", "अगर आपका बच्चा आज रिज़ल्ट लेकर घर आए, तो आप उससे सबसे पहले क्या कहेंगे? कमेंट में लिखिए। और ये वीडियो किसी ऐसे माँ बाप को भेजिए जिन्हें आज इसकी ज़रूरत है।"]]]
+ [
+  "i01",
+  "exterior of a modest four-storey apartment block in Lucknow India at early morning, clothes drying on small balconies, a scooter parked below, soft golden mist, no people",
+  [
+   [
+    "mom",
+    "मेरा नाम रूथ मसीह है। मैं लखनऊ में नर्स हूँ। और उस दिन मैंने सीखा कि बच्चे के नंबर और बच्चे की कीमत, दो अलग चीज़ें हैं।"
+   ]
+  ]
+ ],
+ [
+  "i02",
+  "a 42 year old Indian woman with brown skin, long black hair in a neat braid, small gold earrings, wearing a simple light blue cotton salwar kameez with dupatta, standing in a small Indian kitchen making tea on a gas stove, steel utensils, morning light from a window, a small wooden cross on the wall, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "उस सुबह मैंने हमेशा की तरह चाय चढ़ाई। पर मेरे हाथ काँप रहे थे। आज नीट का रिज़ल्ट आना था।"
+   ],
+   [
+    "mom",
+    "मेरा बेटा अमन, सत्रह साल का। दो साल से कोचिंग, सुबह छह से रात दस बजे तक। दूसरा अटेम्प्ट था।"
+   ]
+  ]
+ ],
+ [
+  "i03",
+  "a 17 year old Indian boy with brown skin and short black hair, thin, tired eyes, wearing a grey t-shirt, sitting at a small study desk piled with thick exam books and notebooks, sticky notes on the wall, a laptop open, early morning light, small Indian bedroom",
+  [
+   [
+    "mom",
+    "उसकी दीवार पर पर्चियाँ चिपकी थीं। फ़िज़िक्स के फ़ॉर्मूले, केमिस्ट्री की लिस्ट, और एक पर्ची पर लिखा था, डॉक्टर अमन मसीह।"
+   ],
+   [
+    "mom",
+    "वो पर्ची उसने नहीं लिखी थी। वो उसके पापा ने लिखी थी।"
+   ]
+  ]
+ ],
+ [
+  "i04",
+  "a 46 year old Indian man with brown skin, short greying hair and a neat moustache, wearing a light formal shirt, sitting at a small dining table reading a Hindi newspaper with a cup of chai, serious expression, modest Indian home",
+  [
+   [
+    "mom",
+    "डैनियल अच्छे इंसान हैं। बैंक में क्लर्क हैं। पर उनका सपना था कि हमारे घर से कोई डॉक्टर बने। उनके पापा नहीं बन पाए, वो नहीं बन पाए।"
+   ],
+   [
+    "mom",
+    "और फिर रिश्तेदार। हर शादी, हर त्योहार पर एक ही सवाल। अमन का क्या हुआ? चाची की बेटी तो एम्स में है।"
+   ]
+  ]
+ ],
+ [
+  "i05",
+  "close up of a smartphone screen glowing in the hands of a 17 year old Indian boy sitting on the edge of a bed, his face lit by the screen, shocked and hollow expression, dim room",
+  [
+   [
+    "mom",
+    "ग्यारह बजे रिज़ल्ट आया। मैंने उसके कमरे से कोई आवाज़ नहीं सुनी। न चीख, न रोना। बस सन्नाटा।"
+   ],
+   [
+    "mom",
+    "फिर दरवाज़ा बंद होने की आवाज़ आई। और चिटकनी लगने की।"
+   ]
+  ]
+ ],
+ [
+  "i06",
+  "a 42 year old Indian woman in a light blue salwar kameez standing outside a closed wooden bedroom door in a narrow Indian apartment corridor, one hand flat on the door, worried face, soft afternoon light, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "मैंने आवाज़ दी। अमन, बेटा, दरवाज़ा खोलो। कोई जवाब नहीं।"
+   ],
+   [
+    "mom",
+    "उसका फ़ोन बंद था। मैं नर्स हूँ। मैंने अस्पताल में बहुत कुछ देखा है। उस पल मेरा दिल बैठ गया।"
+   ]
+  ]
+ ],
+ [
+  "i07",
+  "a 42 year old Indian woman sitting on the floor of a narrow apartment corridor with her back against a closed bedroom door, knees drawn up, holding a small worn Hindi Bible, eyes closed in prayer, dupatta over her head, warm dim light, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "मैं वहीं ज़मीन पर बैठ गई, दरवाज़े से पीठ लगाकर। मैंने ज़ोर से प्रार्थना नहीं की। बस धीरे से कहा, प्रभु, मेरे बेटे को थाम लीजिए। मैं नहीं थाम पा रही।"
+   ],
+   [
+    "mom",
+    "और फिर मुझे वो आयत याद आई जो मेरी माँ मुझे सुनाती थीं।"
+   ]
+  ]
+ ],
+ [
+  "i08",
+  "an open Hindi Bible on a wooden floor beside a steel cup of tea, soft window light falling on the pages, shallow depth of field, no people",
+  [
+   [
+    "verse",
+    "मैं तेरा धन्यवाद करूँगा, इसलिये कि मैं भयानक और अद्भुत रीति से रचा गया हूँ। भजन संहिता एक सौ उनतालीस, चौदह।"
+   ]
+  ]
+ ],
+ [
+  "i09",
+  "a 42 year old Indian woman sitting on the floor against a closed door, speaking softly toward the door with a gentle sad smile, tear on her cheek, warm dim light, Indian home, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "मैंने दरवाज़े से कहा, अमन, तुम्हें पता है, मैं भी फ़ेल हुई थी। नर्सिंग का एंट्रेंस, पहली बार। तुम्हारे नाना ने पूरे मोहल्ले में मिठाई नहीं बाँटी थी।"
+   ],
+   [
+    "mom",
+    "मैं तीन दिन रोई थी। फिर मेरी माँ ने कहा, रूथ, परमेश्वर ने तुझे नंबरों से नहीं, अपने हाथों से बनाया है।"
+   ],
+   [
+    "mom",
+    "अंदर से कोई आवाज़ नहीं आई। पर मैंने बोलना बंद नहीं किया।"
+   ]
+  ]
+ ],
+ [
+  "i10",
+  "a 42 year old Indian woman sitting on the floor holding a smartphone, typing a message, the screen glowing on her face, determined but tearful, dim corridor, Indian apartment, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "फिर मैंने वो ऐप खोला जो मेरी बहन ने मेरे फ़ोन में डाला था। कम्युनिटी कोवेनेंट। उसमें एक डिब्बा है, आप कैसे हैं?"
+   ],
+   [
+    "mom",
+    "मैंने लिखा, मेरा बेटा टूट गया है। दरवाज़ा बंद है। मुझे नहीं पता क्या कहूँ। मैं डरी हुई हूँ।"
+   ]
+  ]
+ ],
+ [
+  "i11",
+  "close up of a smartphone screen in a woman's hands showing a warm message reply in a chat app, soft glow, blurred Indian home background, no readable text, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "reply",
+    "रूथ, आप अकेली नहीं हैं। उसे अभी जवाब नहीं, आपकी मौजूदगी चाहिए। बस वहीं रहिए। उसे बताइए कि उसकी कीमत रिज़ल्ट से तय नहीं होती।"
+   ],
+   [
+    "reply",
+    "और अगर आपको लगे कि वो ख़तरे में है, तो अभी मदद बुलाइए। भारत में टेली मानस, एक चार चार एक छह, दिन रात खुला है।"
+   ]
+  ]
+ ],
+ [
+  "i12",
+  "a 42 year old Indian woman sitting on the floor against a door, speaking clearly and lovingly toward it, hand resting on the door, evening light, Indian home, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "तो मैंने वही कहा। अमन, मुझे डॉक्टर नहीं चाहिए। मुझे मेरा बेटा चाहिए। नंबर बदल सकते हैं। तुम नहीं बदल सकते। तुम मेरे हो।"
+   ]
+  ]
+ ],
+ [
+  "i13",
+  "a wooden bedroom door opening slightly from inside, a 17 year old Indian boy with red swollen eyes peeking out, grey t-shirt, dim room behind him, emotional moment",
+  [
+   [
+    "mom",
+    "कुछ देर बाद चिटकनी खुली। उसकी आँखें सूजी हुई थीं। उसने बस इतना कहा, मम्मी, पापा क्या कहेंगे?"
+   ],
+   [
+    "son",
+    "मैंने सब बर्बाद कर दिया, मम्मी। दो साल। पापा के सारे पैसे।"
+   ]
+  ]
+ ],
+ [
+  "i14",
+  "a 42 year old Indian mother in a light blue salwar kameez hugging her 17 year old son tightly in a narrow apartment corridor, his face buried in her shoulder, her eyes closed, warm light, emotional, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "मैंने उसे गले लगाया। कुछ नहीं कहा। कभी कभी माँ का काम बोलना नहीं, बस पकड़े रहना होता है।"
+   ]
+  ]
+ ],
+ [
+  "i15",
+  "a 46 year old Indian man with greying hair in a formal shirt standing at an apartment front door holding a small paper box of jalebi, unsure tender expression, evening, Indian home entrance with shoes on a rack",
+  [
+   [
+    "mom",
+    "शाम को डैनियल आए। मुझे डर था। पर उनके हाथ में जलेबी का डिब्बा था।"
+   ],
+   [
+    "dad",
+    "अमन, इधर आ। मैंने आज बैंक में बैठे बैठे बहुत सोचा। तेरे दादा ने भी मुझ पर अपना सपना डाला था। मैंने वही गलती तुझ पर दोहराई।"
+   ],
+   [
+    "dad",
+    "मुझे माफ़ कर दे, बेटा। तू मेरा बेटा है, मेरा सपना नहीं।"
+   ]
+  ]
+ ],
+ [
+  "i16",
+  "an Indian father, mother and teenage son sitting together on a floor mat in a modest living room sharing jalebi from a paper box, a younger girl of about 12 joining them, a small wooden cross on the wall, warm lamp light, gentle smiles through tears, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "उस रात हमने रिज़ल्ट पर बात नहीं की। हमने जलेबी खाई। हमारी बेटी नेहा ने अपने स्कूल का बेकार सा जोक सुनाया, और अमन पहली बार दो साल में हँसा।"
+   ]
+  ]
+ ],
+ [
+  "i17",
+  "an Indian family of four praying together with heads bowed and hands joined around a small table at night, Hindi Bible open, lamp light, peaceful",
+  [
+   [
+    "mom",
+    "फिर हमने साथ में प्रार्थना की। डैनियल ने वो आयत पढ़ी जो अब हमारे फ़्रिज पर लगी है।"
+   ],
+   [
+    "verse",
+    "क्योंकि यहोवा की यह वाणी है, कि जो कल्पनाएँ मैं तुम्हारे विषय करता हूँ उन्हें मैं जानता हूँ, वे हानि की नहीं, वरन कुशल ही की हैं। यिर्मयाह उनतीस, ग्यारह।"
+   ]
+  ]
+ ],
+ [
+  "i18",
+  "a 17 year old Indian boy sitting at a tidy study desk in daylight with fewer books, writing in a notebook, calm focused expression, a small potted plant, window light, Indian bedroom",
+  [
+   [
+    "mom",
+    "कुछ हफ़्तों बाद अमन ने ख़ुद फ़ैसला किया। उसने कहा, मम्मी, मुझे लोगों की मदद करनी है, पर मुझे अपनी शांति भी चाहिए।"
+   ],
+   [
+    "mom",
+    "अब वो फ़िज़ियोथेरेपी पढ़ रहा है। कभी कभी मेरे अस्पताल आता है। बुज़ुर्ग मरीज़ उसे बहुत पसंद करते हैं।"
+   ]
+  ]
+ ],
+ [
+  "i19",
+  "a 42 year old Indian woman in a nurse uniform with a light blue cardigan sitting on a hospital bench at dusk, looking at her phone with a soft smile, Indian hospital corridor, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "मैं ये इसलिए बता रही हूँ, क्योंकि हर साल लाखों बच्चे इसी दिन से गुज़रते हैं। और हर साल लाखों माँ बाप के पास सिर्फ़ एक पल होता है, पहला वाक्य।"
+   ],
+   [
+    "mom",
+    "वो पहला वाक्य ये तय करता है कि बच्चा सुनेगा, मैं फ़ेल हूँ, या सुनेगा, तुम मेरे हो।"
+   ]
+  ]
+ ],
+ [
+  "i20",
+  "an Indian mother and her teenage son walking side by side on a quiet Lucknow street at sunset, laughing, autumn light, trees, rickshaws blurred in background, Indian Christian woman, no bindi, no sindoor, no red mark in hair parting, plain forehead",
+  [
+   [
+    "mom",
+    "जो भी करो, तन मन से करो, यह समझकर कि मनुष्यों के लिये नहीं, परन्तु प्रभु के लिये करते हो। कुलुस्सियों तीन, तेईस।"
+   ],
+   [
+    "mom",
+    "अगर आपका बच्चा आज रिज़ल्ट लेकर घर आए, तो आप उससे सबसे पहले क्या कहेंगे? कमेंट में लिखिए। और ये वीडियो किसी ऐसे माँ बाप को भेजिए जिन्हें आज इसकी ज़रूरत है।"
+   ]
+  ]
+ ]
 ]

@@ -1,6 +1,6 @@
 import json, os, asyncio, edge_tts
-S = json.load(open('gen/story.json')); os.makedirs('out', exist_ok=True)
-V = {'mom': ('hi-IN-SwaraNeural', '-4%', '+0Hz'), 'dad': ('hi-IN-MadhurNeural', '-6%', '-4Hz'), 'son': ('hi-IN-MadhurNeural', '+4%', '+18Hz'),
+S = json.load(open('gen/story_af.json')); os.makedirs('out', exist_ok=True)
+V = {'pastor': ('fr-FR-HenriNeural', '-6%', '-6Hz'), 'mom': ('fr-FR-DeniseNeural', '-4%', '+0Hz'), 'verse': ('fr-FR-HenriNeural', '-10%', '-10Hz'), 'reply': ('fr-FR-VivienneMultilingualNeural', '-6%', '+0Hz')} or {'mom': ('hi-IN-SwaraNeural', '-4%', '+0Hz'), 'dad': ('hi-IN-MadhurNeural', '-6%', '-4Hz'), 'son': ('hi-IN-MadhurNeural', '+4%', '+18Hz'),
      'verse': ('hi-IN-MadhurNeural', '-10%', '-10Hz'), 'reply': ('hi-IN-SwaraNeural', '-6%', '-6Hz')}
 async def main():
     for sid, _, ls in S:
