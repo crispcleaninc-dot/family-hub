@@ -3,6 +3,7 @@
 <title>Voice & Avatar Studio</title>
 <link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#14213d">
 <link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Studio">
 <style>
 :root{--navy:#14213d;--gold:#d8b66a;--ink:#f4efe6;--muted:#a9b0c2;--card:#1c2a4a;--line:#2b3a5e;--fs:26px}
 *{box-sizing:border-box}body{margin:0;background:var(--navy);color:var(--ink);font-family:system-ui,-apple-system,Segoe UI,sans-serif;padding-bottom:env(safe-area-inset-bottom)}
@@ -25,7 +26,8 @@ main{max-width:780px;margin:0 auto;padding:10px 16px 140px}
 .looks{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.look{background:#0f1930;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
 .hide{display:none}
 </style></head><body>
-<header><b>Voice & Avatar Studio</b><button id="smaller">A−</button><button id="bigger">A+</button><button id="scrollBtn">Auto-scroll</button></header>
+<header><b>Voice & Avatar Studio</b><button id="smaller">A−</button><button id="bigger">A+</button><button id="scrollBtn">Auto-scroll</button><button id="installBtn">Install app</button></header>
+<div id="instSheet" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;padding:20px;overflow:auto"><div style="background:#fff;color:#14213d;border-radius:14px;padding:18px;max-width:480px;margin:40px auto;font-size:17px;line-height:1.45"><h3 style="margin-top:0">Install Voice &amp; Avatar Studio</h3><button id="doInstall" style="display:none;width:100%;padding:12px;font-size:17px;margin-bottom:12px">Install on this device now</button><p><b>iPhone / iPad</b><br>Open this page in <b>Safari</b> → tap the <b>Share</b> button → <b>Add to Home Screen</b> → <b>Add</b>.</p><p><b>Android</b><br>Open in <b>Chrome</b> → tap <b>⋮</b> → <b>Install app</b>.</p><p><b>Windows / Mac</b><br>Open in <b>Chrome or Edge</b> → click the install icon at the right end of the address bar.</p><p>After that it opens from its own icon like any app, and your recordings still send by themselves.</p><button id="instClose" style="width:100%;padding:12px;font-size:17px">Close</button></div></div>
 <nav><button data-t="record" class="on">Record</button><button data-t="library">My files</button><button data-t="looks">Looks</button></nav>
 <main>
 <section id="signin" class="card hide"><h3 style="margin-top:0">Sign in with your Profit Engine PIN</h3><input id="pin" type="password" inputmode="numeric" placeholder="PIN"><div style="margin-top:10px"><button class="solid" id="go">Sign in</button></div><div id="sinMsg" class="hint"></div></section>
@@ -165,4 +167,10 @@ $('#looks').innerHTML=LOOKS.map(function(l){return '<div class="look"><div style
 document.querySelectorAll('[data-look]').forEach(function(b){b.onclick=function(){var blob=new Blob([JSON.stringify({look:b.dataset.look,at:new Date().toISOString()})],{type:'text/plain'});queue.push({kind:'photo',blob:blob,name:'Look request — '+b.dataset.look+'.txt',note:'Look request'});flush();$('#lookMsg').textContent='Requested: '+b.dataset.look+'. It will show in My files when it is made.'}});
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(function(){});
 })();
+</script><script>(function(){var dp=null,b=document.getElementById('installBtn'),sh=document.getElementById('instSheet'),di=document.getElementById('doInstall');
+var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;if(standalone)b.style.display='none';
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e;di.style.display='block'});
+window.addEventListener('appinstalled',function(){b.style.display='none';sh.style.display='none'});
+b.onclick=function(){sh.style.display='block'};document.getElementById('instClose').onclick=function(){sh.style.display='none'};
+di.onclick=function(){if(!dp)return;dp.prompt();dp.userChoice.then(function(){dp=null;di.style.display='none';sh.style.display='none'})};})();
 </script></body></html>
