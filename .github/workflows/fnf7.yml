@@ -1,0 +1,43 @@
+name: fnf-asr
+on: { push: { branches: [fnf-asr] } }
+permissions: { contents: write }
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy: { fail-fast: false, matrix: { p: [0, 1, 2, 3] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q faster-whisper jiwer
+      - run: |
+          mkdir -p wav
+          for b in $(git ls-remote origin 'refs/heads/fnf-out-read*' | awk '{print $2}' | sed 's#refs/heads/##'); do
+            git fetch -q --depth 1 origin $b && git archive FETCH_HEAD out | tar -x -C /tmp && cp /tmp/out/*.wav /tmp/out/script.json wav/ 2>/dev/null; rm -rf /tmp/out
+          done
+          ls wav | wc -l
+      - run: |
+          cat > asr.py <<'PY'
+          import json, os, re, sys, jiwer
+          from faster_whisper import WhisperModel
+          P = int(sys.argv[1]); it = json.load(open('wav/script.json'))
+          m = WhisperModel('small.en', device='cpu', compute_type='int8')
+          norm = lambda s: re.sub(r"[^a-z0-9' ]", ' ', s.lower().replace('lord', 'lord')).split()
+          out = []
+          for i, (g, k, t) in enumerate(it):
+              if i % 4 != P: continue
+              f = f'wav/{k}.wav'
+              if not os.path.exists(f): out.append([k, 'MISSING', 1.0, '']); continue
+              segs, _ = m.transcribe(f, beam_size=5, language='en')
+              h = ' '.join(s.text for s in segs).strip()
+              ref = t.replace('LORD', 'Lord')
+              w = jiwer.wer(' '.join(norm(ref)), ' '.join(norm(h)) or 'x')
+              out.append([k, h, round(w, 3), ref]); print(k, round(w, 3), flush=True)
+          os.makedirs('out', exist_ok=True); json.dump(out, open(f'out/asr_{P}.json', 'w'), indent=0)
+          PY
+          python3 asr.py ${{ matrix.p }}
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-asr-${{ matrix.p }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-asr-${{ matrix.p }}
