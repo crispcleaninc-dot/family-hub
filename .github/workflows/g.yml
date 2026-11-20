@@ -1,14 +1,23 @@
-name: cc5-gen
-on: { push: { branches: [cc5-gen] } }
+name: cc6-gen
+on: { push: { branches: [cc6-gen] } }
 permissions: { contents: write }
 jobs:
-  img:
+  tts:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: ["e04","v02","v10","t02","t06","t01"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q gradio_client && SEEDS=9103 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - run: pip install -q edge-tts && python3 gen/tts2.py || true
       - if: always()
         run: |
-          git config user.name "cc5"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc5-img2-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc5-img2-${{ matrix.shot }}
+          git config user.name "cc6"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc6-tts-out && git add -f out && git commit -qm "voices" && git push -f origin cc6-tts-out
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: ["m91", "m92", "m93", "m94", "m95", "m96", "m97", "m98", "m99", "b91", "b92", "b93", "b94", "b95", "b96", "b97", "b98", "b99", "s91", "s92", "s93", "s94", "s95", "s96", "s97", "s98", "g91", "g92", "g93", "g94", "g95", "g96", "g97", "g98"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && SEEDS=9201,9202 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - if: always()
+        run: |
+          git config user.name "cc6"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc6-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc6-img-${{ matrix.shot }}
