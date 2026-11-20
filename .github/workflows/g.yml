@@ -4,7 +4,7 @@ permissions: { contents: write }
 jobs:
   img:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["s01","s08","s11","w03","x1"] } }
+    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["m05","m09","w01"] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
