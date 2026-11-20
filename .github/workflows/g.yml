@@ -1,13 +1,13 @@
-name: af-revoice
-on: { push: { branches: [af-revoice] } }
+name: af-hook
+on: { push: { branches: [af-hook] } }
 permissions: { contents: write }
 jobs:
   tts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/af_revoice.py || true
+      - run: pip install -q edge-tts && python3 gen/af_hook.py || true
       - if: always()
         run: |
           git config user.name "aud"; git config user.email "noreply@anthropic.com"
-          git checkout -b af-revoice-out && git add -f out && git commit -qm "voices" && git push -f origin af-revoice-out
+          git checkout -b af-hook-out && git add -f out && git commit -qm "voices" && git push -f origin af-hook-out
