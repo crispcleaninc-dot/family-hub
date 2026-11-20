@@ -1,6 +1,6 @@
 import json, asyncio, edge_tts, os
 D = json.load(open('gen/story2.json')); os.makedirs('out', exist_ok=True)
-want = {('f6', 4), ('f6', 6), ('f6', 8), ('f6', 10), ('f6', 22), ('f8', 16)}
+want = {('f10', 8), ('f9', 12)}
 async def main():
     log = []
     for fid, k in sorted(want):
