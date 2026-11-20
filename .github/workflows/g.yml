@@ -6,8 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/aud.py || true
+      - run: pip install -q edge-tts && python3 gen/en2.py || true
       - if: always()
         run: |
           git config user.name "cc4"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc4-aud-out && git add -f out && git commit -qm "audition" && git push -f origin cc4-aud-out
+          git checkout -b en2-tts-out && git add -f out && git commit -qm "en2 tts" && git push -f origin en2-tts-out
