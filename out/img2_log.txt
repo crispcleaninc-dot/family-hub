@@ -1,0 +1,38 @@
+d04_s3 0 HTTP Error 503: Service Unavailable
+d04_s3 1 HTTP Error 402: Payment Required
+d04_s3 2 HTTP Error 402: Payment Required
+d04_s3 ok 82301
+d04_s4 0 HTTP Error 402: Payment Required
+d04_s4 1 HTTP Error 402: Payment Required
+d04_s4 ok 56656
+d07_s2 0 HTTP Error 402: Payment Required
+d07_s2 1 HTTP Error 402: Payment Required
+d07_s2 ok 57946
+d07_s4 0 HTTP Error 402: Payment Required
+d07_s4 1 HTTP Error 402: Payment Required
+d07_s4 ok 56641
+d09_s1 0 HTTP Error 402: Payment Required
+d09_s1 1 HTTP Error 402: Payment Required
+d09_s1 ok 71738
+d09_s3 0 HTTP Error 402: Payment Required
+d09_s3 1 HTTP Error 402: Payment Required
+d09_s3 ok 67443
+d09_s5 0 HTTP Error 402: Payment Required
+d09_s5 1 HTTP Error 402: Payment Required
+d09_s5 ok 67906
+d10_s2 0 HTTP Error 402: Payment Required
+d10_s2 1 HTTP Error 402: Payment Required
+d10_s2 2 HTTP Error 402: Payment Required
+d10_s2 ok 63555
+d11_s3 0 HTTP Error 402: Payment Required
+d11_s3 1 HTTP Error 402: Payment Required
+d11_s3 ok 80592
+d12_s1 0 HTTP Error 402: Payment Required
+d12_s1 1 HTTP Error 402: Payment Required
+d12_s1 ok 55265
+d12_s4 0 HTTP Error 402: Payment Required
+d12_s4 1 HTTP Error 402: Payment Required
+d12_s4 ok 57826
+d14_s3 0 HTTP Error 402: Payment Required
+d14_s3 1 HTTP Error 402: Payment Required
+d14_s3 ok 64848
