@@ -1,14 +1,23 @@
-name: cc6-redo
-on: { push: { branches: [cc6-redo] } }
+name: cc7-gen
+on: { push: { branches: [cc7-gen] } }
 permissions: { contents: write }
 jobs:
-  img:
+  tts:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["s93","s96"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q gradio_client && SEEDS=9204 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - run: pip install -q edge-tts && python3 gen/tts2.py || true
       - if: always()
         run: |
-          git config user.name "cc6"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc6-img3-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc6-img3-${{ matrix.shot }}
+          git config user.name "cc7"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc7-tts-out && git add -f out && git commit -qm "voices" && git push -f origin cc7-tts-out
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: ["u31", "u32", "u33", "u34", "u35", "u36", "u37", "u38", "u39", "u40", "u41", "u42", "l41", "l42", "l43", "l44", "l45", "l46", "l47", "l48", "l49", "l50", "l51"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && SEEDS=9301,9302 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - if: always()
+        run: |
+          git config user.name "cc7"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc7-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc7-img-${{ matrix.shot }}
