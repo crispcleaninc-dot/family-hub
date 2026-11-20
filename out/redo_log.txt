@@ -1,0 +1,6 @@
+out/f6_004_en.mp3 ok
+out/f6_006_en.mp3 ok
+out/f6_008_en.mp3 ok
+out/f6_010_en.mp3 ok
+out/f6_022_en.mp3 ok
+out/f8_016_en.mp3 ok
