@@ -1,0 +1,23 @@
+name: cc4-gen
+on: { push: { branches: [cc4-gen] } }
+permissions: { contents: write }
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py || true
+      - if: always()
+        run: |
+          git config user.name "cc4"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc4-tts-out && git add -f out && git commit -qm "voices" && git push -f origin cc4-tts-out
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: ["b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "m01", "m02", "m03", "m04", "m05", "m06", "m07", "m08", "m09", "m10", "m11", "m12", "s01", "s02", "s03", "s04", "s05", "s06", "s07", "s08", "s09", "s10", "s11", "s12", "w01", "w02", "w03", "w04", "w05", "w06", "w07", "w08", "x1", "x2", "x3"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name "cc4"; git config user.email "noreply@anthropic.com"
+          git checkout -b cc4-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc4-img-${{ matrix.shot }}
