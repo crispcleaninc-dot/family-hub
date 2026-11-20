@@ -1,0 +1,206 @@
+out/f5_000_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_001_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_002_fr.mp3 ok fr-FR-VivienneMultilingualNeural
+out/f5_003_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_004_fr.mp3 ok fr-FR-VivienneMultilingualNeural
+out/f5_005_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_006_fr.mp3 ok fr-FR-VivienneMultilingualNeural
+out/f5_007_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_008_fr.mp3 ok fr-BE-GerardNeural
+out/f5_009_fr.mp3 ok es-US-AlonsoNeural
+out/f5_010_fr.mp3 ok fr-FR-HenriNeural
+out/f5_011_fr.mp3 ok fr-CA-AntoineNeural
+out/f5_012_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_013_fr.mp3 ok fr-CA-AntoineNeural
+out/f5_014_fr.mp3 ok fr-FR-HenriNeural
+out/f5_015_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_016_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_017_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_018_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_019_fr.mp3 ok fr-CA-AntoineNeural
+out/f5_020_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_021_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_022_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_023_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_024_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_025_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_026_fr.mp3 ok fr-CA-AntoineNeural
+out/f5_027_fr.mp3 ok fr-CA-AntoineNeural
+out/f5_028_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_029_fr.mp3 ok fr-FR-HenriNeural
+out/f5_030_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_031_fr.mp3 ok fr-FR-DeniseNeural
+out/f5_032_fr.mp3 ok fr-CA-SylvieNeural
+out/f5_033_fr.mp3 ok fr-FR-VivienneMultilingualNeural
+out/f5_034_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_035_fr.mp3 ok fr-FR-VivienneMultilingualNeural
+out/f5_036_fr.mp3 ok fr-FR-RemyMultilingualNeural
+out/f5_037_fr.mp3 ok fr-FR-HenriNeural
+out/f5_038_fr.mp3 ok fr-CH-ArianeNeural
+out/f5_039_fr.mp3 ok fr-CH-ArianeNeural
+out/f5_040_fr.mp3 ok fr-CH-ArianeNeural
+out/f5_041_fr.mp3 ok fr-CH-ArianeNeural
+out/f5_000_en.mp3 ok en-NG-AbeoNeural
+out/f5_001_en.mp3 ok en-NG-AbeoNeural
+out/f5_002_en.mp3 ok en-NG-EzinneNeural
+out/f5_003_en.mp3 ok en-NG-AbeoNeural
+out/f5_004_en.mp3 ok en-NG-EzinneNeural
+out/f5_005_en.mp3 ok en-NG-AbeoNeural
+out/f5_006_en.mp3 ok en-NG-EzinneNeural
+out/f5_007_en.mp3 ok en-NG-AbeoNeural
+out/f5_008_en.mp3 ok en-US-BrianNeural
+out/f5_009_en.mp3 ok es-US-AlonsoNeural
+out/f5_010_en.mp3 ok en-KE-ChilembaNeural
+out/f5_011_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f5_011_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f5_012_en.mp3 ok en-NG-AbeoNeural
+out/f5_013_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f5_014_en.mp3 ok en-KE-ChilembaNeural
+out/f5_015_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_016_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_017_en.mp3 ok en-NG-AbeoNeural
+out/f5_018_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_019_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f5_020_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_021_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_022_en.mp3 ok en-NG-AbeoNeural
+out/f5_023_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_024_en.mp3 ok en-NG-AbeoNeural
+out/f5_025_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_026_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f5_026_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f5_027_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f5_027_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f5_027_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f5_027_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f5_028_en.mp3 ok en-NG-AbeoNeural
+out/f5_029_en.mp3 ok en-KE-ChilembaNeural
+out/f5_030_en.mp3 ok en-NG-AbeoNeural
+out/f5_031_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f5_032_en.mp3 ok en-US-AvaMultilingualNeural
+out/f5_033_en.mp3 ok en-NG-EzinneNeural
+out/f5_034_en.mp3 ok en-NG-AbeoNeural
+out/f5_035_en.mp3 ok en-NG-EzinneNeural
+out/f5_036_en.mp3 ok en-NG-AbeoNeural
+out/f5_037_en.mp3 ok en-KE-ChilembaNeural
+out/f5_038_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f5_039_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f5_040_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f5_041_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f6_000_en.mp3 ok en-US-BrianMultilingualNeural
+out/f6_001_en.mp3 ok en-US-BrianMultilingualNeural
+out/f6_002_en.mp3 ok en-NG-AbeoNeural
+out/f6_003_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_004_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_004_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_004_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_004_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_005_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_006_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_006_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_006_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_006_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_007_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_008_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_008_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_008_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_008_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_009_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_010_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_010_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_010_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_010_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_011_en.mp3 ok en-NG-EzinneNeural
+out/f6_012_en.mp3 ok en-NG-AbeoNeural
+out/f6_013_en.mp3 ok en-NG-EzinneNeural
+out/f6_014_en.mp3 ok en-NG-AbeoNeural
+out/f6_015_en.mp3 ok en-NG-EzinneNeural
+out/f6_016_en.mp3 ok en-NG-EzinneNeural
+out/f6_017_en.mp3 ok en-NG-AbeoNeural
+out/f6_018_en.mp3 ok en-NG-EzinneNeural
+out/f6_019_en.mp3 ok en-US-AriaNeural
+out/f6_020_en.mp3 ok en-NG-AbeoNeural
+out/f6_021_en.mp3 ok en-US-AriaNeural
+out/f6_022_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_022_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_022_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_022_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_023_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_023_en.mp3 ok en-NG-AbeoNeural
+out/f6_024_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_025_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_025_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_025_en.mp3 err en-NG-AbeoNeural No audio was received. Please verify that your parameters are correct.
+out/f6_025_en.mp3 ok en-NG-AbeoNeural
+out/f6_026_en.mp3 ok en-US-AvaMultilingualNeural
+out/f6_027_en.mp3 ok en-NG-AbeoNeural
+out/f6_028_en.mp3 ok en-US-AnaNeural
+out/f6_029_en.mp3 ok en-US-BrianMultilingualNeural
+out/f6_030_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f6_030_en.mp3 ok en-US-AndrewMultilingualNeural
+out/f6_031_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f6_032_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f6_033_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f6_034_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f7_000_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_001_hi.mp3 ok hi-IN-MadhurNeural
+out/f7_002_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_003_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_004_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_005_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_006_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_007_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_008_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_009_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_010_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_011_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_012_hi.mp3 ok hi-IN-MadhurNeural
+out/f7_013_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_014_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_015_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_016_hi.mp3 ok hi-IN-SwaraNeural
+out/f7_000_en.mp3 ok en-IN-NeerjaNeural
+out/f7_001_en.mp3 ok en-IN-PrabhatNeural
+out/f7_002_en.mp3 ok en-IN-NeerjaNeural
+out/f7_003_en.mp3 ok en-IN-NeerjaNeural
+out/f7_004_en.mp3 ok en-IN-NeerjaNeural
+out/f7_005_en.mp3 ok en-IN-NeerjaNeural
+out/f7_006_en.mp3 ok en-IN-NeerjaNeural
+out/f7_007_en.mp3 ok en-IN-NeerjaExpressiveNeural
+out/f7_008_en.mp3 ok en-IN-NeerjaNeural
+out/f7_009_en.mp3 ok en-IN-NeerjaNeural
+out/f7_010_en.mp3 ok en-IN-NeerjaNeural
+out/f7_011_en.mp3 ok en-IN-NeerjaNeural
+out/f7_012_en.mp3 ok en-IN-PrabhatNeural
+out/f7_013_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f7_014_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f7_015_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f7_016_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_000_en.mp3 ok en-US-AvaNeural
+out/f8_001_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_002_en.mp3 ok en-US-AnaNeural
+out/f8_003_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_004_en.mp3 ok en-US-AnaNeural
+out/f8_005_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_006_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_007_en.mp3 ok en-US-AvaNeural
+out/f8_008_en.mp3 ok en-US-AnaNeural
+out/f8_009_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_010_en.mp3 ok en-US-BrianMultilingualNeural
+out/f8_011_en.mp3 ok en-US-AnaNeural
+out/f8_012_en.mp3 ok en-US-BrianMultilingualNeural
+out/f8_013_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_014_en.mp3 ok en-US-BrianMultilingualNeural
+out/f8_015_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_016_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f8_016_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f8_016_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f8_016_en.mp3 err en-US-AndrewMultilingualNeural No audio was received. Please verify that your parameters are correct.
+out/f8_017_en.mp3 ok en-US-EmmaMultilingualNeural
+out/f8_018_en.mp3 ok en-US-AvaNeural
+out/f8_019_en.mp3 ok en-US-AvaNeural
+out/f8_020_en.mp3 ok en-US-ChristopherNeural
+out/f8_021_en.mp3 ok en-US-AvaMultilingualNeural
+out/f8_022_en.mp3 ok en-US-AvaMultilingualNeural
+out/f8_023_en.mp3 ok en-US-AvaMultilingualNeural
+out/f8_024_en.mp3 ok en-US-AvaMultilingualNeural
