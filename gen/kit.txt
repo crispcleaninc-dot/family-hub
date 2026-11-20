@@ -1,0 +1,39 @@
+# Films 5–8 — Ready to Post
+@sub Community Covenant · titles, descriptions and pinned comments for each version
+@meta Prepared Nov 20, 2026 · Not posted yet · Every version: public, not made for kids, AI label on, own thumbnail
+## How to post these
+- Video files and thumbnails are saved on GitHub (family-hub, branch cc5-films). Post each lead-language version together with its English version, per the English rule.
+- Set the video language to match (French, Hindi, English). Pin the comment below from Studio → Comments.
+!note Nothing here has been posted. Ciarne reviews first.
+## Film 5 — 7.30 Is Not Seven and a Half (French + English)
+### French
+| Field | Text |
+| Title | 7,30 ce n’est pas 7 h 30 · La juste balance · Court métrage chrétien |
+| Description | Emmanuel compte ses heures avec la mesure de chez lui. Son patron compte avec une autre. Chacun est sûr d’avoir raison. Une histoire de fiche de paie, de respect et de la juste balance. « La balance fausse est en horreur à l’Éternel, mais le poids juste lui est agréable. » Proverbes 11:1. Loin de chez vous et vous ne savez pas comment ça marche ici ? Dans l’application gratuite Community Covenant, touchez Ask for Help : une vraie personne de notre équipe vous répond le jour même. (L’application est en anglais pour l’instant.) covenant.crispusmundo.com · Fiction. Images et voix créées avec l’IA. |
+| Pinned comment | Bien-aimés, Emmanuel a-t-il bien fait d’aller chez le patron avec un ancien ? Chez vous, comment règle-t-on ce genre d’affaire ? 🙏 Application gratuite Community Covenant : covenant.crispusmundo.com ▶ Watch in English: (English link) |
+### English
+| Field | Text |
+| Title | 7.30 Is Not Seven and a Half · Just Weight · Christian Short Film (English) |
+| Description | Emmanuel counts his hours by the measure he grew up with. His boss counts by another. Both are sure they're right. A story about a paycheck, respect, and a just weight. "A false balance is abomination to the Lord: but a just weight is his delight." Proverbs 11:1. Far from home and not sure how something works here? In the free Community Covenant app, tap Ask for Help. A real person from our team writes back the same day. covenant.crispusmundo.com · This story is fiction. Pictures and voices were made with AI. |
+| Pinned comment | Was Emmanuel right to go to the boss's house with an elder? Tell us how it's done where you're from. 🙏 Free Community Covenant app: covenant.crispusmundo.com ▶ Voir en français : (French link) |
+## Film 6 — What the Seminar Didn't Say (English)
+| Field | Text |
+| Title | What the Seminar Didn't Say · Tenants Are Not Numbers · Christian Short Film |
+| Description | A doctor buys rental houses after a weekend wealth course. His first hard winter teaches him what the housing codes were for. "Withhold not good from them to whom it is due, when it is in the power of thine hand to do it." Proverbs 3:27. Whether you hold the keys or pay the rent, you're somebody's neighbor. In the free Community Covenant app, tap Ask for Help. A real person from our team writes back the same day. covenant.crispusmundo.com · This story is fiction. Pictures and voices were made with AI. |
+| Pinned comment | Landlords and renters: what's one thing you wish the other side understood? Keep it kind. 🙏 Free Community Covenant app: covenant.crispusmundo.com |
+## Film 7 — I Read It for Myself (Hindi + English)
+### Hindi
+| Field | Text |
+| Title | मैंने ख़ुद पढ़ा · रात के दो बजे, पहला पन्ना · ईसाई लघु फ़िल्म |
+| Description | न कोई पादरी, न कोई योजना। एक स्त्री उत्पत्ति 1:1 खोलती है और तय करती है कि वह हर शब्द क्रम से पढ़ेगी। "तुम मुझे ढूँढ़ोगे और पाओगे भी, क्योंकि तुम अपने सम्पूर्ण मन से मुझे ढूँढ़ोगे।" यिर्मयाह 29:13. मुफ़्त Community Covenant ऐप हर सुबह आपको वचन पढ़कर सुनाता है। कोई कठिन सवाल? Ask for Help में लिखिए, हमारी टीम उसी दिन जवाब देगी। (ऐप अभी अंग्रेज़ी में है।) covenant.crispusmundo.com · नाट्य रूपांतरण। चित्र और आवाज़ें AI से बनाई गई हैं। |
+| Pinned comment | बाइबल पढ़ते हुए आपका सबसे कठिन सवाल कौन-सा था? नीचे लिखिए। 🙏 मुफ़्त Community Covenant ऐप: covenant.crispusmundo.com ▶ Watch in English: (English link) |
+### English
+| Field | Text |
+| Title | I Read It for Myself · 2 A.M., Page One · Christian Short Film (English) |
+| Description | No pastor, no plan. One woman opens to Genesis 1:1 and decides to read every word in order. "And ye shall seek me, and find me, when ye shall search for me with all your heart." Jeremiah 29:13. The free Community Covenant app reads Scripture over you every morning. Have a hard question? Type it into Ask for Help, and a real person from our team writes back the same day. covenant.crispusmundo.com · This story is fiction. Pictures and voices were made with AI. |
+| Pinned comment | What's the hardest question you've had while reading the Bible? Ask it below. 🙏 Free Community Covenant app: covenant.crispusmundo.com ▶ हिंदी में देखें: (Hindi link) |
+## Film 8 — The Long Ride to Church (English)
+| Field | Text |
+| Title | The Long Ride to Church · Faith on the Way · Christian Short Film |
+| Description | A grown woman remembers riding all the way down South for Holy Convocation in her cousin's station wagon, with fried chicken in foil and a song nobody could take. "And thou shalt teach them diligently unto thy children, and shalt talk of them when thou walkest by the way." Deuteronomy 6:7. Who taught you faith on the way? In the free Community Covenant app, link your family with one family code and cheer each other on. covenant.crispusmundo.com · This story is fiction. Pictures and voices were made with AI. |
+| Pinned comment | Who took you to church when you were little, and what did they teach you on the way? Tell us below. 🙏 Free Community Covenant app: covenant.crispusmundo.com |
