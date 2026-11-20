@@ -1,0 +1,102 @@
+{
+ "god": [
+  "en-US-AndrewMultilingualNeural",
+  "-12%",
+  "-6Hz"
+ ],
+ "serpent": [
+  "ar-EG-ShakirNeural",
+  "-10%",
+  "-2Hz"
+ ],
+ "angel": [
+  "en-US-BrianMultilingualNeural",
+  "-8%",
+  "+0Hz"
+ ],
+ "adam": [
+  "fa-IR-FaridNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "cain": [
+  "en-US-BrianMultilingualNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "abram": [
+  "en-US-AndrewMultilingualNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "jacob": [
+  "en-GB-RyanNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "esau": [
+  "en-GB-ThomasNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "laban": [
+  "ar-EG-ShakirNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "joseph": [
+  "fa-IR-FaridNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "brother": [
+  "en-US-BrianMultilingualNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "isaac": [
+  "ar-EG-ShakirNeural",
+  "+2%",
+  "+18Hz"
+ ],
+ "isaac2": [
+  "en-GB-RyanNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "isaacold": [
+  "en-GB-ThomasNeural",
+  "-14%",
+  "-4Hz"
+ ],
+ "visitor": [
+  "ar-EG-ShakirNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "crowd": [
+  "fa-IR-FaridNeural",
+  "-6%",
+  "+0Hz"
+ ],
+ "eve": [
+  "en-US-AvaMultilingualNeural",
+  "-5%",
+  "+0Hz"
+ ],
+ "hagar": [
+  "en-US-EmmaMultilingualNeural",
+  "-5%",
+  "+0Hz"
+ ],
+ "sarah": [
+  "en-GB-SoniaNeural",
+  "-5%",
+  "+0Hz"
+ ],
+ "rebekah": [
+  "en-US-AvaMultilingualNeural",
+  "-5%",
+  "+0Hz"
+ ]
+}

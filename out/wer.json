@@ -1,0 +1,210 @@
+{
+ "wer": {
+  "ar-EG-SalmaNeural": [
+   0.786,
+   0.375,
+   0.167
+  ],
+  "ar-EG-ShakirNeural": [
+   0.357,
+   0.0,
+   0.167
+  ],
+  "ar-IQ-BasselNeural": [
+   0.643,
+   0.125,
+   0.167
+  ],
+  "ar-IQ-RanaNeural": [
+   0.857,
+   0.0,
+   0.167
+  ],
+  "ar-JO-SanaNeural": [
+   0.857,
+   0.0,
+   0.167
+  ],
+  "ar-JO-TaimNeural": [
+   0.5,
+   0.625,
+   0.167
+  ],
+  "ar-LB-LaylaNeural": [
+   0.429,
+   0.125,
+   0.25
+  ],
+  "ar-LB-RamiNeural": [
+   0.357,
+   0.5,
+   0.25
+  ],
+  "ar-SA-HamedNeural": [
+   0.5,
+   0.375,
+   0.25
+  ],
+  "ar-SA-ZariyahNeural": [
+   0.357,
+   0.375,
+   0.167
+  ],
+  "ar-SY-AmanyNeural": [
+   0.929,
+   1.0,
+   0.833
+  ],
+  "ar-SY-LaithNeural": [
+   0.786,
+   1.0,
+   0.667
+  ],
+  "en-AU-WilliamNeural": [
+   0.143,
+   0.0,
+   0.0
+  ],
+  "en-GB-RyanNeural": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "en-GB-SoniaNeural": [
+   0.143,
+   0.0,
+   0.0
+  ],
+  "en-GB-ThomasNeural": [
+   0.071,
+   0.0,
+   0.0
+  ],
+  "en-IN-NeerjaNeural": [
+   0.071,
+   0.0,
+   0.0
+  ],
+  "en-IN-PrabhatNeural": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "en-KE-AsiliaNeural": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "en-KE-ChilembaNeural": [
+   0.143,
+   0.0,
+   0.083
+  ],
+  "en-NG-AbeoNeural": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "en-NG-EzinneNeural": [
+   0.071,
+   0.0,
+   0.0
+  ],
+  "en-TZ-ElimuNeural": [
+   0.0,
+   0.0,
+   0.167
+  ],
+  "en-TZ-ImaniNeural": [
+   0.071,
+   0.25,
+   0.0
+  ],
+  "en-US-AndrewMultilingualNeural": [
+   0.214,
+   0.25,
+   0.0
+  ],
+  "en-US-AvaMultilingualNeural": [
+   0.143,
+   0.0,
+   0.0
+  ],
+  "en-US-BrianMultilingualNeural": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "en-US-EmmaMultilingualNeural": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "fa-IR-DilaraNeural": [
+   1.143,
+   1.0,
+   1.0
+  ],
+  "fa-IR-FaridNeural": [
+   0.286,
+   0.25,
+   0.0
+  ],
+  "he-IL-AvriNeural": [
+   0.071,
+   0.375,
+   0.417
+  ],
+  "he-IL-HilaNeural": [
+   0.071,
+   0.875,
+   0.417
+  ],
+  "tr-TR-AhmetNeural": [
+   0.357,
+   0.875,
+   0.75
+  ],
+  "tr-TR-EmelNeural": [
+   0.214,
+   1.0,
+   0.5
+  ]
+ },
+ "avg": {
+  "ar-EG-SalmaNeural": 0.4426666666666667,
+  "ar-EG-ShakirNeural": 0.17466666666666666,
+  "ar-IQ-BasselNeural": 0.3116666666666667,
+  "ar-IQ-RanaNeural": 0.3413333333333333,
+  "ar-JO-SanaNeural": 0.3413333333333333,
+  "ar-JO-TaimNeural": 0.4306666666666667,
+  "ar-LB-LaylaNeural": 0.268,
+  "ar-LB-RamiNeural": 0.369,
+  "ar-SA-HamedNeural": 0.375,
+  "ar-SA-ZariyahNeural": 0.2996666666666667,
+  "ar-SY-AmanyNeural": 0.9206666666666666,
+  "ar-SY-LaithNeural": 0.8176666666666668,
+  "en-AU-WilliamNeural": 0.04766666666666666,
+  "en-GB-RyanNeural": 0.0,
+  "en-GB-SoniaNeural": 0.04766666666666666,
+  "en-GB-ThomasNeural": 0.023666666666666666,
+  "en-IN-NeerjaNeural": 0.023666666666666666,
+  "en-IN-PrabhatNeural": 0.0,
+  "en-KE-AsiliaNeural": 0.0,
+  "en-KE-ChilembaNeural": 0.07533333333333332,
+  "en-NG-AbeoNeural": 0.3333333333333333,
+  "en-NG-EzinneNeural": 0.023666666666666666,
+  "en-TZ-ElimuNeural": 0.05566666666666667,
+  "en-TZ-ImaniNeural": 0.107,
+  "en-US-AndrewMultilingualNeural": 0.15466666666666665,
+  "en-US-AvaMultilingualNeural": 0.04766666666666666,
+  "en-US-BrianMultilingualNeural": 0.0,
+  "en-US-EmmaMultilingualNeural": 0.0,
+  "fa-IR-DilaraNeural": 1.0476666666666665,
+  "fa-IR-FaridNeural": 0.17866666666666667,
+  "he-IL-AvriNeural": 0.2876666666666667,
+  "he-IL-HilaNeural": 0.4543333333333333,
+  "tr-TR-AhmetNeural": 0.6606666666666666,
+  "tr-TR-EmelNeural": 0.5713333333333334
+ }
+}
