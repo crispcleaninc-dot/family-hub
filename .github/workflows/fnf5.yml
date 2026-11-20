@@ -1,0 +1,19 @@
+name: fnf-read
+on: { push: { branches: [fnf-read] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 11, matrix: { g: [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, x] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts pythonbible pythonbible-kjv
+      - run: mkdir -p out; G=${{ matrix.g }} python3 gen/read.py > out/read_${{ matrix.g }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-read-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-read-${{ matrix.g }}
