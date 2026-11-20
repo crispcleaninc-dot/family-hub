@@ -1,0 +1,43 @@
+name: fnf-gen
+on: { push: { branches: [fnf-gen] } }
+permissions: { contents: write }
+jobs:
+  aud:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y -q ffmpeg && pip install -q edge-tts faster-whisper jiwer
+      - run: mkdir -p out && python3 gen/aud.py > out/aud_log.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-aud && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-aud
+  her:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { d: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14'] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; D=${{ matrix.d }} python3 gen/her.py > out/her_${{ matrix.d }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-her${{ matrix.d }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-her${{ matrix.d }}
+  music:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, matrix: { k: [m1, m2, m3] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.44.2 scipy
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/music.py > out/${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-${{ matrix.k }}
