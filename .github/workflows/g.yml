@@ -1,0 +1,23 @@
+name: india-gen
+on: { push: { branches: [india-gen] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 4, matrix: { shot: [i01, i02, i03, i04, i05, i06, i07, i08, i09, i10, i11, i12, i13, i14, i15, i16, i17, i18, i19, i20] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name "ig"; git config user.email "noreply@anthropic.com"
+          git checkout -b india-img-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin india-img-${{ matrix.shot }}
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py > run.txt 2>&1 || true; mkdir -p out; mv run.txt out/
+      - if: always()
+        run: |
+          git config user.name "ig"; git config user.email "noreply@anthropic.com"
+          git checkout -b india-tts-out && git add -f out && git commit -qm t && git push -f origin india-tts-out
