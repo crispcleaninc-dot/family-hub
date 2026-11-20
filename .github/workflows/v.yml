@@ -1,0 +1,18 @@
+name: voice-cine
+on: { push: { branches: [voice-cine] } }
+permissions: { contents: write }
+jobs:
+  v:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, max-parallel: 19, matrix: { k: [r01,r02,r03,r04,r05,r06,r07,r08,r09,r10,r11,r12,r13,r14,r15,r16,m1,m2,m3] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/gen.py > out/${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "vc"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan vc-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin vc-${{ matrix.k }}
