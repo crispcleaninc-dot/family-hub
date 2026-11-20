@@ -1,0 +1,13 @@
+name: end-tts
+on: { push: { branches: [end-tts] } }
+permissions: { contents: write }
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py
+      - if: always()
+        run: |
+          git config user.name "et"; git config user.email "noreply@anthropic.com"
+          git checkout -b end-tts-out && git add -f out && git commit -qm o && git push -f origin end-tts-out
