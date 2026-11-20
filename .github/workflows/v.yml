@@ -5,7 +5,7 @@ jobs:
   v:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    strategy: { fail-fast: false, max-parallel: 19, matrix: { k: [t1,t2,t3,t4,k1,k2,k3] } }
+    strategy: { fail-fast: false, max-parallel: 19, matrix: { k: [t5] } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
