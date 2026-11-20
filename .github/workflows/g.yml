@@ -1,0 +1,21 @@
+name: afr2-gen
+on: { push: { branches: [afr2-gen] } }
+permissions: { contents: write }
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && python3 gen/tts.py || true
+      - run: |
+          git config user.name "a2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan afr2-tts-out && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin afr2-tts-out
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: [g1s02, g1s04, g1s05, g1s07, g1s08, g1s10, g2s03, g2s04, g2s07, g2s09, g3s02, g3s03, g3s04, g3s07, g3s09] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && SHOT=${{ matrix.shot }} python3 gen/img.py || true
+      - run: |
+          git config user.name "a2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan afr2-img-${{ matrix.shot }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin afr2-img-${{ matrix.shot }}
