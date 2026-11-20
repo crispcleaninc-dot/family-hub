@@ -8,7 +8,7 @@ c = None
 for a in range(5):
     try: c = Client("black-forest-labs/FLUX.1-schnell"); break
     except Exception as e: log.append('client '+str(e)[:200]); time.sleep(30)
-for sd in ([7101]):
+for sd in ([7102]):
     for a in range(4):
         try:
             r = c.predict(prompt=p, seed=sd, randomize_seed=False, width=1344, height=768, num_inference_steps=4, api_name="/infer")
