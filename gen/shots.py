@@ -23,8 +23,8 @@ SHOTS = {
  's20': "long exposure of a busy highway at night, endless streams of red and white car light trails, no exits, cinematic, moody",
  's21': f"{W} wearing a long-sleeve gray t-shirt and pajama pants, sitting on the edge of her bed in a dim bedroom at night, hands in her lap, staring at the floor, lost in thought, a lamp on the nightstand",
  's22': f"{W} wearing a beige cardigan and a Black American man in his early 40s with a short beard wearing a dark crewneck t-shirt, both fully clothed, sitting on a living room couch in the evening, she is speaking carefully, he is listening quietly, warm lamp light",
- 's23': "close-up of a Black American man in his early 40s with a short beard sitting on a couch in the evening, tired confused expression, warm lamp light",
- 's24': f"close-up of {W} on a living room couch in the evening, hurt expression, looking down, eyes glistening, warm lamp light",
+ 's23': "close-up of a Black American man in his early 40s with a short beard wearing a dark crewneck t-shirt, sitting on a couch in the evening, tired confused expression, warm lamp light",
+ 's24': f"close-up of {W} wearing a beige cardigan on a living room couch in the evening, hurt expression, looking down, eyes glistening, warm lamp light",
  's25': f"an older Black American man in his 60s with a gray beard wearing a flannel shirt, standing in a kitchen at night, worried and protective, talking with {W} who wears a dark sweater, warm light",
  's26': f"{W} standing alone by a dark window at night, arms folded, looking out at the street, reflection in the glass, lonely",
  's27': f"{W} in a dark bedroom at night, her face lit only by the glow of a phone screen, reading intently, the screen not visible",
@@ -34,6 +34,6 @@ SHOTS = {
  's31': f"{W} and a Black American man in his early 40s with a short beard sitting together on front porch steps at sunset, he is apologizing, she listens, gentle",
  's32': f"{W} and an older Black American man in his 60s with a gray beard walking together down a courthouse hallway, his hand on her shoulder, seen from behind, soft daylight",
  's33': "soft golden sunrise light coming through a kitchen window with sheer curtains, a small plant on the sill, hopeful, peaceful, empty room, no people",
- 's34': f"portrait of {W} in calm morning light by a window, steady and peaceful, a faint gentle smile, strong",
+ 's34': f"portrait of {W} wearing a soft cream knit sweater, in calm morning light by a window, steady and peaceful, a faint gentle smile, strong",
 }
 NEG = ", photorealistic cinematic film still, shot on 35mm, natural skin texture, realistic proportions, realistic hands, shallow depth of field, modest, fully clothed or fully covered, no nudity, no text"
