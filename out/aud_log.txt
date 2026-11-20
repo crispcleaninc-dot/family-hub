@@ -1,0 +1,18 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+en-NG-AbeoNeural 0 No audio was received. Please verify that your parameters are correct.
+en-NG-AbeoNeural 0 No audio was received. Please verify that your parameters are correct.
+en-NG-AbeoNeural 0 No audio was received. Please verify that your parameters are correct.
+en-US-AndrewMultilingualNeural 2 No audio was received. Please verify that your parameters are correct.
+en-US-AndrewMultilingualNeural 2 No audio was received. Please verify that your parameters are correct.
+Traceback (most recent call last):
+  File "/home/runner/work/family-hub/family-hub/gen/aud.py", line 30, in <module>
+    hyp = " ".join(s.text for s in m.transcribe(f, language="en")[0])
+                                   ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/runner/.local/lib/python3.14/site-packages/faster_whisper/transcribe.py", line 876, in transcribe
+    audio = decode_audio(audio, sampling_rate=sampling_rate)
+  File "/home/runner/.local/lib/python3.14/site-packages/faster_whisper/audio.py", line 46, in decode_audio
+    with av.open(input_file, mode="r", metadata_errors="ignore") as container:
+         ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "av/container/core.py", line 479, in av.container.core.open
+    def open(
+TypeError: open() got an unexpected keyword argument 'metadata_errors'
