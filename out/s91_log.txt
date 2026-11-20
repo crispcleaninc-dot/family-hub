@@ -1,0 +1,8 @@
+s91_9201 try0 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:22:30. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9201 try1 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:21:49. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9201 try2 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:21:09. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9201 try3 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:20:28. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9202 try0 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:19:48. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9202 try1 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:19:08. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9202 try2 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:18:27. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+s91_9202 try3 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 20:17:47. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
