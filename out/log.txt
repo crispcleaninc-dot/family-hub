@@ -1,0 +1,4 @@
+africa2_h1_l0 ok
+africa2_h1_l1 ok
+africa2_h2_l0 ok
+africa2_a01_l0 ok
