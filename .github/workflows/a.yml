@@ -1,0 +1,13 @@
+name: asr-job5
+on: { push: { branches: [asr-job5] } }
+permissions: { contents: write }
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y -q ffmpeg; mkdir -p out; pip install -q faster-whisper && python3 gen/asr.py > out/run.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "sk"; git config user.email "noreply@anthropic.com"
+          git checkout -b asr-job5-out && git add out && git commit -qm t && git push -f origin asr-job5-out
