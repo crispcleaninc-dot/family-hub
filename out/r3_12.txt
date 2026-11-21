@@ -1,0 +1,190 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord came down to see the city and the tower, which the children of men builded.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:56<00:00, 176.51s/it]100%|██████████| 1/1 [02:56<00:00, 176.51s/it]
+d04_g11_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Ishmael his son was thirteen years old, when he was circumcised in the flesh of his foreskin.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:52<00:00, 172.13s/it]100%|██████████| 1/1 [02:52<00:00, 172.13s/it]
+d05_g17_v025 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the men turned their faces from thence, and went toward Sodom: but Abraham stood yet before the Lord.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:13<00:00, 193.90s/it]100%|██████████| 1/1 [03:13<00:00, 193.90s/it]
+d06_g18_v022 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Ephron dwelt among the children of Heth: and Ephron the Hittite answered Abraham in the audience of the children of Heth,
+gen_text 1 even of all that went in at the gate of his city, saying,
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:39<05:39, 339.96s/it]100%|██████████| 2/2 [05:39<00:00, 169.98s/it]
+d07_g23_v010 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Behold, Rebekah is before thee, take her, and go, and let her be thy master’s son’s wife, as the Lord hath spoken.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:34<00:00, 214.85s/it]100%|██████████| 1/1 [03:34<00:00, 214.85s/it]
+d08_g24_v051 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And there was a famine in the land, beside the first famine that was in the days of Abraham. And Isaac went unto Abimelech king of the Philistines unto Gerar.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:11<00:00, 251.12s/it]100%|██████████| 1/1 [04:11<00:00, 251.12s/it]
+d09_g26_v001 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abimelech said unto Isaac, Go from us; for thou art much mightier  than we.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:35<00:00, 155.58s/it]100%|██████████| 1/1 [02:35<00:00, 155.58s/it]
+d09_g26_v016 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Rebekah took goodly raiment of her eldest son Esau, which were with her in the house, and put them upon Jacob her younger son:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:37<00:00, 217.29s/it]100%|██████████| 1/1 [03:37<00:00, 217.29s/it]
+d09_g27_v015 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Isaac said unto his son, How is it that thou hast found it so quickly, my son? And he said, Because the Lord thy God brought it to me.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:51<00:00, 231.24s/it]100%|██████████| 1/1 [03:51<00:00, 231.24s/it]
+d09_g27_v020 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Isaac said unto Jacob, Come near, I pray thee, that I may feel thee, my son, whether thou be my very son Esau or not.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:34<00:00, 214.66s/it]100%|██████████| 1/1 [03:34<00:00, 214.66s/it]
+d09_g27_v021 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Laban said, Behold, I would it might be according to thy word.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:18<00:00, 138.91s/it]100%|██████████| 1/1 [02:18<00:00, 138.91s/it]
+d11_g30_v034 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it came to pass at the time that the cattle conceived, that I lifted up mine eyes, and saw in a dream, and, behold,
+gen_text 1 the rams which leaped upon the cattle were ringstraked, speckled, and grisled.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:42<05:42, 342.87s/it]100%|██████████| 2/2 [05:42<00:00, 171.43s/it]
+d11_g31_v010 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 It is in the power of my hand to do you hurt: but the God of your father spake unto me yesternight, saying,
+gen_text 1 Take thou heed that thou speak not to Jacob either good or bad.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:20<05:20, 320.18s/it]100%|██████████| 2/2 [05:20<00:00, 160.09s/it]
+d11_g31_v029 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jacob took a stone, and set it up for a pillar.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:08<00:00, 128.53s/it]100%|██████████| 1/1 [02:08<00:00, 128.53s/it]
+d11_g31_v045 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And so commanded he the second, and the third, and all that followed the droves, saying, On this manner shall ye speak unto Esau, when ye find him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:51<00:00, 231.68s/it]100%|██████████| 1/1 [03:51<00:00, 231.68s/it]
+d12_g32_v019 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover, day 14 of 365. Today we read Genesis 38 through 40, from the King James Version: Judah and Tamar, Joseph in Potiphar's house and in prison,
+gen_text 1 and the dreams of the butler and baker. Today's reading is brought to you by Community Covenant, a daily Bible, prayer and accountability app,
+gen_text 2 so you never walk this alone. The link is in the post. Let's read.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [10:04<20:08, 604.35s/it]100%|██████████| 3/3 [10:04<00:00, 201.45s/it]
+d14_open True
