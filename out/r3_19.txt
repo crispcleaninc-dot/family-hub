@@ -1,0 +1,190 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the vale of Siddim was full of slimepits; and the kings of Sodom and Gomorrah fled, and fell there; and they that remained fled to the mountain.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:51<00:00, 471.02s/it]100%|██████████| 1/1 [07:51<00:00, 471.02s/it]
+d05_g14_v010 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And blessed be the most high God, which hath delivered thine enemies into thy hand. And he gave him tithes of all.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:38<00:00, 398.57s/it]100%|██████████| 1/1 [06:38<00:00, 398.57s/it]
+d05_g14_v020 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham said unto him, Beware thou that thou bring not my son thither again.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:31<00:00, 331.31s/it]100%|██████████| 1/1 [05:31<00:00, 331.31s/it]
+d08_g24_v006 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the man came into the house: and he ungirded his camels, and gave straw and provender for the camels, and water to wash his feet,
+gen_text 1 and the men’s feet that were with him.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:46<10:46, 646.68s/it]100%|██████████| 2/2 [10:46<00:00, 323.34s/it]
+d08_g24_v032 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then Abraham gave up the ghost, and died in a good old age, an old man, and full of years; and was gathered to his people.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:55<00:00, 415.49s/it]100%|██████████| 1/1 [06:55<00:00, 415.49s/it]
+d08_g25_v008 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they dwelt from Havilah unto Shur, that is before Egypt, as thou goest toward Assyria: and he died in the presence of all his brethren.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:46<00:00, 466.36s/it]100%|██████████| 1/1 [07:46<00:00, 466.36s/it]
+d08_g25_v018 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Let people serve thee, and nations bow down to thee: be lord over thy brethren, and let thy mother’s sons bow down to thee: cursed be every one that curseth thee,
+gen_text 1 and blessed be he that blesseth thee.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:08<12:08, 728.68s/it]100%|██████████| 2/2 [12:08<00:00, 364.34s/it]
+d09_g27_v029 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick pause. If you want to keep today's verses, track your reading and pray with others, it's all in Community Covenant, at covenant dot crispusmundo dot com. Now,
+gen_text 1 let's keep reading.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:30<11:30, 690.54s/it]100%|██████████| 2/2 [11:30<00:00, 345.27s/it]
+d10_mid True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And while he yet spake with them, Rachel came with her father’s sheep: for she kept them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:36<00:00, 336.79s/it]100%|██████████| 1/1 [05:36<00:00, 336.79s/it]
+d10_g29_v009 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jacob was wroth, and chode with Laban: and Jacob answered and said to Laban, What is my trespass? what is my sin, that thou hast so hotly pursued after me?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:22<00:00, 502.44s/it]100%|██████████| 1/1 [08:22<00:00, 502.44s/it]
+d11_g31_v036 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But if ye will not hearken unto us, to be circumcised; then will we take our daughter, and we will be gone.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:08<00:00, 368.47s/it]100%|██████████| 1/1 [06:08<00:00, 368.47s/it]
+d12_g34_v017 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The sons of Jacob came upon the slain, and spoiled the city, because they had defiled their sister.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:50<00:00, 350.84s/it]100%|██████████| 1/1 [05:50<00:00, 350.84s/it]
+d12_g34_v027 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover, day 13 of 365. Today we read Genesis 35 through 37, from the King James Version: Jacob returns to Bethel, the line of Esau,
+gen_text 1 and Joseph's dreams. Today's reading is brought to you by Community Covenant, a daily Bible, prayer and accountability app, so you never walk this alone.
+gen_text 2 The link is in the post. Let's read.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [18:13<36:27, 1093.74s/it]100%|██████████| 3/3 [18:13<00:00, 364.58s/it] 
+d13_open True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Bashemath Ishmael’s daughter, sister of Nebajoth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:22<00:00, 262.78s/it]100%|██████████| 1/1 [04:22<00:00, 262.78s/it]
+d13_g36_v003 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Duke Korah, duke Gatam, and duke Amalek: these are the dukes that came of Eliphaz in the land of Edom; these were the sons of Adah.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:13<00:00, 433.36s/it]100%|██████████| 1/1 [07:13<00:00, 433.36s/it]
+d13_g36_v016 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 These are the sons of Esau, who is Edom, and these are their dukes.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:47<00:00, 287.86s/it]100%|██████████| 1/1 [04:47<00:00, 287.86s/it]
+d13_g36_v019 True
