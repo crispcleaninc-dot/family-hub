@@ -1,0 +1,617 @@
+{
+ "films": {
+  "f13": {
+   "langs": [
+    "en"
+   ],
+   "shots": [
+    [
+     "u31",
+     "a sunny backyard family cookout, a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt laughing and telling a story while relatives around a picnic table laugh with her, string lights, grill smoke",
+     [
+      [
+       "narr",
+       {
+        "en": "Everybody called my cousin Sunshine. If you were down, she'd find you."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "She showed up for everybody."
+       }
+      ]
+     ]
+    ],
+    [
+     "u32",
+     "a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt fixing the collar of a nervous friend in a dress shirt outside an office building, both smiling, morning light",
+     [
+      [
+       "sun",
+       {
+        "en": "You got this. Walk in there like you already work there."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "She was the one hyping you up before the interview. Every time."
+       }
+      ]
+     ]
+    ],
+    [
+     "u33",
+     "a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt sitting on a city bus looking at her phone with a quick forced smile, the screen not visible, afternoon light through the window",
+     [
+      [
+       "narr",
+       {
+        "en": "I texted her that week. You good? She sent back, lol, I'm good. With the laughing face."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "I believed her. We all did."
+       }
+      ]
+     ]
+    ],
+    [
+     "u34",
+     "a dark bedroom at night lit only by blue window light, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt sitting alone on the floor with her back against the bed and her knees pulled up, a phone face down on the carpet beside her, heavy quiet mood, nothing else on the floor",
+     [
+      [
+       "narr",
+       {
+        "en": "What we didn't see was how heavy it had gotten."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "Bright people learn to hide dark rooms."
+       }
+      ]
+     ]
+    ],
+    [
+     "u35",
+     "a bedroom doorway at night, a 10 year old African American boy in blue pajamas standing in the doorway holding a pillow, sleepy and scared, soft hallway light behind him",
+     [
+      [
+       "theo",
+       {
+        "en": "Sunny? I had a bad dream. Can I sleep in here?"
+       }
+      ],
+      [
+       "sun",
+       {
+        "en": "Yeah. Come on."
+       }
+      ]
+     ]
+    ],
+    [
+     "u36",
+     "dim bedroom at night, a 10 year old African American boy in blue pajamas lying in bed under a blanket talking with his hands, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt lying beside him listening, soft blue light",
+     [
+      [
+       "theo",
+       {
+        "en": "It was a big dog, but it was a nice dog. Can we get a dog? A real one?"
+       }
+      ],
+      [
+       "theo",
+       {
+        "en": "And Mr. Grant said my volcano was the best one in the class."
+       }
+      ],
+      [
+       "theo",
+       {
+        "en": "You're my favorite person. Don't tell Mom."
+       }
+      ]
+     ]
+    ],
+    [
+     "u37",
+     "close up of a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt lying awake on a pillow at night staring at the ceiling, a single tear on her cheek, a sleeping 10 year old boy's head resting on her arm, blue light",
+     [
+      [
+       "narr",
+       {
+        "en": "She didn't sleep. She just lay there, with him on her arm."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "He didn't know it, but he was holding the door open."
+       }
+      ]
+     ]
+    ],
+    [
+     "u38",
+     "gray early dawn light in a bedroom, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt sitting up in bed holding a phone with both hands, typing, a 10 year old boy still asleep beside her, the screen not visible",
+     [
+      [
+       "sun",
+       {
+        "en": "Mama, can you come in here. I'm not okay. I need help."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "She hit send. That was the bravest thing I ever saw anybody do."
+       }
+      ]
+     ]
+    ],
+    [
+     "u39",
+     "dawn light in a bedroom, a 52 year old African American mother with short gray-streaked natural hair, wearing a robe kneeling beside the bed with her arms wrapped tightly around a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt, both eyes closed, a 10 year old boy asleep in the background",
+     [
+      [
+       "narr",
+       {
+        "en": "Footsteps in the hall. Right away."
+       }
+      ],
+      [
+       "mom",
+       {
+        "en": "I'm here, baby. I'm right here. We're gonna get you help. You're not by yourself."
+       }
+      ]
+     ]
+    ],
+    [
+     "u40",
+     "a calm bright afternoon, a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt sitting on a wooden bench outside a small brick counseling office building with a Bible open on her lap and a notebook beside her, gentle hopeful expression, no readable text",
+     [
+      [
+       "sun",
+       {
+        "en": "Elijah sat under a tree and told God he was done. God didn't argue with him."
+       }
+      ],
+      [
+       "sun",
+       {
+        "en": "He sent an angel to wake him up and said, Arise and eat; the journey is too great for thee."
+       }
+      ],
+      [
+       "sun",
+       {
+        "en": "He didn't say be stronger. He said eat, sleep, let somebody help you. And then, one more day."
+       }
+      ]
+     ]
+    ],
+    [
+     "u41",
+     "close up of an open notebook on a wooden bench in sunlight beside an open Bible, a woman's hand holding a pen, handwritten list lines not readable, warm hopeful light",
+     [
+      [
+       "sun",
+       {
+        "en": "Theo's dog. Sunday dinner. Finish my degree. One more day."
+       }
+      ],
+      [
+       "verse",
+       {
+        "en": "The Lord is nigh unto them that are of a broken heart. Psalm thirty four, eighteen."
+       }
+      ]
+     ]
+    ],
+    [
+     "CARD1",
+     null,
+     [
+      [
+       "narr",
+       {
+        "en": "In real life, our Sunshine didn't get her knock."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "So we built a door that's always open."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "For our Sunshine."
+       }
+      ]
+     ]
+    ],
+    [
+     "CARD2",
+     null,
+     [
+      [
+       "app",
+       {
+        "en": "If you're carrying something heavy tonight, tell one person. A text is enough."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "In the United States, call or text nine eight eight, any time."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "Anywhere else, find a free line in your country at find a helpline dot com. If you're in danger right now, call your local emergency number."
+       }
+      ]
+     ]
+    ],
+    [
+     "u42",
+     "a young African American woman with natural curly hair sitting by a sunny window holding a phone, a calm small smile, a cup of tea on the sill, no readable text",
+     [
+      [
+       "app",
+       {
+        "en": "Community Covenant has an Ask for Help button. You don't have to explain everything. A real person from our team reads every message and writes back."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "There are Wisdom Reels with Scripture read aloud for heavy nights, and prayer from people who mean it."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "You are not alone. Keep pushing one more day. Don't give up in God."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "Get Community Covenant at covenant dot crispusmundo dot com."
+       }
+      ]
+     ]
+    ]
+   ]
+  },
+  "f14": {
+   "langs": [
+    "en"
+   ],
+   "shots": [
+    [
+     "l41",
+     "a dark kitchen at 2 in the morning, a 40 year old African American woman with brown skin and her hair in a neat low bun in a bathrobe sitting at the table lit by her phone screen, reading with a stunned face, the screen not visible",
+     [
+      [
+       "mon",
+       {
+        "en": "Hey sis. Not trying to dig up the past. I've moved on, and I hope you have too. God bless!"
+       }
+      ],
+      [
+       "lisa",
+       {
+        "en": "Six years. And that's what you send me."
+       }
+      ]
+     ]
+    ],
+    [
+     "l42",
+     "a hospital surgery waiting room, a 40 year old African American woman with brown skin and her hair in a neat low bun sitting alone in a chair with a newborn baby asleep in an infant car seat carrier at her feet, tired worried face, fluorescent light, clock on the wall",
+     [
+      [
+       "narr",
+       {
+        "en": "Mama's surgery. My baby was nine days old."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "I sat in that room for eleven hours. My sister lived twenty minutes away."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "I texted her. Are you coming? Delivered. Read. Nothing."
+       }
+      ]
+     ]
+    ],
+    [
+     "l43",
+     "night in a hospital waiting room, a 40 year old African American woman with brown skin and her hair in a neat low bun looking at her phone with tears in her eyes, the baby carrier beside her, empty chairs, the screen not visible",
+     [
+      [
+       "narr",
+       {
+        "en": "That night, she posted pictures from a party."
+       }
+      ]
+     ]
+    ],
+    [
+     "l44",
+     "a dark kitchen at 2 in the morning, a 40 year old African American woman with brown skin and her hair in a neat low bun typing angrily on her phone with both thumbs, jaw set, a cold cup of tea, the screen not visible",
+     [
+      [
+       "lisa",
+       {
+        "en": "You moved on? I never got the chance. I'm not doing this again."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "I typed it. I didn't send it."
+       }
+      ]
+     ]
+    ],
+    [
+     "l45",
+     "a 40 year old African American woman with brown skin and her hair in a neat low bun at a kitchen table at night reading an open Bible under a small lamp, her phone set aside, thoughtful tired face",
+     [
+      [
+       "lisa",
+       {
+        "en": "Leave there thy gift before the altar, and go thy way. First be reconciled to thy brother."
+       }
+      ],
+      [
+       "lisa",
+       {
+        "en": "Lord, I've been trying to be reconciled for six years. You can't reconcile with God bless."
+       }
+      ]
+     ]
+    ],
+    [
+     "l46",
+     "a 40 year old African American woman with brown skin and her hair in a neat low bun calm now at the kitchen table at dawn, typing carefully on her phone, a Bible open beside her, soft gray light, the screen not visible",
+     [
+      [
+       "lisa",
+       {
+        "en": "I don't need you to prove yourself. I need you to be honest. You weren't there when I needed my sister most."
+       }
+      ],
+      [
+       "lisa",
+       {
+        "en": "Until you can say that out loud, God bless isn't reconciliation. It's a door you're holding shut while you ask me to walk through it."
+       }
+      ],
+      [
+       "lisa",
+       {
+        "en": "I love you. I'm not closing the door. But I won't pretend it didn't happen."
+       }
+      ]
+     ]
+    ],
+    [
+     "l47",
+     "a 40 year old African American woman nurse with brown skin and her hair in a neat low bun, wearing navy blue scrubs on break in a hospital break room, looking down at a phone ringing in her hand, surprised and nervous, vending machine behind her",
+     [
+      [
+       "narr",
+       {
+        "en": "Three days later. Not a text. A call."
+       }
+      ]
+     ]
+    ],
+    [
+     "l48",
+     "a 37 year old African American woman with long sleek straight hair, polished makeup and a camel blazer sitting in a parked car holding a phone to her ear, eyes wet, no makeup smile, humble, a real estate sign on the back seat, overcast light",
+     [
+      [
+       "mon",
+       {
+        "en": "You're right. I wasn't there."
+       }
+      ],
+      [
+       "mon",
+       {
+        "en": "I was scared of that hospital. And I was jealous of how everybody leaned on you, so I hid behind being busy."
+       }
+      ],
+      [
+       "mon",
+       {
+        "en": "That was wrong. I'm sorry."
+       }
+      ]
+     ]
+    ],
+    [
+     "l49",
+     "close up of a 40 year old African American woman nurse with brown skin and her hair in a neat low bun, wearing navy blue scrubs holding a phone to her ear with her eyes closed, letting out a long breath, a small relieved trembling smile, hospital break room",
+     [
+      [
+       "lisa",
+       {
+        "en": "Thank you for saying it."
+       }
+      ],
+      [
+       "mon",
+       {
+        "en": "Can we start small?"
+       }
+      ],
+      [
+       "lisa",
+       {
+        "en": "Coffee. Sunday. You're buying."
+       }
+      ]
+     ]
+    ],
+    [
+     "l50",
+     "a cozy coffee shop on a Sunday, two African American sisters sitting at a small table, a 40 year old African American woman with brown skin and her hair in a neat low bun in a sweater and a 37 year old African American woman with long sleek straight hair, polished makeup and a camel blazer, a little awkward, the younger sister sliding a coffee cup across the table, the older one almost smiling",
+     [
+      [
+       "narr",
+       {
+        "en": "Trust isn't handed back in one phone call. It's rebuilt, one honest cup of coffee at a time."
+       }
+      ],
+      [
+       "narr",
+       {
+        "en": "But it can't start until somebody tells the truth."
+       }
+      ],
+      [
+       "verse",
+       {
+        "en": "If we confess our sins, he is faithful and just to forgive us our sins. First John one, nine."
+       }
+      ]
+     ]
+    ],
+    [
+     "l51",
+     "a 40 year old African American woman with brown skin and her hair in a neat low bun on a couch in the evening with a phone in her hand, calm, a warm lamp beside her, the screen not visible",
+     [
+      [
+       "app",
+       {
+        "en": "Somebody owe you an apology they may never give? Or do you owe one you don't know how to start?"
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "In Community Covenant, the Wisdom Reels on forgiveness walk you through it with Scripture read aloud."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "Tap Ask for Help, and a real person from our team writes back and prays with you."
+       }
+      ],
+      [
+       "app",
+       {
+        "en": "Forgiveness is free. Trust is rebuilt. Get Community Covenant at covenant dot crispusmundo dot com."
+       }
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "voices": {
+  "f13": {
+   "en": {
+    "narr": [
+     "en-US-AvaMultilingualNeural",
+     "+0%"
+    ],
+    "sun": [
+     "en-US-EmmaMultilingualNeural",
+     "+0%"
+    ],
+    "theo": [
+     "en-US-AnaNeural",
+     "+0%"
+    ],
+    "mom": [
+     "en-US-JennyNeural",
+     "-4%"
+    ],
+    "verse": [
+     "en-US-AndrewMultilingualNeural",
+     "-6%"
+    ],
+    "app": [
+     "en-US-AvaNeural",
+     "-2%"
+    ]
+   }
+  },
+  "f14": {
+   "en": {
+    "narr": [
+     "en-US-AvaMultilingualNeural",
+     "+0%"
+    ],
+    "lisa": [
+     "en-US-AvaMultilingualNeural",
+     "+0%"
+    ],
+    "mon": [
+     "en-US-MichelleNeural",
+     "+2%"
+    ],
+    "verse": [
+     "en-US-AndrewMultilingualNeural",
+     "-6%"
+    ],
+    "app": [
+     "en-US-EmmaMultilingualNeural",
+     "+2%"
+    ]
+   }
+  }
+ },
+ "fallback": {
+  "en-US-MichelleNeural": "en-US-EmmaMultilingualNeural",
+  "en-US-JennyNeural": "en-US-AriaNeural"
+ },
+ "shots": {
+  "u31": "a sunny backyard family cookout, a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt laughing and telling a story while relatives around a picnic table laugh with her, string lights, grill smoke",
+  "u32": "a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt fixing the collar of a nervous friend in a dress shirt outside an office building, both smiling, morning light",
+  "u33": "a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt sitting on a city bus looking at her phone with a quick forced smile, the screen not visible, afternoon light through the window",
+  "u34": "a dark bedroom at night lit only by blue window light, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt sitting alone on the floor with her back against the bed and her knees pulled up, a phone face down on the carpet beside her, heavy quiet mood, nothing else on the floor",
+  "u35": "a bedroom doorway at night, a 10 year old African American boy in blue pajamas standing in the doorway holding a pillow, sleepy and scared, soft hallway light behind him",
+  "u36": "dim bedroom at night, a 10 year old African American boy in blue pajamas lying in bed under a blanket talking with his hands, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt lying beside him listening, soft blue light",
+  "u37": "close up of a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt lying awake on a pillow at night staring at the ceiling, a single tear on her cheek, a sleeping 10 year old boy's head resting on her arm, blue light",
+  "u38": "gray early dawn light in a bedroom, a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt sitting up in bed holding a phone with both hands, typing, a 10 year old boy still asleep beside her, the screen not visible",
+  "u39": "dawn light in a bedroom, a 52 year old African American mother with short gray-streaked natural hair, wearing a robe kneeling beside the bed with her arms wrapped tightly around a 24 year old African American young woman with warm brown skin and shoulder length natural curly hair, wearing a gray oversized t-shirt, both eyes closed, a 10 year old boy asleep in the background",
+  "u40": "a calm bright afternoon, a 24 year old African American young woman with warm brown skin, a bright smile and shoulder length natural curly hair, wearing a yellow sweatshirt sitting on a wooden bench outside a small brick counseling office building with a Bible open on her lap and a notebook beside her, gentle hopeful expression, no readable text",
+  "u41": "close up of an open notebook on a wooden bench in sunlight beside an open Bible, a woman's hand holding a pen, handwritten list lines not readable, warm hopeful light",
+  "u42": "a young African American woman with natural curly hair sitting by a sunny window holding a phone, a calm small smile, a cup of tea on the sill, no readable text",
+  "l41": "a dark kitchen at 2 in the morning, a 40 year old African American woman with brown skin and her hair in a neat low bun in a bathrobe sitting at the table lit by her phone screen, reading with a stunned face, the screen not visible",
+  "l42": "a hospital surgery waiting room, a 40 year old African American woman with brown skin and her hair in a neat low bun sitting alone in a chair with a newborn baby asleep in an infant car seat carrier at her feet, tired worried face, fluorescent light, clock on the wall",
+  "l43": "night in a hospital waiting room, a 40 year old African American woman with brown skin and her hair in a neat low bun looking at her phone with tears in her eyes, the baby carrier beside her, empty chairs, the screen not visible",
+  "l44": "a dark kitchen at 2 in the morning, a 40 year old African American woman with brown skin and her hair in a neat low bun typing angrily on her phone with both thumbs, jaw set, a cold cup of tea, the screen not visible",
+  "l45": "a 40 year old African American woman with brown skin and her hair in a neat low bun at a kitchen table at night reading an open Bible under a small lamp, her phone set aside, thoughtful tired face",
+  "l46": "a 40 year old African American woman with brown skin and her hair in a neat low bun calm now at the kitchen table at dawn, typing carefully on her phone, a Bible open beside her, soft gray light, the screen not visible",
+  "l47": "a 40 year old African American woman nurse with brown skin and her hair in a neat low bun, wearing navy blue scrubs on break in a hospital break room, looking down at a phone ringing in her hand, surprised and nervous, vending machine behind her",
+  "l48": "a 37 year old African American woman with long sleek straight hair, polished makeup and a camel blazer sitting in a parked car holding a phone to her ear, tears running down her cheeks, not smiling, ashamed and humble, mascara smudged, a real estate sign on the back seat, overcast light",
+  "l49": "close up of a 40 year old African American woman nurse with brown skin and her hair in a neat low bun, wearing navy blue scrubs holding a phone to her ear with her eyes closed, letting out a long breath, a small relieved trembling smile, hospital break room",
+  "l50": "a cozy coffee shop on a Sunday, two African American sisters sitting at a small table, a 40 year old African American woman with brown skin and her hair in a neat low bun in a sweater and a 37 year old African American woman with long sleek straight hair, polished makeup and a camel blazer, a little awkward, the younger sister sliding a coffee cup across the table, the older one almost smiling",
+  "l51": "a 40 year old African American woman with brown skin and her hair in a neat low bun on a couch in the evening with a phone in her hand, calm, a warm lamp beside her, the screen not visible"
+ }
+}

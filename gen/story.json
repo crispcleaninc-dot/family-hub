@@ -1,0 +1,928 @@
+{
+ "shots": {
+  "m01": "an elementary school classroom with children at desks, a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt sitting alone at his desk looking down sadly, a paper flyer face down on his desk, soft morning light, no readable text",
+  "m02": "a small apartment kitchen at night, a 33 year old Afro-Latina mother with brown skin and curly hair pulled back, wearing a teal hospital food-service uniform standing with car keys in her hand looking at her son, a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt at the table with homework, warm overhead light",
+  "m03": "a 72 year old Afro-Latina great-grandmother with dark brown skin, high cheekbones, silver hair in a neat low bun, small gold hoop earrings, wearing a floral house dress and a soft gray cardigan, sitting in a worn armchair in a living room at night, listening with a serious knowing expression, a lamp beside her",
+  "m04": "a 72 year old Afro-Latina great-grandmother with dark brown skin, high cheekbones, silver hair in a neat low bun, small gold hoop earrings, wearing a floral house dress and a soft gray cardigan and a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt sitting together on the front porch steps of a small house at golden hour, she is talking, he is listening",
+  "m05": "warm sepia toned memory scene of a Caribbean village evening long ago, Afro-Caribbean and Indigenous men and women of all ages with brown and dark brown skin sitting together around a small outdoor fire near palm trees and a wooden house, a little Afro-Latina girl in a simple white cotton dress sitting among them, plain everyday clothes, no headscarves, peaceful, film grain",
+  "m06": "close shot of a 72 year old Afro-Latina great-grandmother with dark brown skin, high cheekbones, silver hair in a neat low bun, small gold hoop earrings, wearing a floral house dress and a soft gray cardigan on the porch counting on her fingers with a sly smile, a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt beside her starting to grin, evening light",
+  "m07": "a 72 year old Afro-Latina great-grandmother with dark brown skin, high cheekbones, silver hair in a neat low bun, small gold hoop earrings, wearing a floral house dress and a soft gray cardigan sitting at night talking on an old corded house phone with a church directory open on her lap, determined expression, lamp light",
+  "m08": "a bright school cafeteria in the morning, children sitting with their fathers eating donuts, a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt sitting alone at the end of a table with one donut on a napkin",
+  "m09": "four men walking together through the double doors of a school cafeteria, smiling: a 63 year old Puerto Rican man with a gray goatee in a plain white dress shirt, a 74 year old Dominican man with dark brown skin in a gray suit and tie, a 34 year old Mexican-American man in a plain solid black hoodie with no logo and no lettering and a whistle, and a 55 year old Nigerian man with round glasses in a plain blue button shirt, children turning to look, plain clothing with no printed words",
+  "m10": "a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt laughing at a cafeteria table surrounded by four men: an older Dominican man in a gray suit with a napkin tucked into his collar, a Nigerian man with round glasses reading a homework folder, a Puerto Rican man with a gray goatee, a young coach in a black hoodie, donuts on the table",
+  "m11": "a 9 year old Afro-Latino boy with warm brown skin and short curly black hair, wearing a navy school polo shirt hugging a 72 year old Afro-Latina great-grandmother with dark brown skin, high cheekbones, silver hair in a neat low bun, small gold hoop earrings, wearing a floral house dress and a soft gray cardigan on the front porch in afternoon light, her eyes closed, peaceful",
+  "m12": "a 30 year old Afro-Latino man with warm brown skin and short curly black hair, wearing a jacket, walking up to a neighbor's porch carrying a box of donuts toward a young boy sitting on the steps, morning light",
+  "s01": "a kitchen table with five white envelopes, five pens and a shoebox wrapped in shiny gold paper with a slot cut in the lid, warm evening light, no readable text",
+  "s02": "a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater at the head of a kitchen table, a 70 year old Mexican-American grandfather with weathered tan skin and a white mustache, wearing a plaid flannel shirt raising a skeptical eyebrow, a 38 year old Mexican-American woman with tan skin and shoulder-length wavy hair, wearing a denim jacket and an 11 year old Mexican-American girl with tan skin and long dark braided hair, wearing a pink sweatshirt holding pens, evening",
+  "s03": "a 16 year old Mexican-American boy with tan skin and short dark hair, wearing a gray hoodie writing on a small piece of paper at a table, covering it with his arm so no one can see, serious face",
+  "s04": "a Mexican-American family of five holding hands around a kitchen table at night praying, a grandfather in a plaid flannel shirt with eyes closed, candles, warm light",
+  "s05": "view from a dark hallway of a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater washing dishes alone at a kitchen sink at midnight, exhausted, a single light over the sink",
+  "s06": "a Mexican-American family around a kitchen table with lit candles, each holding an opened envelope, an 11 year old Mexican-American girl with tan skin and long dark braided hair, wearing a pink sweatshirt smiling proudly, a 38 year old Mexican-American woman with tan skin and shoulder-length wavy hair, wearing a denim jacket holding up a work ID badge",
+  "s07": "a 70 year old Mexican-American grandfather with weathered tan skin and a white mustache, wearing a plaid flannel shirt wearing reading glasses reading a small handwritten note at a table, surprised realization on his face, candlelight",
+  "s08": "a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater reading a handwritten note at a candlelit table, a quiet hopeful but unfinished expression",
+  "s09": "a 16 year old Mexican-American boy with tan skin and short dark hair, wearing a gray hoodie handing a folded envelope to a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater across a candlelit kitchen table, he looks away",
+  "s10": "close-up of a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater looking up at her teenage son with tears in her eyes, candlelight",
+  "s11": "a 42 year old Mexican-American woman with light brown skin and long dark hair in a low ponytail, wearing a maroon sweater hugging a 16 year old Mexican-American boy with tan skin and short dark hair, wearing a gray hoodie tightly in a kitchen, his eyes closed, warm light",
+  "s12": "a Mexican-American family laughing around a kitchen table, a mother taping a new slot on a gold-wrapped shoebox, a grandfather in a plaid shirt chuckling, a girl with braids grinning",
+  "b01": "inside a church van on a highway, a 15 year old Puerto Rican boy with light brown skin and short curly dark hair, wearing a black hoodie with earbuds in, and a 12 year old Puerto Rican boy with light brown skin and short dark hair, wearing a gray hoodie with his hood up staring out the window, afternoon light",
+  "b02": "a rustic wooden camp chapel at night full of teenagers, low warm lights, a simple acoustic worship band on a small stage, a young youth pastor speaking softly",
+  "b03": "a 12 year old Puerto Rican boy with light brown skin and short dark hair, wearing a gray hoodie, hood down now, walking alone down the aisle of a camp chapel toward the front, other teens watching, warm low light",
+  "b04": "a 12 year old Puerto Rican boy with light brown skin and short dark hair, wearing a gray hoodie kneeling at the front of a camp chapel with his shoulders shaking, crying, an adult counselor kneeling beside him with a hand on his back",
+  "b05": "a 15 year old Puerto Rican boy with light brown skin and short curly dark hair, wearing a black hoodie standing alone by a campfire at night talking on his phone, sparks rising, pine trees",
+  "b06": "a 39 year old Puerto Rican mother with light brown skin and curly shoulder-length hair in a bathrobe standing in a dark kitchen at night holding a phone to her ear, one hand over her mouth, crying and laughing with joy",
+  "b07": "a cabin with bunk beds at night, a 12 year old Puerto Rican boy with light brown skin and short dark hair, wearing a gray hoodie sitting on a bottom bunk with red eyes and a peaceful face, a 15 year old Puerto Rican boy with light brown skin and short curly dark hair, wearing a black hoodie sitting on the edge of the bunk beside him, a small lamp",
+  "b08": "a 39 year old Puerto Rican mother with light brown skin and curly shoulder-length hair in a bathrobe on a front porch in the morning hugging a 12 year old Puerto Rican boy with light brown skin and short dark hair, wearing a gray hoodie, a church van parked at the curb, a 15 year old Puerto Rican boy with light brown skin and short curly dark hair, wearing a black hoodie carrying two duffel bags",
+  "b09": "a teenage boy's hands holding an open Bible at a kitchen table in morning light, a coffee mug beside it, no readable text",
+  "w01": "a 14 year old Latina girl with light brown skin and long dark wavy hair in a cropped beige puffer jacket, facing the camera and rolling her eyes while holding a phone, in a dining room, her mother, a 40 year old Latina woman with a dark ponytail and a blue blouse, stands behind her pointing at a blank whiteboard with a marker, the whiteboard has only empty grid lines and no writing",
+  "w02": "a 68 year old Mexican grandmother with tan skin and gray hair in a bun, wearing a long dark skirt and a knitted cream cardigan, holding a wooden cane walking slowly on a neighborhood sidewalk at sunset holding the arm of a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket, who is texting on her phone with her other hand",
+  "w03": "a 68 year old Mexican grandmother with tan skin and gray hair in a bun, wearing a long dark skirt and a knitted cream cardigan, holding a wooden cane pointing at a small corner store with her cane, a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket laughing hard beside her, evening light",
+  "w04": "a 68 year old Mexican grandmother with tan skin and gray hair in a bun, wearing a long dark skirt and a knitted cream cardigan, holding a wooden cane resting on a bench beside a small church at golden hour, eyes half closed humming, a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket beside her quietly holding up her phone to record",
+  "w05": "a 68 year old Mexican grandmother with tan skin and gray hair in a bun, wearing a long dark skirt and a knitted cream cardigan, holding a wooden cane and a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket walking close together under one umbrella in the rain on a sidewalk, serious quiet conversation, gray light",
+  "w06": "seen through a living room window, a 68 year old Mexican grandmother with tan skin and gray hair in a bun, wearing a long dark skirt and a knitted cream cardigan, holding a wooden cane on a front porch holding the face of her grown daughter a 40 year old Latina mother with light brown skin and dark hair in a ponytail, wearing a blue blouse in both hands, the daughter crying, tender, evening light",
+  "w07": "a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket writing on a whiteboard full of check marks with a marker, a 40 year old Latina mother with light brown skin and dark hair in a ponytail, wearing a blue blouse watching from the doorway with a soft smile, no readable text",
+  "w08": "a 14 year old Latina girl with light brown skin and long dark wavy hair, wearing a cropped beige puffer jacket at a desk in her bedroom doing homework, her phone propped up playing an audio recording, a soft smile, lamp light",
+  "x1": "close-up of a woman's hands holding a smartphone at a kitchen table at night, warm lamp light, the screen glowing softly, a Bible and a cup of coffee beside it, no readable text",
+  "x2": "a Latino man sitting on front porch steps in the evening looking at his phone with a small hopeful smile, warm porch light, quiet neighborhood street",
+  "x3": "a multigenerational Latino family holding hands around a dinner table praying with eyes closed, a phone lying face up on the table, warm golden light"
+ },
+ "films": {
+  "f1": [
+   [
+    "m01",
+    [
+     [
+      "narr_m",
+      "Tenía nueve años el año que hicieron el Desayuno con Papá en la escuela. Yo ya sabía que no iba a ir.",
+      "I was nine the year my school held Donuts with Dads. I already knew I wasn't going."
+     ]
+    ]
+   ],
+   [
+    "m02",
+    [
+     [
+      "tania",
+      "Mijo, tu maestra me escribió. ¿No vas a ir el viernes?",
+      "Baby, your teacher emailed me. You're not going Friday?"
+     ],
+     [
+      "narr_m",
+      "Le pregunté a quién se suponía que iba a llevar. Me dijo que iba a pedir la mañana libre. Pero el papel decía papás.",
+      "I asked her who I was supposed to bring. She said she'd take the morning off. But the flyer said dads."
+     ],
+     [
+      "tania",
+      "Hablamos mañana, mijo. Tengo turno doble.",
+      "We'll talk tomorrow, baby. I've got a double shift."
+     ]
+    ]
+   ],
+   [
+    "m03",
+    [
+     [
+      "narr_m",
+      "Mi bisabuela, Mamá Ruth, lo escuchó todo desde su sillón.",
+      "My great-grandma, Mama Ruth, heard every word from her chair."
+     ]
+    ]
+   ],
+   [
+    "m04",
+    [
+     [
+      "ruth",
+      "Siéntate. Te voy a contar algo que me contó mi mamá.",
+      "Sit down. I'm going to tell you something my mother told me."
+     ]
+    ]
+   ],
+   [
+    "m05",
+    [
+     [
+      "ruth",
+      "De donde venía mi madre, un niño no tenía un solo padre. Tenía muchos. Los tíos, los viejos, los vecinos. Si tu papá no podía, el papá de otro sí podía. Ningún niño era hijo de nadie.",
+      "Where my mother came from, a child didn't have one father. He had many. The uncles, the old men, the neighbors. If your daddy couldn't, somebody's daddy would. Nobody's child was nobody's child."
+     ],
+     [
+      "narr_m",
+      "Yo le dije que aquí no era así.",
+      "I told her it wasn't like that here."
+     ]
+    ]
+   ],
+   [
+    "m06",
+    [
+     [
+      "ruth",
+      "¿Ah, no? ¿Quién te enseñó a hacerte el nudo de la corbata para Semana Santa?",
+      "Isn't it? Who taught you to tie a tie for Easter?"
+     ],
+     [
+      "narr_m",
+      "Don Luis, el barbero.",
+      "Mr. Luis, the barber."
+     ],
+     [
+      "ruth",
+      "¿Quién te lleva a la práctica en la camioneta de la iglesia todos los martes?",
+      "Who drives you to practice in the church van every Tuesday?"
+     ],
+     [
+      "narr_m",
+      "El diácono Santiago.",
+      "Deacon Santiago."
+     ],
+     [
+      "ruth",
+      "¿Y quién no te deja pasar por su portal hasta que le enseñas la tarea de matemáticas?",
+      "And who won't let you past his porch until he sees your math?"
+     ],
+     [
+      "narr_m",
+      "El señor Okafor. Y el coach Andrés, que me dijo que levantara la cabeza cuando perdimos.",
+      "Mr. Okafor. And Coach Andrés, who told me to keep my head up when we lost."
+     ],
+     [
+      "ruth",
+      "Mm-hm. Cuatro padres, y eso que es una sola cuadra. Dios hace habitar en familia a los desamparados. Tú no estás solo, mijo.",
+      "Mm-hm. Four fathers, and that's just this block. God sets the solitary in families. You are not alone, baby."
+     ]
+    ]
+   ],
+   [
+    "m07",
+    [
+     [
+      "ruth",
+      "Hermano Luis, habla Ruth. Viernes, siete y media. Ponte la camisa buena.",
+      "Brother Luis, it's Ruth. Friday, seven-thirty. Wear your good shirt."
+     ],
+     [
+      "ruth",
+      "Diácono, lo necesito en esa escuela temprano. Coach, no llegue tarde. Yo me entero.",
+      "Deacon, I need you at that school in the morning. Coach, don't be late. I'll know."
+     ]
+    ]
+   ],
+   [
+    "m08",
+    [
+     [
+      "narr_m",
+      "Ese viernes, todos tenían a su papá. Yo tenía una dona.",
+      "That Friday, everybody had their dad. I had a donut."
+     ]
+    ]
+   ],
+   [
+    "m09",
+    [
+     [
+      "narr_m",
+      "Entonces se abrió la puerta.",
+      "Then the door opened."
+     ],
+     [
+      "narr_m",
+      "Un niño me preguntó quiénes eran. Me paré despacito y le dije: mis papás.",
+      "A kid asked me who they were. I stood up slow and said, my dads."
+     ],
+     [
+      "coach",
+      "Hazte pa'llá, campeón. Tengo hambre.",
+      "Scoot over, champ. I'm hungry."
+     ]
+    ]
+   ],
+   [
+    "m10",
+    [
+     [
+      "narr_m",
+      "El diácono se metió la servilleta en el cuello. El señor Okafor ya tenía mi tarea abierta en la mesa.",
+      "The Deacon tucked a napkin in his collar. Mr. Okafor already had my homework open on the table."
+     ]
+    ]
+   ],
+   [
+    "m11",
+    [
+     [
+      "narr_m",
+      "Esa tarde le pregunté si Dios también era mi padre.",
+      "That afternoon I asked her if God was my father too."
+     ],
+     [
+      "ruth",
+      "No lo creo. Lo sé. Padre de huérfanos es Dios en su santa morada. Esta mañana te mandó cuatro ayudantes para que lo vieras con tus propios ojos.",
+      "I don't think it. I know it. A father of the fatherless is God in his holy habitation. This morning He sent you four of His helpers so you could see Him with your own eyes."
+     ]
+    ]
+   ],
+   [
+    "m12",
+    [
+     [
+      "narr_m",
+      "Hoy tengo treinta años y un hijo. Y cada viernes le llevo una dona a un niño de mi cuadra cuyo papá no puede venir.",
+      "I'm thirty now. I've got a son. And every Friday, I take a donut to a boy on my block whose daddy can't come."
+     ],
+     [
+      "verse",
+      "Padre de huérfanos y defensor de viudas es Dios en su santa morada. Dios hace habitar en familia a los desamparados. Salmo sesenta y ocho.",
+      "A father of the fatherless, and a judge of the widows, is God in his holy habitation. God setteth the solitary in families. Psalm sixty-eight."
+     ]
+    ]
+   ],
+   [
+    "x1",
+    [
+     [
+      "app",
+      "¿Necesitas una aldea, o quieres ser una?",
+      "Need a village, or want to be one?"
+     ],
+     [
+      "app",
+      "Descarga Community Covenant en covenant punto crispusmundo punto com. La app está en inglés por ahora.",
+      "Get Community Covenant at covenant dot crispusmundo dot com."
+     ]
+    ]
+   ],
+   [
+    "x2",
+    [
+     [
+      "app",
+      "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas.",
+      "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+     ],
+     [
+      "app",
+      "Escribe lo que estás cargando en Pide Ayuda. Una persona real de nuestro equipo te contesta el mismo día, con la Palabra y un próximo paso.",
+      "Type what you're carrying into Ask for Help. A real person on our team writes back the same day, with the Word and a next step."
+     ]
+    ]
+   ],
+   [
+    "x3",
+    [
+     [
+      "app",
+      "Lleva tu ayuno, tus caminatas y tus oraciones por treinta días, solo o con tu familia, y mira lo que Dios hace.",
+      "Track your fast, your walks and your prayers for thirty days, alone or with your family, and watch what God does."
+     ],
+     [
+      "app",
+      "Community Covenant. No estás solo. Sigue un día más. Suscríbete para la próxima historia.",
+      "Community Covenant. You are not alone. Keep pushing one more day. Subscribe for the next story."
+     ]
+    ]
+   ]
+  ],
+  "f2": [
+   [
+    "s01",
+    [
+     [
+      "narr_t",
+      "El primer día del ayuno, mi mamá puso cinco sobres en la mesa y una caja de zapatos forrada de papel dorado.",
+      "On the first day of the fast, my mom put five envelopes on the table and a shoebox wrapped in gold paper."
+     ],
+     [
+      "rosa",
+      "Cinco oraciones cada uno. Nadie lee las de nadie. Ni yo. Las sellamos, las oramos cada noche por treinta días, y el día treinta las abrimos juntos.",
+      "Five prayers each. Nobody reads anybody's. Not even me. We seal them, we pray them every night for thirty days, and on day thirty we open them together."
+     ]
+    ]
+   ],
+   [
+    "s02",
+    [
+     [
+      "jose",
+      "¿Y si no pasa nada?",
+      "And if nothing happens?"
+     ],
+     [
+      "rosa",
+      "Entonces también lo sabremos.",
+      "Then we'll know that too."
+     ]
+    ]
+   ],
+   [
+    "s03",
+    [
+     [
+      "narr_t",
+      "Yo escribí la quinta y la tapé con el brazo. No quería que nadie la viera.",
+      "I wrote my fifth one and covered it with my arm. I didn't want anyone to see it."
+     ]
+    ]
+   ],
+   [
+    "s04",
+    [
+     [
+      "narr_t",
+      "Cada noche, a las ocho, nos tomábamos de las manos. El abuelo José al principio abría los ojos. Para el día diez, ya los cerraba.",
+      "Every night at eight, we held hands. Grandpa José kept his eyes open at first. By day ten, he closed them."
+     ]
+    ]
+   ],
+   [
+    "s05",
+    [
+     [
+      "narr_t",
+      "Y yo seguía viendo a mi mamá lavar platos a medianoche, cansada.",
+      "And I kept watching my mom wash dishes at midnight, tired."
+     ]
+    ]
+   ],
+   [
+    "s06",
+    [
+     [
+      "narr_t",
+      "El día treinta, cada uno leyó sus propias oraciones en voz alta.",
+      "On day thirty, each of us read our own prayers out loud."
+     ],
+     [
+      "narr_t",
+      "Camila leyó la primera: entrar al equipo de baile. Todos la miramos. Entró. El martes.",
+      "Camila read her first: make the dance team. We all looked at her. She made it. Tuesday."
+     ],
+     [
+      "vanessa",
+      "La mía: un trabajo con seguro médico. Empecé el lunes.",
+      "Mine: a job with health insurance. Started Monday."
+     ]
+    ]
+   ],
+   [
+    "s07",
+    [
+     [
+      "jose",
+      "Que mi rodilla me deje caminar a la iglesia otra vez.",
+      "That my knee would let me walk to church again."
+     ],
+     [
+      "rosa",
+      "Papá, el domingo caminaste.",
+      "Dad, you walked last Sunday."
+     ],
+     [
+      "jose",
+      "Es cierto, ¿verdad?",
+      "I did, didn't I."
+     ]
+    ]
+   ],
+   [
+    "s08",
+    [
+     [
+      "rosa",
+      "Tener nuestra propia casa antes de la primavera. Todavía no.",
+      "That we'd have our own place by spring. Not yet."
+     ],
+     [
+      "jose",
+      "Aunque tardare, espéralo.",
+      "Though it tarry, wait for it."
+     ],
+     [
+      "rosa",
+      "Mírate, citando la Biblia.",
+      "Look at you quoting Scripture."
+     ],
+     [
+      "jose",
+      "Llevo treinta días escuchando. Déjame en paz.",
+      "I've been listening for thirty days. Leave me alone."
+     ]
+    ]
+   ],
+   [
+    "s09",
+    [
+     [
+      "narr_t",
+      "Yo no quería leer la mía. Se la di a mi mamá.",
+      "I didn't want to read mine. I handed it to my mom."
+     ],
+     [
+      "rosa",
+      "Número cinco: que mi mamá deje de llorar sola en la cocina por las noches.",
+      "Number five: that Mom would stop crying alone in the kitchen at night."
+     ]
+    ]
+   ],
+   [
+    "s10",
+    [
+     [
+      "rosa",
+      "¿Me escuchabas?",
+      "You heard me?"
+     ],
+     [
+      "andres",
+      "Todas las noches. Por mucho tiempo.",
+      "Every night. For a long time."
+     ],
+     [
+      "rosa",
+      "¿Y estas dos semanas? ¿Me has oído?",
+      "And these last two weeks? Have you heard me?"
+     ],
+     [
+      "andres",
+      "No.",
+      "No."
+     ],
+     [
+      "rosa",
+      "Porque estas dos semanas no he llorado sola. He estado orando con mi familia.",
+      "Because these two weeks I haven't been crying alone. I've been praying with my family."
+     ]
+    ]
+   ],
+   [
+    "s11",
+    [
+     [
+      "narr_t",
+      "Me abrazó. Y por primera vez en mucho tiempo, la dejé.",
+      "She hugged me. And for the first time in a long time, I let her."
+     ]
+    ]
+   ],
+   [
+    "s12",
+    [
+     [
+      "rosa",
+      "Segunda ronda.",
+      "Round two."
+     ],
+     [
+      "narr_t",
+      "Camila preguntó si podía orar por una caja más grande.",
+      "Camila asked if she could pray for a bigger box."
+     ],
+     [
+      "jose",
+      "Ora por una mesa más grande. Ya no cabemos.",
+      "Pray for a bigger table. We're running out of room."
+     ],
+     [
+      "verse",
+      "Porque donde están dos o tres congregados en mi nombre, allí estoy yo en medio de ellos. Mateo dieciocho, veinte.",
+      "For where two or three are gathered together in my name, there am I in the midst of them. Matthew eighteen, twenty."
+     ]
+    ]
+   ],
+   [
+    "x1",
+    [
+     [
+      "app",
+      "Escribe tus oraciones. Órenlas juntos. Ábranlas el día treinta.",
+      "Write it down. Pray it together. Open it on day thirty."
+     ],
+     [
+      "app",
+      "Descarga Community Covenant en covenant punto crispusmundo punto com. La app está en inglés por ahora.",
+      "Get Community Covenant at covenant dot crispusmundo dot com."
+     ]
+    ]
+   ],
+   [
+    "x2",
+    [
+     [
+      "app",
+      "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas.",
+      "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+     ],
+     [
+      "app",
+      "Escribe lo que estás cargando en Pide Ayuda. Una persona real de nuestro equipo te contesta el mismo día, con la Palabra y un próximo paso.",
+      "Type what you're carrying into Ask for Help. A real person on our team writes back the same day, with the Word and a next step."
+     ]
+    ]
+   ],
+   [
+    "x3",
+    [
+     [
+      "app",
+      "Lleva tu ayuno, tus caminatas y tus oraciones por treinta días, solo o con tu familia, y mira lo que Dios hace.",
+      "Track your fast, your walks and your prayers for thirty days, alone or with your family, and watch what God does."
+     ],
+     [
+      "app",
+      "Community Covenant. No estás solo. Sigue un día más. Suscríbete para la próxima historia.",
+      "Community Covenant. You are not alone. Keep pushing one more day. Subscribe for the next story."
+     ]
+    ]
+   ]
+  ],
+  "f3": [
+   [
+    "b01",
+    [
+     [
+      "narr_t",
+      "Mi mamá nos mandó a los dos al retiro de jóvenes. Yo fui para vigilar a Elías. Elías fue porque no tenía opción.",
+      "Mom made us both go to the youth retreat. I went to keep an eye on Eli. Eli went because he had no choice."
+     ],
+     [
+      "narr_t",
+      "Desde que mi papá se fue, Elías andaba enojado con todo el mundo.",
+      "Ever since Dad left, Eli was mad at everybody."
+     ]
+    ]
+   ],
+   [
+    "b02",
+    [
+     [
+      "pastor",
+      "Algunos de ustedes llevan mucho tiempo enojados. Ya ni se acuerdan de cómo era no estarlo. Si eres tú, no necesitas las palabras correctas. Solo ven.",
+      "Some of you have been angry a long time. You don't even remember what it's like not to be. If that's you, you don't need the right words. Just come."
+     ]
+    ]
+   ],
+   [
+    "b03",
+    [
+     [
+      "narr_t",
+      "Y entonces Elías se paró. Se quitó la capucha. Caminó solo hasta el frente.",
+      "And then Eli stood up. He took his hood down. He walked to the front alone."
+     ]
+    ]
+   ],
+   [
+    "b04",
+    [
+     [
+      "narr_t",
+      "Nunca había visto llorar a mi hermano. Ni cuando papá se fue. Nunca.",
+      "I'd never seen my brother cry. Not when Dad left. Not ever."
+     ]
+    ]
+   ],
+   [
+    "b05",
+    [
+     [
+      "narr_t",
+      "Salí, me alejé de todos y llamé a mi mamá.",
+      "I walked outside, away from everybody, and called my mom."
+     ],
+     [
+      "lena",
+      "¿Isaías? ¿Qué pasó, mijo?",
+      "Isaiah? What's wrong, baby?"
+     ],
+     [
+      "isaias",
+      "No pasó nada malo. Mamá... Elías le entregó su vida a Cristo.",
+      "Nothing's wrong. Mama... Eli gave his life to Christ."
+     ]
+    ]
+   ],
+   [
+    "b06",
+    [
+     [
+      "lena",
+      "¡Gracias, Jesús! ¡Gracias, Jesús!",
+      "Thank You, Jesus! Thank You, Jesus!"
+     ],
+     [
+      "lena",
+      "No, no me lo pases. Déjalo tener su momento. Tú abrázalo por mí.",
+      "No, don't put him on. Let him have it. You hug him for me."
+     ]
+    ]
+   ],
+   [
+    "b07",
+    [
+     [
+      "narr_t",
+      "En la cabaña, Elías me preguntó si le había dicho a mamá. Le dije que sí. Me dijo: qué bueno.",
+      "In the cabin, Eli asked if I told Mom. I said yes. He said, good."
+     ],
+     [
+      "isaias",
+      "Me dijo que te abrazara.",
+      "She said to hug you."
+     ],
+     [
+      "narr_t",
+      "Me dijo que no lo hiciera raro. Lo abracé de todas formas. Y me dejó.",
+      "He told me not to make it weird. I hugged him anyway. He let me."
+     ]
+    ]
+   ],
+   [
+    "b08",
+    [
+     [
+      "narr_t",
+      "El domingo, mamá nos esperaba en el portal en bata. Elías caminó derechito a sus brazos.",
+      "Sunday, Mom was waiting on the porch in her robe. Eli walked straight into her arms."
+     ]
+    ]
+   ],
+   [
+    "b09",
+    [
+     [
+      "narr_t",
+      "La Biblia dice que Andrés halló primero a su hermano Simón, y le dijo: hemos hallado al Mesías. Yo no traje a Elías a Jesús. Pero me tocó traer la noticia a casa.",
+      "The Bible says Andrew first found his own brother Simon and told him, we have found the Messias. I didn't bring Eli to Jesus. But I got to bring the news home."
+     ],
+     [
+      "verse",
+      "Os digo que así habrá más gozo en el cielo por un pecador que se arrepiente. Lucas quince, siete.",
+      "Joy shall be in heaven over one sinner that repenteth. Luke fifteen, seven."
+     ]
+    ]
+   ],
+   [
+    "x1",
+    [
+     [
+      "app",
+      "¿Acabas de entregarle tu vida a Cristo? Empieza a leer esta noche, un capítulo a la vez.",
+      "Just got saved? Start reading tonight, one chapter at a time."
+     ],
+     [
+      "app",
+      "Descarga Community Covenant en covenant punto crispusmundo punto com. La app está en inglés por ahora.",
+      "Get Community Covenant at covenant dot crispusmundo dot com."
+     ]
+    ]
+   ],
+   [
+    "x2",
+    [
+     [
+      "app",
+      "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas.",
+      "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+     ],
+     [
+      "app",
+      "Escribe lo que estás cargando en Pide Ayuda. Una persona real de nuestro equipo te contesta el mismo día, con la Palabra y un próximo paso.",
+      "Type what you're carrying into Ask for Help. A real person on our team writes back the same day, with the Word and a next step."
+     ]
+    ]
+   ],
+   [
+    "x3",
+    [
+     [
+      "app",
+      "Lleva tu ayuno, tus caminatas y tus oraciones por treinta días, solo o con tu familia, y mira lo que Dios hace.",
+      "Track your fast, your walks and your prayers for thirty days, alone or with your family, and watch what God does."
+     ],
+     [
+      "app",
+      "Community Covenant. No estás solo. Sigue un día más. Suscríbete para la próxima historia.",
+      "Community Covenant. You are not alone. Keep pushing one more day. Subscribe for the next story."
+     ]
+    ]
+   ]
+  ],
+  "f4": [
+   [
+    "w01",
+    [
+     [
+      "narr_f",
+      "El verano que hicimos el ayuno en familia, mi mamá hizo una tabla. Cada uno tenía un turno para caminar con la abuela. El mío era a las seis de la tarde.",
+      "The summer we did the family fast, my mom made a chart. Everybody got one slot to walk with Grandma. Mine was six p.m."
+     ],
+     [
+      "dani",
+      "¿Por qué tengo que caminar con la abuela? Camina como tortuga.",
+      "Why do I have to walk with Grandma? She walks like a turtle."
+     ],
+     [
+      "carla",
+      "Por eso. Vas a ir despacio veinte minutos al día. Ya sé, te vas a morir.",
+      "That's why. You're going to slow down twenty minutes a day. I know, it'll kill you."
+     ]
+    ]
+   ],
+   [
+    "w02",
+    [
+     [
+      "narr_f",
+      "Día uno. La abuela de mi brazo, y yo con el teléfono en la otra mano.",
+      "Day one. Grandma on my arm, and me with my phone in the other hand."
+     ],
+     [
+      "bea",
+      "Sabes que te veo escribiendo, ¿verdad?",
+      "You know I can see you texting."
+     ],
+     [
+      "dani",
+      "Estoy caminando.",
+      "I'm walking."
+     ],
+     [
+      "bea",
+      "Estás presente como está presente un fantasma.",
+      "You're present like a ghost is present."
+     ]
+    ]
+   ],
+   [
+    "w03",
+    [
+     [
+      "narr_f",
+      "Día cuatro, pasamos por la tiendita de la esquina.",
+      "Day four, we passed the corner store."
+     ],
+     [
+      "bea",
+      "Tu mamá se robó un dulce de esta tienda. La hice devolverlo y pedirle perdón al señor. Lloró todo el camino.",
+      "Your mama stole candy from this store. I made her bring it back and apologize to the man. She cried the whole way."
+     ],
+     [
+      "dani",
+      "¿Mi mamá? ¿La señora de las listas?",
+      "My mom? Mrs. Spreadsheet?"
+     ],
+     [
+      "narr_f",
+      "Me reí de verdad, por primera vez.",
+      "I laughed for real, for the first time."
+     ]
+    ]
+   ],
+   [
+    "w04",
+    [
+     [
+      "bea",
+      "Mi mamá limpiaba casas de gente que nunca dijo bien su nombre. Caminaba dos millas de ida y dos de vuelta. Y cantaba todo el camino. Himnos.",
+      "My mother cleaned houses for people who never said her name right. She walked two miles each way. And she sang the whole time. Hymns."
+     ],
+     [
+      "dani",
+      "¿Y no se cansaba?",
+      "Didn't she get tired?"
+     ],
+     [
+      "bea",
+      "Todos los días. Cantar era su manera de no rendirse.",
+      "Every day. Singing was how she didn't quit."
+     ],
+     [
+      "narr_f",
+      "La abuela tarareó un himno viejo. Yo lo grabé sin decirle.",
+      "Grandma hummed an old hymn. I recorded it without telling her."
+     ]
+    ]
+   ],
+   [
+    "w05",
+    [
+     [
+      "narr_f",
+      "Día catorce. Llovía. Le pregunté por qué ella y mi mamá se trataban con tanto cuidado.",
+      "Day fourteen. It was raining. I asked her why she and my mom were so careful with each other."
+     ],
+     [
+      "bea",
+      "Porque fui dura con ella. Más dura que con nadie. Pensé que lo duro la haría fuerte. A veces solo la hizo sentirse sola.",
+      "Because I was hard on her. Harder than on anybody. I thought hard would make her strong. Sometimes it just made her lonely."
+     ],
+     [
+      "dani",
+      "¿Alguna vez se lo dijiste?",
+      "Did you ever tell her that?"
+     ],
+     [
+      "bea",
+      "No.",
+      "No."
+     ],
+     [
+      "dani",
+      "Te quedan siete días.",
+      "You've got seven days left."
+     ]
+    ]
+   ],
+   [
+    "w06",
+    [
+     [
+      "narr_f",
+      "Día dieciocho. Las vi en el portal desde la ventana. No oí lo que se dijeron. Vi a mi mamá llorar, y a mi abuela tomarle la cara con las dos manos. Me di la vuelta para dejarlas solas.",
+      "Day eighteen. I saw them on the porch from the window. I didn't hear what they said. I saw my mom cry, and my grandma hold her face in both hands. I turned away to give them their privacy."
+     ]
+    ]
+   ],
+   [
+    "w07",
+    [
+     [
+      "narr_f",
+      "Día veintiuno. Todo marcado. Y abajo escribí: día veintidós, Daniela, seis de la tarde.",
+      "Day twenty-one. Every slot checked. And underneath I wrote: day twenty-two, Daniela, six p.m."
+     ],
+     [
+      "carla",
+      "El ayuno ya terminó.",
+      "The fast is over."
+     ],
+     [
+      "dani",
+      "La caminata no.",
+      "The walk isn't."
+     ]
+    ]
+   ],
+   [
+    "w08",
+    [
+     [
+      "narr_f",
+      "Pensé que yo le estaba regalando veinte minutos a la abuela. Ella me estaba regalando sesenta años.",
+      "I thought I was giving Grandma twenty minutes. She was giving me sixty years."
+     ],
+     [
+      "verse",
+      "Aun en la vejez y las canas, oh Dios, no me desampares, hasta que anuncie tu poder a la posteridad. Salmo setenta y uno, dieciocho.",
+      "Now also when I am old and grayheaded, O God, forsake me not; until I have shewed thy strength unto this generation. Psalm seventy-one, eighteen."
+     ]
+    ]
+   ],
+   [
+    "x1",
+    [
+     [
+      "app",
+      "Veinte minutos al día pueden sanar sesenta años.",
+      "Twenty minutes a day can heal sixty years."
+     ],
+     [
+      "app",
+      "Descarga Community Covenant en covenant punto crispusmundo punto com. La app está en inglés por ahora.",
+      "Get Community Covenant at covenant dot crispusmundo dot com."
+     ]
+    ]
+   ],
+   [
+    "x2",
+    [
+     [
+      "app",
+      "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas.",
+      "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+     ],
+     [
+      "app",
+      "Escribe lo que estás cargando en Pide Ayuda. Una persona real de nuestro equipo te contesta el mismo día, con la Palabra y un próximo paso.",
+      "Type what you're carrying into Ask for Help. A real person on our team writes back the same day, with the Word and a next step."
+     ]
+    ]
+   ],
+   [
+    "x3",
+    [
+     [
+      "app",
+      "Lleva tu ayuno, tus caminatas y tus oraciones por treinta días, solo o con tu familia, y mira lo que Dios hace.",
+      "Track your fast, your walks and your prayers for thirty days, alone or with your family, and watch what God does."
+     ],
+     [
+      "app",
+      "Community Covenant. No estás solo. Sigue un día más. Suscríbete para la próxima historia.",
+      "Community Covenant. You are not alone. Keep pushing one more day. Subscribe for the next story."
+     ]
+    ]
+   ]
+  ]
+ }
+}

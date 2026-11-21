@@ -1,0 +1,182 @@
+{
+ "mother": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "+2%",
+   "+0Hz",
+   "Mijo, your teacher emailed me. You're not going Friday? We'll talk tomorrow. I've got a double shift."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "+2%",
+   "-4Hz",
+   "Mijo, your teacher emailed me. You're not going Friday? We'll talk tomorrow. I've got a double shift."
+  ],
+  [
+   "en-US-JennyNeural",
+   "+2%",
+   "+0Hz",
+   "Mijo, your teacher emailed me. You're not going Friday? We'll talk tomorrow. I've got a double shift."
+  ]
+ ],
+ "grandma": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "-4%",
+   "-14Hz",
+   "Where my mother came from, a child didn't have one father. He had many. Nobody's child was nobody's child."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "-4%",
+   "-16Hz",
+   "Where my mother came from, a child didn't have one father. He had many. Nobody's child was nobody's child."
+  ],
+  [
+   "en-GB-SoniaNeural",
+   "-4%",
+   "-10Hz",
+   "Where my mother came from, a child didn't have one father. He had many. Nobody's child was nobody's child."
+  ]
+ ],
+ "grandpa": [
+  [
+   "en-US-AndrewMultilingualNeural",
+   "-3%",
+   "-12Hz",
+   "And if nothing happens? I've been listening for thirty days. Leave me alone."
+  ],
+  [
+   "en-US-BrianMultilingualNeural",
+   "-3%",
+   "-14Hz",
+   "And if nothing happens? I've been listening for thirty days. Leave me alone."
+  ],
+  [
+   "en-AU-WilliamMultilingualNeural",
+   "-3%",
+   "-10Hz",
+   "And if nothing happens? I've been listening for thirty days. Leave me alone."
+  ]
+ ],
+ "adult_man": [
+  [
+   "en-US-BrianMultilingualNeural",
+   "+2%",
+   "-4Hz",
+   "Some of you have been angry a long time. If that's you, you don't need the right words. Just come."
+  ],
+  [
+   "en-US-AndrewMultilingualNeural",
+   "+0%",
+   "-6Hz",
+   "Some of you have been angry a long time. If that's you, you don't need the right words. Just come."
+  ],
+  [
+   "en-AU-WilliamMultilingualNeural",
+   "+2%",
+   "+0Hz",
+   "Some of you have been angry a long time. If that's you, you don't need the right words. Just come."
+  ]
+ ],
+ "app_lady": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "+2%",
+   "+0Hz",
+   "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "+0%",
+   "-2Hz",
+   "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+  ],
+  [
+   "en-US-AriaNeural",
+   "+0%",
+   "+0Hz",
+   "Every morning it reads Scripture over you, with gospel music, and walks you into prayer, even when you don't feel like it."
+  ]
+ ],
+ "es_madre": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "+4%",
+   "+0Hz",
+   "Mijo, tu maestra me escribió. ¿No vas a ir el viernes? Hablamos mañana. Tengo turno doble."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "+4%",
+   "-2Hz",
+   "Mijo, tu maestra me escribió. ¿No vas a ir el viernes? Hablamos mañana. Tengo turno doble."
+  ],
+  [
+   "es-MX-DaliaNeural",
+   "+6%",
+   "+0Hz",
+   "Mijo, tu maestra me escribió. ¿No vas a ir el viernes? Hablamos mañana. Tengo turno doble."
+  ]
+ ],
+ "es_abuela": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "-2%",
+   "-14Hz",
+   "De donde venía mi madre, un niño no tenía un solo padre. Tenía muchos. Ningún niño era hijo de nadie."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "-2%",
+   "-16Hz",
+   "De donde venía mi madre, un niño no tenía un solo padre. Tenía muchos. Ningún niño era hijo de nadie."
+  ],
+  [
+   "es-DO-RamonaNeural",
+   "+2%",
+   "-6Hz",
+   "De donde venía mi madre, un niño no tenía un solo padre. Tenía muchos. Ningún niño era hijo de nadie."
+  ]
+ ],
+ "es_abuelo": [
+  [
+   "en-US-AndrewMultilingualNeural",
+   "+0%",
+   "-12Hz",
+   "¿Y si no pasa nada? Llevo treinta días escuchando. Déjame en paz."
+  ],
+  [
+   "en-US-BrianMultilingualNeural",
+   "+0%",
+   "-14Hz",
+   "¿Y si no pasa nada? Llevo treinta días escuchando. Déjame en paz."
+  ],
+  [
+   "es-CU-ManuelNeural",
+   "+2%",
+   "-6Hz",
+   "¿Y si no pasa nada? Llevo treinta días escuchando. Déjame en paz."
+  ]
+ ],
+ "es_app": [
+  [
+   "en-US-EmmaMultilingualNeural",
+   "+4%",
+   "+0Hz",
+   "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas."
+  ],
+  [
+   "en-US-AvaMultilingualNeural",
+   "+4%",
+   "-2Hz",
+   "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas."
+  ],
+  [
+   "es-US-PalomaNeural",
+   "+6%",
+   "+0Hz",
+   "Cada mañana te lee la Escritura en voz alta, con música de alabanza, y te lleva a orar, aunque no tengas ganas."
+  ]
+ ]
+}
