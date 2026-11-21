@@ -1,0 +1,200 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Lot lifted up his eyes, and beheld all the plain of Jordan, that it was well watered every where, before the Lord destroyed Sodom and Gomorrah,
+gen_text 1 even as the garden of the Lord, like the land of Egypt, as thou comest unto Zoar.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:54<10:54, 654.83s/it]100%|██████████| 2/2 [10:54<00:00, 327.42s/it]
+d04_g13_v010 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Melchizedek king of Salem brought forth bread and wine: and he was the priest of the most high God.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:42<00:00, 342.20s/it]100%|██████████| 1/1 [05:42<00:00, 342.20s/it]
+d05_g14_v018 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And when the fowls came down upon the carcases, Abram drove them away.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:31<00:00, 271.43s/it]100%|██████████| 1/1 [04:31<00:00, 271.43s/it]
+d05_g15_v011 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But in the fourth generation they shall come hither again: for the iniquity of the Amorites is not yet full.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:51<00:00, 351.66s/it]100%|██████████| 1/1 [05:51<00:00, 351.66s/it]
+d05_g15_v016 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he overthrew those cities, and all the plain, and all the inhabitants of the cities, and that which grew upon the ground.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:20<00:00, 380.07s/it]100%|██████████| 1/1 [06:20<00:00, 380.07s/it]
+d06_g19_v025 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham took the wood of the burnt offering, and laid it upon Isaac his son; and he took the fire in his hand, and a knife; and they went both of them together.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:53<00:00, 473.85s/it]100%|██████████| 1/1 [07:53<00:00, 473.85s/it]
+d07_g22_v006 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Isaac came from the way of the well Lahai-roi; for he dwelt in the south country.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:00<00:00, 300.28s/it]100%|██████████| 1/1 [05:00<00:00, 300.28s/it]
+d08_g24_v062 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they digged another well, and strove for that also: and he called the name of it Sitnah.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:09<00:00, 309.56s/it]100%|██████████| 1/1 [05:09<00:00, 309.56s/it]
+d09_g26_v021 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And make me savoury meat, such as I love, and bring it to me, that I may eat; that my soul may bless thee before I die.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:09<00:00, 369.64s/it]100%|██████████| 1/1 [06:09<00:00, 369.64s/it]
+d09_g27_v004 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jacob went near unto Isaac his father; and he felt him, and said, The voice is Jacob’s voice, but the hands are the hands of Esau.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:52<00:00, 412.31s/it]100%|██████████| 1/1 [06:52<00:00, 412.31s/it]
+d09_g27_v022 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Esau hated Jacob because of the blessing wherewith his father blessed him: and Esau said in his heart, The days of mourning for my father are at hand;
+gen_text 1 then will I slay my brother Jacob.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:02<10:02, 602.18s/it]100%|██████████| 2/2 [10:02<00:00, 301.09s/it]
+d09_g27_v041 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Isaac sent away Jacob: and he went to Padan-aram unto Laban, son of Bethuel the Syrian, the brother of Rebekah, Jacob’s and Esau’s mother.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:04<00:00, 424.00s/it]100%|██████████| 1/1 [07:04<00:00, 424.00s/it]
+d10_g28_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And she said unto her, Is it a small matter that thou hast taken my husband? and wouldest thou take away my son’s mandrakes also? And Rachel said,
+gen_text 1 Therefore he shall lie with thee to night for thy son’s mandrakes.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:37<10:37, 637.67s/it]100%|██████████| 2/2 [10:37<00:00, 318.83s/it]
+d11_g30_v015 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it came to pass, whensoever the stronger cattle did conceive, that Jacob laid the rods before the eyes of the cattle in the gutters,
+gen_text 1 that they might conceive among the rods.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:24<09:24, 564.28s/it]100%|██████████| 2/2 [09:24<00:00, 282.14s/it]
+d11_g30_v041 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Laban said to Jacob, What hast thou done, that thou hast stolen away unawares to me, and carried away my daughters, as captives taken with the sword?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:30<00:00, 450.41s/it]100%|██████████| 1/1 [07:30<00:00, 450.41s/it]
+d11_g31_v026 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 34.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:55<00:00, 175.45s/it]100%|██████████| 1/1 [02:55<00:00, 175.45s/it]
+d12_g34_h True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God went up from him in the place where he talked with him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:10<00:00, 250.28s/it]100%|██████████| 1/1 [04:10<00:00, 250.28s/it]
+d13_g35_v013 True
