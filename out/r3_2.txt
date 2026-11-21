@@ -1,0 +1,190 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Peleg lived thirty years, and begat Reu:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:12<00:00, 132.02s/it]100%|██████████| 1/1 [02:12<00:00, 132.02s/it]
+d04_g11_v018 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So Abram departed, as the Lord had spoken unto him; and Lot went with him: and Abram was seventy and five years old when he departed out of Haran.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:14<00:00, 254.95s/it]100%|██████████| 1/1 [04:14<00:00, 254.95s/it]
+d04_g12_v004 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That completes today's reading. What is God asking you to walk away from? Answer in the comments, and if you'd like to talk about it live, vote in today's poll.
+gen_text 1 To join Community Covenant, go to covenant dot crispusmundo dot com, tap Create Account, verify your email, choose your daily focus, and add it to your home screen.
+gen_text 2 Tomorrow is Genesis 14 through 17. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [11:02<22:05, 662.88s/it]100%|██████████| 3/3 [11:02<00:00, 220.96s/it]
+d04_close True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham was ninety years old and nine, when he was circumcised in the flesh of his foreskin.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:02<00:00, 182.59s/it]100%|██████████| 1/1 [03:02<00:00, 182.59s/it]
+d05_g17_v024 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord visited Sarah as he had said, and the Lord did unto Sarah as he had spoken.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:50<00:00, 170.14s/it]100%|██████████| 1/1 [02:50<00:00, 170.14s/it]
+d07_g21_v001 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then on the third day Abraham lifted up his eyes, and saw the place afar off.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:43<00:00, 163.91s/it]100%|██████████| 1/1 [02:43<00:00, 163.91s/it]
+d07_g22_v004 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Sarah my master’s wife bare a son to my master when she was old: and unto him hath he given all that he hath.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:25<00:00, 205.21s/it]100%|██████████| 1/1 [03:25<00:00, 205.21s/it]
+d08_g24_v036 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Give me my wives and my children, for whom I have served thee, and let me go: for thou knowest my service which I have done thee.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:51<00:00, 231.77s/it]100%|██████████| 1/1 [03:51<00:00, 231.77s/it]
+d11_g30_v026 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he took his brethren with him, and pursued after him seven days’ journey; and they overtook him in the mount Gilead.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:33<00:00, 213.34s/it]100%|██████████| 1/1 [03:33<00:00, 213.34s/it]
+d11_g31_v023 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 With whomsoever thou findest thy gods, let him not live: before our brethren discern thou what is thine with me, and take it to thee.
+gen_text 1 For Jacob knew not that Rachel had stolen them.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:40<05:40, 340.60s/it]100%|██████████| 2/2 [05:40<00:00, 170.30s/it]
+d11_g31_v032 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they journeyed: and the terror of God was upon the cities that were round about them, and they did not pursue after the sons of Jacob.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:49<00:00, 229.14s/it]100%|██████████| 1/1 [03:49<00:00, 229.14s/it]
+d13_g35_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Come now therefore, and let us slay him, and cast him into some pit, and we will say, Some evil beast hath devoured him:
+gen_text 1 and we shall see what will become of his dreams.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:20<05:20, 320.96s/it]100%|██████████| 2/2 [05:20<00:00, 160.48s/it]
+d13_g37_v020 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then there passed by Midianites merchantmen; and they drew and lifted up Joseph out of the pit, and sold Joseph to the Ishmeelites for twenty pieces of silver:
+gen_text 1 and they brought Joseph into Egypt.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:52<05:52, 352.68s/it]100%|██████████| 2/2 [05:52<00:00, 176.34s/it]
+d13_g37_v028 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Judah took a wife for Er his firstborn, whose name was Tamar.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:22<00:00, 142.25s/it]100%|██████████| 1/1 [02:22<00:00, 142.25s/it]
+d14_g38_v006 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Judah said unto Onan, Go in unto thy brother’s wife, and marry her, and raise up seed to thy brother.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:11<00:00, 191.72s/it]100%|██████████| 1/1 [03:11<00:00, 191.72s/it]
+d14_g38_v008 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The keeper of the prison looked not to any thing that was under his hand; because the Lord was with him, and that which he did, the Lord made it to prosper.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:16<00:00, 256.69s/it]100%|██████████| 1/1 [04:16<00:00, 256.69s/it]
+d14_g39_v023 True
