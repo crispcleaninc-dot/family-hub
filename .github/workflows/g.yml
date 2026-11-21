@@ -4,11 +4,11 @@ permissions: { contents: write }
 jobs:
   img:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["u36","u37","l50","l48"] } }
+    strategy: { fail-fast: false, max-parallel: 2, matrix: { shot: ["l50"] } }
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q gradio_client && SEEDS=9303 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - run: pip install -q gradio_client && SEEDS=9304,9305 SHOT=${{ matrix.shot }} python3 gen/img2.py || true
       - if: always()
         run: |
           git config user.name "cc7"; git config user.email "noreply@anthropic.com"
-          git checkout -b cc7-img2-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc7-img2-${{ matrix.shot }}
+          git checkout -b cc7-img3-${{ matrix.shot }} && git add -f out && git commit -qm "img" && git push -f origin cc7-img3-${{ matrix.shot }}
