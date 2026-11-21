@@ -1,0 +1,11 @@
+africa2fr_h1_l0 ok
+africa2fr_h1_l1 ok
+africa2fr_h2_l0 ok
+africa2fr_a01_l0 ok
+africa2fr_a08_l0 ok
+africa2fr_a16_l1 ok
+africa2fr_end0 ok
+africa2fr_end1 ok
+africa2fr_end2 ok
+africa2fr_end3 ok
+africa2fr_end4 ok
