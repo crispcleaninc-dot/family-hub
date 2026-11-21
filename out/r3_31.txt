@@ -1,0 +1,200 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Sarai Abram’s wife took Hagar her maid the Egyptian, after Abram had dwelt ten years in the land of Canaan, and gave her to her husband Abram to be his wife.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:11<00:00, 251.68s/it]100%|██████████| 1/1 [04:11<00:00, 251.68s/it]
+d05_g16_v003 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Abraham, Thou shalt keep my covenant therefore, thou, and thy seed after thee in their generations.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:14<00:00, 194.99s/it]100%|██████████| 1/1 [03:14<00:00, 194.99s/it]
+d05_g17_v009 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham took Ishmael his son, and all that were born in his house, and all that were bought with his money, every male among the men of Abraham’s house;
+gen_text 1 and circumcised the flesh of their foreskin in the selfsame day, as God had said unto him.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:32<06:32, 392.86s/it]100%|██████████| 2/2 [06:32<00:00, 196.43s/it]
+d05_g17_v023 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they made their father drink wine that night also: and the younger arose, and lay with him; and he perceived not when she lay down, nor when she arose.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:12<00:00, 252.16s/it]100%|██████████| 1/1 [04:12<00:00, 252.16s/it]
+d06_g19_v035 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But Abimelech had not come near her: and he said, Lord, wilt thou slay also a righteous nation?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:50<00:00, 170.67s/it]100%|██████████| 1/1 [02:50<00:00, 170.67s/it]
+d06_g20_v004 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 21.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:37<00:00, 97.25s/it]100%|██████████| 1/1 [01:37<00:00, 97.25s/it]
+d07_g21_h True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it came to pass after these things, that it was told Abraham, saying, Behold, Milcah, she hath also born children unto thy brother Nahor;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:57<00:00, 237.92s/it]100%|██████████| 1/1 [03:57<00:00, 237.92s/it]
+d07_g22_v020 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Bethuel begat Rebekah: these eight Milcah did bear to Nahor, Abraham’s brother.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:39<00:00, 159.68s/it]100%|██████████| 1/1 [02:39<00:00, 159.68s/it]
+d07_g22_v023 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the children of Heth answered Abraham, saying unto him,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:11<00:00, 131.61s/it]100%|██████████| 1/1 [02:11<00:00, 131.61s/it]
+d07_g23_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Hear us, my lord: thou art a mighty prince among us: in the choice of our sepulchres bury thy dead; none of us shall withhold from thee his sepulchre,
+gen_text 1 but that thou mayest bury thy dead.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:30<05:30, 330.36s/it]100%|██████████| 2/2 [05:30<00:00, 165.18s/it]
+d07_g23_v006 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the servant said unto him, Peradventure the woman will not be willing to follow me unto this land:
+gen_text 1 must I needs bring thy son again unto the land from whence thou camest?
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:12<05:12, 312.77s/it]100%|██████████| 2/2 [05:12<00:00, 156.38s/it]
+d08_g24_v005 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And there was set meat before him to eat: but he said, I will not eat, until I have told mine errand. And he said, Speak on.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:19<00:00, 199.20s/it]100%|██████████| 1/1 [03:19<00:00, 199.20s/it]
+d08_g24_v033 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Rebekah arose, and her damsels, and they rode upon the camels, and followed the man: and the servant took Rebekah, and went his way.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:38<00:00, 218.60s/it]100%|██████████| 1/1 [03:38<00:00, 218.60s/it]
+d08_g24_v061 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord appeared unto him, and said, Go not down into Egypt; dwell in the land which I shall tell thee of:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:27<00:00, 207.44s/it]100%|██████████| 1/1 [03:27<00:00, 207.44s/it]
+d09_g26_v002 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And she gave the savoury meat and the bread, which she had prepared, into the hand of her son Jacob.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:03<00:00, 183.01s/it]100%|██████████| 1/1 [03:03<00:00, 183.01s/it]
+d09_g27_v017 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Isaac trembled very exceedingly, and said, Who? where is he that hath taken venison, and brought it me, and I have eaten of all before thou camest,
+gen_text 1 and have blessed him? yea, and he shall be blessed.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:57<05:57, 357.01s/it]100%|██████████| 2/2 [05:57<00:00, 178.51s/it]
+d09_g27_v033 True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Laban gave to Rachel his daughter Bilhah his handmaid to be her maid.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:29<00:00, 149.42s/it]100%|██████████| 1/1 [02:29<00:00, 149.42s/it]
+d10_g29_v029 True
