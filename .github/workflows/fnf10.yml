@@ -1,0 +1,22 @@
+name: fnf-read4
+on: { push: { branches: [fnf-read4] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, matrix: { k: [d14_g39_v002, d14_g39_v012] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: |
+          python3 -c "s=open('gen/r3.py').read();s=s.replace('if x[3] == N]','if x[1] == K]').replace(\"N = int(os.environ['N'])\",\"K = os.environ['K']\");open('gen/r3.py','w').write(s)"
+          grep -n "K = " gen/r3.py
+          mkdir -p out; K=${{ matrix.k }} python3 gen/r3.py > out/r4_${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-r4-${{ matrix.k }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-r4-${{ matrix.k }}
