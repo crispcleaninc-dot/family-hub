@@ -1,13 +1,13 @@
-name: af-hook
-on: { push: { branches: [af-hook] } }
+name: af-fr2
+on: { push: { branches: [af-fr2] } }
 permissions: { contents: write }
 jobs:
   tts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && python3 gen/af_hook.py || true
+      - run: pip install -q edge-tts && python3 gen/af_fr.py || true
       - if: always()
         run: |
           git config user.name "aud"; git config user.email "noreply@anthropic.com"
-          git checkout -b af-hook-out && git add -f out && git commit -qm "voices" && git push -f origin af-hook-out
+          git checkout -b af-fr2-out && git add -f out && git commit -qm "voices" && git push -f origin af-fr2-out
