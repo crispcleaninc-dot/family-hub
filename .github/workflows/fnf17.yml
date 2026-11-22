@@ -5,7 +5,7 @@ jobs:
   img:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    strategy: { fail-fast: false, max-parallel: 5, matrix: { shot: [d10_s3, d13_s1, d13_s2, d14_s1, d14_s2] } }
+    strategy: { fail-fast: false, max-parallel: 5, matrix: { shot: [ck1_a, ck1_b, ck1_c, ck2_a, ck2_b, ck2_c, ck3_a, ck3_b, ck3_c, ck4_a, ck4_b, ck4_c, ck5_a, ck5_b, ck5_c, ck6_a, ck6_b, ck6_c] } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
