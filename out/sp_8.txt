@@ -1,0 +1,100 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 In the ancient world, the scariest thing on a battlefield wasn't always the sword. It was fire raining down from the sky.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:19<00:00, 319.85s/it]100%|██████████| 1/1 [05:19<00:00, 319.85s/it]
+fa5_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:21<08:21, 501.58s/it]100%|██████████| 2/2 [08:21<00:00, 250.79s/it]
+fa5_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Enemies wrapped arrows in cloth, soaked them in pitch, set them on fire, and shot them by the hundreds. The Roman shield was big, about the size of a door,
+gen_text 1 and covered in leather. Many teachers say soldiers soaked those shields in water so the fire would go out on contact.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:40<09:40, 580.12s/it]100%|██████████| 2/2 [09:40<00:00, 290.06s/it]
+fa5_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Above all, taking the shield of faith, wherewith ye shall be able to quench all the fiery darts of the wicked.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:42<00:00, 282.35s/it]100%|██████████| 1/1 [04:42<00:00, 282.35s/it]
+fa5_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Above all. Paul puts this one above all. Fear is coming. Doubt is coming. Accusation is coming. The question isn't whether the darts fly. It's whether they land.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:29<00:00, 389.56s/it]100%|██████████| 1/1 [06:29<00:00, 389.56s/it]
+fa5_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For whatsoever is born of God overcometh the world: and this is the victory that overcometh the world, even our faith.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:02<00:00, 302.52s/it]100%|██████████| 1/1 [05:02<00:00, 302.52s/it]
+fa5_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And here's the tea nobody tells you. Roman soldiers didn't fight alone. They locked their shields together, side by side and overhead, like a turtle shell.
+gen_text 1 One shield can get tired. A wall of shields holds.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:22<08:22, 502.69s/it]100%|██████████| 2/2 [08:22<00:00, 251.35s/it]
+fa5_007t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is hitting home, the whole Full Armor of God series is waiting for you inside the Community Covenant app. Open it and tap Wisdom Reels.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:56<00:00, 356.74s/it]100%|██████████| 1/1 [05:56<00:00, 356.74s/it]
+fa5_008x True
