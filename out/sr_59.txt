@@ -1,0 +1,144 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He that is slow to anger is better than the mighty; and he that ruleth his spirit than he that taketh a city.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:25<00:00, 445.17s/it]100%|██████████| 1/1 [07:25<00:00, 445.17s/it]
+frd9_013v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able;
+gen_text 1 but will with the temptation also make a way to escape, that ye may be able to bear it.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [14:07<14:07, 847.69s/it]100%|██████████| 2/2 [14:07<00:00, 423.84s/it]
+frd9_014v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 God always makes a way to escape. Temperance is taking the exit when you see it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:58<00:00, 358.48s/it]100%|██████████| 1/1 [05:58<00:00, 358.48s/it]
+frd9_015t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now let's put the whole fruit together one more time.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:58<00:00, 298.25s/it]100%|██████████| 1/1 [04:58<00:00, 298.25s/it]
+frd9_016t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:27<00:00, 387.59s/it]100%|██████████| 1/1 [06:27<00:00, 387.59s/it]
+frd9_017v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Meekness, temperance: against such there is no law.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:53<00:00, 293.76s/it]100%|██████████| 1/1 [04:53<00:00, 293.76s/it]
+frd9_018v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Against such there is no law. Nobody ever got arrested for too much love or too much patience. This is the life God is growing in you.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:32<00:00, 512.77s/it]100%|██████████| 1/1 [08:32<00:00, 512.77s/it]
+frd9_019t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:43<00:00, 523.76s/it]100%|██████████| 1/1 [08:43<00:00, 523.76s/it]
+frd9_020x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your homework. Pick one appetite that has been running you. Food, phone, spending, anger, anything. Fast from it for three days this week,
+gen_text 1 and every time you feel the pull, pray instead.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:24<12:24, 744.63s/it]100%|██████████| 2/2 [12:24<00:00, 372.32s/it]
+frd9_021t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Questions for the comments. Which flavor of the fruit grew the most in you these nine weeks? And which one do you still need?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:26<00:00, 506.56s/it]100%|██████████| 1/1 [08:26<00:00, 506.56s/it]
+frd9_022t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Starting next week: Lord, teach us to pray. The Lord's Prayer, line by line, for six weeks. Don't miss it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:30<00:00, 450.23s/it]100%|██████████| 1/1 [07:30<00:00, 450.23s/it]
+frd9_023t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Join Community Covenant for free. Go to covenant dot crispus mundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 1 and add it to your home screen.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:11<12:11, 731.08s/it]100%|██████████| 2/2 [12:11<00:00, 365.54s/it]
+frd9_024x True
