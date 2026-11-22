@@ -1,0 +1,16 @@
+name: d2-asr
+on: { push: { branches: [d2-asr] } }
+permissions: { contents: write }
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q faster-whisper jiwer; python3 asr.py > log.txt 2>&1 || true
+      - if: always()
+        run: |
+          mkdir -p out; cp log.txt out/; git config user.name a; git config user.email noreply@anthropic.com
+          git checkout --orphan d2-asr-out && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin d2-asr-out
