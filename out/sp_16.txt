@@ -1,0 +1,123 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Two judges. Respected men. Elders of the people. Everybody trusted them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:39<00:00, 159.24s/it]100%|██████████| 1/1 [02:39<00:00, 159.24s/it]
+sus_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And for days, they'd been hiding in a married woman's garden, watching her.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:36<00:00, 156.22s/it]100%|██████████| 1/1 [02:36<00:00, 156.22s/it]
+sus_002t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 When she told them no, they decided to destroy her. In court. In front of everybody. And the sentence was death.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:19<00:00, 199.86s/it]100%|██████████| 1/1 [03:19<00:00, 199.86s/it]
+sus_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But they made one mistake. And it was a tree.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:03<00:00, 123.78s/it]100%|██████████| 1/1 [02:03<00:00, 123.78s/it]
+sus_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If you're new here: every Friday night we open the books that were printed in the 1611 King James Bible between the Old and New Testaments.
+gen_text 1 Keep up with every edition in Community Covenant, our free daily Bible, prayer and accountability app. Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:45<06:45, 405.90s/it]100%|██████████| 2/2 [07:10<00:00, 181.68s/it]100%|██████████| 2/2 [07:10<00:00, 215.32s/it]
+sus_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick and honest background. These books were printed in the original King James Bible.
+gen_text 1 The Church of England said they're read for example of life and instruction of manners, but not to build doctrine on. Most Protestant Bibles leave them out today.
+gen_text 2 So we read them for history and lessons, and we test everything by Scripture.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [07:58<15:57, 478.68s/it] 67%|██████▋   | 2/3 [09:14<04:01, 241.56s/it]100%|██████████| 3/3 [09:14<00:00, 184.75s/it]
+sus_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 We're in Babylon, during the exile. A rich man named Joacim has a big house with a garden, and the community's court meets at his house. His wife is Susanna.
+gen_text 1 Beautiful, and she fears the Lord.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:45<05:45, 345.22s/it]100%|██████████| 2/2 [05:45<00:00, 172.61s/it]
+sus_007t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 There dwelt a man in Babylon, called Joacim:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:59<00:00, 119.90s/it]100%|██████████| 1/1 [01:59<00:00, 119.90s/it]
+sus_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he took a wife, whose name was Susanna, the daughter of Chelcias, a very fair woman, and one that feared the Lord.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:24<00:00, 204.21s/it]100%|██████████| 1/1 [03:24<00:00, 204.21s/it]
+sus_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Her parents also were righteous, and taught their daughter according to the law of Moses.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:48<00:00, 168.15s/it]100%|██████████| 1/1 [02:48<00:00, 168.15s/it]
+sus_010v True
