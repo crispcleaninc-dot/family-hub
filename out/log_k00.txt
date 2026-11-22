@@ -1,0 +1,109 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Would you believe one of God's greatest prophets stood in front of four hundred and fifty false prophets and started making jokes? Not polite jokes either.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:43<00:00, 523.69s/it]100%|██████████| 1/1 [08:43<00:00, 523.69s/it]
+e1_00 ok 524
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Maybe your god is busy. Maybe he stepped out. Maybe he's asleep. Elijah was not being cruel for fun. He was exposing a lie the whole nation had believed.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:46<00:00, 526.17s/it]100%|██████████| 1/1 [08:46<00:00, 526.17s/it]
+e1_17 ok 526
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And David's anger was greatly kindled against the man; and he said to Nathan,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:38<00:00, 338.77s/it]100%|██████████| 1/1 [05:38<00:00, 338.77s/it]
+e2_10 ok 339
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So for forty years, he tells Judah what God said. Judgment is coming. Turn back. And what does it get him?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:55<00:00, 415.22s/it]100%|██████████| 1/1 [06:55<00:00, 415.22s/it]
+e3_06 ok 415
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Kine means cattle. Bashan was famous for fat, well-fed cows. And he's talking about people living well off the backs of the poor. Then he goes after church.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:53<00:00, 533.29s/it]100%|██████████| 1/1 [08:53<00:00, 533.29s/it]
+e4_05 ok 533
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But when he saw many of the Pharisees and Sadducees come to his baptism, he said unto them,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:12<00:00, 372.17s/it]100%|██████████| 1/1 [06:12<00:00, 372.17s/it]
+e5_06 ok 372
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 A den of thieves, in the house of prayer. And to the religious leaders who looked holy on the outside, He said this.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:48<00:00, 408.65s/it]100%|██████████| 1/1 [06:48<00:00, 408.65s/it]
+e6_06 ok 409
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So how do you try them? Jesus told us.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:08<00:00, 248.55s/it]100%|██████████| 1/1 [04:08<00:00, 248.55s/it]
+e7_06 ok 249
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the finding for the whole series. God's prophets were sharp because the truth is sharp. But every one of them was aiming at a heart coming home.
+gen_text 1 Don't take a loud voice's word for it. Try the spirits. Read His Word for yourself.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:52<12:52, 772.72s/it]100%|██████████| 2/2 [12:52<00:00, 386.36s/it]
+e7_20 ok 773
