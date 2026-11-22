@@ -1,0 +1,121 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So he put him aside, and commanded to bring the other, and said unto him, O thou seed of Chanaan, and not of Juda, beauty hath deceived thee,
+gen_text 1 and lust hath perverted thine heart.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:37<07:37, 457.49s/it]100%|██████████| 2/2 [07:37<00:00, 228.74s/it]
+sus_068v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Thus have ye dealt with the daughters of Israel, and they for fear companied with you: but the daughter of Juda would not abide your wickedness.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:14<00:00, 314.87s/it]100%|██████████| 1/1 [05:14<00:00, 314.88s/it]
+sus_069v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now therefore tell me, Under what tree didst thou take them companying together? Who answered, Under an holm tree.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:30<00:00, 270.44s/it]100%|██████████| 1/1 [04:30<00:00, 270.44s/it]
+sus_070v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then said Daniel unto him, Well; thou hast also lied against thine own head: for the angel of God waiteth with the sword to cut thee in two, that he may destroy you.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:05<00:00, 365.19s/it]100%|██████████| 1/1 [06:05<00:00, 365.19s/it]
+sus_071v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Did you catch it? A mastick tree. A holm tree. Two witnesses. Two different trees. The story falls apart right there in court.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:52<00:00, 292.48s/it]100%|██████████| 1/1 [04:52<00:00, 292.48s/it]
+sus_072t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 With that all the assembly cried out with a loud voice, and praised God, who saveth them that trust in him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:18<00:00, 258.09s/it]100%|██████████| 1/1 [04:18<00:00, 258.09s/it]
+sus_073v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they arose against the two elders, for Daniel had convicted them of false witness by their own mouth:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:17<00:00, 257.17s/it]100%|██████████| 1/1 [04:17<00:00, 257.17s/it]
+sus_074v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And according to the law of Moses they did unto them in such sort as they maliciously intended to do to their neighbour: and they put them to death.
+gen_text 1 Thus the innocent blood was saved the same day.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:44<07:44, 464.42s/it]100%|██████████| 2/2 [07:44<00:00, 232.21s/it]
+sus_075v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Therefore Chelcias and his wife praised God for their daughter Susanna, with Joacim her husband, and all the kindred, because there was no dishonesty found in her.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:48<00:00, 348.87s/it]100%|██████████| 1/1 [05:48<00:00, 348.87s/it]
+sus_076v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 From that day forth was Daniel had in great reputation in the sight of the people.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:45<00:00, 225.85s/it]100%|██████████| 1/1 [03:45<00:00, 225.85s/it]
+sus_077v True
