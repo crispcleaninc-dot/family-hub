@@ -1,0 +1,134 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Two thousand years of believers, two answers. Some say the sons of God were fallen angels. Others say they were godly men who married ungodly women.
+gen_text 1 Let's read the case for both. Sons of God, part two.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:26<08:26, 506.30s/it]100%|██████████| 2/2 [08:26<00:00, 253.15s/it]
+sg2_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:05<08:05, 485.26s/it]100%|██████████| 2/2 [08:05<00:00, 242.63s/it]
+sg2_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 View one: angels. Everywhere else in the Old Testament, the phrase sons of God points to heavenly beings.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:59<00:00, 299.89s/it]100%|██████████| 1/1 [04:59<00:00, 299.89s/it]
+sg2_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now there was a day when the sons of God came to present themselves before the Lord, and Satan came also among them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:16<00:00, 316.65s/it]100%|██████████| 1/1 [05:16<00:00, 316.65s/it]
+sg2_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 When the morning stars sang together, and all the sons of God shouted for joy?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:22<00:00, 262.81s/it]100%|██████████| 1/1 [04:22<00:00, 262.81s/it]
+sg2_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the New Testament talks about angels who left their place and are held for judgment.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:42<00:00, 282.68s/it]100%|██████████| 1/1 [04:42<00:00, 282.68s/it]
+sg2_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the angels which kept not their first estate, but left their own habitation,
+gen_text 1 he hath reserved in everlasting chains under darkness unto the judgment of the great day.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:21<07:21, 441.78s/it]100%|██████████| 2/2 [07:31<00:00, 187.71s/it]100%|██████████| 2/2 [07:31<00:00, 225.82s/it]
+sg2_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For if God spared not the angels that sinned, but cast them down to hell, and delivered them into chains of darkness, to be reserved unto judgment;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:45<00:00, 405.06s/it]100%|██████████| 1/1 [06:45<00:00, 405.06s/it]
+sg2_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And spared not the old world, but saved Noah the eighth person, a preacher of righteousness, bringing in the flood upon the world of the ungodly;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:13<00:00, 373.24s/it]100%|██████████| 1/1 [06:13<00:00, 373.24s/it]
+sg2_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:06<00:00, 366.14s/it]100%|██████████| 1/1 [06:06<00:00, 366.14s/it]
+sg2_010x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 View two: the line of Seth. Genesis chapter four ends with Seth's family calling on the name of the Lord, and Cain's family building cities and weapons.
+gen_text 1 On this reading, the godly line mixed with the ungodly line.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:47<08:47, 527.80s/it]100%|██████████| 2/2 [08:47<00:00, 263.90s/it]
+sg2_011t True
