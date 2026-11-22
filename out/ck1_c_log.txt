@@ -1,0 +1,10 @@
+ck1_c_7101 try0 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:19:21. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7101 try1 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:18:51. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7101 try2 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:18:20. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7101 poll ok
+ck1_c_7102 try0 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:17:49. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7102 try1 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:17:19. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7102 try2 You have exceeded your ZeroGPU quota (105s requested vs. 0s left). Try again in 7:16:48. Authenticate with a Hugging Face token for more quota - https://hugging
+ck1_c_7102 poll0 HTTP Error 503: Service Unavailable
+ck1_c_7102 poll1 HTTP Error 402: Payment Required
+ck1_c_7102 poll2 HTTP Error 402: Payment Required
