@@ -1,0 +1,153 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Ninety-nine years old, and still waiting on the promise. That's when God told Abraham His name. El Shaddai. Let's talk about God Almighty.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:46<00:00, 466.05s/it]100%|██████████| 1/1 [07:46<00:00, 466.05s/it]
+ng2_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:12<11:12, 672.93s/it]100%|██████████| 2/2 [11:12<00:00, 336.47s/it]
+ng2_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And when Abram was ninety years old and nine, the Lord appeared to Abram, and said unto him, I am the Almighty God; walk before me, and be thou perfect.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:02<00:00, 482.31s/it]100%|██████████| 1/1 [08:02<00:00, 482.31s/it]
+ng2_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 In the King James, El Shaddai is translated the Almighty God. The God who has all power, and doesn't run out.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:17<00:00, 377.45s/it]100%|██████████| 1/1 [06:17<00:00, 377.45s/it]
+ng2_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Is any thing too hard for the Lord? At the time appointed I will return unto thee, according to the time of life, and Sarah shall have a son.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:51<00:00, 471.63s/it]100%|██████████| 1/1 [07:51<00:00, 471.63s/it]
+ng2_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Is any thing too hard for the Lord? Sarah laughed. And a year later, she was holding Isaac.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:35<00:00, 335.37s/it]100%|██████████| 1/1 [05:35<00:00, 335.37s/it]
+ng2_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:42<00:00, 462.14s/it]100%|██████████| 1/1 [07:42<00:00, 462.14s/it]
+ng2_007x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. God didn't show up as El Shaddai when Abraham was young and strong. He waited until it was impossible. Because that's when you know it was Him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:36<00:00, 516.32s/it]100%|██████████| 1/1 [08:36<00:00, 516.32s/it]
+ng2_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He that dwelleth in the secret place of the most High shall abide under the shadow of the Almighty.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:55<00:00, 355.21s/it]100%|██████████| 1/1 [05:55<00:00, 355.21s/it]
+ng2_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 I will say of the Lord, He is my refuge and my fortress: my God; in him will I trust.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:20<00:00, 320.75s/it]100%|██████████| 1/1 [05:20<00:00, 320.76s/it]
+ng2_010v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Under the shadow of the Almighty. Shaddai is a hiding place.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:34<00:00, 274.12s/it]100%|██████████| 1/1 [04:34<00:00, 274.12s/it]
+ng2_011t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 My question for you: what have you been waiting on so long that you stopped believing? Tell us in the comments. We'll pray.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:46<00:00, 406.48s/it]100%|██████████| 1/1 [06:46<00:00, 406.48s/it]
+ng2_012t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Next Wednesday: Jehovah Jireh. The Lord will provide.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:19<00:00, 259.89s/it]100%|██████████| 1/1 [04:19<00:00, 259.89s/it]
+ng2_013t True
