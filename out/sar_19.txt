@@ -1,0 +1,117 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before horoscopes were in magazines and apps,
+gen_text 1 priests in ancient Babylon watched the sky every night and wrote down what they believed the stars were saying about kings. This is The Stars and the Scriptures,
+gen_text 2 part one.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [09:47<19:34, 587.21s/it] 67%|██████▋   | 2/3 [13:18<06:06, 366.08s/it]100%|██████████| 3/3 [13:18<00:00, 266.17s/it]
+st1_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:50<09:50, 590.17s/it]100%|██████████| 2/2 [09:50<00:00, 295.08s/it]
+st1_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 History first. The Babylonians, also called Chaldeans, mapped the sky into the twelve signs we know.
+gen_text 1 The Greeks later added the idea that the stars at your birth shape your personality.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:14<09:14, 554.67s/it]100%|██████████| 2/2 [09:14<00:00, 277.34s/it]
+st1_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then the king commanded to call the magicians, and the astrologers, and the sorcerers, and the Chaldeans, for to shew the king his dreams.
+gen_text 1 So they came and stood before the king.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:24<09:24, 564.82s/it]100%|██████████| 2/2 [09:24<00:00, 282.41s/it]
+st1_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Daniel answered in the presence of the king, and said, The secret which the king hath demanded cannot the wise men, the astrologers, the magicians, the soothsayers,
+gen_text 1 shew unto the king;
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:21<10:21, 621.87s/it]100%|██████████| 2/2 [10:21<00:00, 310.93s/it]
+st1_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But there is a God in heaven that revealeth secrets, and maketh known to the king Nebuchadnezzar what shall be in the latter days. Thy dream,
+gen_text 1 and the visions of thy head upon thy bed, are these;
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:53<09:53, 593.93s/it]100%|██████████| 2/2 [09:53<00:00, 296.96s/it]
+st1_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:48<00:00, 408.65s/it]100%|██████████| 1/1 [06:48<00:00, 408.65s/it]
+st1_007x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. The best stargazers in the world's greatest empire stood in front of the king and said, we can't do it. And Daniel said:
+gen_text 1 there is a God in heaven that revealeth secrets.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:48<09:48, 588.60s/it]100%|██████████| 2/2 [09:48<00:00, 294.30s/it]
+st1_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Over the next six weeks we'll read everything the King James Bible says about the stars. What God made them for, the names He gave them, the Magi who followed one,
+gen_text 1 and the warnings. Read it with us and decide for yourself.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:51<10:51, 651.43s/it]100%|██████████| 2/2 [10:51<00:00, 325.71s/it]
+st1_009t True
