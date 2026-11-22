@@ -1,0 +1,114 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The Book of Enoch is not one of the sixty-six books. But the book of Jude quotes it. Tonight we look at what it says about the sons of God,
+gen_text 1 and how to handle a book that isn't Scripture. Sons of God, part three.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:40<08:40, 520.48s/it]100%|██████████| 2/2 [08:40<00:00, 260.24s/it]
+sg3_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:19<08:19, 499.00s/it]100%|██████████| 2/2 [08:19<00:00, 249.50s/it]
+sg3_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Enoch also, the seventh from Adam, prophesied of these, saying, Behold, the Lord cometh with ten thousands of his saints,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:45<00:00, 345.18s/it]100%|██████████| 1/1 [05:45<00:00, 345.18s/it]
+sg3_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 To execute judgment upon all, and to convince all that are ungodly among them of all their ungodly deeds which they have ungodly committed,
+gen_text 1 and of all their hard speeches which ungodly sinners have spoken against him.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:39<08:39, 519.37s/it]100%|██████████| 2/2 [08:39<00:00, 259.68s/it]
+sg3_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's what to know. First Enoch is an ancient Jewish writing. It's kept as Scripture in the Ethiopian Orthodox church, but not in the King James Bible.
+gen_text 1 We read it as history, not as the Word of God.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:31<08:31, 511.91s/it]100%|██████████| 2/2 [08:31<00:00, 255.95s/it]
+sg3_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 First Enoch tells the story of the Watchers: two hundred angels who came down on Mount Hermon, took wives,
+gen_text 1 and taught people forbidden things like sorcery and weapons of war. Their children were the giants.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:08<08:08, 488.37s/it]100%|██████████| 2/2 [08:08<00:00, 244.19s/it]
+sg3_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:03<00:00, 363.12s/it]100%|██████████| 1/1 [06:03<00:00, 363.12s/it]
+sg3_007x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. Jude quoting Enoch doesn't make the whole book Scripture. Paul quoted Greek poets too. It means that one line was true.
+gen_text 1 Hold everything else up to the sixty-six books.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:05<08:05, 485.30s/it]100%|██████████| 2/2 [08:05<00:00, 242.65s/it]
+sg3_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For in him we live, and move, and have our being; as certain also of your own poets have said, For we are also his offspring.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:38<00:00, 338.61s/it]100%|██████████| 1/1 [05:38<00:00, 338.61s/it]
+sg3_009v True
