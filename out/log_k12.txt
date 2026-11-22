@@ -1,0 +1,98 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And now, the sharp tongue.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:55<00:00, 235.72s/it]100%|██████████| 1/1 [03:55<00:00, 235.72s/it]
+e1_14 ok 236
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the LORD sent Nathan unto David. And he came unto him, and said unto him,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:03<00:00, 363.94s/it]100%|██████████| 1/1 [06:03<00:00, 363.94s/it]
+e2_04 ok 364
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Jeremiah was young when God called him. And the call started with his mouth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:53<00:00, 353.91s/it]100%|██████████| 1/1 [05:53<00:00, 353.91s/it]
+e3_03 ok 354
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 This series comes to you from Community Covenant, the free app where families read the Bible, pray, and keep each other accountable. The link is in the description.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:39<00:00, 579.19s/it]100%|██████████| 1/1 [09:39<00:00, 579.19s/it]
+e4_02 ok 579
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the same John had his raiment of camel's hair, and a leathern girdle about his loins; and his meat was locusts and wild honey.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:29<00:00, 509.56s/it]100%|██████████| 1/1 [08:29<00:00, 509.56s/it]
+e5_04 ok 510
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jesus went into the temple of God, and cast out all them that sold and bought in the temple, and overthrew the tables of the moneychangers,
+gen_text 1 and the seats of them that sold doves,
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:11<12:11, 731.21s/it]100%|██████████| 2/2 [12:11<00:00, 365.60s/it]
+e6_04 ok 731
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 We've seen Elijah, Nathan, Jeremiah, Amos, John, and Jesus. All sharp. But sharp does not automatically mean sent. Start here.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:48<00:00, 468.61s/it]100%|██████████| 1/1 [07:48<00:00, 468.61s/it]
+e7_03 ok 469
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Grace, seasoned with salt. Not salt with no grace, and not grace with no salt. And for those of us who have sharp tongues ourselves, one more.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:16<00:00, 496.06s/it]100%|██████████| 1/1 [08:16<00:00, 496.06s/it]
+e7_18 ok 496
