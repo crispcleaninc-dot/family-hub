@@ -1,0 +1,18 @@
+name: fnf-amb
+on: { push: { branches: [fnf-amb] } }
+permissions: { contents: write }
+jobs:
+  music:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { k: [qa1, qa2, qa3, qa4, qa5, qa6] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.44.2 scipy
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/music3.py > out/${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-mu-${{ matrix.k }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-mu-${{ matrix.k }}
