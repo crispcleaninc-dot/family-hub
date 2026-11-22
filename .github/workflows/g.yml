@@ -1,0 +1,20 @@
+name: fnfd2-render
+on: { push: { branches: [fnfd2-render] } }
+permissions: { contents: write }
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy: { fail-fast: false, max-parallel: 13, matrix: { d: ["02","03","04","05","07","08","10","11","12","13","14"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg fonts-dejavu-core && pip install -q pillow numpy soundfile
+      - run: bash gen/fetch.sh ${{ matrix.d }}
+      - run: mkdir -p out && cd gen && python3 render_day.py ${{ matrix.d }} > ../out/log_${{ matrix.d }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          cd $GITHUB_WORKSPACE; ls -la out gen/out 2>/dev/null || true; mkdir -p out; cp gen/out/*.mp4 out/ 2>/dev/null || true
+          git config user.name fnfd; git config user.email noreply@anthropic.com
+          git checkout --orphan fnfd2-vid-${{ matrix.d }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfd2-vid-${{ matrix.d }}
