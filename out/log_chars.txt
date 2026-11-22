@@ -1,0 +1,31 @@
+e1_05 ahab ok
+e1_10 elijah ok
+e1_16 elijah ok
+e1_21 elijah ok
+e1_22 elijah ok
+e2_05 nathan ok
+e2_06 nathan ok
+e2_07 nathan ok
+e2_08 nathan ok
+e2_11 david ok
+e2_14 nathan ok
+e2_16 nathan ok
+e2_19 david ok
+e2_21 nathan ok
+e3_05 No audio was received. Please verify that your parameters are correct.
+e3_05 god ok
+e3_07 jeremiah ok
+e3_09 jeremiah ok
+e3_13 god ok
+e3_15 No audio was received. Please verify that your parameters are correct.
+e3_15 god ok
+e4_04 amos ok
+e4_06 amos ok
+e4_07 amos ok
+e4_12 amaziah ok
+e4_14 amos ok
+e4_15 amos ok
+e5_07 john ok
+e5_08 john ok
+e5_14 john ok
+e7_05 god ok
