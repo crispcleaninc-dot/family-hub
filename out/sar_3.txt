@@ -1,0 +1,53 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Were the sons of God angels? Or godly men from the line of Seth? Christians have argued about this for two thousand years.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:05<00:00, 365.58s/it]100%|██████████| 1/1 [06:05<00:00, 365.58s/it]
+sgs2_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now there was a day when the sons of God came to present themselves before the Lord, and Satan came also among them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:04<00:00, 364.56s/it]100%|██████████| 1/1 [06:04<00:00, 364.56s/it]
+sgs2_002v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 In Job, the sons of God stand before the Lord in heaven.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:10<00:00, 250.66s/it]100%|██████████| 1/1 [04:10<00:00, 250.66s/it]
+sgs2_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Full teaching tonight at six in Faith and Findings. Follow, and subscribe to Community Covenant on YouTube.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:36<00:00, 336.49s/it]100%|██████████| 1/1 [05:36<00:00, 336.49s/it]
+sgs2_004x True
