@@ -1,0 +1,35 @@
+name: fnf-hear
+on: { push: { branches: [fnf-hear] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { n: [0,1,2,3,4,5] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: |
+          sed -i 's#gen/script4.json#gen/spec.json#' gen/r3.py
+          mkdir -p out; N=${{ matrix.n }} python3 gen/r3.py > out/hr_${{ matrix.n }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-hr-${{ matrix.n }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-hr-${{ matrix.n }}
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 5, matrix: { shot: [hear_a, hear_b, hear_c, hear_d, hear_e, hear_f, h1_a, h1_b, h1_c, h2_a, h2_b, h2_c, h3_a, h3_b, h3_c] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-ih-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-ih-${{ matrix.shot }}
