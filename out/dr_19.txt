@@ -1,0 +1,124 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Brother Sylvester Mitchell said it like this.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:59<00:00, 239.54s/it]100%|██████████| 1/1 [03:59<00:00, 239.54s/it]
+dd7_011t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your weapon is not merely what you feel. Your sword is what God has said in His word.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:10<00:00, 310.12s/it]100%|██████████| 1/1 [05:10<00:00, 310.12s/it]
+dd7_012q True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit,
+gen_text 1 and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:50<10:50, 650.02s/it]100%|██████████| 2/2 [10:50<00:00, 325.01s/it]
+dd7_013v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Sharper than any two-edged sword. It cuts the lie away from the truth. It even cuts your own motives open. That's why some of us avoid it.
+gen_text 1 The sword works on us before it works for us.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:53<09:53, 593.02s/it]100%|██████████| 2/2 [09:53<00:00, 296.51s/it]
+dd7_014t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Thy word have I hid in mine heart, that I might not sin against thee.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:36<00:00, 276.22s/it]100%|██████████| 1/1 [04:36<00:00, 276.22s/it]
+dd7_015v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. You can't swing a sword you don't carry. If the only scripture you know is the one on the coffee mug, you're going into battle with a butter knife.
+gen_text 1 That's why we read the whole Bible together, Genesis to Revelation, out loud. Faith comes by hearing.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:02<12:02, 722.83s/it]100%|██████████| 2/2 [12:02<00:00, 361.42s/it]
+dd7_016t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So shall my word be that goeth forth out of my mouth: it shall not return unto me void, but it shall accomplish that which I please,
+gen_text 1 and it shall prosper in the thing whereto I sent it.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:50<09:50, 590.08s/it]100%|██████████| 2/2 [09:50<00:00, 295.04s/it]
+dd7_017v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:01<00:00, 421.14s/it]100%|██████████| 1/1 [07:01<00:00, 421.14s/it]
+dd7_018x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your application. Pick three verses this week, one for each of your biggest battles. Write them on a card or in your phone. Memorize them. When the attack comes,
+gen_text 1 don't argue with it. Say: it is written.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:40<10:40, 640.75s/it]100%|██████████| 2/2 [10:40<00:00, 320.38s/it]
+dd7_019t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Questions for the comments. What verse do you speak when the enemy comes at you? Drop it in the comments, so we can all add it to our sword.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:07<00:00, 427.27s/it]100%|██████████| 1/1 [07:07<00:00, 427.27s/it]
+dd7_020t True
