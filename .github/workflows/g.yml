@@ -1,0 +1,39 @@
+name: fnfd2-gen
+on: { push: { branches: [fnfd2-gen] } }
+permissions: { contents: write }
+jobs:
+  f5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 20, matrix: { k: ["k00","k01","k02","k03","k04","k05","k06","k07","k08","k09","k10","k11","k12","k13","k14","k15","k16","k17","k18","k19"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/f5.py > out/log_${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name fnfd; git config user.email noreply@anthropic.com
+          git checkout --orphan fnfd2-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfd2-${{ matrix.k }}
+  chars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && mkdir -p out && python3 gen/chars.py > out/log_chars.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name fnfd; git config user.email noreply@anthropic.com
+          git checkout --orphan fnfd2-chars && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfd2-chars
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 26, matrix: { s: ["d02_n1,d02_n2,d02_n3","d02_n4,d02_n5,d02_n6","d03_n1,d03_n2,d03_n3","d03_n4,d03_n5,d03_n6","d04_n1,d04_n2,d04_n3","d04_n4,d04_n5,d04_n6","d05_n1,d05_n2,d05_n3","d05_n4,d05_n5,d05_n6","d06_n1,d06_n2,d06_n3","d06_n4,d06_n5,d06_n6","d07_n1,d07_n2,d07_n3","d07_n4,d07_n5,d07_n6","d08_n1,d08_n2,d08_n3","d08_n4,d08_n5,d08_n6","d09_n1,d09_n2,d09_n3","d09_n4,d09_n5,d09_n6","d10_n1,d10_n2,d10_n3","d10_n4,d10_n5,d10_n6","d11_n1,d11_n2,d11_n3","d11_n4,d11_n5,d11_n6","d12_n1,d12_n2,d12_n3","d12_n4,d12_n5,d12_n6","d13_n1,d13_n2,d13_n3","d13_n4,d13_n5,d13_n6","d14_n1,d14_n2,d14_n3","d14_n4,d14_n5,d14_n6"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && mkdir -p out && SHOTS=${{ matrix.s }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name fnfd; git config user.email noreply@anthropic.com
+          B=fnfd2-img-$(echo ${{ matrix.s }} | cut -d, -f1)
+          git checkout --orphan $B && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin $B
