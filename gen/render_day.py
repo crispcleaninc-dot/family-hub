@@ -41,7 +41,8 @@ print('missing', missing, 'total', round(TOT, 1))
 
 # --- 2. shots: day images spread evenly across the reading
 cand = [f'{IMG}/d{DAY:02d}_n{i}.webp' for i in range(1, 7)]
-sk = sorted(_g.glob(f'/tmp/skimg/fnf-out-img-d{DAY:02d}_s[123]/out/*_7101.webp'))
+SKIP = {'d13_s1', 'd13_s2', 'd10_s3'}  # young-looking figures: keep minors off screen
+sk = [p for p in sorted(_g.glob(f'/tmp/skimg/fnf-out-img-d{DAY:02d}_s[123]/out/*_7101.webp')) if p.split('img-')[1][:6] not in SKIP]
 pics = [p for p in cand if os.path.exists(p)]
 order = []
 for i in range(max(len(pics), len(sk))):
