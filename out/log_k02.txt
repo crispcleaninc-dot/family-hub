@@ -1,0 +1,133 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord said unto Noah,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:43<00:00, 283.38s/it]100%|██████████| 1/1 [04:43<00:00, 283.38s/it]
+d03_g07_v001_0 ok 283
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 8.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:19<00:00, 259.37s/it]100%|██████████| 1/1 [04:19<00:00, 259.37s/it]
+d03_c08 ok 259
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Noah builded an altar unto the Lord; and took of every clean beast, and of every clean fowl, and offered burnt offerings on the altar.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:54<00:00, 594.16s/it]100%|██████████| 1/1 [09:54<00:00, 594.16s/it]
+d03_g08_v020_0 ok 594
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord smelled a sweet savour; and the Lord said in his heart, I will not again curse the ground any more for man's sake;
+gen_text 1 for the imagination of man's heart is evil from his youth; neither will I again smite any more every thing living, as I have done.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [16:49<16:49, 1009.09s/it]100%|██████████| 2/2 [17:01<00:00, 422.56s/it] 100%|██████████| 2/2 [17:01<00:00, 510.54s/it]
+d03_g08_v021_0 ok 1021
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 While the earth remaineth, seedtime and harvest, and cold and heat, and summer and winter, and day and night shall not cease.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:08<00:00, 548.40s/it]100%|██████████| 1/1 [09:08<00:00, 548.40s/it]
+d03_g08_v022_0 ok 548
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick word: if you want to keep today's verses and read along every day, it's all free in Community Covenant, at covenant dot crispus mundo dot com. Pause right there.
+gen_text 1 The water is going down. A raven goes out. A dove comes back with a leaf. And then God makes a promise you still see in the sky today. Genesis, chapter 9.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:40<18:40, 1120.08s/it]100%|██████████| 2/2 [18:40<00:00, 560.04s/it] 
+d03_hm ok 1120
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:55<00:00, 235.03s/it]100%|██████████| 1/1 [03:55<00:00, 235.03s/it]
+d03_g09_v012_0 ok 235
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Noah,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:19<00:00, 259.62s/it]100%|██████████| 1/1 [04:19<00:00, 259.62s/it]
+d03_g09_v017_0 ok 260
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Ham, the father of Canaan, saw the nakedness of his father, and told his two brethren without.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:33<00:00, 453.16s/it]100%|██████████| 1/1 [07:33<00:00, 453.16s/it]
+d03_g09_v022_0 ok 453
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Shem and Japheth took a garment, and laid it upon both their shoulders, and went backward, and covered the nakedness of their father;
+gen_text 1 and their faces were backward, and they saw not their father's nakedness.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [15:02<15:02, 902.47s/it]100%|██████████| 2/2 [15:02<00:00, 451.23s/it]
+d03_g09_v023_0 ok 902
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Noah awoke from his wine, and knew what his younger son had done unto him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:53<00:00, 413.60s/it]100%|██████████| 1/1 [06:53<00:00, 413.60s/it]
+d03_g09_v024_0 ok 414
