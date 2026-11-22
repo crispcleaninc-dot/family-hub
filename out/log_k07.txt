@@ -1,0 +1,106 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Did you catch that? The king calls him the troublemaker, and Elijah hands it right back. You are the trouble. Then he turns to the people.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:47<00:00, 287.48s/it]100%|██████████| 1/1 [04:47<00:00, 287.48s/it]
+e1_08 ok 288
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here is your question for the comments. Is there a lie in your life you've been halting between, one foot in and one foot out? Next time on Sharp Tongues: Nathan,
+gen_text 1 the prophet who told a king a bedtime story, then said, Thou art the man. Join Community Covenant, free, at covenant dot crispusmundo dot com,
+gen_text 2 and read with us every day on Cover to Cover. God bless you.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [12:27<24:55, 747.62s/it]100%|██████████| 3/3 [12:27<00:00, 249.21s/it]
+e1_26 ok 748
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The same mouth that said thou art the man also said the Lord hath put away thy sin. Nathan's sharp word opened a door back to God. That's the finding.
+gen_text 1 A true prophet's sharp word is a door, not a wall.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:12<07:12, 432.98s/it]100%|██████████| 2/2 [07:12<00:00, 216.49s/it]
+e2_22 ok 433
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then took they Jeremiah, and cast him into the dungeon of Malchiah the son of Hammelech, that was in the court of the prison:
+gen_text 1 and they let down Jeremiah with cords. And in the dungeon there was no water, but mire: so Jeremiah sunk in the mire.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:20<08:20, 500.82s/it]100%|██████████| 2/2 [08:20<00:00, 250.41s/it]
+e3_17 ok 501
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here is your question for the comments. Where do you see people being crushed while the worship goes on as usual? Next time on Sharp Tongues: John the Baptist,
+gen_text 1 who called the religious leaders a generation of vipers, and told a king, It is not lawful. Join Community Covenant, free, at covenant dot crispusmundo dot com,
+gen_text 2 and read with us every day on Cover to Cover. God bless you.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [12:31<25:02, 751.25s/it] 67%|██████▋   | 2/3 [12:41<05:15, 315.28s/it]100%|██████████| 3/3 [12:41<00:00, 253.78s/it]
+e4_17 ok 761
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here is your question for the comments. If someone you trusted told you a hard truth today, would you hear it or shoot the messenger? Next time on Sharp Tongues: Jesus Himself.
+gen_text 1 Tables turned over, whited sepulchres, and the one verse that tells you what was behind it all. Join Community Covenant, free, at covenant dot crispusmundo dot com,
+gen_text 2 and read with us every day on Cover to Cover. God bless you.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [13:13<26:26, 793.16s/it]100%|██████████| 3/3 [13:13<00:00, 264.39s/it]
+e5_16 ok 793
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Jesus beholding him loved him, and said unto him, one thing thou lackest. The love came first, and the hard truth came out of the love. Here's the finding.
+gen_text 1 The sharpest words in the Gospels came from the One who loved the most.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:52<07:52, 472.12s/it]100%|██████████| 2/2 [07:52<00:00, 236.06s/it]
+e6_13 ok 472
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Test number two. The why. Every true prophet we studied was sharp in order to turn hearts back to God, not to get followers.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:27<00:00, 267.21s/it]100%|██████████| 1/1 [04:27<00:00, 267.21s/it]
+e7_13 ok 267
