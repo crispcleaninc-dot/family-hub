@@ -1,0 +1,123 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For their riches were more than that they might dwell together; and the land wherein they were strangers could not bear them because of their cattle.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [10:22<00:00, 622.60s/it]100%|██████████| 1/1 [10:22<00:00, 622.60s/it]
+d13_g36_v007_0 ok 623
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 37.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:17<00:00, 257.39s/it]100%|██████████| 1/1 [04:17<00:00, 257.39s/it]
+d13_c37 ok 257
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And his brethren said to him,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.03s/it]100%|██████████| 1/1 [04:38<00:00, 278.03s/it]
+d13_g37_v008_0 ok 278
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Israel said unto Joseph,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:32<00:00, 272.05s/it]100%|██████████| 1/1 [04:32<00:00, 272.05s/it]
+d13_g37_v013_0 ok 272
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he said to him, Here am I.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.69s/it]100%|██████████| 1/1 [04:38<00:00, 278.69s/it]
+d13_g37_v013_2 ok 279
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Reuben said unto them,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:31<00:00, 271.29s/it]100%|██████████| 1/1 [04:31<00:00, 271.29s/it]
+d13_g37_v022_0 ok 271
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Judah said unto his brethren,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:46<00:00, 286.36s/it]100%|██████████| 1/1 [04:46<00:00, 286.36s/it]
+d13_g37_v026_0 ok 286
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So here's my question for you. When people misunderstood the dream God gave you, how did you handle it? Tell me in the comments. To join Community Covenant,
+gen_text 1 go to covenant dot crispus mundo dot com, tap Create Account, choose your daily focus, and add it to your home screen. Tomorrow is Genesis thirty-eight through forty.
+gen_text 2 Joseph in Egypt, a false accusation, and two dreams in a prison. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [25:06<50:13, 1506.78s/it] 67%|██████▋   | 2/3 [25:59<10:51, 651.48s/it] 100%|██████████| 3/3 [25:59<00:00, 519.85s/it]
+d13_h9 ok 1560
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Okay, family. Joseph is sold as a slave in Egypt. He works hard. He does right. And would you believe doing right is exactly what lands him in prison?
+gen_text 1 But notice how many times the Bible says: the Lord was with Joseph.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [14:51<14:51, 891.66s/it]100%|██████████| 2/2 [14:51<00:00, 445.83s/it]
+d14_h0 ok 892
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 14 of three hundred sixty-five. Today is Genesis chapters thirty-eight, thirty-nine and forty, read from the King James Version,
+gen_text 1 with not one word changed. This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 38.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:08<18:08, 1088.27s/it]100%|██████████| 2/2 [18:15<00:00, 452.65s/it] 100%|██████████| 2/2 [18:15<00:00, 547.99s/it]
+d14_h1 ok 1096
