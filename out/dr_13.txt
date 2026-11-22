@@ -1,0 +1,123 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's something else about the Roman shield. Soldiers could lock their shields together, side by side and over their heads, into a formation called the tortoise.
+gen_text 1 Alone, one shield covers one man. Together, they became a wall.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:19<11:19, 679.10s/it]100%|██████████| 2/2 [11:19<00:00, 339.55s/it]
+dd5_010t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That's why you can't do this alone. Your faith covers you. But when we stand together, praying for each other, our faith covers the whole group.
+gen_text 1 That's what Community Covenant is for.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:57<09:57, 597.79s/it]100%|██████████| 2/2 [09:57<00:00, 298.89s/it]
+dd5_011t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Brother Sylvester Mitchell said it like this.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:53<00:00, 233.82s/it]100%|██████████| 1/1 [03:53<00:00, 233.82s/it]
+dd5_012t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Faith doesn't mean the enemy never attacks. Faith means what he throws doesn't have to enter you.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:28<00:00, 328.43s/it]100%|██████████| 1/1 [05:28<00:00, 328.43s/it]
+dd5_013q True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For whatsoever is born of God overcometh the world: and this is the victory that overcometh the world, even our faith.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:09<00:00, 369.30s/it]100%|██████████| 1/1 [06:09<00:00, 369.30s/it]
+dd5_014v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But without faith it is impossible to please him: for he that cometh to God must believe that he is, and that he is a rewarder of them that diligently seek him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:50<00:00, 470.10s/it]100%|██████████| 1/1 [07:50<00:00, 470.10s/it]
+dd5_015v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. A shield only works if you lift it. Faith that stays on the wall at home doesn't stop anything. Lifting the shield sounds like this: God,
+gen_text 1 I don't see it yet, but I trust you. I'm not going to let this thought in.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:01<11:01, 661.09s/it]100%|██████████| 2/2 [11:01<00:00, 330.55s/it]
+dd5_016t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every word of God is pure: he is a shield unto them that put their trust in him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:04<00:00, 304.79s/it]100%|██████████| 1/1 [05:04<00:00, 304.79s/it]
+dd5_017v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:20<00:00, 440.83s/it]100%|██████████| 1/1 [07:20<00:00, 440.83s/it]
+dd5_018x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your application. Name the fiery dart that's been hitting you most. Then pick one promise from God to hold up against it, and every time that dart comes,
+gen_text 1 say the promise out loud. And find one person to lock shields with this week. Text them your prayer request.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:47<11:47, 707.53s/it]100%|██████████| 2/2 [11:47<00:00, 353.76s/it]
+dd5_019t True
