@@ -1,0 +1,6 @@
+s074 adam ok
+s078 serpent ok
+s083 serpent ok
+s084 serpent ok
+s091 adam ok
+s095 adam ok
