@@ -1,0 +1,134 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Who cried with a loud voice, I am clear from the blood of this woman.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:17<00:00, 317.61s/it]100%|██████████| 1/1 [05:17<00:00, 317.61s/it]
+sus_057v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then all the people turned them toward him, and said, What mean these words that thou hast spoken?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:16<00:00, 376.16s/it]100%|██████████| 1/1 [06:16<00:00, 376.16s/it]
+sus_058v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So he standing in the midst of them said, Are ye such fools, ye sons of Israel,
+gen_text 1 that without examination or knowledge of the truth ye have condemned a daughter of Israel?
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:10<10:10, 610.28s/it]100%|██████████| 2/2 [10:28<00:00, 261.89s/it]100%|██████████| 2/2 [10:28<00:00, 314.15s/it]
+sus_059v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Return again to the place of judgment: for they have borne false witness against her.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:43<00:00, 343.42s/it]100%|██████████| 1/1 [05:43<00:00, 343.42s/it]
+sus_060v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Wherefore all the people turned again in haste, and the elders said unto him, Come, sit down among us, and shew it us,
+gen_text 1 seeing God hath given thee the honour of an elder.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:34<10:34, 634.54s/it]100%|██████████| 2/2 [10:34<00:00, 317.27s/it]
+sus_061v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then said Daniel unto them, Put these two aside one far from another, and I will examine them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:53<00:00, 353.27s/it]100%|██████████| 1/1 [05:53<00:00, 353.27s/it]
+sus_062v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Daniel does what any good investigator does. He separates them. Now listen to their answers.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:53<00:00, 353.77s/it]100%|██████████| 1/1 [05:53<00:00, 353.77s/it]
+sus_063t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So when they were put asunder one from another, he called one of them, and said unto him, O thou that art waxen old in wickedness,
+gen_text 1 now thy sins which thou hast committed aforetime are come to light.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:34<11:34, 694.02s/it]100%|██████████| 2/2 [11:34<00:00, 347.01s/it]
+sus_064v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For thou hast pronounced false judgment and hast condemned the innocent and hast let the guilty go free; albeit the Lord saith,
+gen_text 1 The innocent and righteous shalt thou not slay.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:49<10:49, 649.02s/it]100%|██████████| 2/2 [10:49<00:00, 324.51s/it]
+sus_065v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now then, if thou hast seen her, tell me, Under what tree sawest thou them companying together? Who answered, Under a mastick tree.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:27<00:00, 447.05s/it]100%|██████████| 1/1 [07:27<00:00, 447.05s/it]
+sus_066v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Daniel said, Very well; thou hast lied against thine own head; for even now the angel of God hath received the sentence of God to cut thee in two.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:12<00:00, 492.78s/it]100%|██████████| 1/1 [08:12<00:00, 492.78s/it]
+sus_067v True
