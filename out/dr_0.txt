@@ -1,0 +1,125 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Yesterday we said it was never them. Today we're going deeper, because if the fight isn't with people, we need to know exactly who it is with,
+gen_text 1 and exactly what God handed us for it.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:03<08:03, 483.26s/it]100%|██████████| 2/2 [08:03<00:00, 241.63s/it]
+dd1_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:04<08:04, 484.72s/it]100%|██████████| 2/2 [08:04<00:00, 242.36s/it]
+dd1_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Let's start where Paul starts. Not with the armor. With the strength.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:54<00:00, 234.03s/it]100%|██████████| 1/1 [03:54<00:00, 234.04s/it]
+dd1_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Finally, my brethren, be strong in the Lord, and in the power of his might.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:02<00:00, 242.76s/it]100%|██████████| 1/1 [04:02<00:00, 242.76s/it]
+dd1_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Be strong in the Lord. Not be strong, period. In the Lord. Some of us have been trying to win spiritual fights with natural strength. More sleep, more willpower,
+gen_text 1 more telling people off. And we keep losing, because we brought the wrong strength to the right fight.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:35<09:35, 575.05s/it]100%|██████████| 2/2 [09:35<00:00, 287.52s/it]
+dd1_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's something most people never notice. Paul didn't invent this armor. He pulled it out of Isaiah. Look at how Isaiah describes God himself getting dressed.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:33<00:00, 393.98s/it]100%|██████████| 1/1 [06:33<00:00, 393.98s/it]
+dd1_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For he put on righteousness as a breastplate, and an helmet of salvation upon his head; and he put on the garments of vengeance for clothing,
+gen_text 1 and was clad with zeal as a cloke.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:50<07:50, 470.68s/it]100%|██████████| 2/2 [07:50<00:00, 235.34s/it]
+dd1_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The breastplate. The helmet. That's God's own armor first. So when Paul says put on the whole armor of God, he's saying: wear what God wears.
+gen_text 1 You're not borrowing a soldier's uniform. You're being dressed in His.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:24<08:24, 504.79s/it]100%|██████████| 2/2 [08:24<00:00, 252.40s/it]
+dd1_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.53s/it]100%|██████████| 1/1 [04:38<00:00, 278.53s/it]
+dd1_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world,
+gen_text 1 against spiritual wickedness in high places.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:53<07:53, 473.04s/it]100%|██████████| 2/2 [07:53<00:00, 236.52s/it]
+dd1_010v True
