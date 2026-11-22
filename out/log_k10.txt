@@ -1,0 +1,101 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 8 of three hundred sixty-five. Today is Genesis chapters twenty-four and twenty-five, read from the King James Version, with not one word changed.
+gen_text 1 This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 24.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:53<18:53, 1133.09s/it]100%|██████████| 2/2 [18:53<00:00, 566.54s/it] 
+d08_h1 ok 1133
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham said unto him,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:32<00:00, 272.14s/it]100%|██████████| 1/1 [04:32<00:00, 272.14s/it]
+d08_g24_v006_0 ok 272
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Behold, I stand here by the well of water; and the daughters of the men of the city come out to draw water:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:01<00:00, 481.53s/it]100%|██████████| 1/1 [08:01<00:00, 481.53s/it]
+d08_g24_v013_0 ok 482
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I asked her, and said, Whose daughter art thou? And she said, The daughter of Bethuel, Nahor's son, whom Milcah bare unto him:
+gen_text 1 and I put the earring upon her face, and the bracelets upon her hands.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [14:53<14:53, 893.42s/it]100%|██████████| 2/2 [14:53<00:00, 446.71s/it]
+d08_g24_v047_0 ok 893
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I bowed down my head, and worshipped the Lord, and blessed the Lord God of my master Abraham,
+gen_text 1 which had led me in the right way to take my master's brother's daughter unto his son.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:44<13:44, 824.81s/it]100%|██████████| 2/2 [13:44<00:00, 412.41s/it]
+d08_g24_v048_0 ok 825
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then Laban and Bethuel answered and said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:21<00:00, 321.31s/it]100%|██████████| 1/1 [05:21<00:00, 321.31s/it]
+d08_g24_v050_0 ok 321
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:13<00:00, 253.46s/it]100%|██████████| 1/1 [04:13<00:00, 253.46s/it]
+d08_g24_v057_0 ok 253
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick word: if you want to keep today's verses and read along every day, it's all free in Community Covenant, at covenant dot crispus mundo dot com. And now, twins.
+gen_text 1 Fighting before they're even born. One of them trades his whole birthright for a bowl of stew. Mm. Listen to this. Genesis, chapter 25.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:10<18:10, 1091.00s/it]100%|██████████| 2/2 [18:10<00:00, 545.50s/it] 
+d08_hm ok 1091
