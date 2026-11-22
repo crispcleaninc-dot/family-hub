@@ -1,0 +1,8 @@
+fa1_a_7101 try0 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:10:46. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7101 try1 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:10:16. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7101 try2 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:09:45. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7101 poll ok
+fa1_a_7102 try0 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:09:10. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7102 try1 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:08:40. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7102 try2 You have exceeded your ZeroGPU quota (105s requested vs. 99s left). Try again in 14:08:09. Authenticate with a Hugging Face token for more quota - https://huggi
+fa1_a_7102 poll ok
