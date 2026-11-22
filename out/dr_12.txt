@@ -1,0 +1,112 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Paul says above all, take the shield. Above all. So let's find out why this one piece gets that kind of emphasis.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:39<00:00, 400.00s/it]100%|██████████| 1/1 [06:39<00:00, 400.00s/it]
+dd5_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:22<11:22, 682.47s/it]100%|██████████| 2/2 [11:22<00:00, 341.24s/it]
+dd5_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Above all, taking the shield of faith, wherewith ye shall be able to quench all the fiery darts of the wicked.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:22<00:00, 382.11s/it]100%|██████████| 1/1 [06:22<00:00, 382.11s/it]
+dd5_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The Roman shield was called a scutum. About four feet tall, curved around the body, made of layered wood and covered in leather.
+gen_text 1 A soldier could crouch behind it and disappear. And ancient armies really did shoot flaming arrows. The goal wasn't just to wound you.
+gen_text 2 It was to set your whole camp on fire.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [16:50<33:41, 1010.90s/it] 67%|██████▋   | 2/3 [16:56<06:59, 419.35s/it] 100%|██████████| 3/3 [16:56<00:00, 338.72s/it]
+dd5_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 That's the enemy's strategy too. One fiery dart. One rumor, one diagnosis, one text message at two in the morning. And if it lands, it spreads to everything.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:33<00:00, 513.23s/it]100%|██████████| 1/1 [08:33<00:00, 513.23s/it]
+dd5_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 After these things the word of the Lord came unto Abram in a vision, saying, Fear not, Abram: I am thy shield, and thy exceeding great reward.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:44<00:00, 464.39s/it]100%|██████████| 1/1 [07:44<00:00, 464.39s/it]
+dd5_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before Paul ever wrote about a shield of faith, God told Abram: I am thy shield. So faith isn't you being strong. Faith is you getting behind God.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:02<00:00, 482.52s/it]100%|██████████| 1/1 [08:02<00:00, 482.52s/it]
+dd5_007t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He shall cover thee with his feathers, and under his wings shalt thou trust: his truth shall be thy shield and buckler.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:56<00:00, 416.01s/it]100%|██████████| 1/1 [06:56<00:00, 416.01s/it]
+dd5_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is feeding you, do three things for me right now. Hit like. Share it with somebody who's in a fight.
+gen_text 1 And follow Faith and Findings so you don't miss next week. And if you're on YouTube, subscribe to Community Covenant, at Community Covenant App.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:50<11:50, 710.06s/it]100%|██████████| 2/2 [13:17<00:00, 343.76s/it]100%|██████████| 2/2 [13:17<00:00, 398.70s/it]
+dd5_009x True
