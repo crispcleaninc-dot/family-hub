@@ -5,7 +5,7 @@ jobs:
   render:
     runs-on: ubuntu-latest
     timeout-minutes: 120
-    strategy: { fail-fast: false, max-parallel: 13, matrix: { d: ["03"] } }
+    strategy: { fail-fast: false, max-parallel: 13, matrix: { d: ["03","04","05","06","07","08","09","10","11","12","13","14"] } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

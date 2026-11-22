@@ -156,5 +156,5 @@ mus = mus / (np.abs(mus).max() + 1e-9) * 0.5
 sf.write(f'{W}/music_raw.wav', mus, sr)
 run(f'ffmpeg -nostdin -y -i {W}/music_raw.wav -af "volume=-15dB" -ac 2 -t {TOT} {W}/music.wav')
 run(f'ffmpeg -nostdin -y -i {W}/voice.wav -i {W}/music.wav -filter_complex "[1:a][0:a]sidechaincompress=threshold=0.03:ratio=6:attack=20:release=400[d];[0:a][d]amix=inputs=2:normalize=0,alimiter=limit=0.95[o]" -map "[o]" -c:a aac -b:a 160k {W}/mix.m4a')
-run(f'ffmpeg -nostdin -y -i {W}/vid.mp4 -i {W}/mix.m4a -vf "ass={W}/cap.ass" -map 0:v -map 1:a -c:v libx264 -preset veryfast -crf 23 -c:a copy -shortest -movflags +faststart out/Day{DAY:02d}_Reading_Drama.mp4')
+run(f'ffmpeg -nostdin -y -i {W}/vid.mp4 -i {W}/mix.m4a -vf "ass={W}/cap.ass" -map 0:v -map 1:a -c:v libx264 -preset veryfast -crf 23 -c:a copy -shortest -movflags +faststart ../out/Day{DAY:02d}_Reading_Drama.mp4')
 print('done', round(TOT, 1))
