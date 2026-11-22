@@ -1,0 +1,5 @@
+sg5_b_7101 flux ok
+sg5_b_7102 try0 You have exceeded your ZeroGPU quota (105s requested vs. 104s left). Try again in 18:35:08. Authenticate with a Hugging Face token for more quota - https://hugg
+sg5_b_7102 try1 You have exceeded your ZeroGPU quota (105s requested vs. 104s left). Try again in 18:34:38. Authenticate with a Hugging Face token for more quota - https://hugg
+sg5_b_7102 try2 You have exceeded your ZeroGPU quota (105s requested vs. 104s left). Try again in 18:34:07. Authenticate with a Hugging Face token for more quota - https://hugg
+sg5_b_7102 poll ok
