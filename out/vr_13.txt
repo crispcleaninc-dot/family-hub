@@ -1,0 +1,88 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Thy words were found, and I did eat them; and thy word was unto me the joy and rejoicing of mine heart: for I am called by thy name, O Lord God of hosts.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:19<00:00, 439.04s/it]100%|██████████| 1/1 [07:19<00:00, 439.04s/it]
+vgd3_011v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Thy words were found, and I did eat them. That's what we do every day in Cover to Cover. We eat the Word together.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:04<00:00, 364.91s/it]100%|██████████| 1/1 [06:04<00:00, 364.91s/it]
+vgd3_012t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:55<00:00, 415.82s/it]100%|██████████| 1/1 [06:55<00:00, 415.82s/it]
+vgd3_013x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your homework. Pick one short passage this week. Read it out loud three times a day. Each time, write down one word or phrase that stands out. By Sunday,
+gen_text 1 you'll know what God was saying.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:03<10:03, 603.39s/it]100%|██████████| 2/2 [10:03<00:00, 301.69s/it]
+vgd3_014t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Questions for the comments. How has God spoken to you through a Bible verse at exactly the right time? And what keeps you from reading more?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:00<00:00, 420.72s/it]100%|██████████| 1/1 [07:00<00:00, 420.72s/it]
+vgd3_015t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Next week: speak, Lord.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:13<00:00, 193.87s/it]100%|██████████| 1/1 [03:13<00:00, 193.87s/it]
+vgd3_016t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Join Community Covenant for free. Go to covenant dot crispus mundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 1 and add it to your home screen.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:28<09:28, 568.85s/it]100%|██████████| 2/2 [09:28<00:00, 284.42s/it]
+vgd3_017x True
