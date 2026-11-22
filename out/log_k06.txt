@@ -1,0 +1,101 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 I have not troubled Israel; but thou, and thy father's house, in that ye have forsaken the commandments of the LORD, and thou hast followed Baalim.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:11<00:00, 551.47s/it]100%|██████████| 1/1 [09:11<00:00, 551.47s/it]
+e1_07 ok 552
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the finding. Elijah's sharp words had one goal. Not to win an argument. To turn their heart back again.
+gen_text 1 That is what separates a prophet's sharp tongue from just being mean.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:05<11:05, 665.09s/it]100%|██████████| 2/2 [11:05<00:00, 332.55s/it]
+e1_25 ok 665
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Nathan said unto David,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:55<00:00, 235.88s/it]100%|██████████| 1/1 [03:55<00:00, 235.88s/it]
+e2_20 ok 236
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 A fire and a hammer. It is not supposed to feel soft when it breaks a hard heart. And it cost Jeremiah.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:44<00:00, 404.67s/it]100%|██████████| 1/1 [06:44<00:00, 404.67s/it]
+e3_16 ok 405
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the finding. Amos's sharp tongue was pointed up, at the powerful, on behalf of the poor. When someone's sharp words only ever land on the weak, ask who sent them.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:23<00:00, 563.02s/it]100%|██████████| 1/1 [09:23<00:00, 563.02s/it]
+e4_16 ok 563
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Seven words, and it cost him his life. Here's the finding. John's sharp words came with a way out. Repent, and bring fruit.
+gen_text 1 A prophet who calls you a viper and never shows you the way home is only half a prophet.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:56<11:56, 716.97s/it]100%|██████████| 2/2 [11:56<00:00, 358.48s/it]
+e5_15 ok 717
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then Jesus beholding him loved him, and said unto him, One thing thou lackest: go thy way, sell whatsoever thou hast, and give to the poor,
+gen_text 1 and thou shalt have treasure in heaven: and come, take up the cross, and follow me.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:12<13:12, 792.88s/it]100%|██████████| 2/2 [13:12<00:00, 396.44s/it]
+e6_12 ok 793
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick pause. If somebody you love needs to hear this, share it. And if you want a place to keep reading the Word with your family every day, Community Covenant is free.
+gen_text 1 Link in the description.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:10<12:10, 730.97s/it]100%|██████████| 2/2 [12:10<00:00, 365.48s/it]
+e7_12 ok 731
