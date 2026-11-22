@@ -1,0 +1,84 @@
+{
+"meta": {
+ "fr": {"voice": "fr-FR-DeniseNeural", "sub": "COVER TO COVER - JOUR %d", "sub0": "COVER TO COVER - ÉDITION SPÉCIALE", "book": "Genèse", "low": "Bible King James, mot pour mot", "low0": "Légende juive ou Bible ?", "end": "LECTURE COMPLÈTE SUR LA CHAÎNE", "label": "Dramatisation - images et voix IA"},
+ "sw": {"voice": "sw-KE-ZuriNeural", "sub": "COVER TO COVER - SIKU %d", "sub0": "COVER TO COVER - TOLEO MAALUM", "book": "Mwanzo", "low": "Biblia ya King James, neno kwa neno", "low0": "Hadithi ya Kiyahudi au Biblia?", "end": "USOMAJI KAMILI KWENYE CHANELI", "label": "Maigizo - picha na sauti za AI"},
+ "hi": {"voice": "hi-IN-SwaraNeural", "sub": "COVER TO COVER - दिन %d", "sub0": "COVER TO COVER - विशेष अंक", "book": "उत्पत्ति", "low": "किंग जेम्स बाइबल, शब्दशः", "low0": "यहूदी किंवदंती या बाइबल?", "end": "पूरा पाठ चैनल पर", "label": "नाट्य रूपांतरण - AI चित्र और आवाज़"},
+ "es": {"voice": "es-MX-DaliaNeural", "sub": "COVER TO COVER - DÍA %d", "sub0": "COVER TO COVER - EDICIÓN ESPECIAL", "book": "Génesis", "low": "Biblia King James, palabra por palabra", "low0": "¿Leyenda judía o Biblia?", "end": "LECTURA COMPLETA EN EL CANAL", "label": "Dramatización - imágenes y voces IA"}
+},
+"top": {
+ "fr": {"1":"DIEU A-T-IL|VRAIMENT DIT ÇA ?","2":"LE PREMIER|MEURTRE","3":"UN BATEAU|SANS OCÉAN","4":"UNE TOUR|JUSQU'AU CIEL","5":"COMPTE|LES ÉTOILES","6":"SARA|A RI","7":"L'AUTEL SUR|LA MONTAGNE","8":"UNE PRIÈRE|AU PUITS","9":"LA BÉNÉDICTION|VOLÉE","10":"UNE ÉCHELLE|VERS LE CIEL","11":"PARTI EN|PLEINE NUIT","12":"LUTTER|AVEC DIEU","13":"JETÉ DANS|UNE CITERNE","14":"PUNI POUR|AVOIR BIEN FAIT","0":"QUI ÉTAIT|LILITH ?"},
+ "sw": {"1":"JE, MUNGU|ALISEMA KWELI?","2":"MAUAJI|YA KWANZA","3":"SAFINA|BILA BAHARI","4":"MNARA|HADI MBINGUNI","5":"HESABU|NYOTA","6":"SARA|ALICHEKA","7":"MADHABAHU|MLIMANI","8":"MAOMBI|KISIMANI","9":"BARAKA|ILIYOIBIWA","10":"NGAZI|HADI MBINGUNI","11":"ALIONDOKA|USIKU","12":"KUSHINDANA|NA MUNGU","13":"ALITUPWA|SHIMONI","14":"ADHABU KWA|KUTENDA MEMA","0":"LILITH|NI NANI?"},
+ "hi": {"1":"क्या परमेश्वर ने|सच में कहा?","2":"पहली|हत्या","3":"बिना समुद्र|की नाव","4":"आकाश तक|मीनार","5":"तारे|गिनो","6":"सारा|हँस पड़ी","7":"पहाड़ पर|वेदी","8":"कुएँ पर|प्रार्थना","9":"चुराई गई|आशीष","10":"स्वर्ग तक|सीढ़ी","11":"रात में|भाग निकला","12":"परमेश्वर से|मल्लयुद्ध","13":"गड्ढे में|फेंका गया","14":"भलाई की|सज़ा","0":"लिलिथ|कौन थी?"},
+ "es": {"1":"¿DE VERDAD|DIOS DIJO ESO?","2":"EL PRIMER|ASESINATO","3":"UN ARCA|SIN MAR","4":"UNA TORRE|HASTA EL CIELO","5":"CUENTA|LAS ESTRELLAS","6":"SARA|SE RIÓ","7":"EL ALTAR EN|EL MONTE","8":"UNA ORACIÓN|EN EL POZO","9":"LA BENDICIÓN|ROBADA","10":"UNA ESCALERA|AL CIELO","11":"HUIDA EN|LA NOCHE","12":"LUCHANDO|CON DIOS","13":"ARROJADO|AL POZO","14":"CASTIGADO POR|HACER EL BIEN","0":"¿QUIÉN ERA|LILITH?"}
+},
+"hook": {
+ "fr": {
+  "1": "Bien-aimés, approchez. La toute première conversation qui a mal tourné : une femme, un arbre, et un beau parleur… qui était un serpent. Et croiriez-vous qu'il a tout commencé avec une seule petite question ?",
+  "2": "Bien-aimés, deux frères. Deux offrandes. L'une est acceptée, et l'autre frère devient jaloux. Croiriez-vous que le tout premier meurtre de la Bible a eu lieu dans un champ, entre frères ?",
+  "3": "Imaginez : un homme passe des années à construire un bateau là où il n'y a pas d'océan. Tout le monde se moque. Et puis un jour, Dieu ferme la porte. Croiriez-vous qu'il a plu quarante jours et quarante nuits ?",
+  "4": "Bien-aimés, tout le monde parle une seule langue. Ils décident de bâtir une tour pour se faire un nom. Et Dieu descend pour voir. Croiriez-vous ce qui arrive ensuite ?",
+  "5": "Bien-aimés, c'est la guerre. Des rois contre des rois. Lot, le neveu d'Abram, est capturé. Croiriez-vous qu'Abram part le délivrer avec trois cent dix-huit hommes ? Puis Dieu lui dit : regarde le ciel. Compte les étoiles.",
+  "6": "Trois hommes arrivent à la tente d'Abraham en pleine chaleur. L'un d'eux dit : l'an prochain, Sara aura un fils. Sara a quatre-vingt-dix ans. Croiriez-vous qu'elle a ri ? Et Dieu l'a entendue.",
+  "7": "La promesse arrive enfin. Isaac est né. Mais croiriez-vous que Dieu demande ensuite à Abraham de lui rendre ce même fils ? Sur une montagne. Avec du bois et un couteau.",
+  "8": "Abraham cherche une épouse pour Isaac. Il envoie son serviteur avec dix chameaux et une prière. Croiriez-vous que la réponse arrive au puits avant même qu'il finisse de prier ?",
+  "9": "Si vous pensez qu'il y a des histoires dans votre famille, attendez. Un père aveugle. Une mère avec un plan. Un fils déguisé avec des peaux de chevreau. Croiriez-vous que la plus grande bénédiction a été volée à table ?",
+  "10": "Jacob est en fuite. Il dort avec une pierre pour oreiller, et il rêve d'une échelle qui touche le ciel. Puis il travaille sept ans pour épouser celle qu'il aime… et croiriez-vous qu'il se réveille marié à sa sœur ?",
+  "11": "Deux sœurs mariées au même homme, qui se disputent son amour. Un oncle qui change sans cesse le marché. Croiriez-vous que Jacob part finalement avec toute sa famille, en pleine nuit ?",
+  "12": "Jacob apprend que son frère Ésaü arrive avec quatre cents hommes. Il a peur. Cette nuit-là, un homme lutte avec lui jusqu'à l'aube. Croiriez-vous que Jacob dit : je ne te laisserai pas aller, que tu ne m'aies béni ?",
+  "13": "Joseph a dix-sept ans. Le préféré de son père, avec sa tunique de plusieurs couleurs. Il raconte ses rêves à ses frères. Croiriez-vous qu'ils l'ont tellement haï qu'ils l'ont jeté dans une citerne ?",
+  "14": "Joseph est vendu comme esclave en Égypte. Il travaille dur. Il fait le bien. Et croiriez-vous que c'est justement le bien qui l'envoie en prison ? Mais remarquez : l'Éternel était avec Joseph.",
+  "0": "Croiriez-vous qu'une vieille légende juive dit qu'Ève n'était pas la première femme du jardin ? Elle s'appelait Lilith. Et selon l'histoire, elle était jalouse. Mais que dit vraiment la Bible ?"
+ },
+ "sw": {
+  "1": "Wapendwa, karibuni. Mazungumzo ya kwanza kabisa yaliyoharibika: mwanamke, mti, na mjanja wa maneno… aliyekuwa nyoka. Je, mngeamini alianza kila kitu kwa swali moja dogo tu?",
+  "2": "Wapendwa, ndugu wawili. Sadaka mbili. Moja inakubaliwa, na ndugu mwingine anaona wivu. Je, mngeamini kwamba mauaji ya kwanza kabisa katika Biblia yalitokea shambani, kati ya ndugu?",
+  "3": "Fikirieni hivi: mtu anajenga safina kwa miaka mingi mahali pasipo na bahari. Kila mtu anacheka. Kisha siku moja, Mungu anafunga mlango. Je, mngeamini mvua ilinyesha siku arobaini mchana na usiku?",
+  "4": "Wapendwa, watu wote wanaongea lugha moja. Wanaamua kujenga mnara ili wajipatie jina. Na Mungu anashuka kuuona. Je, mngeamini kilichotokea baadaye?",
+  "5": "Wapendwa, kuna vita. Wafalme dhidi ya wafalme. Lutu, mpwa wa Abramu, anachukuliwa mateka. Je, mngeamini Abramu anawafuata akiwa na watu mia tatu kumi na wanane? Kisha Mungu anamwambia: tazama juu. Hesabu nyota.",
+  "6": "Watu watatu wanafika kwenye hema ya Ibrahimu wakati wa jua kali. Mmoja anasema: mwaka ujao, Sara atapata mtoto wa kiume. Sara ana miaka tisini. Je, mngeamini alicheka? Na Mungu alimsikia.",
+  "7": "Ahadi hatimaye inatimia. Isaka anazaliwa. Lakini je, mngeamini kwamba Mungu anamwomba Ibrahimu amtoe mwana huyo huyo? Juu ya mlima. Na kuni na kisu.",
+  "8": "Ibrahimu anamtafutia Isaka mke. Anamtuma mtumishi wake na ngamia kumi na maombi. Je, mngeamini jibu linafika kisimani kabla hata hajamaliza kuomba?",
+  "9": "Kama mnadhani familia yenu ina vituko, subirini. Baba kipofu. Mama mwenye mpango. Mwana aliyevaa ngozi za mbuzi mikononi. Je, mngeamini baraka kubwa ya familia iliibiwa mezani?",
+  "10": "Yakobo anakimbia. Analala na jiwe kama mto, na anaota ngazi inayofika mbinguni. Kisha anafanya kazi miaka saba kwa ajili ya mpenzi wake… na je, mngeamini anaamka akiwa ameoa dada yake?",
+  "11": "Dada wawili walioolewa na mwanaume mmoja, wakishindania upendo wake. Mjomba anayebadilisha makubaliano kila mara. Je, mngeamini Yakobo hatimaye anaondoka na familia yake yote usiku wa manane?",
+  "12": "Yakobo anasikia kaka yake Esau anakuja na watu mia nne. Anaogopa sana. Usiku ule, mtu anashindana naye hadi asubuhi. Je, mngeamini Yakobo anasema: sitakuacha uende, usiponibariki?",
+  "13": "Yusufu ana miaka kumi na saba. Kipenzi cha baba yake, amevaa kanzu ya rangi nyingi. Anawaambia kaka zake ndoto zake. Je, mngeamini walimchukia hadi wakamtupa shimoni?",
+  "14": "Yusufu anauzwa kama mtumwa Misri. Anafanya kazi kwa bidii. Anatenda mema. Na je, mngeamini kutenda mema ndiko kunakompeleka gerezani? Lakini angalieni: Bwana alikuwa pamoja na Yusufu.",
+  "0": "Je, mngeamini kuna hadithi ya zamani ya Kiyahudi inayosema Hawa hakuwa mwanamke wa kwanza bustanini? Jina lake lilikuwa Lilith. Na kwa mujibu wa hadithi, alikuwa na wivu. Lakini Biblia inasema nini hasa?"
+ },
+ "hi": {
+  "1": "मेरे प्यारे परिवार, पास आइए। इतिहास की पहली बातचीत जो बिगड़ गई: एक स्त्री, एक पेड़, और एक मीठा बोलने वाला… जो एक साँप था। क्या आप विश्वास करेंगे कि उसने सब कुछ सिर्फ़ एक छोटे से सवाल से शुरू किया?",
+  "2": "मेरे प्यारे परिवार, दो भाई। दो भेंट। एक स्वीकार होती है, और दूसरे भाई को जलन होती है। क्या आप विश्वास करेंगे कि बाइबल की पहली हत्या एक खेत में, दो भाइयों के बीच हुई?",
+  "3": "ज़रा सोचिए: एक आदमी सालों तक वहाँ नाव बनाता है जहाँ कोई समुद्र नहीं। सब हँसते हैं। फिर एक दिन, परमेश्वर दरवाज़ा बंद कर देता है। क्या आप विश्वास करेंगे कि चालीस दिन और चालीस रात बारिश हुई?",
+  "4": "मेरे प्यारे परिवार, सब लोग एक ही भाषा बोलते हैं। वे अपना नाम करने के लिए एक मीनार बनाने का फ़ैसला करते हैं। और परमेश्वर उसे देखने नीचे आता है। क्या आप विश्वास करेंगे कि आगे क्या हुआ?",
+  "5": "मेरे प्यारे परिवार, युद्ध छिड़ा है। राजा राजाओं से लड़ रहे हैं। अब्राम का भतीजा लूत पकड़ा जाता है। क्या आप विश्वास करेंगे कि अब्राम तीन सौ अठारह लोगों के साथ उसे छुड़ाने जाता है? फिर परमेश्वर कहता है: ऊपर देखो। तारे गिनो।",
+  "6": "दोपहर की गर्मी में तीन पुरुष अब्राहम के तम्बू पर आते हैं। उनमें से एक कहता है: अगले साल इसी समय सारा के बेटा होगा। सारा नब्बे साल की है। क्या आप विश्वास करेंगे कि वह हँस पड़ी? और परमेश्वर ने सुन लिया।",
+  "7": "आख़िरकार वादा पूरा होता है। इसहाक का जन्म होता है। पर क्या आप विश्वास करेंगे कि फिर परमेश्वर अब्राहम से वही बेटा माँगता है? एक पहाड़ पर। लकड़ी और छुरी के साथ।",
+  "8": "अब्राहम इसहाक के लिए पत्नी ढूँढ रहा है। वह अपने सेवक को दस ऊँटों और एक प्रार्थना के साथ भेजता है। क्या आप विश्वास करेंगे कि प्रार्थना ख़त्म होने से पहले ही जवाब कुएँ पर आ जाता है?",
+  "9": "अगर आपको लगता है कि आपके परिवार में ड्रामा है, तो रुकिए। एक अंधा पिता। एक योजना वाली माँ। हाथों पर बकरी की खाल पहने एक बेटा। क्या आप विश्वास करेंगे कि परिवार की सबसे बड़ी आशीष खाने की मेज़ पर चुरा ली गई?",
+  "10": "याकूब भाग रहा है। वह पत्थर को तकिया बनाकर सोता है, और स्वर्ग तक पहुँचती सीढ़ी का सपना देखता है। फिर अपनी प्रिय के लिए सात साल काम करता है… और क्या आप विश्वास करेंगे कि सुबह उसकी शादी उसकी बहन से हो चुकी होती है?",
+  "11": "एक ही आदमी से ब्याही दो बहनें, उसके प्यार के लिए होड़ करती हुई। एक मामा जो बार-बार सौदा बदलता है। क्या आप विश्वास करेंगे कि याकूब आख़िरकार आधी रात को पूरे परिवार के साथ निकल जाता है?",
+  "12": "याकूब सुनता है कि उसका भाई एसाव चार सौ लोगों के साथ आ रहा है। वह बहुत डर जाता है। उस रात एक पुरुष सुबह तक उससे मल्लयुद्ध करता है। क्या आप विश्वास करेंगे कि याकूब कहता है: जब तक तू मुझे आशीष न दे, मैं तुझे जाने न दूँगा?",
+  "13": "यूसुफ़ सत्रह साल का है। पिता का दुलारा, रंग-बिरंगा अंगरखा पहने। वह अपने भाइयों को अपने सपने सुनाता है। क्या आप विश्वास करेंगे कि उन्होंने उससे इतनी नफ़रत की कि उसे गड्ढे में फेंक दिया?",
+  "14": "यूसुफ़ को मिस्र में दास बनाकर बेच दिया जाता है। वह मेहनत करता है। वह सही करता है। और क्या आप विश्वास करेंगे कि सही करना ही उसे जेल पहुँचा देता है? पर ध्यान दीजिए: प्रभु यूसुफ़ के साथ था।",
+  "0": "क्या आप विश्वास करेंगे कि एक पुरानी यहूदी किंवदंती कहती है कि हव्वा बगीचे की पहली स्त्री नहीं थी? उसका नाम लिलिथ था। और कहानी के अनुसार, वह जलती थी। पर बाइबल असल में क्या कहती है?"
+ },
+ "es": {
+  "1": "Familia, acérquense. La primera conversación de la historia que salió mal: una mujer, un árbol y un hablador muy suave… que era una serpiente. ¿Creerían que empezó todo con una sola preguntita?",
+  "2": "Familia, dos hermanos. Dos ofrendas. Una es aceptada, y el otro hermano se llena de celos. ¿Creerían que el primer asesinato de la Biblia pasó en un campo, entre hermanos?",
+  "3": "Imagínense: un hombre pasa años construyendo un barco donde no hay mar. Todos se ríen. Y un día, Dios cierra la puerta. ¿Creerían que llovió cuarenta días y cuarenta noches?",
+  "4": "Familia, todos hablan un solo idioma. Deciden construir una torre para hacerse un nombre. Y Dios baja a verla. ¿Creerían lo que pasa después?",
+  "5": "Familia, hay guerra. Reyes contra reyes. Lot, el sobrino de Abram, es capturado. ¿Creerían que Abram va tras ellos con trescientos dieciocho hombres? Luego Dios le dice: mira al cielo. Cuenta las estrellas.",
+  "6": "Tres hombres llegan a la tienda de Abraham en pleno calor. Uno de ellos dice: el año que viene, Sara tendrá un hijo. Sara tiene noventa años. ¿Creerían que se rió? Y Dios la escuchó.",
+  "7": "Por fin llega la promesa. Nace Isaac. Pero ¿creerían que después Dios le pide a Abraham que le entregue a ese mismo hijo? En un monte. Con leña y un cuchillo.",
+  "8": "Abraham busca esposa para Isaac. Manda a su siervo con diez camellos y una oración. ¿Creerían que la respuesta llega al pozo antes de que termine de orar?",
+  "9": "Si creen que su familia tiene drama, esperen. Un padre ciego. Una madre con un plan. Un hijo con pieles de cabrito en las manos. ¿Creerían que la bendición más grande de la familia se robó en la mesa?",
+  "10": "Jacob va huyendo. Duerme con una piedra de almohada y sueña con una escalera que llega al cielo. Luego trabaja siete años por la mujer que ama… y ¿creerían que amanece casado con su hermana?",
+  "11": "Dos hermanas casadas con el mismo hombre, compitiendo por su amor. Un tío que cambia el trato una y otra vez. ¿Creerían que Jacob por fin se va con toda su familia en medio de la noche?",
+  "12": "Jacob se entera de que su hermano Esaú viene con cuatrocientos hombres. Tiene miedo. Esa noche, un hombre lucha con él hasta el amanecer. ¿Creerían que Jacob le dice: no te dejaré ir, si no me bendices?",
+  "13": "José tiene diecisiete años. El consentido de su papá, con su túnica de colores. Les cuenta sus sueños a sus hermanos. ¿Creerían que lo odiaron tanto que lo echaron en un pozo?",
+  "14": "A José lo venden como esclavo en Egipto. Trabaja duro. Hace lo correcto. Y ¿creerían que hacer lo correcto es justo lo que lo manda a la cárcel? Pero fíjense: el Señor estaba con José.",
+  "0": "¿Creerían que una antigua leyenda judía dice que Eva no fue la primera mujer del jardín? Se llamaba Lilith. Y según la historia, era celosa. Pero ¿qué dice de verdad la Biblia?"
+ }
+}
+}
