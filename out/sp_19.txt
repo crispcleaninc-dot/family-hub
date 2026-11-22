@@ -1,0 +1,133 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 With that Susanna cried with a loud voice: and the two elders cried out against her.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:09<00:00, 309.37s/it]100%|██████████| 1/1 [05:09<00:00, 309.37s/it]
+sus_032v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Then ran the one, and opened the garden door.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:00<00:00, 240.49s/it]100%|██████████| 1/1 [04:00<00:00, 240.49s/it]
+sus_033v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So when the servants of the house heard the cry in the garden, they rushed in at the privy door, to see what was done unto her.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:42<00:00, 402.81s/it]100%|██████████| 1/1 [06:42<00:00, 402.81s/it]
+sus_034v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But when the elders had declared their matter, the servants were greatly ashamed: for there was never such a report made of Susanna.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:51<00:00, 411.44s/it]100%|██████████| 1/1 [06:51<00:00, 411.44s/it]
+sus_035v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 She's alone. Two powerful men. A threat. And she chose God over her reputation, out loud. Better to fall into your hands, she said,
+gen_text 1 than to sin in the sight of the Lord. Then she screamed.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:42<09:42, 582.31s/it]100%|██████████| 2/2 [09:42<00:00, 291.15s/it]
+sus_036t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Some of you have been lied on, and you're still waiting to be cleared. Community Covenant has a prayer and accountability space for exactly that.
+gen_text 1 Join free at covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:16<10:16, 616.63s/it]100%|██████████| 2/2 [10:16<00:00, 308.32s/it]
+sus_037t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it came to pass the next day, when the people were assembled to her husband Joacim,
+gen_text 1 the two elders came also full of mischievous imagination against Susanna to put her to death;
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:57<08:57, 537.04s/it]100%|██████████| 2/2 [09:09<00:00, 228.72s/it]100%|██████████| 2/2 [09:09<00:00, 274.97s/it]
+sus_038v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And said before the people, Send for Susanna, the daughter of Chelcias, Joacim’s wife. And so they sent.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:43<00:00, 343.48s/it]100%|██████████| 1/1 [05:43<00:00, 343.48s/it]
+sus_039v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So she came with her father and mother, her children, and all her kindred.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:45<00:00, 285.38s/it]100%|██████████| 1/1 [04:45<00:00, 285.38s/it]
+sus_040v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now Susanna was a very delicate woman, and beauteous to behold.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:24<00:00, 264.59s/it]100%|██████████| 1/1 [04:24<00:00, 264.59s/it]
+sus_041v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And these wicked men commanded to uncover her face, (for she was covered) that they might be filled with her beauty.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:21<00:00, 381.21s/it]100%|██████████| 1/1 [06:21<00:00, 381.21s/it]
+sus_042v True
