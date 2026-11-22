@@ -1,0 +1,113 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Let me ask you something a little personal. What's holding your clothes up? Stay with me, because this matters.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:17<00:00, 197.84s/it]100%|██████████| 1/1 [03:17<00:00, 197.84s/it]
+fa2_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 A Roman soldier could own the finest sword in the empire. But if his belt came loose, his sword dropped and his long tunic tangled around his legs.
+gen_text 1 He was done before the fight started.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:44<05:44, 344.76s/it]100%|██████████| 2/2 [05:44<00:00, 172.38s/it]
+fa2_002t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:53<05:53, 353.97s/it]100%|██████████| 2/2 [05:53<00:00, 176.99s/it]
+fa2_003x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The belt was the first thing a soldier put on. Before battle, he'd pull up his long tunic and tuck it into that belt so he could run.
+gen_text 1 That's what the Bible means by girding up your loins. Everything else hung off the belt. Even the sword.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:46<06:46, 406.52s/it]100%|██████████| 2/2 [06:46<00:00, 203.26s/it]
+fa2_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Stand therefore, having your loins girt about with truth, and having on the breastplate of righteousness;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:16<00:00, 196.90s/it]100%|██████████| 1/1 [03:16<00:00, 196.90s/it]
+fa2_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Paul puts truth in the belt spot on purpose. When truth slips, everything else starts slipping with it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:08<00:00, 188.88s/it]100%|██████████| 1/1 [03:08<00:00, 188.88s/it]
+fa2_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Sanctify them through thy truth: thy word is truth.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:15<00:00, 135.29s/it]100%|██████████| 1/1 [02:15<00:00, 135.29s/it]
+fa2_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And ye shall know the truth, and the truth shall make you free.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:35<00:00, 155.94s/it]100%|██████████| 1/1 [02:35<00:00, 155.94s/it]
+fa2_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. Truth isn't only what you believe about God. It's also what you let God say about you.
+gen_text 1 Some of us are walking around in a lie somebody told us years ago. You're too much. You're not enough. You'll never change.
+gen_text 2 And that lie has been loosening everything else.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [07:53<15:46, 473.09s/it] 67%|██████▋   | 2/3 [08:25<03:33, 213.91s/it]100%|██████████| 3/3 [08:25<00:00, 168.52s/it]
+fa2_009t True
