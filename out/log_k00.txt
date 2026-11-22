@@ -1,0 +1,155 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Okay, family. Two brothers. Two offerings. One of them gets accepted, and the other one gets jealous.
+gen_text 1 And would you believe the very first murder in the Bible happened in a field, between brothers? You're about to hear it word for word.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:51<13:51, 831.24s/it]100%|██████████| 2/2 [15:11<00:00, 389.46s/it]100%|██████████| 2/2 [15:11<00:00, 455.73s/it]
+d02_h0 ok 912
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 2 of three hundred sixty-five. Today is Genesis chapters four, five and six, read from the King James Version, with not one word changed.
+gen_text 1 This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 4.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [17:46<17:46, 1066.89s/it]100%|██████████| 2/2 [17:46<00:00, 533.45s/it] 
+d02_h1 ok 1067
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord said unto Cain,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:53<00:00, 293.48s/it]100%|██████████| 1/1 [04:53<00:00, 293.48s/it]
+d02_g04_v006_0 ok 293
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord said unto Cain,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:31<00:00, 271.88s/it]100%|██████████| 1/1 [04:31<00:00, 271.88s/it]
+d02_g04_v009_0 ok 272
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he said, I know not: Am I my brother's keeper?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:38<00:00, 338.54s/it]100%|██████████| 1/1 [05:38<00:00, 338.54s/it]
+d02_g04_v009_2 ok 339
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Cain said unto the Lord,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:46<00:00, 286.39s/it]100%|██████████| 1/1 [04:46<00:00, 286.39s/it]
+d02_g04_v013_0 ok 286
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the Lord said unto him,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:27<00:00, 267.27s/it]100%|██████████| 1/1 [04:27<00:00, 267.27s/it]
+d02_g04_v015_0 ok 267
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Lamech said unto his wives,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:43<00:00, 283.41s/it]100%|██████████| 1/1 [04:43<00:00, 283.41s/it]
+d02_g04_v023_0 ok 283
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick word: if you want to keep today's verses and read along every day, it's all free in Community Covenant, at covenant dot crispus mundo dot com. Now hold on. After all that,
+gen_text 1 the world gets worse, not better. Watch how God looks at the whole earth, and finds one man. Genesis, chapter 5.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [17:32<17:32, 1052.92s/it]100%|██████████| 2/2 [17:32<00:00, 526.46s/it] 
+d02_hm ok 1053
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Methuselah lived after he begat Lamech seven hundred eighty and two years, and begat sons and daughters:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:04<00:00, 484.87s/it]100%|██████████| 1/1 [08:04<00:00, 484.87s/it]
+d02_g05_v026_0 ok 485
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And all the days of Methuselah were nine hundred sixty and nine years: and he died.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:01<00:00, 421.46s/it]100%|██████████| 1/1 [07:01<00:00, 421.46s/it]
+d02_g05_v027_0 ok 421
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Lamech lived an hundred eighty and two years, and begat a son:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:17<00:00, 377.74s/it]100%|██████████| 1/1 [06:17<00:00, 377.74s/it]
+d02_g05_v028_0 ok 378
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he called his name Noah, saying, This same shall comfort us concerning our work and toil of our hands, because of the ground which the Lord hath cursed.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [10:43<00:00, 643.18s/it]100%|██████████| 1/1 [10:43<00:00, 643.18s/it]
+d02_g05_v029_0 ok 643
