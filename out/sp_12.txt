@@ -1,0 +1,111 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every piece of armor we've talked about so far has been defense. Belt. Breastplate. Shoes. Shield. Helmet. Until now.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:54<00:00, 354.44s/it]100%|██████████| 1/1 [05:54<00:00, 354.44s/it]
+fa7_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:46<09:46, 586.81s/it]100%|██████████| 2/2 [09:46<00:00, 293.40s/it]
+fa7_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The Roman short sword was made for close fighting. Not waving from a distance. Up close, quick and sharp. And in the language Paul wrote in,
+gen_text 1 the word for word here means a spoken word. Something said out loud.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:16<10:16, 616.55s/it]100%|██████████| 2/2 [10:16<00:00, 308.27s/it]
+fa7_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And take the helmet of salvation, and the sword of the Spirit, which is the word of God:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:15<00:00, 315.16s/it]100%|██████████| 1/1 [05:15<00:00, 315.16s/it]
+fa7_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Now watch how Jesus used it. Forty days in the wilderness. Hungry. And the devil comes with an offer.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:40<00:00, 340.07s/it]100%|██████████| 1/1 [05:40<00:00, 340.07s/it]
+fa7_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:47<00:00, 407.97s/it]100%|██████████| 1/1 [06:47<00:00, 407.97s/it]
+fa7_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. Jesus didn't argue. He didn't explain himself. Three times the devil came at him, and three times he said: it is written. And the devil left.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:43<00:00, 463.19s/it]100%|██████████| 1/1 [07:43<00:00, 463.19s/it]
+fa7_007t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit,
+gen_text 1 and of the joints and marrow, and is a discerner of the thoughts and intents of the heart.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:34<10:34, 634.88s/it]100%|██████████| 2/2 [10:34<00:00, 317.44s/it]
+fa7_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is hitting home, the whole Full Armor of God series is waiting for you inside the Community Covenant app. Open it and tap Wisdom Reels.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:03<00:00, 423.45s/it]100%|██████████| 1/1 [07:03<00:00, 423.45s/it]
+fa7_009x True
