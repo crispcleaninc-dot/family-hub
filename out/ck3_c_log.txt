@@ -1,0 +1,10 @@
+ck3_c_7101 try0 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7101 try1 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7101 try2 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7101 poll ok
+ck3_c_7102 try0 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7102 try1 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7102 try2 You have exceeded your ZeroGPU runs limit. Authenticate with a Hugging Face token for more quota - https://huggingface.co/settings/tokens
+ck3_c_7102 poll0 HTTP Error 503: Service Unavailable
+ck3_c_7102 poll1 HTTP Error 402: Payment Required
+ck3_c_7102 poll2 HTTP Error 402: Payment Required
