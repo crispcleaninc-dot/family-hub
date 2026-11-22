@@ -1,0 +1,100 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And they took the bullock which was given them, and they dressed it, and called on the name of Baal from morning even until noon, saying, O Baal, hear us.
+gen_text 1 But there was no voice, nor any that answered. And they leaped upon the altar which was made.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [14:43<14:43, 883.64s/it]100%|██████████| 2/2 [14:43<00:00, 441.82s/it]
+e1_13 ok 884
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 King David has taken another man's wife and had her husband killed to cover it up. Nobody says a word. Then God sends Nathan. And Nathan doesn't start with an accusation.
+gen_text 1 He starts with a story.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [12:37<12:37, 757.80s/it]100%|██████████| 2/2 [12:37<00:00, 378.90s/it]
+e2_03 ok 758
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 This series comes to you from Community Covenant, the free app where families read the Bible, pray, and keep each other accountable. The link is in the description.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:35<00:00, 575.13s/it]100%|██████████| 1/1 [09:35<00:00, 575.14s/it]
+e3_02 ok 575
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Sharp Tongues, a Faith and Findings series on why so many of God's prophets spoke hard truth, and what the Bible says about it,
+gen_text 1 word for word from the King James Version.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [11:51<11:51, 711.30s/it]100%|██████████| 2/2 [11:51<00:00, 355.65s/it]
+e4_01 ok 711
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 First, picture him.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:52<00:00, 232.39s/it]100%|██████████| 1/1 [03:52<00:00, 232.39s/it]
+e5_03 ok 232
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 We like to picture Jesus soft-spoken all the time. Listen to this.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:31<00:00, 331.35s/it]100%|██████████| 1/1 [05:31<00:00, 331.35s/it]
+e6_03 ok 331
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 This series comes to you from Community Covenant, the free app where families read the Bible, pray, and keep each other accountable. The link is in the description.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:24<00:00, 564.23s/it]100%|██████████| 1/1 [09:24<00:00, 564.23s/it]
+e7_02 ok 564
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Let your speech be alway with grace, seasoned with salt, that ye may know how ye ought to answer every man.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:21<00:00, 441.17s/it]100%|██████████| 1/1 [07:21<00:00, 441.17s/it]
+e7_17 ok 441
