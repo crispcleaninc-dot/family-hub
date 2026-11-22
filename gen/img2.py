@@ -3,6 +3,7 @@ import json, os, time, shutil, urllib.parse, urllib.request
 sid = os.environ['SHOT']; p = json.load(open('gen/shots2.json'))[sid]
 STYLE = (", photorealistic cinematic film still, shot on 35mm, realistic proportions, realistic hands, shallow depth of field, "
          "warm natural lighting, high detail, historically accurate ancient Roman and Near Eastern setting, modest dignified clothing, no text, no watermark")
+if 'modern' in p: STYLE = ', photorealistic cinematic film still, shot on 35mm, realistic proportions, realistic hands, shallow depth of field, warm natural lighting, high detail, modest clothing, no text, no watermark'
 os.makedirs('out', exist_ok=True); log = []; c = None
 try:
     from gradio_client import Client
