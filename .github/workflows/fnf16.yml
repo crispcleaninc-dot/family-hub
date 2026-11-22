@@ -1,0 +1,35 @@
+name: fnf-series
+on: { push: { branches: [fnf-series] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { n: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: |
+          sed -i 's#gen/script4.json#gen/spec.json#' gen/r3.py
+          mkdir -p out; N=${{ matrix.n }} python3 gen/r3.py > out/sr_${{ matrix.n }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-sr-${{ matrix.n }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-sr-${{ matrix.n }}
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 4, matrix: { shot: [fr1_a, fr1_b, fr1_c, fr2_a, fr2_b, fr2_c, fr3_a, fr3_b, fr3_c, fr4_a, fr4_b, fr4_c, fr5_a, fr5_b, fr5_c, fr6_a, fr6_b, fr6_c, fr7_a, fr7_b, fr7_c, fr8_a, fr8_b, fr8_c, fr9_a, fr9_b, fr9_c, lp1_a, lp1_b, lp1_c, lp2_a, lp2_b, lp2_c, lp3_a, lp3_b, lp3_c, lp4_a, lp4_b, lp4_c, lp5_a, lp5_b, lp5_c, lp6_a, lp6_b, lp6_c, ng1_a, ng1_b, ng1_c, ng2_a, ng2_b, ng2_c, ng3_a, ng3_b, ng3_c, ng4_a, ng4_b, ng4_c, ng5_a, ng5_b, ng5_c, ng6_a, ng6_b, ng6_c, ng7_a, ng7_b, ng7_c, ng8_a, ng8_b, ng8_c, ck1_a, ck1_b, ck1_c, ck2_a, ck2_b, ck2_c, ck3_a, ck3_b, ck3_c, ck4_a, ck4_b, ck4_c, ck5_a, ck5_b, ck5_c, ck6_a, ck6_b, ck6_c] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-is-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-is-${{ matrix.shot }}
