@@ -1,0 +1,13 @@
+name: sw-trahie
+on: { push: { branches: [sw-trahie] } }
+permissions: { contents: write }
+jobs:
+  tts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && mkdir -p out && python3 gen/tts.py > out/log.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name swt; git config user.email noreply@anthropic.com
+          git checkout --orphan sw-trahie-out && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin sw-trahie-out
