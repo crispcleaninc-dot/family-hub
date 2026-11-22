@@ -1,0 +1,112 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abimelech said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:12<00:00, 132.08s/it]100%|██████████| 1/1 [02:12<00:00, 132.08s/it]
+d06_g20_v015_0 ok 132
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And unto Sarah he said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:14<00:00, 134.70s/it]100%|██████████| 1/1 [02:14<00:00, 134.70s/it]
+d06_g20_v016_0 ok 135
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So here's my question for you. What is God telling you not to look back at? Tell me in the comments. To join Community Covenant, go to covenant dot crispus mundo dot com,
+gen_text 1 tap Create Account, choose your daily focus, and add it to your home screen. Tomorrow is Genesis twenty-one through twenty-three. The promised son is born,
+gen_text 2 and then God asks Abraham for the hardest thing. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [13:30<27:01, 810.96s/it]100%|██████████| 3/3 [13:30<00:00, 270.32s/it]
+d06_h9 ok 811
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Family, the promise finally comes. Isaac is born. Sarah is laughing for a whole different reason now.
+gen_text 1 But would you believe that God then asks Abraham to give that same son back? Up a mountain. With wood and a knife. Let's read it.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:02<07:02, 422.18s/it]100%|██████████| 2/2 [07:39<00:00, 195.64s/it]100%|██████████| 2/2 [07:39<00:00, 229.63s/it]
+d07_h0 ok 459
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 7 of three hundred sixty-five. Today is Genesis chapters twenty-one, twenty-two and twenty-three, read from the King James Version,
+gen_text 1 with not one word changed. This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 21.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:40<09:40, 580.04s/it]100%|██████████| 2/2 [09:40<00:00, 239.24s/it]100%|██████████| 2/2 [09:40<00:00, 290.36s/it]
+d07_h1 ok 581
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Sarah said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:05<00:00, 125.13s/it]100%|██████████| 1/1 [02:05<00:00, 125.13s/it]
+d07_g21_v006_0 ok 125
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Abraham,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:24<00:00, 144.43s/it]100%|██████████| 1/1 [02:24<00:00, 144.43s/it]
+d07_g21_v012_0 ok 144
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God heard the voice of the lad; and the angel of God called to Hagar out of heaven, and said unto her,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:26<00:00, 266.30s/it]100%|██████████| 1/1 [04:26<00:00, 266.30s/it]
+d07_g21_v017_0 ok 266
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And it came to pass at that time, that Abimelech and Phichol the chief captain of his host spake unto Abraham, saying,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:37<00:00, 277.66s/it]100%|██████████| 1/1 [04:37<00:00, 277.66s/it]
+d07_g21_v022_0 ok 278
