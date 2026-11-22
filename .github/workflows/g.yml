@@ -1,0 +1,39 @@
+name: fnfl-gen
+on: { push: { branches: [fnfl-gen] } }
+permissions: { contents: write }
+jobs:
+  f5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 19, matrix: { k: ["k00","k01","k02","k03","k04","k05","k06","k07","k08","k09"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/f5.py > out/log_${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name fnfl; git config user.email noreply@anthropic.com
+          git checkout --orphan fnfl-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfl-${{ matrix.k }}
+  chars:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q edge-tts && mkdir -p out && python3 gen/chars.py > out/log_chars.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name fnfl; git config user.email noreply@anthropic.com
+          git checkout --orphan fnfl-chars && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfl-chars
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 8, matrix: { s: ["L01,L02,L03","L04,L05,L06","L07,L08,L09","L10,L11,L12","L13,L14,L15","L16,L17,L18","L19,L20,L03b"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && mkdir -p out && SHOTS=${{ matrix.s }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name fnfl; git config user.email noreply@anthropic.com
+          B=fnfl-img-$(echo ${{ matrix.s }} | tr , _)
+          git checkout --orphan $B && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin $B
