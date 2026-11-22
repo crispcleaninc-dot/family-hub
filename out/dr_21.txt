@@ -1,0 +1,124 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Paul names six pieces of armor. Then he names one more thing. And most people stop reading right before it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:00<00:00, 300.23s/it]100%|██████████| 1/1 [05:00<00:00, 300.23s/it]
+dd8_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:09<08:09, 489.81s/it]100%|██████████| 2/2 [08:09<00:00, 244.90s/it]
+dd8_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:03<00:00, 363.80s/it]100%|██████████| 1/1 [06:03<00:00, 363.80s/it]
+dd8_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Praying always. That's not a seventh piece of armor. That's how you wear the other six. Prayer is the strap that holds the whole thing on. A soldier fully dressed,
+gen_text 1 who never talks to his commander, is just a well-dressed target.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:19<09:19, 559.96s/it]100%|██████████| 2/2 [09:19<00:00, 279.98s/it]
+dd8_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And for me, that utterance may be given unto me, that I may open my mouth boldly, to make known the mystery of the gospel,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:44<00:00, 344.82s/it]100%|██████████| 1/1 [05:44<00:00, 344.82s/it]
+dd8_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For which I am an ambassador in bonds: that therein I may speak boldly, as I ought to speak.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:39<00:00, 279.97s/it]100%|██████████| 1/1 [04:39<00:00, 279.97s/it]
+dd8_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Look who's asking for prayer. Paul. The man writing the letter. Chained to a Roman soldier, an ambassador in bonds, and he says: pray for me,
+gen_text 1 that I open my mouth boldly. Even the strongest believers need covering.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:47<08:47, 527.35s/it]100%|██████████| 2/2 [08:47<00:00, 263.67s/it]
+dd8_007t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is feeding you, do three things for me right now. Hit like. Share it with somebody who's in a fight.
+gen_text 1 And follow Faith and Findings so you don't miss next week. And if you're on YouTube, subscribe to Community Covenant, at Community Covenant App.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:20<08:20, 500.63s/it]100%|██████████| 2/2 [09:36<00:00, 251.02s/it]100%|██████████| 2/2 [09:36<00:00, 288.46s/it]
+dd8_008x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Watch and pray, that ye enter not into temptation: the spirit indeed is willing, but the flesh is weak.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:11<00:00, 311.93s/it]100%|██████████| 1/1 [05:11<00:00, 311.93s/it]
+dd8_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Watch and pray. Jesus said that in the garden, and His disciples fell asleep. Twice. Some of us are spiritually asleep in the most important hour of our lives.
+gen_text 1 Wake up and pray.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:24<08:24, 504.55s/it]100%|██████████| 2/2 [08:24<00:00, 252.27s/it]
+dd8_010t True
