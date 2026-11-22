@@ -1,0 +1,24 @@
+name: fnf-vchk
+on: { push: { branches: [fnf-vchk] } }
+permissions: { contents: write }
+jobs:
+  vchk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q demucs soundfile
+      - run: |
+          mkdir -p cues
+          for b in $(git ls-remote origin | grep -oE "fnf-out-mu-(soft|hymn|amb|qa)[0-9]*"); do
+            git fetch -q --depth 1 origin $b && git archive FETCH_HEAD out | tar -x -C . && mv out/*.wav cues/ 2>/dev/null; rm -rf out
+          done
+          ls cues
+          python3 gen/vchk.py > vchk_log.txt 2>&1 || true
+          mkdir -p out; cp vchk_log.txt out/; cat vchk_log.txt | tail -30
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-vchk && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-vchk
