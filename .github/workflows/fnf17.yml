@@ -1,0 +1,18 @@
+name: fnf-skitfix
+on: { push: { branches: [fnf-skitfix] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 5, matrix: { shot: [d10_s3, d13_s1, d13_s2, d14_s1, d14_s2] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img2.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-sf-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-sf-${{ matrix.shot }}
