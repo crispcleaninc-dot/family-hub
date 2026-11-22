@@ -1,33 +1,11 @@
-name: fnfm-gen
-on: { push: { branches: [fnfm-gen] } }
+name: fnfm-img2
+on: { push: { branches: [fnfm-img2] } }
 permissions: { contents: write }
 jobs:
-  f5:
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
-      - run: mkdir -p out; K=k00 python3 gen/f5.py > out/log_k00.txt 2>&1 || true
-      - if: always()
-        run: |
-          git config user.name fnfm; git config user.email noreply@anthropic.com
-          git checkout --orphan fnfm-k00 && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfm-k00
-  chars:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: pip install -q edge-tts && mkdir -p out && python3 gen/chars.py > out/log_chars.txt 2>&1 || true
-      - if: always()
-        run: |
-          git config user.name fnfm; git config user.email noreply@anthropic.com
-          git checkout --orphan fnfm-chars && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfm-chars
   img:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    strategy: { fail-fast: false, max-parallel: 12, matrix: { s: ["B1,M1,M2", "M3,A1,A2", "A3,A4,A5", "A6,A7,A8", "C1,C2,C3", "C4,C5,C6", "C7,D1,D2", "D3,D4,D5", "D6,D7,E1", "E2,F1,F2", "F3,F4,F5", "F6,F7"] } }
+    strategy: { fail-fast: false, max-parallel: 12, matrix: { s: ["A8", "F3", "F4", "F5"] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client && mkdir -p out && SHOTS=${{ matrix.s }} python3 gen/img.py || true
@@ -36,19 +14,3 @@ jobs:
           git config user.name fnfm; git config user.email noreply@anthropic.com
           B=fnfm-img-$(echo ${{ matrix.s }} | tr , _)
           git checkout --orphan $B && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin $B
-  music:
-    runs-on: ubuntu-latest
-    timeout-minutes: 120
-    strategy: { fail-fast: false, max-parallel: 6, matrix: { k: [cs1, cs2, cs3, cs4, cs5, cs6] } }
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - run: sudo apt-get install -y -q ffmpeg; pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.44.2 scipy demucs soundfile
-      - run: |
-          mkdir -p out cues; K=${{ matrix.k }} python3 gen/music.py > out/${{ matrix.k }}.txt 2>&1 || true
-          cp out/*.wav cues/ 2>/dev/null || true; python3 gen/vchk.py >> out/${{ matrix.k }}.txt 2>&1 || true
-      - if: always()
-        run: |
-          git config user.name fnfm; git config user.email noreply@anthropic.com
-          git checkout --orphan fnfm-mu-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin fnfm-mu-${{ matrix.k }}
