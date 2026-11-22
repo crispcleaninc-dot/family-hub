@@ -1,0 +1,134 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Laban said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:07<00:00, 127.82s/it]100%|██████████| 1/1 [02:07<00:00, 127.82s/it]
+d10_g29_v026_0 ok 128
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So here's my question for you. Where has God met you in a place you didn't expect Him? Tell me in the comments. To join Community Covenant,
+gen_text 1 go to covenant dot crispus mundo dot com, tap Create Account, choose your daily focus, and add it to your home screen. Tomorrow is Genesis thirty and thirty-one. Two sisters,
+gen_text 2 one husband, and a midnight escape from Laban. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [12:47<25:34, 767.10s/it] 67%|██████▋   | 2/3 [13:27<05:39, 339.39s/it]100%|██████████| 3/3 [13:27<00:00, 269.03s/it]
+d10_h9 ok 807
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Family, two sisters married to the same man, competing for his love by naming babies. And an uncle who keeps changing the deal.
+gen_text 1 Would you believe Jacob finally just packs up his whole family and leaves in the middle of the night?
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:40<07:40, 460.58s/it]100%|██████████| 2/2 [07:40<00:00, 230.29s/it]
+d11_h0 ok 461
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 11 of three hundred sixty-five. Today is Genesis chapters thirty and thirty-one, read from the King James Version, with not one word changed.
+gen_text 1 This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 30.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:18<09:18, 558.44s/it]100%|██████████| 2/2 [09:18<00:00, 279.22s/it]
+d11_h1 ok 558
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Rachel said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:06<00:00, 126.63s/it]100%|██████████| 1/1 [02:06<00:00, 126.63s/it]
+d11_g30_v006_0 ok 127
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Rachel said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:06<00:00, 126.43s/it]100%|██████████| 1/1 [02:06<00:00, 126.43s/it]
+d11_g30_v008_0 ok 126
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Leah said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:01<00:00, 121.10s/it]100%|██████████| 1/1 [02:01<00:00, 121.10s/it]
+d11_g30_v011_0 ok 121
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Leah said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:02<00:00, 122.14s/it]100%|██████████| 1/1 [02:02<00:00, 122.14s/it]
+d11_g30_v013_0 ok 122
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Reuben went in the days of wheat harvest, and found mandrakes in the field, and brought them unto his mother Leah. Then Rachel said to Leah,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:09<00:00, 309.82s/it]100%|██████████| 1/1 [05:09<00:00, 309.82s/it]
+d11_g30_v014_0 ok 310
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And she said unto her, Is it a small matter that thou hast taken my husband? and wouldest thou take away my son's mandrakes also? And Rachel said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:12<00:00, 312.62s/it]100%|██████████| 1/1 [05:12<00:00, 312.62s/it]
+d11_g30_v015_0 ok 313
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Leah said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:04<00:00, 124.11s/it]100%|██████████| 1/1 [02:04<00:00, 124.11s/it]
+d11_g30_v018_0 ok 124
