@@ -1,0 +1,112 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's a question nobody asks in church. When was the last time you thanked God for your shoes? Stay with me. This one is deeper than it sounds.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:43<00:00, 403.53s/it]100%|██████████| 1/1 [06:43<00:00, 403.53s/it]
+dd4_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:19<09:19, 559.64s/it]100%|██████████| 2/2 [09:19<00:00, 279.82s/it]
+dd4_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And your feet shod with the preparation of the gospel of peace;
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:07<00:00, 247.11s/it]100%|██████████| 1/1 [04:07<00:00, 247.11s/it]
+dd4_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Roman soldiers wore a boot called the caliga. Heavy leather, open on top, with iron nails driven into the sole. Those nails did two things.
+gen_text 1 They let a soldier march mile after mile on Roman roads. And when the fight came, they gripped the ground so he couldn't be pushed back.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:36<10:36, 636.19s/it]100%|██████████| 2/2 [10:47<00:00, 268.34s/it]100%|██████████| 2/2 [10:47<00:00, 323.51s/it]
+dd4_004t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Preparation. That word means readiness. A soldier with his shoes on is ready to move, and ready to stand. And notice what the shoes are made of. Not war. Peace.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:37<00:00, 457.28s/it]100%|██████████| 1/1 [07:37<00:00, 457.28s/it]
+dd4_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:12<00:00, 372.28s/it]100%|██████████| 1/1 [06:12<00:00, 372.29s/it]
+dd4_006v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:30<00:00, 330.12s/it]100%|██████████| 1/1 [05:30<00:00, 330.12s/it]
+dd4_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The peace of God keeps your heart and mind. The word keep there is a military word. It means guard. Peace stands guard over you.
+gen_text 1 When everything around you is shaking, peace is the grip in your sole that keeps you from sliding.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:33<09:33, 573.80s/it]100%|██████████| 2/2 [09:33<00:00, 286.90s/it]
+dd4_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is feeding you, do three things for me right now. Hit like. Share it with somebody who's in a fight.
+gen_text 1 And follow Faith and Findings so you don't miss next week. And if you're on YouTube, subscribe to Community Covenant, at Community Covenant App.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:04<09:04, 544.43s/it]100%|██████████| 2/2 [10:26<00:00, 272.37s/it]100%|██████████| 2/2 [10:26<00:00, 313.18s/it]
+dd4_009x True
