@@ -1,0 +1,102 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the people answered him not a word.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:06<00:00, 306.09s/it]100%|██████████| 1/1 [05:06<00:00, 306.09s/it]
+e1_11 ok 306
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Sharp Tongues, a Faith and Findings series on why so many of God's prophets spoke hard truth, and what the Bible says about it,
+gen_text 1 word for word from the King James Version.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:20<13:20, 800.68s/it]100%|██████████| 2/2 [13:20<00:00, 400.34s/it]
+e2_01 ok 801
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Would you believe a prophet once told God, I'm done, I'm not saying your name anymore, and it didn't work?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:43<00:00, 463.16s/it]100%|██████████| 1/1 [07:43<00:00, 463.16s/it]
+e3_00 ok 463
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here is your question for the comments. What word from God has been burning in you that you've been holding in? Next time on Sharp Tongues: Amos,
+gen_text 1 the farmer who called the rich women of Samaria cows. Join Community Covenant, free, at covenant dot crispusmundo dot com, and read with us every day on Cover to Cover.
+gen_text 2 God bless you.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [20:36<41:13, 1236.94s/it] 67%|██████▋   | 2/3 [21:45<09:09, 549.70s/it] 100%|██████████| 3/3 [21:45<00:00, 435.19s/it]
+e3_19 ok 1306
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Sharp Tongues, a Faith and Findings series on why so many of God's prophets spoke hard truth, and what the Bible says about it,
+gen_text 1 word for word from the King James Version.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:22<13:22, 802.87s/it]100%|██████████| 2/2 [13:22<00:00, 401.43s/it]
+e5_01 ok 803
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Sharp Tongues, a Faith and Findings series on why so many of God's prophets spoke hard truth, and what the Bible says about it,
+gen_text 1 word for word from the King James Version.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:18<13:18, 798.37s/it]100%|██████████| 2/2 [13:18<00:00, 399.19s/it]
+e6_01 ok 798
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Would you believe the Bible gives you a test for every loud prophet on your timeline? And most people never use it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:07<00:00, 487.34s/it]100%|██████████| 1/1 [08:07<00:00, 487.34s/it]
+e7_00 ok 487
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Faithful are the wounds of a friend; but the kisses of an enemy are deceitful.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:49<00:00, 409.30s/it]100%|██████████| 1/1 [06:49<00:00, 409.30s/it]
+e7_15 ok 409
