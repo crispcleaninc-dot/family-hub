@@ -1,0 +1,2 @@
+lp6_b_7101 flux ok
+lp6_b_7102 flux ok
