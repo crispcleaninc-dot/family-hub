@@ -1,0 +1,143 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 In earth, as it is in heaven. In heaven, the angels obey instantly. No arguing. No delay. And Jesus tells us to pray for earth to look like that. Tonight we go deep.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:36<00:00, 276.73s/it]100%|██████████| 1/1 [04:36<00:00, 276.73s/it]
+lpd3_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:06<06:06, 366.01s/it]100%|██████████| 2/2 [06:06<00:00, 183.01s/it]
+lpd3_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The Lord hath prepared his throne in the heavens; and his kingdom ruleth over all.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:54<00:00, 174.70s/it]100%|██████████| 1/1 [02:54<00:00, 174.70s/it]
+lpd3_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Bless the Lord, ye his angels, that excel in strength, that do his commandments, hearkening unto the voice of his word.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:34<00:00, 214.03s/it]100%|██████████| 1/1 [03:34<00:00, 214.03s/it]
+lpd3_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Bless ye the Lord, all ye his hosts; ye ministers of his, that do his pleasure.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:49<00:00, 169.93s/it]100%|██████████| 1/1 [02:49<00:00, 169.93s/it]
+lpd3_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Ye ministers of his, that do his pleasure. That's what heaven looks like. And that's what we're asking for here.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:34<00:00, 214.71s/it]100%|██████████| 1/1 [03:34<00:00, 214.71s/it]
+lpd3_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And when he was demanded of the Pharisees, when the kingdom of God should come, he answered them and said, The kingdom of God cometh not with observation:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:22<00:00, 262.41s/it]100%|██████████| 1/1 [04:22<00:00, 262.41s/it]
+lpd3_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Neither shall they say, Lo here! or, lo there! for, behold, the kingdom of God is within you.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:58<00:00, 178.99s/it]100%|██████████| 1/1 [02:58<00:00, 178.99s/it]
+lpd3_008v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The kingdom of God is within you. It comes first in hearts, before it comes in headlines.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:48<00:00, 168.57s/it]100%|██████████| 1/1 [02:48<00:00, 168.57s/it]
+lpd3_009t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 If this is feeding you, do three things for me right now. Hit like. Share it with somebody who needs it. And follow Faith and Findings so you don't miss next week.
+gen_text 1 And if you're on YouTube, subscribe to Community Covenant, at Community Covenant App.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:44<06:44, 404.93s/it]100%|██████████| 2/2 [06:44<00:00, 202.47s/it]
+lpd3_010x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For the kingdom of God is not meat and drink; but righteousness, and peace, and joy in the Holy Ghost.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:13<00:00, 193.24s/it]100%|██████████| 1/1 [03:13<00:00, 193.25s/it]
+lpd3_011v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Righteousness, peace and joy in the Holy Ghost. That's what the kingdom feels like in a life.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:01<00:00, 181.38s/it]100%|██████████| 1/1 [03:01<00:00, 181.38s/it]
+lpd3_012t True
