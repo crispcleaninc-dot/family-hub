@@ -1,0 +1,498 @@
+{
+ "her": {
+  "k00": [
+   [
+    "m1_01",
+    "Welcome to the movie night, family. This is Moses, the movie. Episode one, Drawn Out of the Water. The story is told the way a film tells it, and every time you see a verse on the screen, it is read word for word from the King James Bible. This comes to you from Community Covenant, the free app where families read, pray, and keep each other accountable. The link is in the description.",
+    "H"
+   ],
+   [
+    "m1_46",
+    "Quick pause, family. If this story is reaching you tonight, share it with someone who needs to know God sees them in the river. And if you want to keep reading the Word with your family every day, Community Covenant is free. Link in the description.",
+    "H"
+   ],
+   [
+    "m1_97",
+    "Here is your question for the comments. When God called you to something, what was your 'who am I?' Tell us below. Next time on Moses, the movie: Pharaoh says no, and Egypt meets the God of the Hebrews. Join Community Covenant, free, at covenant dot crispusmundo dot com, and read the whole Bible with us every day on Cover to Cover. God bless you.",
+    "H"
+   ]
+  ]
+ },
+ "chars": [
+  [
+   "m1_00",
+   "NAR",
+   "A bush on fire in the middle of the desert, and it will not burn up. A runaway shepherd, eighty years old, hiding from a king. And a voice calls his name. Twice. Before this night is over, he will ask the question every one of us has asked God. Who am I?"
+  ],
+  [
+   "m1_02",
+   "NAR",
+   "Four hundred years had passed since Joseph saved Egypt from famine. His people, the children of Israel, had grown from one family of seventy into a nation. Then the throne changed hands."
+  ],
+  [
+   "m1_03",
+   "NAR",
+   "Now there arose up a new king over Egypt, which knew not Joseph."
+  ],
+  [
+   "m1_04",
+   "NAR",
+   "A king with no memory of Joseph looks out at the Hebrews and sees only one thing. Numbers. And numbers make kings afraid."
+  ],
+  [
+   "m1_05",
+   "NAR",
+   "And he said unto his people,"
+  ],
+  [
+   "m1_06",
+   "pharaoh",
+   "Behold, the people of the children of Israel are more and mightier than we:"
+  ],
+  [
+   "m1_07",
+   "pharaoh",
+   "Come on, let us deal wisely with them; lest they multiply, and it come to pass, that, when there falleth out any war, they join also unto our enemies, and fight against us, and so get them up out of the land."
+  ],
+  [
+   "m1_08",
+   "NAR",
+   "So Egypt does what empires do. It turns a people into a workforce."
+  ],
+  [
+   "m1_09",
+   "NAR",
+   "Therefore they did set over them taskmasters to afflict them with their burdens. And they built for Pharaoh treasure cities, Pithom and Raamses."
+  ],
+  [
+   "m1_10",
+   "NAR",
+   "Mud and straw. Brick after brick, under the whip, under the sun. But listen to what happened next."
+  ],
+  [
+   "m1_11",
+   "NAR",
+   "But the more they afflicted them, the more they multiplied and grew. And they were grieved because of the children of Israel."
+  ],
+  [
+   "m1_12",
+   "NAR",
+   "The harder they were pressed, the more they grew. So Pharaoh tried something darker. He went to two women whose whole work was bringing life into the world."
+  ],
+  [
+   "m1_13",
+   "NAR",
+   "And the king of Egypt spake to the Hebrew midwives, of which the name of the one was Shiphrah, and the name of the other Puah:"
+  ],
+  [
+   "m1_14",
+   "NAR",
+   "And he said,"
+  ],
+  [
+   "m1_15",
+   "pharaoh",
+   "When ye do the office of a midwife to the Hebrew women, and see them upon the stools; if it be a son, then ye shall kill him: but if it be a daughter, then she shall live."
+  ],
+  [
+   "m1_16",
+   "NAR",
+   "Two women. Against the most powerful man on earth."
+  ],
+  [
+   "m1_17",
+   "NAR",
+   "But the midwives feared God, and did not as the king of Egypt commanded them, but saved the men children alive."
+  ],
+  [
+   "m1_18",
+   "NAR",
+   "And the king of Egypt called for the midwives, and said unto them,"
+  ],
+  [
+   "m1_19",
+   "pharaoh",
+   "Why have ye done this thing, and have saved the men children alive?"
+  ],
+  [
+   "m1_20",
+   "NAR",
+   "And the midwives said unto Pharaoh,"
+  ],
+  [
+   "m1_21",
+   "midwife",
+   "Because the Hebrew women are not as the Egyptian women; for they are lively, and are delivered ere the midwives come in unto them."
+  ],
+  [
+   "m1_22",
+   "NAR",
+   "Therefore God dealt well with the midwives: and the people multiplied, and waxed very mighty."
+  ],
+  [
+   "m1_23",
+   "NAR",
+   "Shiphrah and Puah. History forgot the name of the Pharaoh. God wrote down the names of the midwives. Then the king stopped hiding his hand."
+  ],
+  [
+   "m1_24",
+   "NAR",
+   "And Pharaoh charged all his people, saying,"
+  ],
+  [
+   "m1_25",
+   "pharaoh",
+   "Every son that is born ye shall cast into the river, and every daughter ye shall save alive."
+  ],
+  [
+   "m1_26",
+   "NAR",
+   "The Nile, the river that fed Egypt, would now swallow Israel's sons. And into that darkness, one more baby boy was born."
+  ],
+  [
+   "m1_27",
+   "NAR",
+   "And there went a man of the house of Levi, and took to wife a daughter of Levi."
+  ],
+  [
+   "m1_28",
+   "NAR",
+   "And the woman conceived, and bare a son: and when she saw him that he was a goodly child, she hid him three months."
+  ],
+  [
+   "m1_29",
+   "NAR",
+   "And when she could not longer hide him, she took for him an ark of bulrushes, and daubed it with slime and with pitch, and put the child therein; and she laid it in the flags by the river's brink."
+  ],
+  [
+   "m1_30",
+   "NAR",
+   "Did you catch that word? An ark. The same word used for Noah's ark. A mother builds a tiny ark, and trusts the same God who carried Noah over the flood."
+  ],
+  [
+   "m1_31",
+   "NAR",
+   "And his sister stood afar off, to wit what would be done to him."
+  ],
+  [
+   "m1_32",
+   "NAR",
+   "And then, out of all the places on that river, out of all the hours in the day, who comes down to the water?"
+  ],
+  [
+   "m1_33",
+   "NAR",
+   "And the daughter of Pharaoh came down to wash herself at the river; and her maidens walked along by the river's side; and when she saw the ark among the flags, she sent her maid to fetch it."
+  ],
+  [
+   "m1_34",
+   "NAR",
+   "And when she had opened it, she saw the child: and, behold, the babe wept. And she had compassion on him, and said,"
+  ],
+  [
+   "m1_35",
+   "pdaughter",
+   "This is one of the Hebrews' children."
+  ],
+  [
+   "m1_36",
+   "NAR",
+   "The daughter of the man who ordered every Hebrew boy into the river is holding one in her arms. And his big sister is watching from the reeds."
+  ],
+  [
+   "m1_37",
+   "NAR",
+   "Then said his sister to Pharaoh's daughter,"
+  ],
+  [
+   "m1_38",
+   "miriam",
+   "Shall I go and call to thee a nurse of the Hebrew women, that she may nurse the child for thee?"
+  ],
+  [
+   "m1_39",
+   "NAR",
+   "And Pharaoh's daughter said to her,"
+  ],
+  [
+   "m1_40",
+   "pdaughter",
+   "Go."
+  ],
+  [
+   "m1_41",
+   "NAR",
+   "And the maid went and called the child's mother."
+  ],
+  [
+   "m1_42",
+   "NAR",
+   "And Pharaoh's daughter said unto her,"
+  ],
+  [
+   "m1_43",
+   "pdaughter",
+   "Take this child away, and nurse it for me, and I will give thee thy wages."
+  ],
+  [
+   "m1_44",
+   "NAR",
+   "And the woman took the child, and nursed it."
+  ],
+  [
+   "m1_45",
+   "NAR",
+   "Would you believe it? His own mother gets him back, and Pharaoh's house pays her to raise him."
+  ],
+  [
+   "m1_47",
+   "NAR",
+   "And the child grew, and she brought him unto Pharaoh's daughter, and he became her son. And she called his name Moses: and she said, Because I drew him out of the water."
+  ],
+  [
+   "m1_48",
+   "NAR",
+   "Moses. Drawn out. Raised a prince of Egypt, with the best teachers, the best food, the palace of the most powerful nation on earth. But he never stopped knowing whose son he was."
+  ],
+  [
+   "m1_49",
+   "NAR",
+   "And it came to pass in those days, when Moses was grown, that he went out unto his brethren, and looked on their burdens: and he spied an Egyptian smiting an Hebrew, one of his brethren."
+  ],
+  [
+   "m1_50",
+   "NAR",
+   "And he looked this way and that way, and when he saw that there was no man, he slew the Egyptian, and hid him in the sand."
+  ],
+  [
+   "m1_51",
+   "NAR",
+   "He thought he could fix it himself. With his own hands. In the dark. And the next day, he found out how alone he really was."
+  ],
+  [
+   "m1_52",
+   "NAR",
+   "And when he went out the second day, behold, two men of the Hebrews strove together: and he said to him that did the wrong,"
+  ],
+  [
+   "m1_53",
+   "moses",
+   "Wherefore smitest thou thy fellow?"
+  ],
+  [
+   "m1_54",
+   "NAR",
+   "And he said,"
+  ],
+  [
+   "m1_55",
+   "hebrew",
+   "Who made thee a prince and a judge over us? intendest thou to kill me, as thou killedst the Egyptian?"
+  ],
+  [
+   "m1_56",
+   "NAR",
+   "And Moses feared, and said,"
+  ],
+  [
+   "m1_57",
+   "moses",
+   "Surely this thing is known."
+  ],
+  [
+   "m1_58",
+   "NAR",
+   "Now when Pharaoh heard this thing, he sought to slay Moses. But Moses fled from the face of Pharaoh, and dwelt in the land of Midian: and he sat down by a well."
+  ],
+  [
+   "m1_59",
+   "NAR",
+   "The prince of Egypt is now a man with a price on his head, sitting by a well in the desert. But even running, he could not stand to watch the weak get pushed around."
+  ],
+  [
+   "m1_60",
+   "NAR",
+   "Now the priest of Midian had seven daughters: and they came and drew water, and filled the troughs to water their father's flock."
+  ],
+  [
+   "m1_61",
+   "NAR",
+   "And the shepherds came and drove them away: but Moses stood up and helped them, and watered their flock."
+  ],
+  [
+   "m1_62",
+   "NAR",
+   "And Moses was content to dwell with the man: and he gave Moses Zipporah his daughter."
+  ],
+  [
+   "m1_63",
+   "NAR",
+   "Forty years. A wife, a son, a flock of sheep that weren't even his. The palace was gone. The dream was gone. And back in Egypt, the crying never stopped."
+  ],
+  [
+   "m1_64",
+   "NAR",
+   "And it came to pass in process of time, that the king of Egypt died: and the children of Israel sighed by reason of the bondage, and they cried, and their cry came up unto God by reason of the bondage."
+  ],
+  [
+   "m1_65",
+   "NAR",
+   "And God heard their groaning, and God remembered his covenant with Abraham, with Isaac, and with Jacob."
+  ],
+  [
+   "m1_66",
+   "NAR",
+   "And God looked upon the children of Israel, and God had respect unto them."
+  ],
+  [
+   "m1_67",
+   "NAR",
+   "God heard. God remembered. God looked. And one ordinary day, out on the backside of the desert, it happened."
+  ],
+  [
+   "m1_68",
+   "NAR",
+   "Now Moses kept the flock of Jethro his father in law, the priest of Midian: and he led the flock to the backside of the desert, and came to the mountain of God, even to Horeb."
+  ],
+  [
+   "m1_69",
+   "NAR",
+   "And the angel of the LORD appeared unto him in a flame of fire out of the midst of a bush: and he looked, and, behold, the bush burned with fire, and the bush was not consumed."
+  ],
+  [
+   "m1_70",
+   "NAR",
+   "And Moses said,"
+  ],
+  [
+   "m1_71",
+   "moses",
+   "I will now turn aside, and see this great sight, why the bush is not burnt."
+  ],
+  [
+   "m1_72",
+   "NAR",
+   "And when the LORD saw that he turned aside to see, God called unto him out of the midst of the bush, and said,"
+  ],
+  [
+   "m1_73",
+   "god",
+   "Moses, Moses."
+  ],
+  [
+   "m1_74",
+   "NAR",
+   "And he said,"
+  ],
+  [
+   "m1_75",
+   "moses",
+   "Here am I."
+  ],
+  [
+   "m1_76",
+   "NAR",
+   "And he said,"
+  ],
+  [
+   "m1_77",
+   "god",
+   "Draw not nigh hither: put off thy shoes from off thy feet, for the place whereon thou standest is holy ground."
+  ],
+  [
+   "m1_78",
+   "NAR",
+   "Moreover he said,"
+  ],
+  [
+   "m1_79",
+   "god",
+   "I am the God of thy father, the God of Abraham, the God of Isaac, and the God of Jacob."
+  ],
+  [
+   "m1_80",
+   "NAR",
+   "And Moses hid his face; for he was afraid to look upon God."
+  ],
+  [
+   "m1_81",
+   "NAR",
+   "And the LORD said,"
+  ],
+  [
+   "m1_82",
+   "god",
+   "I have surely seen the affliction of my people which are in Egypt, and have heard their cry by reason of their taskmasters; for I know their sorrows;"
+  ],
+  [
+   "m1_83",
+   "god",
+   "Come now therefore, and I will send thee unto Pharaoh, that thou mayest bring forth my people the children of Israel out of Egypt."
+  ],
+  [
+   "m1_84",
+   "NAR",
+   "Send me? Back to Egypt? Back to the man who wants me dead?"
+  ],
+  [
+   "m1_85",
+   "NAR",
+   "And Moses said unto God,"
+  ],
+  [
+   "m1_86",
+   "moses",
+   "Who am I, that I should go unto Pharaoh, and that I should bring forth the children of Israel out of Egypt?"
+  ],
+  [
+   "m1_87",
+   "NAR",
+   "And he said,"
+  ],
+  [
+   "m1_88",
+   "god",
+   "Certainly I will be with thee; and this shall be a token unto thee, that I have sent thee: When thou hast brought forth the people out of Egypt, ye shall serve God upon this mountain."
+  ],
+  [
+   "m1_89",
+   "NAR",
+   "Notice, God never answered who Moses was. He answered who would be with him."
+  ],
+  [
+   "m1_90",
+   "NAR",
+   "And Moses said unto God,"
+  ],
+  [
+   "m1_91",
+   "moses",
+   "Behold, when I come unto the children of Israel, and shall say unto them, The God of your fathers hath sent me unto you; and they shall say to me, What is his name? what shall I say unto them?"
+  ],
+  [
+   "m1_92",
+   "NAR",
+   "And God said unto Moses,"
+  ],
+  [
+   "m1_93",
+   "god",
+   "I AM THAT I AM:"
+  ],
+  [
+   "m1_94",
+   "NAR",
+   "and he said,"
+  ],
+  [
+   "m1_95",
+   "god",
+   "Thus shalt thou say unto the children of Israel, I AM hath sent me unto you."
+  ],
+  [
+   "m1_96",
+   "NAR",
+   "I AM. Not I was. Not I will be someday. I AM. The God who saw the midwives, who floated a baby down a river of death, who waited forty years in the desert, is the same God standing in that fire. And a broken eighty-year-old shepherd is about to walk back into Egypt."
+  ]
+ ]
+}
