@@ -1,0 +1,16 @@
+name: fnfd2-fix8
+on: { push: { branches: [fnfd2-fix8] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy: { fail-fast: false, max-parallel: 9, matrix: { s: ["d07_n2","d07_n3","d09_n4","d10_n4","d11_n1","d13_n4","d13_n6","d14_n1","d14_n2"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client && mkdir -p out && SHOTS=${{ matrix.s }} python3 gen/img.py || true
+      - if: always()
+        run: |
+          git config user.name fnfd; git config user.email noreply@anthropic.com
+          B=fnfd2-fix8-${{ matrix.s }}
+          git checkout --orphan $B && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin $B
