@@ -1,0 +1,167 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Sarai said unto Abram,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:32<00:00, 272.86s/it]100%|██████████| 1/1 [04:32<00:00, 272.86s/it]
+d05_g16_v002_0 ok 273
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Sarai said unto Abram,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.59s/it]100%|██████████| 1/1 [04:38<00:00, 278.59s/it]
+d05_g16_v005_0 ok 279
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But Abram said unto Sarai,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:34<00:00, 274.98s/it]100%|██████████| 1/1 [04:34<00:00, 274.98s/it]
+d05_g16_v006_0 ok 275
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the angel of the Lord said unto her,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:11<00:00, 311.02s/it]100%|██████████| 1/1 [05:11<00:00, 311.02s/it]
+d05_g16_v009_0 ok 311
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the angel of the Lord said unto her,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:14<00:00, 314.85s/it]100%|██████████| 1/1 [05:14<00:00, 314.85s/it]
+d05_g16_v010_0 ok 315
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the angel of the Lord said unto her,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:09<00:00, 309.78s/it]100%|██████████| 1/1 [05:09<00:00, 309.78s/it]
+d05_g16_v011_0 ok 310
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 17.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:14<00:00, 254.96s/it]100%|██████████| 1/1 [04:14<00:00, 254.96s/it]
+d05_c17 ok 255
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Abraham,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:32<00:00, 272.74s/it]100%|██████████| 1/1 [04:32<00:00, 272.74s/it]
+d05_g17_v009_0 ok 273
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said unto Abraham,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:36<00:00, 276.88s/it]100%|██████████| 1/1 [04:36<00:00, 276.88s/it]
+d05_g17_v015_0 ok 277
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abraham said unto God,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:35<00:00, 275.17s/it]100%|██████████| 1/1 [04:35<00:00, 275.17s/it]
+d05_g17_v018_0 ok 275
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And God said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:00<00:00, 240.33s/it]100%|██████████| 1/1 [04:00<00:00, 240.33s/it]
+d05_g17_v019_0 ok 240
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 So here's my question for you. Where have you tried to help God out instead of waiting on Him? Tell me in the comments. To join Community Covenant,
+gen_text 1 go to covenant dot crispus mundo dot com, tap Create Account, choose your daily focus, and add it to your home screen. Tomorrow is Genesis eighteen through twenty.
+gen_text 2 Three visitors, a laugh behind a tent door, and a city on fire. Invite two people to read with us. See you tomorrow in the Word.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [24:55<49:50, 1495.43s/it] 67%|██████▋   | 2/3 [25:37<10:40, 640.45s/it] 100%|██████████| 3/3 [25:37<00:00, 512.47s/it]
+d05_h9 ok 1537
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Okay, family. Three men show up at Abraham's tent in the heat of the day. And one of them says, by this time next year, Sarah will have a son. Sarah is ninety.
+gen_text 1 Would you believe she laughed? And God heard her.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [14:31<14:31, 871.29s/it]100%|██████████| 2/2 [14:31<00:00, 435.65s/it]
+d06_h0 ok 871
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 6 of three hundred sixty-five. Today is Genesis chapters eighteen, nineteen and twenty, read from the King James Version,
+gen_text 1 with not one word changed. This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 18.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:06<18:06, 1086.33s/it]100%|██████████| 2/2 [18:21<00:00, 456.06s/it] 100%|██████████| 2/2 [18:21<00:00, 550.60s/it]
+d06_h1 ok 1101
