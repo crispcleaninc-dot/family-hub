@@ -9,4 +9,6 @@ SHOTS = {
  'd13_n6': "a long caravan of traders with camels carrying bundles of spices crossing the desert toward Egypt at sunset, seen from a distance",
  'd14_n1': "an ancient Canaanite stone town gate with a veiled woman in an embroidered mantle waiting beside a dirt path, sheep nearby",
  'd14_n2': "a bearded Hebrew steward in his thirties in white Egyptian linen giving orders in a grand Egyptian house with columns, servants listening",
+ 'd13_n3': "a bearded grown man in his twenties wearing a richly colored striped coat standing among a flock of sheep in a green field, his older brothers watching from a distance",
+ 'd14_n4': "a bearded grown Hebrew man in his late twenties sitting in an ancient Egyptian stone prison with two Egyptian officials, a cupbearer and a baker, torch light",
 }
