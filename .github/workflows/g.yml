@@ -5,7 +5,7 @@ jobs:
   img:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    strategy: { fail-fast: false, max-parallel: 8, matrix: { s: ["L04","L05","L06","L12"] } }
+    strategy: { fail-fast: false, max-parallel: 8, matrix: { s: ["L04"] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client && mkdir -p out && SHOTS=${{ matrix.s }} python3 gen/img.py || true
