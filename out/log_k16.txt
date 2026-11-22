@@ -1,0 +1,111 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Okay, family. Jacob hears his brother Esau is coming, with four hundred men. He is terrified. That night, a man wrestles with him until morning. Would you believe Jacob says,
+gen_text 1 I will not let thee go, except thou bless me?
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [15:36<15:36, 936.41s/it]100%|██████████| 2/2 [15:36<00:00, 468.21s/it]
+d12_h0 ok 936
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 12 of three hundred sixty-five. Today is Genesis chapters thirty-two, thirty-three and thirty-four, read from the King James Version,
+gen_text 1 with not one word changed. This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 32.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [18:58<18:58, 1138.33s/it]100%|██████████| 2/2 [18:58<00:00, 569.16s/it] 
+d12_h1 ok 1138
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And I have oxen, and asses, flocks, and menservants, and womenservants: and I have sent to tell my lord, that I may find grace in thy sight.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:59<00:00, 599.23s/it]100%|██████████| 1/1 [09:59<00:00, 599.23s/it]
+d12_g32_v005_0 ok 599
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jacob said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:04<00:00, 244.18s/it]100%|██████████| 1/1 [04:04<00:00, 244.18s/it]
+d12_g32_v009_0 ok 244
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick word: if you want to keep today's verses and read along every day, it's all free in Community Covenant, at covenant dot crispus mundo dot com.
+gen_text 1 Now the brothers finally meet after twenty years. Everybody's holding their breath. Listen to what Esau does. Genesis, chapter 33.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [16:55<16:55, 1015.80s/it]100%|██████████| 2/2 [16:55<00:00, 507.90s/it] 
+d12_hm ok 1016
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Esau said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:18<00:00, 258.65s/it]100%|██████████| 1/1 [04:18<00:00, 258.65s/it]
+d12_g33_v009_0 ok 259
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Jacob said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:23<00:00, 263.66s/it]100%|██████████| 1/1 [04:23<00:00, 263.66s/it]
+d12_g33_v010_0 ok 264
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Esau said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:11<00:00, 251.97s/it]100%|██████████| 1/1 [04:11<00:00, 251.97s/it]
+d12_g33_v015_0 ok 252
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he said, What needeth it? let me find grace in the sight of my lord.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:39<00:00, 399.38s/it]100%|██████████| 1/1 [06:39<00:00, 399.38s/it]
+d12_g33_v015_2 ok 399
