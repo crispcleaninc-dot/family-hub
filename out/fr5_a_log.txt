@@ -1,0 +1,10 @@
+fr5_a_7101 try0 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:41:39. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7101 try1 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:41:09. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7101 try2 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:40:39. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7101 poll0 HTTP Error 503: Service Unavailable
+fr5_a_7101 poll1 HTTP Error 402: Payment Required
+fr5_a_7101 poll2 HTTP Error 402: Payment Required
+fr5_a_7102 try0 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:39:06. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7102 try1 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:38:36. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7102 try2 You have exceeded your ZeroGPU quota (105s requested vs. 44s left). Try again in 18:38:05. Authenticate with a Hugging Face token for more quota - https://huggi
+fr5_a_7102 poll ok
