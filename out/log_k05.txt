@@ -1,0 +1,101 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Family, there's a war. Kings fighting kings. Abram's nephew Lot gets captured. And would you believe Abram goes after them with three hundred eighteen men?
+gen_text 1 Then God takes him outside at night and says: look up. Count the stars.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:51<07:51, 471.70s/it]100%|██████████| 2/2 [07:51<00:00, 235.85s/it]
+d05_h0 ok 472
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Welcome to Cover to Cover. Day 5 of three hundred sixty-five. Today is Genesis chapters fourteen through seventeen, read from the King James Version, with not one word changed.
+gen_text 1 This reading comes to you from Community Covenant, the free daily Bible and prayer app. The link is in the post. Genesis, chapter 14.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:05<09:05, 545.13s/it]100%|██████████| 2/2 [09:05<00:00, 272.57s/it]
+d05_h1 ok 545
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the king of Sodom said unto Abram, Give me the persons, and take the goods to thyself.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:42<00:00, 222.34s/it]100%|██████████| 1/1 [03:42<00:00, 222.34s/it]
+d05_g14_v021_0 ok 222
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abram said to the king of Sodom,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:22<00:00, 142.04s/it]100%|██████████| 1/1 [02:22<00:00, 142.04s/it]
+d05_g14_v022_0 ok 142
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Genesis, chapter 15.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:01<00:00, 121.43s/it]100%|██████████| 1/1 [02:01<00:00, 121.43s/it]
+d05_c15 ok 121
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abram said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:57<00:00, 117.65s/it]100%|██████████| 1/1 [01:57<00:00, 117.65s/it]
+d05_g15_v002_0 ok 118
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And Abram said,
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:57<00:00, 117.27s/it]100%|██████████| 1/1 [01:57<00:00, 117.27s/it]
+d05_g15_v003_0 ok 117
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Quick word: if you want to keep today's verses and read along every day, it's all free in Community Covenant, at covenant dot crispus mundo dot com.
+gen_text 1 Now here's where it gets messy. Waiting on a promise is hard. Sarai has an idea. And when we try to help God out, it never goes the way we think.
+gen_text 2 Listen to what happens with Hagar. Genesis, chapter 16.
+
+
+Generating audio in 3 batches...
+  0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [11:15<22:30, 675.40s/it] 67%|██████▋   | 2/3 [11:30<04:46, 286.88s/it]100%|██████████| 3/3 [11:30<00:00, 230.11s/it]
+d05_hm ok 690
