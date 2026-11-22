@@ -1,4 +1,5 @@
 # Render FNF Cover to Cover Day 1 dramatized reading (1280x720).
+import os as _o; _o.makedirs('out', exist_ok=True)
 import json, os, subprocess, re, glob
 from PIL import Image, ImageDraw, ImageFont
 import sys, glob as _g
@@ -7,7 +8,9 @@ SEG = [tuple(x) for x in json.load(open('days_seg.json'))[str(DAY)]]
 HER = '/tmp/d2her/out'; CH = '/tmp/d2chars/out'; IMG = '/tmp/d2img/out'; W = f'/tmp/dwork{DAY:02d}'
 os.makedirs(W, exist_ok=True)
 FPS = 25; WD, HT = 1280, 720
-def run(c): subprocess.run(c, shell=True, check=True, capture_output=True)
+def run(c):
+    r = subprocess.run(c, shell=True, capture_output=True, text=True)
+    if r.returncode: print('CMD', c[:300], '\nERR', r.stderr[-1500:], flush=True); raise SystemExit(1)
 def dur(f): return float(subprocess.run(f'ffprobe -v error -show_entries format=duration -of csv=p=0 "{f}"', shell=True, capture_output=True, text=True).stdout)
 
 # --- 1. clean each clip, measure gain, build timeline
