@@ -1,0 +1,55 @@
+s004 No audio was received. Please verify that your parameters are correct.
+s004 No audio was received. Please verify that your parameters are correct.
+s004 No audio was received. Please verify that your parameters are correct.
+s004 No audio was received. Please verify that your parameters are correct.
+s004 No audio was received. Please verify that your parameters are correct.
+s004 god ok
+s009 god ok
+s013 No audio was received. Please verify that your parameters are correct.
+s013 No audio was received. Please verify that your parameters are correct.
+s013 god ok
+s017 No audio was received. Please verify that your parameters are correct.
+s017 god ok
+s022 No audio was received. Please verify that your parameters are correct.
+s022 god ok
+s023 No audio was received. Please verify that your parameters are correct.
+s023 No audio was received. Please verify that your parameters are correct.
+s023 god ok
+s030 No audio was received. Please verify that your parameters are correct.
+s030 god ok
+s033 No audio was received. Please verify that your parameters are correct.
+s033 god ok
+s036 No audio was received. Please verify that your parameters are correct.
+s036 god ok
+s040 No audio was received. Please verify that your parameters are correct.
+s040 god ok
+s043 No audio was received. Please verify that your parameters are correct.
+s043 god ok
+s045 god ok
+s046 No audio was received. Please verify that your parameters are correct.
+s046 god ok
+s065 No audio was received. Please verify that your parameters are correct.
+s065 god ok
+s066 god ok
+s068 god ok
+s074 adam ok
+s078 serpent ok
+s080 eve ok
+s081 eve ok
+s083 serpent ok
+s084 serpent ok
+s089 god ok
+s091 adam ok
+s093 god ok
+s095 adam ok
+s097 god ok
+s099 eve ok
+s101 god ok
+s102 No audio was received. Please verify that your parameters are correct.
+s102 god ok
+s104 No audio was received. Please verify that your parameters are correct.
+s104 god ok
+s106 god ok
+s107 god ok
+s108 god ok
+s112 god ok
