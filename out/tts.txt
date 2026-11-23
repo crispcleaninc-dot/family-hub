@@ -1,0 +1,31 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+a01__ar-EG-ShakirNeural ok
+a01__he-IL-AvriNeural ok
+a01__en-US-BrianMultilingualNeural ok
+g01__he-IL-AvriNeural ok
+g01__ar-SA-HamedNeural ok
+g01__en-US-AndrewMultilingualNeural ok
+s01__ar-EG-ShakirNeural ok
+s01__fa-IR-FaridNeural ok
+s01__ar-SA-HamedNeural ok
+s02__ar-SA-HamedNeural ok
+s02__ar-JO-TaimNeural ok
+s02__fa-IR-FaridNeural ok
+g02__he-IL-AvriNeural ok
+g02__ar-SA-HamedNeural ok
+g02__en-US-AndrewMultilingualNeural ok
+a01__ar-EG-ShakirNeural.mp3 => The Lord is with thee, the mighty man of failure.
+a01__en-US-BrianMultilingualNeural.mp3 => The Lord is with thee, thou mighty man of Valor.
+a01__he-IL-AvriNeural.mp3 => The Lord I ask with thee, the mighty man of valor.
+g01__ar-SA-HamedNeural.mp3 => If the Lord be with us, we then is all this befalliness.
+g01__en-US-AndrewMultilingualNeural.mp3 => If the Lord be with us, why then is all this befallen us?
+g01__he-IL-AvriNeural.mp3 => If the Lord be with you is, why then is all this befall on you is?
+g02__ar-SA-HamedNeural.mp3 => the sword of the Lord and of Kideel.
+g02__en-US-AndrewMultilingualNeural.mp3 => the sword of the Lord and of Gideon.
+g02__he-IL-AvriNeural.mp3 => The Sword of the Lord and the of Gideon.
+s01__ar-EG-ShakirNeural.mp3 => I dreamed a kek of barley bread tumbled into the house of midi. It struck the tent. And the tent lay flat.
+s01__ar-SA-HamedNeural.mp3 => I drained a cake of barley bread doubled into the house of midi. It struck the tank and the tank lay flat.
+s01__fa-IR-FaridNeural.mp3 => A dream to cake of barley bread a tumbled into the host of million. It struck the tent, and the tent lay flat.
+s02__ar-JO-TaimNeural.mp3 => This is Nathan Giles safe the sword of Kiddie. Into his hand hath Koud delivered me thee.
+s02__ar-SA-HamedNeural.mp3 => This is Nathaniel 77 of Kideen. Into his hand hath code delivered me thee.
+s02__fa-IR-FaridNeural.mp3 => This is nothing else as save the sword of Gideon. Into his hand hath God delivered Midian.
