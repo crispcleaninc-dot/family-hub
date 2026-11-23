@@ -1,4 +1,4 @@
-name: v2-gen
+name: v2-gen1b
 on: { push: { branches: [v2-gen] } }
 permissions: { contents: write }
 jobs:
@@ -15,7 +15,7 @@ jobs:
       - if: always()
         run: |
           git config user.name "v2"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan v2o-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2o-${{ matrix.k }}
+          git checkout --orphan v2q-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2q-${{ matrix.k }}
   tts:
     runs-on: ubuntu-latest
     steps:
@@ -23,4 +23,4 @@ jobs:
       - run: pip install -q edge-tts && python3 gen/tts.py > tts.txt 2>&1 || true; mkdir -p out; cp tts.txt out/
       - run: |
           git config user.name "v2"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan v2o-tts && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2o-tts
+          git checkout --orphan v2q-tts && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2q-tts
