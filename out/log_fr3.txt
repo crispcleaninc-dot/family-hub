@@ -1,0 +1,53 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/model_last_reduced.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Aujourd'hui, Junior a six ans. Il prend ses médicaments, il boit beaucoup d'eau, et il court plus vite que tous ses cousins. Et devinez qui l'amène à ses rendez-vous à l'hôpital? Maman Adjoua.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:59<00:00, 59.82s/it]100%|██████████| 1/1 [00:59<00:00, 59.82s/it]
+ci_d19 ok 60
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Et vous? Avez-vous déjà été accusée de quelque chose que vous n'avez pas fait, dans votre famille ou dans votre église? Racontez-moi en commentaire. Et partagez cette vidéo sur WhatsApp, à une femme qui en a besoin.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:02<00:00, 62.59s/it]100%|██████████| 1/1 [01:02<00:00, 62.59s/it]
+ci_d20 ok 63
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Community Covenant est une application gratuite de Bible et de prière, avec une équipe qui prie pour vous et vous répond.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:45<00:00, 45.86s/it]100%|██████████| 1/1 [00:45<00:00, 45.86s/it]
+ci_end0 ok 46
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Ouvrez covenant point crispus mundo point com. Abonnez-vous pour d'autres histoires. Que Dieu vous bénisse.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:44<00:00, 44.48s/it]100%|██████████| 1/1 [00:44<00:00, 44.48s/it]
+ci_end1 ok 44
