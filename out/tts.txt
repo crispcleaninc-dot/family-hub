@@ -1,0 +1,8 @@
+fr_ci_c2 ok
+fr_ci_k1 ok
+fr_ci_m1 ok
+fr_ci_b2 ok
+en_ci_c2 ok
+en_ci_k1 ok
+en_ci_m1 ok
+en_ci_b2 ok
