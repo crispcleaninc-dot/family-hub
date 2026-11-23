@@ -1,0 +1,18 @@
+name: v2-gen3
+on: { push: { branches: [v2-gen3] } }
+permissions: { contents: write }
+jobs:
+  f5:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 12, matrix: { k: ["fr0","fr1","fr2","fr3","en0","en1","en2","en3","en9","es9"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; K=${{ matrix.k }} python3 gen2/f5.py > out/log_${{ matrix.k }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan v2r-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2r-${{ matrix.k }}
