@@ -1,0 +1,55 @@
+# Neema v2 — shorter (≈3 min), hook-first Swahili remake + English version.
+# Every line is narrated by Ciarne's voice copy (storyteller reference), except
+# the neighbor's whisper (edge voice). Tuple: (id, who, image, {lang: text}, opts)
+# who: N = her voice, W = neighbor whisper (edge), T = title card, P = pause
+L = [
+ ('h1', 'N', 'a07', {'sw': "Jirani yangu aliinama karibu na sikio langu. Akanong'ona:",
+                     'en': "My neighbor leaned in close to my ear. And she whispered:"}),
+ ('h2', 'W', 'a07', {'sw': "Neema... namjua mganga. Atamrudisha. Au atamfanya alipe.",
+                     'en': "Neema... I know a witch doctor. He'll bring her back. Or he'll make her pay."}),
+ ('h3', 'N', 'a07', {'sw': "Nitakuambia ukweli. Kwa sekunde moja... nilitaka kusema ndiyo.",
+                     'en': "I'll tell you the truth. For one second... I wanted to say yes."}, {'slow': 1}),
+ ('t0', 'T', 'TITLE', 2.6),
+ ('s1', 'N', 'a01', {'sw': "Naitwa Neema. Nauza samaki pale Kariakoo. Naamka saa kumi alfajiri, kila siku, kwa ajili ya watoto wangu wawili.",
+                     'en': "My name is Neema. I sell fish at Kariakoo market. I get up at four in the morning, every day, for my two children."}),
+ ('s2', 'N', 'a02', {'sw': "Binti yangu Rehema, miaka kumi na minne. Anataka kuwa daktari.",
+                     'en': "My daughter Rehema is fourteen. She wants to be a doctor."}),
+ ('s3', 'N', 'a03', {'sw': "Sisi wanawake kumi na wawili tulikuwa na chama. Kila wiki, shilingi elfu ishirini. Na mwezi Desemba... ilikuwa zamu yangu. Ada yote ya Rehema ilikuwa pale.",
+                     'en': "Twelve of us women had a savings circle, a chama. Every week, twenty thousand shillings. And in December... it was my turn. Every cent of Rehema's school fees was in that pot."}),
+ ('s4', 'N', 'a04', {'sw': "Mweka hazina alikuwa Shangazi Rose. Tuliimba kwaya pamoja. Alimbeba mwanangu siku ya ubatizo wake.",
+                     'en': "The treasurer was Auntie Rose. We sang in the choir together. She held my son on the day he was baptized."}),
+ ('s5', 'N', 'a05', {'sw': "Siku ya zamu yangu... simu yake imezimwa. Duka limefungwa. Rose ameondoka. Na shilingi milioni tatu za familia kumi na mbili.",
+                     'en': "On my day... her phone was off. Her shop was locked. Rose was gone. With three million shillings from twelve families."}),
+ ('s6', 'N', 'a06', {'sw': "Mnaijua aibu ile? Soko zima linakutazama. Na wewe ndiye uliyemwamini.",
+                     'en': "Do you know that kind of shame? The whole market watching you. And you were the one who trusted her."}),
+ ('s7', 'N', 'a07', {'sw': "Ndipo jirani yule akaja na lile neno la mganga.",
+                     'en': "That's when my neighbor came with her word about the witch doctor."}),
+ ('s8', 'N', 'a08', {'sw': "Lakini usiku ule, nilifungua Biblia. Na neno moja likanishika:",
+                     'en': "But that night, I opened my Bible. And one verse took hold of me:"}),
+ ('v1', 'N', 'a08', {'sw': "Wapenzi, msijilipizie kisasi. Kisasi ni juu yangu mimi; mimi nitalipa, anena Bwana. Warumi kumi na mbili, kumi na tisa.",
+                     'en': "Dearly beloved, avenge not yourselves. Vengeance is mine; I will repay, saith the Lord. Romans twelve, nineteen."}, {'slow': 1}),
+ ('s9', 'N', 'a11', {'sw': "Rehema alinisikia nikilia. Akakaa karibu nami, akasema: Mama, naweza kusubiri mwaka mmoja.",
+                     'en': "Rehema heard me crying. She sat down beside me and said: Mama, I can wait a year."}),
+ ('s10', 'N', 'a12', {'sw': "Moyo wangu ulivunjika. Nikamwambia: hapana, mwanangu. Huu si mzigo wako.",
+                      'en': "It broke my heart. I told her: no, my child. This is not your load to carry."}),
+ ('s11', 'N', 'a14', {'sw': "Jumapili, Mchungaji aliwakusanya wanawake wa chama. Hatukuomba dhidi ya Rose. Tuliomba kwa ajili ya watoto wetu.",
+                      'en': "That Sunday, the pastor gathered the women of the chama. We did not pray against Rose. We prayed for our children."}),
+ ('s12', 'N', 'a16', {'sw': "Mkuu wa shule akaniruhusu kulipa ada kwa awamu tatu. Nikaongeza biashara ya jioni. Rehema akasomea mezani, kati ya wateja.",
+                      'en': "The headmaster let me pay the fees in three parts. I added an evening stall. Rehema did her homework at my table, between customers."}),
+ ('s13', 'N', 'a17', {'sw': "Miezi saba baadaye... mlango ukagongwa. Alikuwa Rose.",
+                      'en': "Seven months later... a knock at the door. It was Rose."}, {'slow': 1}),
+ ('s14', 'N', 'a17', {'sw': "Amekonda. Mikono inatetemeka. Akanipa bahasha. Haikuwa yote... lakini ilikuwa mwanzo.",
+                      'en': "She was thin. Her hands were shaking. She handed me an envelope. It wasn't all of it... but it was a start."}),
+ ('s15', 'N', 'a19', {'sw': "Sijasahau. Lakini nimesamehe. Na leo, Rehema ni wa kwanza darasani kwa sayansi.",
+                      'en': "I haven't forgotten. But I have forgiven. And today, Rehema is first in her class in science."}),
+ ('s16', 'N', 'a20', {'sw': "Na wewe je? Umewahi kusalitiwa na mtu uliyemwamini? Niandikie kwenye maoni. Na mtumie dada yako video hii kwenye WhatsApp.",
+                      'en': "And you? Have you ever been betrayed by someone you trusted? Tell me in the comments. And send this to a sister on WhatsApp."}),
+]
+END = {
+ 'sw': ["Community Covenant ni programu ya bure ya Biblia na maombi, na timu inayokuombea.",
+        "Fungua covenant dot crispus mundo dot com. Na jiunge na chaneli kwa hadithi zaidi. Mungu akubariki."],
+ 'en': ["Community Covenant is a free Bible and prayer app, with a team that prays for you and writes back.",
+        "Open covenant dot crispus mundo dot com. And subscribe for more stories. God bless you."],
+}
+TITLE = {'sw': ("ALINISALITI", "DADA WA KANISANI"), 'en': ("BETRAYED", "BY A CHURCH SISTER")}
+WHISPER = {'sw': ('sw-TZ-RehemaNeural', '-8%'), 'en': ('en-KE-AsiliaNeural', '-8%')}
