@@ -1,0 +1,103 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Nine weeks of feasts. So why does almost no church calendar have them? Tonight, the history, and the honest question believers disagree on. The Feasts of the Lord,
+gen_text 1 the final part.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:33<08:33, 513.59s/it]100%|██████████| 2/2 [08:33<00:00, 256.80s/it]
+fe10_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:26<08:26, 506.95s/it]100%|██████████| 2/2 [08:26<00:00, 253.48s/it]
+fe10_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 The first Christians were Jews who kept the feasts. Paul kept them. In Asia, churches kept the resurrection on the fourteenth of Nisan, Passover, for generations.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:56<00:00, 416.34s/it]100%|██████████| 1/1 [06:56<00:00, 416.34s/it]
+fe10_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For Paul had determined to sail by Ephesus, because he would not spend the time in Asia: for he hasted, if it were possible for him,
+gen_text 1 to be at Jerusalem the day of Pentecost.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:06<08:06, 486.83s/it]100%|██████████| 2/2 [08:06<00:00, 243.42s/it]
+fe10_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 In the year three twenty five, the Council of Nicaea set Easter by its own calculation and separated it from the Jewish calendar.
+gen_text 1 Emperor Constantine's letter said the church should have nothing in common with the Jews. That's in the historical record.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:36<09:36, 576.11s/it]100%|██████████| 2/2 [09:36<00:00, 288.05s/it]
+fe10_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Christmas came later. The first record of a December twenty fifth Christmas is from Rome in the three hundreds.
+gen_text 1 Historians still argue whether the date was picked to replace a Roman sun festival, or calculated from the date Christians believed Jesus was conceived.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:32<08:32, 512.03s/it]100%|██████████| 2/2 [09:50<00:00, 257.27s/it]100%|██████████| 2/2 [09:50<00:00, 295.48s/it]
+fe10_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:12<00:00, 372.21s/it]100%|██████████| 1/1 [06:12<00:00, 372.22s/it]
+fe10_007x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the finding. Believers read this two ways. Some say the feasts are for ever, and they keep them today. Others say Christ fulfilled them,
+gen_text 1 and believers are free to keep a day or not. Both read these verses.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:54<08:54, 534.25s/it]100%|██████████| 2/2 [08:54<00:00, 267.13s/it]
+fe10_008t True
