@@ -1,0 +1,56 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+HTTP Error 429 thrown while requesting GET https://huggingface.co/api/models/charactr/vocos-mel-24khz/xet-read-token/0feb3fdd929bcd6649e0e7c5a688cf7dd012ef21
+Rate limited. Waiting 122.0s before retry [Retry 1/5].
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For seven days, God told His people to clean every crumb of leaven out of their homes.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:42<00:00, 162.79s/it]100%|██████████| 1/1 [02:42<00:00, 162.79s/it]
+fes4_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Seven days shall ye eat unleavened bread; even the first day ye shall put away leaven out of your houses:
+gen_text 1 for whosoever eateth leavened bread from the first day until the seventh day, that soul shall be cut off from Israel.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [05:39<05:39, 339.24s/it]100%|██████████| 2/2 [05:51<00:00, 146.78s/it]100%|██████████| 2/2 [05:51<00:00, 175.65s/it]
+fes4_002v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Paul says the leaven was never really about bread.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:16<00:00, 136.85s/it]100%|██████████| 1/1 [02:16<00:00, 136.86s/it]
+fes4_003t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Full teaching tonight at six in Faith and Findings. Follow, and subscribe to Community Covenant on YouTube.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:12<00:00, 192.59s/it]100%|██████████| 1/1 [03:12<00:00, 192.59s/it]
+fes4_004x True
