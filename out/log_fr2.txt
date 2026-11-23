@@ -1,0 +1,86 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/model_last_reduced.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Le médecin a fait une analyse de sang. Puis il m'a regardée longtemps.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:19<00:00, 439.51s/it]100%|██████████| 1/1 [07:19<00:00, 439.51s/it]
+ci_d12 ok 440
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Le papa et la maman. Koffi et moi. Personne n'avait mangé mon enfant. Il était malade. Et il fallait le soigner.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:58<00:00, 538.31s/it]100%|██████████| 1/1 [08:58<00:00, 538.31s/it]
+ci_d13 ok 538
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Le dimanche suivant, j'ai demandé la parole au pasteur. Je n'ai accusé personne. J'ai seulement lu le papier du médecin, devant les mêmes deux cents personnes.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [11:43<00:00, 703.96s/it]100%|██████████| 1/1 [11:43<00:00, 703.96s/it]
+ci_d14 ok 704
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Puis j'ai dit: si une maman ici a un enfant qui a mal aux os et de la fièvre la nuit, ne cherchez pas une sorcière. Allez à l'hôpital.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [10:11<00:00, 611.42s/it]100%|██████████| 1/1 [10:11<00:00, 611.42s/it]
+ci_d15 ok 611
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Après le culte, trois femmes sont venues me voir. Deux avaient des enfants avec les mêmes douleurs.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:22<00:00, 502.69s/it]100%|██████████| 1/1 [08:22<00:00, 502.69s/it]
+ci_d16 ok 503
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Et Maman Adjoua... est restée assise longtemps. Puis elle est venue vers moi. Les yeux pleins de larmes.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:42<00:00, 522.41s/it]100%|██████████| 1/1 [08:42<00:00, 522.41s/it]
+ci_d17 ok 522
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Je l'ai prise dans mes bras. Parce que pardonner, ce n'est pas dire qu'elle avait raison. C'est refuser de porter la haine.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:38<00:00, 578.40s/it]100%|██████████| 1/1 [09:38<00:00, 578.40s/it]
+ci_d18 ok 578
