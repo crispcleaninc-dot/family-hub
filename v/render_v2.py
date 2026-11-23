@@ -43,7 +43,7 @@ for row in S.L:
         segs.append(('TITLE', t, t + row[3])); t += row[3]; cur = None; seg_start = t; continue
     im = row[2]
     if im != cur:
-        if cur is not None: segs.append((cur, seg_start, t + 0.15)); t += 0.35
+        if cur is not None: t += 0.35; segs.append((cur, seg_start, t))
         cur = im; seg_start = t
     txt = row[3][lang]; slow = len(row) > 4 and row[4].get('slow')
     if who == 'N': src = f'{VD}/{lang}_{pfx}_{sid}.wav'
@@ -60,6 +60,7 @@ for row in S.L:
     t += d + (0.95 if slow else 0.5)
 segs.append((cur, seg_start, t + 0.3)); t += 0.6
 END0 = t
+segs[0] = (segs[0][0], 0.0, segs[0][2])
 for i, txt in enumerate(S.END[lang]):
     a = load(f'{VD}/{lang}_{pfx}_end{i}.wav', f'end{i}')
     voice.append((t, a)); d = len(a) / SR
