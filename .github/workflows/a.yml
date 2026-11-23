@@ -1,0 +1,12 @@
+name: v2-asr
+on: { push: { branches: [v2-asr] } }
+permissions: { contents: write }
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q faster-whisper && python3 asr.py > log.txt 2>&1 || true; mkdir -p out; cp log.txt out/
+      - run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan v2a-out && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin v2a-out
