@@ -1,21 +1,7 @@
-name: v2-gid
-on: { push: { branches: [v2-gid] } }
+name: v2-gid2
+on: { push: { branches: [v2-gid2] } }
 permissions: { contents: write }
 jobs:
-  f5:
-    runs-on: ubuntu-latest
-    timeout-minutes: 150
-    strategy: { fail-fast: false, matrix: { k: ["en0","en1","en2"] } }
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
-      - run: mkdir -p out; K=${{ matrix.k }} python3 gen5/f5.py > out/log_${{ matrix.k }}.txt 2>&1 || true
-      - if: always()
-        run: |
-          git config user.name "v2"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan gd-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin gd-${{ matrix.k }}
   tts:
     runs-on: ubuntu-latest
     steps:
@@ -25,13 +11,13 @@ jobs:
       - run: pip install -q edge-tts faster-whisper && python3 gen5/tts.py > tts.txt 2>&1 || true; mkdir -p out; cp tts.txt out/
       - run: |
           git config user.name "v2"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan gd-tts && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin gd-tts
+          git checkout --orphan gd2-tts && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin gd2-tts
   img:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, max-parallel: 14, matrix: { g: ["b01","b02","b03","b04","b05","b06","b07","b08","b09","b10","b11","b12","b13","b14"] } }
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { g: ["b04","b09","b11"] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen5/img.py || true
       - run: |
           git config user.name "v2"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan gd-img-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin gd-img-${{ matrix.g }}
+          git checkout --orphan gd2-img-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin gd2-img-${{ matrix.g }}
