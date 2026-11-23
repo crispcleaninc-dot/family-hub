@@ -1,0 +1,143 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 For she said, If I may touch but his clothes, I shall be whole.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:34<00:00, 274.47s/it]100%|██████████| 1/1 [04:34<00:00, 274.47s/it]
+ngd4_014v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And straightway the fountain of her blood was dried up; and she felt in her body that she was healed of that plague.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:09<00:00, 369.63s/it]100%|██████████| 1/1 [06:09<00:00, 369.63s/it]
+ngd4_015v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Twelve years. She spent everything she had. And she pushed through a crowd to touch the hem of His garment.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:57<00:00, 357.47s/it]100%|██████████| 1/1 [05:57<00:00, 357.47s/it]
+ngd4_016t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he said unto her, Daughter, thy faith hath made thee whole; go in peace, and be whole of thy plague.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:53<00:00, 353.79s/it]100%|██████████| 1/1 [05:53<00:00, 353.79s/it]
+ngd4_017v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He called her daughter. He healed her body, and He gave her back her name.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:48<00:00, 288.76s/it]100%|██████████| 1/1 [04:48<00:00, 288.76s/it]
+ngd4_018t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Luke, the beloved physician, and Demas, greet you.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:03<00:00, 243.03s/it]100%|██████████| 1/1 [04:03<00:00, 243.03s/it]
+ngd4_019v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Luke, the beloved physician. Faith and medicine are not enemies.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.25s/it]100%|██████████| 1/1 [04:38<00:00, 278.25s/it]
+ngd4_020t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:58<00:00, 418.42s/it]100%|██████████| 1/1 [06:58<00:00, 418.42s/it]
+ngd4_021x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Your homework. Write down one hurt, in your body or your heart. Pray Jeremiah seventeen fourteen over it every day. And if there's someone you need to forgive for it,
+gen_text 1 start there.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:21<10:21, 621.27s/it]100%|██████████| 2/2 [10:21<00:00, 310.63s/it]
+ngd4_022t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Questions for the comments. Tell us a testimony of God's healing. And what's one bitter thing you're asking Him to make sweet?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:46<00:00, 406.47s/it]100%|██████████| 1/1 [06:46<00:00, 406.47s/it]
+ngd4_023t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Next week, Jehovah Nissi.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:25<00:00, 205.52s/it]100%|██████████| 1/1 [03:25<00:00, 205.52s/it]
+ngd4_024t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Join Community Covenant for free. Go to covenant dot crispus mundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 1 and add it to your home screen.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:47<09:47, 587.70s/it]100%|██████████| 2/2 [09:47<00:00, 293.85s/it]
+ngd4_025x True
