@@ -1,0 +1,141 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--jpgallegoar--F5-Spanish/snapshots/4765c14ffd01075479c2fde8615831acc0adca9a/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--jpgallegoar--F5-Spanish/snapshots/4765c14ffd01075479c2fde8615831acc0adca9a/model_1200000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Cada noche a las tres de la mañana, se prendía la luz de mi abuela.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:28<00:00, 208.09s/it]100%|██████████| 1/1 [03:28<00:00, 208.09s/it]
+g1_0 ok 208
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Yo pensaba que simplemente no podía dormir.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:55<00:00, 175.77s/it]100%|██████████| 1/1 [02:55<00:00, 175.77s/it]
+g1_1 ok 176
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 En su funeral encontré su cuaderno. Cuarenta años de nombres.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:15<00:00, 195.45s/it]100%|██████████| 1/1 [03:15<00:00, 195.45s/it]
+g1_2 ok 195
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 El mío estaba en cada página. Junto a mi peor año, escribió: Señor, guárdala viva hasta que vuelva a Ti.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:21<00:00, 261.94s/it]100%|██████████| 1/1 [04:21<00:00, 261.94s/it]
+g1_3 ok 262
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Volví. Y ella alcanzó a verlo.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:35<00:00, 155.33s/it]100%|██████████| 1/1 [02:35<00:00, 155.33s/it]
+g1_4 ok 155
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Abuela, ¿por quién estás orando esta noche? Mira Caminando con la abuela en nuestro canal.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:58<00:00, 238.81s/it]100%|██████████| 1/1 [03:58<00:00, 238.81s/it]
+g1_5 ok 239
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Mi madre nunca tuvo dinero para abogados, doctores ni segundas oportunidades.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:29<00:00, 209.60s/it]100%|██████████| 1/1 [03:29<00:00, 209.60s/it]
+g2_0 ok 210
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Tenía una mesa de cocina.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:30<00:00, 150.37s/it]100%|██████████| 1/1 [02:30<00:00, 150.37s/it]
+g2_1 ok 150
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Y dos rodillas.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [02:13<00:00, 133.85s/it]100%|██████████| 1/1 [02:13<00:00, 133.85s/it]
+g2_2 ok 134
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Cada cuenta, cada citación, cada hijo que se fue. Lo ponía sobre esa mesa, y oraba.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:47<00:00, 227.44s/it]100%|██████████| 1/1 [03:47<00:00, 227.44s/it]
+g2_3 ok 227
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Cuarenta años después, los cinco seguimos de pie.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:00<00:00, 180.13s/it]100%|██████████| 1/1 [03:00<00:00, 180.13s/it]
+g2_4 ok 180
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Si tu madre te sostuvo con oración, escribe Amén. La historia completa, Las oraciones selladas, está en nuestro canal.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:38<00:00, 278.52s/it]100%|██████████| 1/1 [04:38<00:00, 278.52s/it]
+g2_5 ok 279
