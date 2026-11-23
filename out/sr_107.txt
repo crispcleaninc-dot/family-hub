@@ -1,0 +1,122 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 They had just watched the Red Sea split. Three days later, they were complaining about bitter water. And God answered with a name. Jehovah Rapha. Let's talk about it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:38<00:00, 398.88s/it]100%|██████████| 1/1 [06:38<00:00, 398.88s/it]
+ng4_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:41<07:41, 461.64s/it]100%|██████████| 2/2 [07:41<00:00, 230.82s/it]
+ng4_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And when they came to Marah, they could not drink of the waters of Marah, for they were bitter: therefore the name of it was called Marah.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:34<00:00, 334.24s/it]100%|██████████| 1/1 [05:34<00:00, 334.24s/it]
+ng4_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And the people murmured against Moses, saying, What shall we drink?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:42<00:00, 222.95s/it]100%|██████████| 1/1 [03:42<00:00, 222.95s/it]
+ng4_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And he cried unto the Lord; and the Lord shewed him a tree, which when he had cast into the waters, the waters were made sweet:
+gen_text 1 there he made for them a statute and an ordinance, and there he proved them,
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [08:08<08:08, 488.02s/it]100%|██████████| 2/2 [08:08<00:00, 244.01s/it]
+ng4_005v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Marah means bitter. God showed Moses a tree, and when he threw it in, the water turned sweet.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:18<00:00, 258.39s/it]100%|██████████| 1/1 [04:18<00:00, 258.39s/it]
+ng4_006t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 And said, If thou wilt diligently hearken to the voice of the Lord thy God, and wilt do that which is right in his sight, and wilt give ear to his commandments,
+gen_text 1 and keep all his statutes, I will put none of these diseases upon thee, which I have brought upon the Egyptians: for I am the Lord that healeth thee.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [09:58<09:58, 598.04s/it]100%|██████████| 2/2 [10:05<00:00, 250.87s/it]100%|██████████| 2/2 [10:05<00:00, 302.95s/it]
+ng4_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:32<00:00, 332.80s/it]100%|██████████| 1/1 [05:32<00:00, 332.80s/it]
+ng4_008x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. God introduced Himself as healer at a place called bitter. Some of us need healing in our bodies. But some of us need the bitterness healed first.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:31<00:00, 391.77s/it]100%|██████████| 1/1 [06:31<00:00, 391.77s/it]
+ng4_009t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He healeth the broken in heart, and bindeth up their wounds.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:32<00:00, 212.54s/it]100%|██████████| 1/1 [03:32<00:00, 212.54s/it]
+ng4_010v True
