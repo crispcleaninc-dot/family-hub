@@ -1,0 +1,89 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Let no man therefore judge you in meat, or in drink, or in respect of an holyday, or of the new moon, or of the sabbath days:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:11<00:00, 431.03s/it]100%|██████████| 1/1 [07:11<00:00, 431.04s/it]
+fe10_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Which are a shadow of things to come; but the body is of Christ.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:54<00:00, 294.35s/it]100%|██████████| 1/1 [04:54<00:00, 294.35s/it]
+fe10_010v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 One man esteemeth one day above another: another esteemeth every day alike. Let every man be fully persuaded in his own mind.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:13<00:00, 433.76s/it]100%|██████████| 1/1 [07:13<00:00, 433.76s/it]
+fe10_011v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 He that regardeth the day, regardeth it unto the Lord; and he that regardeth not the day, to the Lord he doth not regard it. He that eateth, eateth to the Lord,
+gen_text 1 for he giveth God thanks; and he that eateth not, to the Lord he eateth not, and giveth God thanks.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:35<13:35, 815.21s/it]100%|██████████| 2/2 [13:35<00:00, 407.61s/it]
+fe10_012v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 A shadow of things to come, but the body is of Christ. Whatever your conviction, here's what nobody can argue with. Holidays,
+gen_text 1 busyness and shopping can take the place of meeting with God. The feasts were always about one thing. Appointed time with Him.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [13:08<13:08, 788.19s/it]100%|██████████| 2/2 [13:08<00:00, 394.10s/it]
+fe10_013t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 My question for you: after this series, will you keep any of the feasts this year? Tell us in the comments. And keep reading Cover to Cover with us every day.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:32<00:00, 512.96s/it]100%|██████████| 1/1 [08:32<00:00, 512.96s/it]
+fe10_014t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Join Community Covenant for free. Go to covenant dot crispus mundo dot com, tap Create Account, verify your email, choose your daily focus,
+gen_text 1 and add it to your home screen.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [10:50<10:50, 650.77s/it]100%|██████████| 2/2 [10:50<00:00, 325.39s/it]
+fe10_015x True
