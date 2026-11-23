@@ -1,0 +1,86 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/model_last_reduced.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Et puis il y a eu ce dimanche.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:46<00:00, 46.49s/it]100%|██████████| 1/1 [00:46<00:00, 46.49s/it]
+ci_d6 ok 47
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Je suis rentrée à la maison. J'ai fermé la porte de la chambre. Et j'ai pleuré comme jamais.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:00<00:00, 60.98s/it]100%|██████████| 1/1 [01:00<00:00, 60.98s/it]
+ci_d7 ok 61
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Koffi est entré. Il a dit tout bas:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:47<00:00, 47.67s/it]100%|██████████| 1/1 [00:47<00:00, 47.67s/it]
+ci_d8 ok 48
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Mon cœur s'est arrêté. Mon enfant... entre les mains d'un féticheur?
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:56<00:00, 56.24s/it]100%|██████████| 1/1 [00:56<00:00, 56.24s/it]
+ci_d9 ok 56
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Cette nuit-là, j'ai ouvert ma Bible. Et je suis tombée sur ce verset:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:55<00:00, 55.28s/it]100%|██████████| 1/1 [00:55<00:00, 55.28s/it]
+ci_d10 ok 55
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Ne crains rien, car je suis avec toi. Ne promène pas des regards inquiets, car je suis ton Dieu. Ésaïe quarante et un, dix.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:09<00:00, 69.15s/it]100%|██████████| 1/1 [01:09<00:00, 69.15s/it]
+ci_v1 ok 69
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Je n'ai pas crié. Je n'ai insulté personne. Le lendemain matin, j'ai pris Junior, et je suis allée à l'hôpital.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:06<00:00, 66.19s/it]100%|██████████| 1/1 [01:06<00:00, 66.19s/it]
+ci_d11 ok 66
