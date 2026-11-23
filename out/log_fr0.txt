@@ -1,0 +1,86 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--RASPIAUDIO--F5-French-MixedSpeakers-reduced/snapshots/bcad6ae266c8406dc572b33d1d6ffced4db114fe/model_last_reduced.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Dimanche matin, devant toute l'église, ma belle-mère s'est levée. Elle a pointé son doigt sur moi.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:49<00:00, 49.16s/it]100%|██████████| 1/1 [00:49<00:00, 49.16s/it]
+ci_c1 ok 49
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Deux cents personnes m'ont regardée. Et mon mari... n'a rien dit.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:43<00:00, 43.23s/it]100%|██████████| 1/1 [00:43<00:00, 43.23s/it]
+ci_c3 ok 43
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Je m'appelle Akissi. Je suis mariée à Koffi depuis six ans. Nous avons un fils, Junior. Quatre ans. Mon trésor.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:52<00:00, 52.83s/it]100%|██████████| 1/1 [00:52<00:00, 52.83s/it]
+ci_d1 ok 53
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Depuis le premier jour, sa mère, Maman Adjoua, ne m'a jamais acceptée. Pas de la bonne famille. Pas du bon village. Et pendant cinq ans... pas d'enfant.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:01<00:00, 61.72s/it]100%|██████████| 1/1 [01:01<00:00, 61.72s/it]
+ci_d2 ok 62
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Quand Junior est enfin arrivé, j'ai cru que tout allait changer.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:44<00:00, 44.02s/it]100%|██████████| 1/1 [00:44<00:00, 44.02s/it]
+ci_d3 ok 44
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Mais Junior tombait malade. Souvent. Des douleurs dans les bras, dans les jambes. Des fièvres la nuit. Il pleurait, et je ne savais pas pourquoi.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:00<00:00, 60.60s/it]100%|██████████| 1/1 [01:00<00:00, 60.60s/it]
+ci_d4 ok 61
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Maman Adjoua a commencé à dire au quartier que c'était moi. Au marché, des femmes changeaient de trottoir quand je passais.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:55<00:00, 55.06s/it]100%|██████████| 1/1 [00:55<00:00, 55.06s/it]
+ci_d5 ok 55
