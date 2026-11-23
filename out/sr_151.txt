@@ -1,0 +1,134 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Jesus said it would be better to have a millstone tied around your neck and be thrown into the sea than to cause a little one to stumble.
+gen_text 1 That's how seriously He takes children. Let's talk about it.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:59<06:59, 419.14s/it]100%|██████████| 2/2 [06:59<00:00, 209.57s/it]
+ck5_001t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Before we get into it: if you want to keep up every single week, Community Covenant is our free app for daily Bible, prayer and accountability.
+gen_text 1 Go to covenant dot crispus mundo dot com.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:43<06:43, 403.81s/it]100%|██████████| 2/2 [06:43<00:00, 201.91s/it]
+ck5_002x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 But whoso shall offend one of these little ones which believe in me, it were better for him that a millstone were hanged about his neck,
+gen_text 1 and that he were drowned in the depth of the sea.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [06:58<06:58, 418.08s/it]100%|██████████| 2/2 [06:58<00:00, 209.04s/it]
+ck5_003v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Take heed that ye despise not one of these little ones; for I say unto you, That in heaven their angels do always behold the face of my Father which is in heaven.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [05:06<00:00, 306.16s/it]100%|██████████| 1/1 [05:06<00:00, 306.16s/it]
+ck5_004v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Take heed that ye despise not one of these little ones. Their angels behold the face of the Father. Children are watched over by heaven.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:17<00:00, 257.94s/it]100%|██████████| 1/1 [04:17<00:00, 257.94s/it]
+ck5_005t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Every day in Faith and Findings and Community Covenant, we read the King James Bible out loud together, Genesis to Revelation. Come hear it.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [04:25<00:00, 265.22s/it]100%|██████████| 1/1 [04:25<00:00, 265.22s/it]
+ck5_006x True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Even so it is not the will of your Father which is in heaven, that one of these little ones should perish.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:46<00:00, 226.53s/it]100%|██████████| 1/1 [03:46<00:00, 226.53s/it]
+ck5_007v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Here's the tea. Protecting children is not just a parent's job. It's a church job. A community job. If a child tells you something is wrong, believe them,
+gen_text 1 and get them to safe adults and real help.
+
+
+Generating audio in 2 batches...
+  0%|          | 0/2 [00:00<?, ?it/s] 50%|█████     | 1/2 [07:14<07:14, 434.67s/it]100%|██████████| 2/2 [07:14<00:00, 217.34s/it]
+ck5_008t True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Open thy mouth for the dumb in the cause of all such as are appointed to destruction.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:14<00:00, 194.31s/it]100%|██████████| 1/1 [03:14<00:00, 194.31s/it]
+ck5_009v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Open thy mouth, judge righteously, and plead the cause of the poor and needy.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:05<00:00, 185.11s/it]100%|██████████| 1/1 [03:05<00:00, 185.11s/it]
+ck5_010v True
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   The first one swung, the bottle was already in my hand. When it was over, her tooth was gone, and I was the one the police wanted. 
+gen_text 0 Open thy mouth for the dumb. Speak for those who can't speak for themselves.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [03:20<00:00, 200.07s/it]100%|██████████| 1/1 [03:20<00:00, 200.08s/it]
+ck5_011t True
