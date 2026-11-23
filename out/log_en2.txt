@@ -1,0 +1,75 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /opt/hostedtoolcache/Python/3.11.18/x64/lib/python3.11/site-packages/f5_tts/infer/examples/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--SWivid--F5-TTS/snapshots/84e5a410d9cead4de2f847e7c9369a6440bdfaca/F5TTS_v1_Base/model_1250000.safetensors 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 It broke my heart. I told her: no, my child. This is not your load to carry.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:57<00:00, 57.51s/it]100%|██████████| 1/1 [00:57<00:00, 57.51s/it]
+nm_s10 ok 58
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 That Sunday, the pastor gathered the women of the chama. We did not pray against Rose. We prayed for our children.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:06<00:00, 66.56s/it]100%|██████████| 1/1 [01:06<00:00, 66.56s/it]
+nm_s11 ok 67
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 The headmaster let me pay the fees in three parts. I added an evening stall. Rehema did her homework at my table, between customers.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:10<00:00, 70.74s/it]100%|██████████| 1/1 [01:10<00:00, 70.74s/it]
+nm_s12 ok 71
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Seven months later... a knock at the door. It was Rose.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:52<00:00, 52.75s/it]100%|██████████| 1/1 [00:52<00:00, 52.75s/it]
+nm_s13 ok 53
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 She was thin. Her hands were shaking. She handed me an envelope. It wasn't all of it... but it was a start.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:05<00:00, 65.19s/it]100%|██████████| 1/1 [01:05<00:00, 65.19s/it]
+nm_s14 ok 65
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 I haven't forgotten. But I have forgiven. And today, Rehema is first in her class in science.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [01:01<00:00, 61.29s/it]100%|██████████| 1/1 [01:01<00:00, 61.29s/it]
+nm_s15 ok 61
