@@ -1,0 +1,14 @@
+name: v2-img2
+on: { push: { branches: [v2-img2] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, max-parallel: 15, matrix: { g: ["mC", "mD", "mE", "mF", "gAs", "gBs", "gCs", "gDs", "gEs", "mAs", "mBs", "mCs", "mDs", "mEs", "mFs"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen2/img.py || true
+      - run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          B=v2s-img-$(echo ${{ matrix.g }} | cut -d, -f1)
+          git checkout --orphan $B && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin $B
