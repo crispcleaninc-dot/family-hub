@@ -1,0 +1,36 @@
+name: fnf-fe
+on: { push: { branches: [fnf-fe] } }
+permissions: { contents: write }
+jobs:
+  read:
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { n: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: git fetch -q --depth 1 origin voice-cine2 && git show FETCH_HEAD:gen/her.wav > gen/her.wav
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: |
+          sed -i 's#gen/script4.json#gen/spec.json#' gen/r3.py
+          mkdir -p out; N=${{ matrix.n }} python3 gen/r3.py > out/fer_${{ matrix.n }}.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-fer-${{ matrix.n }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-fer-${{ matrix.n }}
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, max-parallel: 4, matrix: { shot: [fe1_a, fe1_b, fe1_c, fe2_a, fe2_b, fe2_c, fe3_a, fe3_b, fe3_c, fe4_a, fe4_b, fe4_c, fe5_a, fe5_b, fe5_c, fe6_a, fe6_b, fe6_c, fe7_a, fe7_b, fe7_c, fe8_a, fe8_b, fe8_c, fe9_a, fe9_b, fe9_c, fe10_a, fe10_b, fe10_c] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client && pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.46.3 pillow numpy
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img3.py || true
+      - run: python3 gen/depth.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-ife-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-ife-${{ matrix.shot }}
