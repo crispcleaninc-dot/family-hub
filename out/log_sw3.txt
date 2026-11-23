@@ -1,0 +1,42 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--msingiai--sauti-tts/snapshots/2d34cd5a4f2779a0c12ccc832e7baf941db041e9/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--msingiai--sauti-tts/snapshots/2d34cd5a4f2779a0c12ccc832e7baf941db041e9/model_last.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Na wewe je? Umewahi kusalitiwa na mtu uliyemwamini? Niandikie kwenye maoni. Na mtumie dada yako video hii kwenye WhatsApp.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:57<00:00, 597.58s/it]100%|██████████| 1/1 [09:57<00:00, 597.58s/it]
+nm_s16 ok 598
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Community Covenant ni programu ya bure ya Biblia na maombi, na timu inayokuombea.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:21<00:00, 441.51s/it]100%|██████████| 1/1 [07:21<00:00, 441.51s/it]
+nm_end0 ok 442
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Fungua covenant dot crispus mundo dot com. Na jiunge na chaneli kwa hadithi zaidi. Mungu akubariki.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:17<00:00, 497.91s/it]100%|██████████| 1/1 [08:17<00:00, 497.91s/it]
+nm_end1 ok 498
