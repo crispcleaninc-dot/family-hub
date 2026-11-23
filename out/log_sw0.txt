@@ -1,0 +1,75 @@
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.4.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Download Vocos from huggingface charactr/vocos-mel-24khz
+
+vocab :  /home/runner/.cache/huggingface/hub/models--msingiai--sauti-tts/snapshots/2d34cd5a4f2779a0c12ccc832e7baf941db041e9/vocab.txt
+token :  custom
+model :  /home/runner/.cache/huggingface/hub/models--msingiai--sauti-tts/snapshots/2d34cd5a4f2779a0c12ccc832e7baf941db041e9/model_last.pt 
+
+Converting audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Jirani yangu aliinama karibu na sikio langu. Akanong'ona:
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [06:47<00:00, 407.54s/it]100%|██████████| 1/1 [06:47<00:00, 407.54s/it]
+nm_h1 ok 408
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Nitakuambia ukweli. Kwa sekunde moja... nilitaka kusema ndiyo.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:32<00:00, 452.25s/it]100%|██████████| 1/1 [07:32<00:00, 452.25s/it]
+nm_h3 ok 452
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Naitwa Neema. Nauza samaki pale Kariakoo. Naamka saa kumi alfajiri, kila siku, kwa ajili ya watoto wangu wawili.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [09:17<00:00, 557.98s/it]100%|██████████| 1/1 [09:17<00:00, 557.98s/it]
+nm_s1 ok 558
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Binti yangu Rehema, miaka kumi na minne. Anataka kuwa daktari.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [07:05<00:00, 425.61s/it]100%|██████████| 1/1 [07:05<00:00, 425.61s/it]
+nm_s2 ok 426
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Sisi wanawake kumi na wawili tulikuwa na chama. Kila wiki, shilingi elfu ishirini. Na mwezi Desemba... ilikuwa zamu yangu. Ada yote ya Rehema ilikuwa pale.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [11:31<00:00, 691.85s/it]100%|██████████| 1/1 [11:31<00:00, 691.85s/it]
+nm_s3 ok 692
+Converting audio...
+Using cached preprocessed reference audio...
+Using custom reference text...
+
+ref_text   I know that room. I sat in it at seventeen. Nobody asked me what happened, not the police, not the prosecutor, not even the lawyer I paid. 
+gen_text 0 Mweka hazina alikuwa Shangazi Rose. Tuliimba kwaya pamoja. Alimbeba mwanangu siku ya ubatizo wake.
+
+
+Generating audio in 1 batches...
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [08:33<00:00, 513.35s/it]100%|██████████| 1/1 [08:33<00:00, 513.35s/it]
+nm_s4 ok 513
