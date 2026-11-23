@@ -1,0 +1,38 @@
+name: fnf-fl2
+on: { push: { branches: [fnf-fl2] } }
+permissions: { contents: write }
+jobs:
+  img:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, max-parallel: 4, matrix: { shot: [fl1_d, fl1_e, fl1_f, fl1_g, fl1_h, fl1_i, fl1_j, fl2_d, fl2_e, fl2_f, fl2_g] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client && pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.46.3 pillow numpy
+      - run: mkdir -p out; SHOT=${{ matrix.shot }} python3 gen/img3.py || true
+      - run: python3 gen/depth.py || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-ifl-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-ifl-${{ matrix.shot }}
+  depth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    strategy: { fail-fast: false, max-parallel: 6, matrix: { shot: [fl1_a, fl1_b, fl1_c, fl2_a, fl2_b, fl2_c, fl3_a, fl3_b, fl3_c, fl4_a, fl4_b, fl4_c, fl5_a, fl5_b, fl5_c, fl6_a, fl6_b, fl6_c] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q torch==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q transformers==4.46.3 pillow numpy
+      - run: |
+          B=fnf-out-ifl-${{ matrix.shot }}
+          for i in $(seq 1 50); do git ls-remote --exit-code origin $B >/dev/null && break; sleep 120; done
+          mkdir -p src out && git fetch -q --depth 1 origin $B && git archive FETCH_HEAD | tar -x -C src
+          SRC=src/out python3 gen/depth.py || true
+          cp src/out/*_log.txt out/ 2>/dev/null || true
+      - if: always()
+        run: |
+          git config user.name "fnf"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan fnf-out-dfl-${{ matrix.shot }} && git rm -rqf --cached . && git add -f out && git commit -qm o && git push -f origin fnf-out-dfl-${{ matrix.shot }}
