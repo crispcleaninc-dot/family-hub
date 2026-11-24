@@ -1,1 +1,18 @@
-{}
+{
+"badge": "badge.mp3",
+"break": "break.mp3",
+"combo": "combo.mp3",
+"done": "done.mp3",
+"hello": "hello.mp3",
+"hint": "hint.mp3",
+"level": "level.mp3",
+"paper": "paper.mp3",
+"ready": "ready.mp3",
+"right2": "right2.mp3",
+"right4": "right4.mp3",
+"right5": "right5.mp3",
+"welcome_back": "welcome_back.mp3",
+"wrong1": "wrong1.mp3",
+"wrong2": "wrong2.mp3",
+"wrong3": "wrong3.mp3"
+}
