@@ -1421,7 +1421,7 @@ function runStoryStep(i){
 function finishStoryStep(){
   if (!STORY || !P || P.storyStep !== STORY.i || STORY.results[STORY.i] !== undefined) return;
   STORY.results[STORY.i] = P.kind === 'div' ? P.Q : P.T;
-  if (STORY.i === STORY.steps.length - 1) { STORY.done = true; P.story = { after: STORY.after || `The answer to the story is ${fmt(STORY.results[STORY.i])}.` }; }
+  if (STORY.i === STORY.steps.length - 1) { STORY.done = true; const money = /\$|dollar|cost|saved|spend|price/i.test(STORY.text); STORY.after = STORY.after || `The answer to the story is ${money ? '$' : ''}${fmt(STORY.results[STORY.i])}` + (P.kind === 'div' && P.R ? `, with ${money ? '$' : ''}${P.R} left over.` : '.'); P.story = { after: STORY.after }; }
   renderPlan();
 }
 function nextStoryStep(){ if (storyHasNext()) { runStoryStep(STORY.i + 1); return true; } return false; }
