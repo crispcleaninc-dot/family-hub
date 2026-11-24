@@ -851,6 +851,7 @@ function handleQ(raw){
     return askAI(raw, pending() ? f.ask.hint + (f.extra ? ' ' + f.extra : '') : ((f.why || '') + ' ' + f.text.replace(/<[^>]+>/g, '') + (f.extra ? ' ' + f.extra : '') + extra));
   }
   if (/(what (step|do i do)|now what)/.test(t)) return P ? reply(pending() ? frames[fi].ask.q : $('#explain').textContent) : reply('Give me a problem first.');
+  if (t.split(/\s+/).length < 3) return reply(`I didn't catch that${who()}. Say a whole question, like "why do we bring down", or read me a problem.`);
   askAI(raw, `I didn't catch that${who()}. Try saying a problem like "2976 divided by 83", or say "next", "why", or "say that again".`);
 }
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
