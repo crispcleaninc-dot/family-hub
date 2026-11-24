@@ -255,6 +255,12 @@ details summary{cursor:pointer;font-weight:700}
       </select></div>
   </div>
   <p class="small" id="styleNote"></p>
+  <div class="row" style="margin-top:6px">
+    <div><label for="voicePick">Reading voice (★ = natural-sounding)</label><select id="voicePick"></select></div>
+  </div>
+  <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-size:1rem;color:var(--ink)"><input type="checkbox" id="momVoice" style="width:24px;min-height:24px"> Use Mom's voice for cheers and steps</label>
+  <p class="small" id="momNote"></p>
+  <button class="alt sm" id="voiceTest">▶ Test the voices</button>
   <div id="skills"></div>
   <div class="row" style="margin-top:6px"><div style="flex:0"><button class="alt sm" id="skillReset">Reset progress</button></div></div>
 </section>
@@ -301,16 +307,56 @@ function speechText(t){
           .replace(/(\d) R(\d)/g, '$1 remainder $2').replace(/[🎉✓✅💡⭐🔊🎤]/g, '');
 }
 let sayId = 0, slowVoice = false;
-function say(text, force){
-  if (!talk || !window.speechSynthesis) { if (typeof afterSpeak === 'function') setTimeout(afterSpeak, 400); return; }
-  if (!force && text === lastSpoken) return;
-  lastSpoken = text;
+/* Voices: Mom's recorded voice (voice/*.mp3) for cheers and step names; the most natural device voice for the math. */
+let momVoice = (store('mc_momvoice') ?? '1') === '1', MOM = {}, voicePick = store('mc_voice') || '', curAudio = null;
+fetch('voice/manifest.json').then(r => r.ok ? r.json() : {}).then(m => { MOM = m || {}; renderVoiceUI(); }).catch(() => {});
+const momHas = k => momVoice && Object.keys(MOM).some(x => x === k || x.startsWith(k + '_') || x.replace(/\d+$/, '') === k);
+function momClip(k){ const keys = Object.keys(MOM).filter(x => x === k || x.replace(/\d+$/, '') === k); return keys.length ? keys[Math.floor(Math.random() * keys.length)] : null; }
+const NATURAL = /(natural|neural|online|premium|enhanced|google us english|samantha|ava|aria|jenny|emma|allison|zira|serena|joanna)/i;
+function bestVoice(){
+  if (!window.speechSynthesis) return null;
+  const vs = speechSynthesis.getVoices().filter(v => /^en(-|_)/i.test(v.lang));
+  if (voicePick) { const v = vs.find(x => x.name === voicePick); if (v) return v; }
+  const score = v => (NATURAL.test(v.name) ? 10 : 0) + (/en.US/i.test(v.lang) ? 3 : 0) + (/female|woman|samantha|ava|aria|jenny|emma|zira|allison|serena|joanna|google us/i.test(v.name) ? 2 : 0) + (v.localService ? 0 : 1);
+  return vs.sort((a, b) => score(b) - score(a))[0] || null;
+}
+if (window.speechSynthesis) speechSynthesis.onvoiceschanged = () => renderVoiceUI();
+function say(text, force, pre, post){
+  const parts = [].concat(pre || [], text ? [text] : [], post || []).filter(x => x && (typeof x === 'string' ? x.trim() : momClip(x.clip)));
+  const key = parts.map(x => typeof x === 'string' ? x : '#' + x.clip).join('|');
+  if (!talk || (!window.speechSynthesis && !parts.some(x => typeof x !== 'string'))) { if (typeof afterSpeak === 'function') setTimeout(afterSpeak, 400); return; }
+  if (!force && key === lastSpoken) return;
+  lastSpoken = key;
   if (typeof stopListening === 'function') stopListening();
-  speechSynthesis.cancel();
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  if (curAudio) { try { curAudio.pause(); } catch (e) {} curAudio = null; }
   const id = ++sayId;
-  const u = new SpeechSynthesisUtterance(speechText(text)); u.rate = slowVoice ? 0.7 : (style === 'hear' || recentWrong > 0 ? 0.78 : 0.9); u.lang = 'en-US';
-  u.onend = u.onerror = () => { if (id === sayId && typeof afterSpeak === 'function') afterSpeak(); };
-  speechSynthesis.speak(u);
+  const next = i => {
+    if (id !== sayId) return;
+    if (i >= parts.length) { if (typeof afterSpeak === 'function') afterSpeak(); return; }
+    const x = parts[i];
+    if (typeof x !== 'string') {
+      const k = momClip(x.clip); if (!k) return next(i + 1);
+      const a = new Audio('voice/' + MOM[k]); curAudio = a;
+      a.onended = a.onerror = () => next(i + 1);
+      a.play().catch(() => next(i + 1));
+      return;
+    }
+    if (!window.speechSynthesis) return next(i + 1);
+    const u = new SpeechSynthesisUtterance(speechText(x)); u.rate = slowVoice ? 0.72 : (style === 'hear' || recentWrong > 0 ? 0.85 : 0.97); u.pitch = 1.02; u.lang = 'en-US';
+    const v = bestVoice(); if (v) u.voice = v;
+    u.onend = u.onerror = () => next(i + 1);
+    speechSynthesis.speak(u);
+  };
+  next(0);
+}
+function renderVoiceUI(){
+  const sel = document.getElementById('voicePick'); if (!sel || !window.speechSynthesis) return;
+  const vs = speechSynthesis.getVoices().filter(v => /^en(-|_)/i.test(v.lang));
+  const best = bestVoice();
+  sel.innerHTML = '<option value="">Best available (auto)' + (best ? ' · ' + esc(best.name) : '') + '</option>' + vs.map(v => `<option value="${esc(v.name)}" ${v.name === voicePick ? 'selected' : ''}>${esc(v.name)}${NATURAL.test(v.name) ? ' ★' : ''}</option>`).join('');
+  const mv = document.getElementById('momVoice'); if (mv) { mv.checked = momVoice; mv.disabled = !Object.keys(MOM).length; }
+  const note = document.getElementById('momNote'); if (note) note.textContent = Object.keys(MOM).length ? "Mom's voice is on for cheers, step names and paper reminders." : "Mom's recorded voice is being prepared.";
 }
 
 /* =============== DIVISION =============== */
@@ -518,6 +564,8 @@ function visibleSet(upto){
   return vis;
 }
 function pending(){ const f = frames[fi]; return mode === 'practice' && f.ask && !answered[fi]; }
+let justRight = false, justWrongClip = false;
+const tagClip = t => ({ 'Divide': 'divide', 'Multiply': 'multiply', 'Subtract': 'subtract', 'Bring down': 'bring', 'Carry': 'carry', 'Add': 'add' }[t] || null);
 function render(){
   const f = frames[fi], pend = pending(), vis = visibleSet(pend ? fi - 1 : fi);
   if (pend) (f.clear || []).forEach(x => vis.delete(x));
@@ -546,10 +594,18 @@ function render(){
     $('#ans').value = ''; $('#fb').textContent = ''; $('#fb').className = 'feedback';
     $('#hint').classList.add('hidden');
     if (weak(skillOf(f)) || style === 'see') { $('#hint').textContent = '💡 ' + f.ask.hint + (f.extra ? ' ' + f.extra : ''); $('#hint').classList.remove('hidden'); }
-    say(f.ask.q + (weak(skillOf(f)) ? ' Take your time with this one.' : ''));
+    say(f.ask.q + (weak(skillOf(f)) ? ' Take your time with this one.' : ''), false, justWrongClip ? [] : (f.tag ? [{ clip: tagClip(f.tag) }] : []));
+    justWrongClip = false;
   } else {
     $('#explain').innerHTML = (mode === 'practice' && f.ask && answered[fi] === 'star' ? '✅ Right! ' : '') + f.text;
-    say($('#explain').textContent + ($('#extra').classList.contains('hidden') ? '' : ' ' + $('#extra').textContent) + (f.paper ? ' On your paper: ' + $('#paper').textContent.replace('✏️ On your paper: ', '') : ''));
+    let body = $('#explain').textContent.replace(/^✅ Right! /, '');
+    const tc = f.tag ? tagClip(f.tag) : null, useTag = tc && momHas(tc) && mode !== 'practice';
+    if (useTag) body = body.replace(/^(Divide|Multiply|Subtract|Bring down|Add):\s*/i, '');
+    const pre = []; if (justRight) pre.push({ clip: G.combo >= 3 && Math.random() < .5 ? 'combo' : 'right' }); else if (useTag) pre.push({ clip: tc });
+    const post = []; if (!$('#extra').classList.contains('hidden')) post.push($('#extra').textContent);
+    if (f.paper) { const pt = $('#paper').textContent.replace('✏️ On your paper: ', ''); if (momHas('paper')) post.push({ clip: 'paper' }, pt); else post.push('On your paper: ' + pt); }
+    if (fi === frames.length - 1) post.push({ clip: 'done' });
+    say(body, justRight, pre, post); justRight = false;
   }
   $('#back').disabled = fi === 0;
   $('#next').disabled = pend || fi === frames.length - 1;
@@ -576,7 +632,7 @@ function check(val){
     award(wrong[fi] ? 5 : 10, wrong[fi] ? 'You got it' : (G.combo >= 3 ? `Combo x${G.combo}!` : 'Right!'));
     if (G.combo >= 5) unlock('combo5'); if (G.combo >= 15) unlock('combo15');
     if (streak === 6 && style === 'auto') logLine('bot', 'Six right in a row. The app will give fewer hints now.');
-    answered[fi] = wrong[fi] ? 'ok' : 'star';
+    answered[fi] = wrong[fi] ? 'ok' : 'star'; justRight = true;
     render();
   } else {
     if (!wrong[fi]) { record(skillOf(f), false); streak = 0; recentWrong = 2; G.combo = 0; saveG(); }
@@ -587,12 +643,13 @@ function check(val){
       fb.textContent = `The answer is ${f.ask.a}. Let's keep going.`; say(fb.textContent, true);
       answered[fi] = 'ok'; setTimeout(render, 2200);
     } else {
-      fb.textContent = `${v} is not quite it. Try again!`; say(fb.textContent, true);
+      fb.textContent = `${v} is not quite it. Try again!`;
+      if (momHas('wrong')) say('', true, [{ clip: 'wrong' }]); else say(fb.textContent, true);
       if (wrong[fi] >= (weak(skillOf(f)) ? 1 : 2)) showHint();
     }
   }
 }
-function showHint(){ const h = $('#hint'); h.textContent = '💡 ' + frames[fi].ask.hint; h.classList.remove('hidden'); say(h.textContent, true); }
+function showHint(){ const h = $('#hint'); h.textContent = '💡 ' + frames[fi].ask.hint; h.classList.remove('hidden'); say(frames[fi].ask.hint, true, momHas('hint') ? [{ clip: 'hint' }] : []); }
 
 function start(a, op, b, quiet, resume){
   $('#err').textContent = '';
@@ -741,7 +798,7 @@ $('#talkMode').onclick = () => {
   if (talkMode) { setTalkMode(false); return; }
   setTalkMode(true); talk = true; unlock('talk'); $('#talk').textContent = '🔊 Read aloud: On';
   if (P) reply(`I'm listening${who()}. ` + (pending() ? frames[fi].ask.q : `We're on step ${fi + 1}. Say "I wrote it" when you're ready for the next step, or ask me anything.`));
-  else reply(`Hi${who()}, I'm listening. Tell me your problem, like "6889 divided by 53", or say "new problem".`);
+  else { const t = `Tell me your problem, like "6889 divided by 53", or say "new problem".`; logLine('bot', `Hi${who()}, I'm listening. ` + t); say(t, true, momHas('hello') ? [{ clip: 'hello' }] : [`Hi${who()}, I'm listening.`]); }
 };
 $('#mic').onclick = () => {
   if (!SR) return;
@@ -894,12 +951,15 @@ function award(xp, why){
   G.xp += xp; G.stars += Math.max(1, Math.round(xp / 10)); saveG();
   toast(`+${xp} XP${why ? ' · ' + why : ''}`);
   const after = levelOf(G.xp);
-  if (after > before) { setTimeout(() => { toast(`⬆️ LEVEL ${after}! You're a ${RANKS[Math.min(after - 1, RANKS.length - 1)]}!`); sfx.level(); confetti(180); say(`Level up! You reached level ${after}.`, true); }, 1200); }
+  if (after > before) { setTimeout(() => { toast(`⬆️ LEVEL ${after}! You're a ${RANKS[Math.min(after - 1, RANKS.length - 1)]}!`); sfx.level(); confetti(180); say(`You reached level ${after}.`, true, momHas('level') ? [{ clip: 'level' }] : ['Level up!']); }, 1200); }
   if (G.streak >= 3) unlock('streak3'); if (G.streak >= 7) unlock('streak7');
   if (after >= 5) unlock('lvl5'); if (after >= 10) unlock('lvl10');
   renderHUD();
 }
+const sessionStart = Date.now(); let breakSaid = false;
+function maybeBreak(){ if (!breakSaid && Date.now() - sessionStart > 25 * 60 * 1000) { breakSaid = true; setTimeout(() => { toast('🧃 Break time! Stretch and grab some water.'); say('You have been working hard. Take a short break, get some water, and come back.', true, momHas('break') ? [] : []); if (momHas('break')) { lastSpoken=''; say('', true, [{ clip: 'break' }]); } }, 4000); } }
 function problemDone(){
+  maybeBreak();
   if (!P || P.completed) return;
   P.completed = true;
   const solo = mode === 'practice' && frames.every((f, i) => !f.ask || !wrong[i]);
@@ -939,6 +999,10 @@ function applyStyle(s, init){
   renderSkills(); if (P) { lastSpoken = ''; render(); }
 }
 $('#style').onchange = e => applyStyle(e.target.value);
+$('#voicePick').onchange = e => { voicePick = e.target.value; store('mc_voice', voicePick); };
+$('#momVoice').onchange = e => { momVoice = e.target.checked; store('mc_momvoice', momVoice ? '1' : '0'); renderVoiceUI(); };
+$('#voiceTest').onclick = () => { lastSpoken = ''; say('9867 divided by 12. How many times does 12 go into 98? 8 times, because 12 times 8 is 96.', true, momHas('hello') ? [{ clip: 'hello' }] : [], momHas('right') ? [{ clip: 'right' }] : []); };
+renderVoiceUI();
 $('#skillReset').onclick = () => { stats = {}; store('mc_stats', '{}'); renderSkills(); };
 
 /* =============== SAVED SESSIONS =============== */
@@ -967,7 +1031,7 @@ function renderSessions(){
   if (open && (!P || P.sid !== open.id)) { rb.textContent = `▶ Continue where you left off: ${open.a} ${open.op === 'div' ? '÷' : '×'} ${open.b} (step ${open.fi + 1} of ${open.total})`; rb.dataset.id = open.id; rb.classList.remove('hidden'); }
   else rb.classList.add('hidden');
 }
-function resumeSession(rec){ if (rec) { lastSpoken = ''; start(rec.a, rec.op, rec.b, false, rec); } }
+function resumeSession(rec){ if (rec) { lastSpoken = ''; start(rec.a, rec.op, rec.b, true, rec); if (momHas('welcome_back')) { lastSpoken = ''; say('', true, [{ clip: 'welcome_back' }]); setTimeout(() => { lastSpoken = ''; render(); }, 2600); } else render(); } }
 $('#sessions').addEventListener('click', e => {
   const t = e.target.dataset;
   if (t.resume !== undefined) resumeSession(SESS[+t.resume]);
