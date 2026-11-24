@@ -1,0 +1,18 @@
+name: mc-voice
+on: { push: { branches: [mc-voice] } }
+permissions: { contents: write }
+jobs:
+  v:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; python3 gen/gen.py > out/run.txt 2>&1 || true
+      - if: always()
+        run: |
+          git config user.name "vf"; git config user.email "noreply@anthropic.com"
+          git rm -q --cached gen/ref.wav || true
+          git checkout -b mc-voice-out && git add -f out && git commit -qm o && git push -f origin mc-voice-out
