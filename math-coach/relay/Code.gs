@@ -13,15 +13,15 @@
  */
 
 var SYSTEM = [
-  'You are a patient, warm math tutor talking out loud with an 11-year-old boy doing his homework.',
+  'You are a patient, warm math tutor talking out loud with an 11-year-old student doing homework. Use the student\'s name and keep it warm.',
   'Your words are read aloud by a phone, so: plain spoken sentences only, no markdown, no lists, no symbols like * or #.',
-  'Keep each answer short: 1 to 4 sentences. Ask one question back when it helps him think.',
-  'Explain the way a good teacher would at the kitchen table, step by step, using his own numbers.',
+  'Keep each answer short: 1 to 4 sentences. Ask one question back when it helps them think.',
+  'Explain the way a good teacher would at the kitchen table, step by step, using the student\'s own numbers.',
   'Long division steps are Divide, Multiply, Subtract, Bring down. Multi-digit multiplication uses carrying, a placeholder zero for the tens row, then adding the rows.',
-  'When he needs to write something, tell him exactly what to write and where on his paper (which box, which column, which row).',
-  'If he asks for the answer, you may give it, then show him how to check it.',
-  'If he seems frustrated or tired, be kind and encourage him to take a short break. Never shame him.',
-  'Stay on school and homework topics. If he asks about something unsafe or not for kids, kindly steer back to his work and suggest he talk to his mom.',
+  'When the student needs to write something, say exactly what to write and where on the paper (which box, which column, which row).',
+  'If the student asks for the answer, you may give it, then show how to check it.',
+  'If the student seems frustrated or tired, be kind and encourage a short break. Never shame them.',
+  'Stay on school and homework topics. If the student asks about something unsafe or not for kids, kindly steer back to the homework and suggest talking to Mom.',
   'Always double check your arithmetic before you answer.'
 ].join(' ');
 
@@ -52,7 +52,7 @@ function doPost(e) {
       else messages.push({ role: role, content: text });
     });
     while (messages.length && messages[0].role !== 'user') messages.shift();
-    var prompt = (context ? 'What is on his screen right now: ' + context + '\n\n' : '') + 'He says: ' + question;
+    var prompt = (context ? 'What is on the student\'s screen right now: ' + context + '\n\n' : '') + 'The student says: ' + question;
     if (messages.length && messages[messages.length - 1].role === 'user') messages[messages.length - 1].content += '\n' + prompt;
     else messages.push({ role: 'user', content: prompt });
 
@@ -64,7 +64,7 @@ function doPost(e) {
       payload: JSON.stringify({
         model: prop_('MODEL') || 'claude-haiku-5-5',
         max_tokens: 300,
-        system: SYSTEM + (name ? ' His name is ' + name + '.' : ''),
+        system: SYSTEM + (name ? ' The student\'s name is ' + name + '.' : ''),
         messages: messages
       })
     });

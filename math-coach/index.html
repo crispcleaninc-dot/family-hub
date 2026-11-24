@@ -124,6 +124,13 @@ button:disabled{opacity:.4;cursor:default;transform:none}
 #toast.show{transform:translate(-50%,0);opacity:1}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden,.cell.gone{display:none!important}
+#picker{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(10,8,35,.82);backdrop-filter:blur(6px);padding:16px}
+.pickbox{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid #3d3599;border-radius:24px;padding:24px;max-width:520px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.pickbox h2{font-size:1.7rem;color:var(--accent)}
+.pickrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.pickrow button{min-height:150px;font-size:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;border-radius:20px}
+.pickrow button span{font-size:3.2rem}
+.pickrow button small{font-size:.85rem;font-weight:700;opacity:.85}
 .pic svg{width:100%;height:auto;display:block}
 .pic .cap{font-size:1.05rem;margin-top:8px}
 .pic .cap b{color:var(--accent)}
@@ -152,10 +159,19 @@ details summary{cursor:pointer;font-weight:700}
       <span class="pill fire" title="Days in a row" id="streakPill">🔥 0</span>
       <span class="pill star" title="Stars" id="starPill">⭐ 0</span>
       <button class="pill" id="soundBtn" aria-label="Sound effects on or off">🔔</button>
+      <button class="pill" id="whoBtn" aria-label="Switch student">👤</button>
     </div>
   </div>
 </header>
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="picker" class="hidden" role="dialog" aria-modal="true" aria-labelledby="pickTitle">
+  <div class="pickbox">
+    <h2 id="pickTitle">Who's doing math today?</h2>
+    <div class="pickrow" id="pickRow"></div>
+    <p class="small">No login needed. Each person keeps their own levels, badges and saved work on this device.</p>
+    <button class="alt sm hidden" id="pickClose">Cancel</button>
+  </div>
+</div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <main>
 <div id="mainCol">
@@ -242,7 +258,7 @@ details summary{cursor:pointer;font-weight:700}
 
 <section class="card">
   <h2>Homework answers</h2>
-  <p class="small">Tap <b>Teach me</b> to walk through a problem, <b>Answer</b> to see the correct answer, or type his answer and tap <b>Check</b>.</p>
+  <p class="small">Tap <b>Teach me</b> to walk through a problem, <b>Answer</b> to see the correct answer, or type your answer and tap <b>Check</b>.</p>
   <div class="hw" id="hw"></div>
   <div class="row" style="margin-top:10px">
     <div><input id="hwA" type="number" inputmode="numeric" placeholder="First number"></div>
@@ -260,14 +276,14 @@ details summary{cursor:pointer;font-weight:700}
 </section>
 
 <section class="card">
-  <h2>How he learns best</h2>
+  <h2 id="learnTitle">How I learn best</h2>
   <div class="row">
     <div><label for="style">Learning style</label>
       <select id="style">
-        <option value="auto">Adaptive (the app adjusts as he works)</option>
+        <option value="auto">Adaptive (the app adjusts as you work)</option>
         <option value="hear">Hear it (reads every step aloud slowly, spells numbers)</option>
         <option value="see">See it (pictures, highlights, extra breakdowns)</option>
-        <option value="do">Do it (he answers each step and writes it on paper)</option>
+        <option value="do">Do it (answer each step and write it on paper)</option>
       </select></div>
   </div>
   <p class="small" id="styleNote"></p>
@@ -306,14 +322,22 @@ const ORD = ['first','second','third','fourth','fifth','sixth','seventh','eighth
 const ord = n => ORD[n - 1] || n + 'th';
 const PLACES = ['ones','tens','hundreds','thousands','ten-thousands','hundred-thousands','millions','ten-millions','hundred-millions','billions'];
 const multiples = (d, upto) => { const o = []; for (let k = 1; k <= 10 && d * k <= upto + d; k++) o.push(`${d} × ${k} = ${d * k}`); return o.join(', '); };
-function store(k, v){ try{ if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); }catch(e){ return null; } }
+/* Students: no login. Each student's progress, saved work and settings are kept apart on this device.
+   Ezekiel keeps the original keys (his existing progress stays); other students get their own keys. */
+const STUDENTS = [{ id: 'Ezekiel', ic: '👦' }, { id: 'Emma', ic: '👧' }];
+const SHARED_KEYS = ['mc_profile', 'mc_voice', 'mc_momvoice'];
+function rawGet(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
+let STUDENT = rawGet('mc_profile') || '';
+function skey(k){ return (SHARED_KEYS.includes(k) || !STUDENT || STUDENT === 'Ezekiel') ? k : k + '__' + STUDENT; }
+function store(k, v){ try{ if (v === undefined) return localStorage.getItem(skey(k)); localStorage.setItem(skey(k), v); }catch(e){ return null; } }
+function pickStudent(id){ try { localStorage.setItem('mc_profile', id); } catch (e) {} location.reload(); }
 
 let P = null, frames = [], fi = 0, mode = 'learn', answered = {}, wrong = {}, stars = 0;
 let talk = true, spell = false, lastSpoken = '', streak = 0, recentWrong = 0;
 let style = store('mc_style') || 'auto', stats = {};
 try { stats = JSON.parse(store('mc_stats') || '{}') || {}; } catch (e) { stats = {}; }
 
-$('#name').value = store('mc_name') || 'Ezekiel';
+$('#name').value = store('mc_name') || STUDENT || 'Ezekiel';
 $('#name').addEventListener('input', e => store('mc_name', e.target.value));
 const who = () => { const n = $('#name').value.trim(); return n ? ', ' + n : ''; };
 
@@ -327,7 +351,8 @@ function speechText(t){
 let sayId = 0, slowVoice = false;
 /* Voices: Mom's recorded voice (voice/*.mp3) for cheers and step names; the most natural device voice for the math. */
 let momVoice = (store('mc_momvoice') ?? '1') === '1', MOM = {}, voicePick = store('mc_voice') || '', curAudio = null;
-fetch('voice/manifest.json').then(r => r.ok ? r.json() : {}).then(m => { MOM = m || {}; renderVoiceUI(); }).catch(() => {});
+const NAMED_CLIPS = ['hello', 'right2', 'welcome_back'];   // these say "Ezekiel"
+fetch('voice/manifest.json').then(r => r.ok ? r.json() : {}).then(m => { MOM = m || {}; if (STUDENT && STUDENT !== 'Ezekiel') NAMED_CLIPS.forEach(k => delete MOM[k]); renderVoiceUI(); }).catch(() => {});
 const momHas = k => momVoice && Object.keys(MOM).some(x => x === k || x.startsWith(k + '_') || x.replace(/\d+$/, '') === k);
 function momClip(k){ const keys = Object.keys(MOM).filter(x => x === k || x.replace(/\d+$/, '') === k); return keys.length ? keys[Math.floor(Math.random() * keys.length)] : null; }
 const NATURAL = /(natural|neural|online|premium|enhanced|google us english|samantha|ava|aria|jenny|emma|allison|zira|serena|joanna)/i;
@@ -705,7 +730,7 @@ function screenContext(){
   if (!P) return 'No problem started yet.';
   const f = frames[fi];
   return `Problem: ${P.kind === 'div' ? P.a + ' divided by ' + P.b : P.A + ' times ' + P.B} (answer ${answerOf()}). Step ${fi + 1} of ${frames.length}. ` +
-    (pending() ? `The app is asking him: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '');
+    (pending() ? `The app is asking the student: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '');
 }
 async function askAI(question, backup){
   if (!RELAY || !navigator.onLine) return reply(backup);
@@ -867,7 +892,7 @@ function renderHW(){
     <button class="sm" data-teach="${i}">Teach me</button>
     <button class="sm alt" data-show="${i}">Answer</button>
     <span class="a hidden" id="hwa${i}">${hwAns(p)}</span>
-    <input type="text" inputmode="numeric" placeholder="${p[0] === 'div' ? 'e.g. 129 R52' : 'His answer'}" id="hwi${i}" aria-label="His answer for problem ${i + 1}">
+    <input type="text" inputmode="numeric" placeholder="${p[0] === 'div' ? 'e.g. 129 R52' : 'Your answer'}" id="hwi${i}" aria-label="Your answer for problem ${i + 1}">
     <button class="sm alt" data-check="${i}">Check</button>
     <button class="sm alt" data-del="${i}" aria-label="Remove problem ${i + 1}">✕</button>
     <span class="res" id="hwr${i}"></span></div>`).join('');
@@ -1019,10 +1044,10 @@ function renderSkills(){
     return `<div class="skill"><span>${n}</span><span class="bar ${wk ? 'weak' : ''}"><i style="width:${pc}%"></i></span><span>${t ? pc + '% right' : 'no tries yet'}${wk ? ' · extra help on' : ''}</span></div>`; }).join('');
 }
 const STYLE_NOTES = {
-  auto: 'Adaptive: the app counts which steps he gets right on the first try. When a step gives him trouble, it slows the voice, shows the hint before he answers, and adds a "break it down" line for that step until he improves.',
+  auto: 'Adaptive: the app counts which steps you get right on the first try. When a step gives you trouble, it slows the voice, shows the hint before you answer, and adds a "break it down" line for that step until you improve.',
   hear: 'Hear it: every step and every paper direction is read aloud slowly, and numbers are spelled digit by digit.',
   see: 'See it: highlights, the times table helper, and a "break it down" line on every step. Read aloud is off; turn it on any time.',
-  do: 'Do it: he answers each step himself, then writes it on his paper and taps "I wrote it".'
+  do: 'Do it: you answer each step yourself, then write it on your paper and tap "I wrote it".'
 };
 function applyStyle(s, init){
   style = s; store('mc_style', s); $('#style').value = s; $('#styleNote').textContent = STYLE_NOTES[s];
@@ -1149,6 +1174,20 @@ $('#sessions').addEventListener('click', e => {
 });
 $('#resumeBtn').onclick = () => resumeSession(SESS.find(x => String(x.id) === $('#resumeBtn').dataset.id));
 renderSessions();
+
+/* =============== STUDENT PICKER =============== */
+function levelFor(id){ try { const g = JSON.parse(localStorage.getItem(id === 'Ezekiel' ? 'mc_game' : 'mc_game__' + id) || '{}'); return Math.floor((g.xp || 0) / 150) + 1; } catch (e) { return 1; } }
+function openPicker(first){
+  $('#pickRow').innerHTML = STUDENTS.map(x => `<button class="${x.id === STUDENT ? 'gold' : ''}" data-who="${x.id}"><span>${x.ic}</span>${x.id}<small>Level ${levelFor(x.id)}</small></button>`).join('');
+  $('#pickClose').classList.toggle('hidden', !!first);
+  $('#picker').classList.remove('hidden');
+}
+$('#pickRow').addEventListener('click', e => { const b = e.target.closest('[data-who]'); if (b) pickStudent(b.dataset.who); });
+$('#pickClose').onclick = () => $('#picker').classList.add('hidden');
+$('#whoBtn').textContent = (STUDENTS.find(x => x.id === STUDENT) || { ic: '👤' }).ic + ' ' + (STUDENT || 'Who?');
+$('#whoBtn').onclick = () => openPicker(false);
+if (STUDENT) $('#learnTitle').textContent = `How ${STUDENT} learns best`;
+if (!STUDENT) openPicker(true);
 
 /* =============== CONTROLS =============== */
 const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
