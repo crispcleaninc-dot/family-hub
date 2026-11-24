@@ -6,101 +6,148 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Math Coach">
-<meta name="theme-color" content="#1f4e79">
+<meta name="theme-color" content="#120f33">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="robots" content="noindex, nofollow">
 <script src="../samsung-guard.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
 <title>Math Homework Coach</title>
 <style>
-/* VOICE: patient tutor at the kitchen table
-   IDEA: the worksheet grid itself, solved live
-   PICTURE: the big working board
-   COLOUR and TYPE: chalkboard blue, paper white, pencil yellow highlight; Atkinson Hyperlegible
-   LAYOUT: one column, board first, controls below */
-:root{color-scheme:light dark;--bg:light-dark(#f4f7fb,#10161f);--card:light-dark(#fff,#1a2230);--ink:light-dark(#1d2433,#e9eef6);--muted:light-dark(#5b6475,#9aa6b8);--brand:#1f4e79;--accent:#f2b705;--good:light-dark(#1a7f4b,#4cc98a);--bad:light-dark(#c0392b,#ff7b6b);--hl:light-dark(#ffe9a3,#5c4a10);--new:light-dark(#1f6fd1,#7fb5ff);--line:light-dark(#cfd6e0,#33405a);--soft:light-dark(#eef2f7,#232d3d)}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+/* VOICE: a game he wants to come back to: arcade energy, but calm enough to think
+   IDEA: a quest map of levels; each solved problem is a cleared stage
+   PICTURE: the glowing board, plus a HUD with level, XP bar, streak and stars
+   COLOUR and TYPE: deep indigo night, cyan glow, gold rewards, lime for right; Baloo 2 + Atkinson Hyperlegible
+   LAYOUT: HUD on top, board first, controls below, one column */
+:root{color-scheme:dark;--bg:#120f33;--bg2:#1d1856;--card:#221c63;--card2:#2b2478;--ink:#f3f1ff;--muted:#b7b1e6;--brand:#5b4cff;--cyan:#3ee0ff;--accent:#ffcc33;--good:#9dff5c;--bad:#ff6b8b;--hl:rgba(255,204,51,.28);--new:#3ee0ff;--line:#4a41a8;--soft:#2f2884}
 *{box-sizing:border-box;min-width:0}
-body{margin:0;font:17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overflow-x:clip}
-header{background:var(--brand);color:#fff;padding:14px 16px}
-header h1{margin:0;font-size:1.35rem}
-header p{margin:2px 0 0;opacity:.85;font-size:.95rem}
+body{margin:0;font:17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);overflow-x:clip;
+  background:radial-gradient(1200px 600px at 80% -10%,#3b2cb8 0%,transparent 60%),radial-gradient(900px 500px at -10% 30%,#0e5e8a 0%,transparent 55%),var(--bg);background-attachment:fixed;min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(1.5px 1.5px at 20px 30px,#fff8,transparent),radial-gradient(1px 1px at 120px 80px,#fff6,transparent),radial-gradient(1.5px 1.5px at 200px 160px,#fff5,transparent),radial-gradient(1px 1px at 300px 40px,#fff7,transparent);background-size:340px 220px}
+h1,h2,.title,.ask,button,.hud,.lvl{font-family:"Baloo 2","Atkinson Hyperlegible",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:20;background:linear-gradient(180deg,rgba(18,15,51,.96),rgba(18,15,51,.85));backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:10px max(12px,calc((100vw - 780px)/2))}
+.hud{display:flex;align-items:center;gap:10px}
+.lvl{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:1.45rem;color:#1a1442;background:conic-gradient(var(--accent) var(--p,0%),#3a3290 0);box-shadow:0 0 18px rgba(255,204,51,.45);position:relative}
+.lvl::after{content:"";position:absolute;inset:5px;border-radius:50%;background:linear-gradient(145deg,#ffe58a,#ffb300);z-index:0}
+.lvl span{position:relative;z-index:1}
+.who{flex:1;min-width:0}
+.who h1{margin:0;font-size:1.15rem;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.who .rank{font-size:.85rem;color:var(--cyan);font-weight:700}
+.xpbar{height:10px;border-radius:6px;background:#2f2884;overflow:hidden;margin-top:4px;box-shadow:inset 0 0 0 1px #4a41a8}
+.xpbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--good));border-radius:6px;transition:width .6s cubic-bezier(.2,1.4,.4,1)}
+.xptext{font-size:.75rem;color:var(--muted)}
+.pills{display:flex;gap:6px;flex:none}
+.pill{display:flex;align-items:center;gap:3px;padding:4px 9px;border-radius:20px;background:#2f2884;font-weight:800;font-size:.95rem;white-space:nowrap;min-height:34px}
+.pill.fire{color:#ffb15c}.pill.star{color:var(--accent)}
+button.pill{border:0;cursor:pointer;color:var(--ink)}
 main{max-width:780px;margin:0 auto;padding:12px}
-.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-h2{font-size:1.1rem;margin:0 0 10px}
+.card{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid #3d3599;border-radius:20px;padding:16px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+h2{font-size:1.25rem;margin:0 0 10px}
 label{font-size:.88rem;color:var(--muted);display:block;margin-bottom:4px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
 .row>div{flex:1;min-width:100px}
-input,select{width:100%;font-size:1.2rem;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:48px}
-input:focus,select:focus,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
-button{font:inherit;font-weight:700;padding:10px 16px;min-height:46px;border-radius:10px;border:0;background:var(--brand);color:#fff;cursor:pointer}
-button.alt{background:var(--soft);color:var(--ink)}
-button.gold{background:var(--accent);color:#1d2433}
-button.sm{padding:6px 10px;min-height:38px;font-size:.9rem}
-button:disabled{opacity:.4;cursor:default}
+input,select{width:100%;font-size:1.2rem;padding:10px 12px;border:2px solid var(--line);border-radius:14px;background:#171247;color:var(--ink);min-height:50px}
+input::placeholder{color:#7d76c2}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--cyan);outline-offset:1px}
+button{font:inherit;font-family:"Baloo 2",system-ui,sans-serif;font-weight:800;font-size:1.05rem;padding:10px 16px;min-height:48px;border-radius:14px;border:0;color:#fff;cursor:pointer;
+  background:linear-gradient(180deg,#7a6dff,#5b4cff);box-shadow:0 4px 0 #3a2fb8,0 8px 18px rgba(91,76,255,.35);transition:transform .08s,box-shadow .08s}
+button:active{transform:translateY(3px);box-shadow:0 1px 0 #3a2fb8}
+button.alt{background:#332b8c;color:var(--ink);box-shadow:0 4px 0 #221c63}
+button.gold{background:linear-gradient(180deg,#ffe066,#ffb300);color:#2a1d00;box-shadow:0 4px 0 #b37700,0 8px 18px rgba(255,179,0,.35)}
+button.sm{padding:6px 10px;min-height:40px;font-size:.92rem}
+button:disabled{opacity:.4;cursor:default;transform:none}
 .modes{display:flex;gap:8px;margin-top:12px}.modes button{flex:1}
-.on{box-shadow:0 0 0 3px var(--accent) inset}
+.on{box-shadow:0 0 0 3px var(--cyan) inset,0 4px 0 #221c63!important}
 .err{color:var(--bad);font-weight:700;margin-top:6px;min-height:1.2em}
-.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
-.chip{padding:4px 10px;border-radius:20px;background:var(--soft);font-size:.85rem;font-weight:700;color:var(--muted)}
-.chip.on{background:var(--accent);color:#1d2433;box-shadow:none}
-.title{text-align:center;font-weight:700;font-size:1.15rem}
-.board-wrap{overflow-x:auto;padding:8px 0 4px}
-.board{display:grid;font-family:"Courier New",ui-monospace,monospace;font-size:clamp(1.45rem,6.2vw,2.3rem);font-weight:700;justify-content:center;margin:0 auto}
-.cell{width:1.3em;height:1.45em;display:flex;align-items:center;justify-content:center;position:relative;border-radius:6px;transition:background .25s,color .25s}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:8px}
+.chip{padding:4px 12px;border-radius:20px;background:#2f2884;font-size:.85rem;font-weight:800;color:var(--muted)}
+.chip.on{background:var(--accent);color:#2a1d00;box-shadow:0 0 14px rgba(255,204,51,.6)}
+.title{text-align:center;font-weight:800;font-size:1.5rem;color:var(--accent);text-shadow:0 0 14px rgba(255,204,51,.4)}
+.board-wrap{overflow-x:auto;padding:14px 8px;margin:6px 0;border-radius:16px;background:#0f0c2e linear-gradient(#ffffff0a 1px,transparent 1px) 0 0/22px 22px,linear-gradient(90deg,#ffffff0a 1px,transparent 1px) 0 0/22px 22px;box-shadow:inset 0 0 0 1px #3d3599,inset 0 0 30px rgba(62,224,255,.08)}
+.board{display:grid;font-family:"Courier New",ui-monospace,monospace;font-size:clamp(1.45rem,6.2vw,2.3rem);font-weight:700;justify-content:center;margin:0 auto;color:#fff}
+.cell{width:1.3em;height:1.45em;display:flex;align-items:center;justify-content:center;position:relative;border-radius:8px;transition:background .25s,color .25s,transform .25s}
 .cell.divisor{width:auto;padding-right:.25em;justify-content:flex-end}
-.cell.dv{border-top:3px solid var(--ink);border-radius:0}
-.cell.dv.first{border-left:3px solid var(--ink);border-top-left-radius:14px 20px}
-.cell.under{border-bottom:3px solid var(--ink);border-radius:0}
+.cell.dv{border-top:3px solid #fff;border-radius:0}
+.cell.dv.first{border-left:3px solid #fff;border-top-left-radius:14px 20px}
+.cell.under{border-bottom:3px solid #fff;border-radius:0}
 .cell.minus::before{content:"\2212";position:absolute;left:-.6em;color:var(--muted)}
 .cell.carry{height:1em;font-size:.55em;width:2.36em;color:var(--bad)}
 .cell.hide{visibility:hidden}
-.cell.hl{background:var(--hl)}
-.cell.new{color:var(--new)}
-.cell.carry.new{color:var(--bad)}
+.cell.hl{background:var(--hl);box-shadow:0 0 12px rgba(255,204,51,.35)}
+.cell.new{color:var(--cyan);text-shadow:0 0 12px rgba(62,224,255,.8);animation:pop .4s ease-out}
+.cell.carry.new{color:var(--bad);text-shadow:none}
+@keyframes pop{0%{transform:scale(.3);opacity:0}70%{transform:scale(1.25)}100%{transform:scale(1)}}
 .explain{font-size:1.2rem;line-height:1.5;min-height:3em}
-.explain b{color:var(--new)}
-.ask{font-size:1.25rem;font-weight:700;margin-bottom:8px}
-.feedback{font-weight:700;margin-top:8px;min-height:1.3em}
+.explain b{color:var(--cyan)}
+.ask{font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--accent)}
+.feedback{font-weight:800;margin-top:8px;min-height:1.3em}
 .good{color:var(--good)}.bad{color:var(--bad)}
-.hint{background:var(--soft);border-left:4px solid var(--new);padding:8px 10px;border-radius:8px;margin-top:8px}
+.hint{background:#2f2884;border-left:4px solid var(--cyan);padding:8px 10px;border-radius:10px;margin-top:8px}
 .nav{display:flex;gap:8px;margin-top:12px}.nav button{flex:1}
 .status{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-top:8px}
+.stepbar{height:8px;border-radius:5px;background:#2f2884;overflow:hidden;margin-top:8px}.stepbar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),#ff8a3d);transition:width .4s}
 .table{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;font-family:"Courier New",monospace;font-size:1rem;margin-top:8px}
-.table div{padding:5px 6px;border-radius:6px;background:var(--soft)}
-.table div.pick{background:var(--hl);font-weight:700}
+.table div{padding:5px 6px;border-radius:8px;background:#2f2884}
+.table div.pick{background:var(--accent);color:#2a1d00;font-weight:700}
 .talkbar{display:flex;gap:8px;flex-wrap:wrap}
 .talkbar button{flex:1;min-width:130px}
-.mic{background:var(--bad)}
-.mic.listening{animation:pulse 1s infinite}
-@keyframes pulse{50%{opacity:.55}}
-@media (prefers-reduced-motion:reduce){.mic.listening{animation:none}.cell{transition:none}}
+.mic{background:linear-gradient(180deg,#ff8aa5,#ff4d79);box-shadow:0 4px 0 #b3264a}
+.mic.listening,#talkMode.on{animation:pulse 1.2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 8px rgba(62,224,255,.25),0 4px 0 #221c63}}
 .log{margin-top:10px;max-height:260px;overflow-y:auto}
-.log p{margin:6px 0;padding:8px 10px;border-radius:10px}
-.log .me{background:var(--soft);text-align:right}
-.log .bot{background:light-dark(#e9f3ff,#1b2d47)}
-.hw{display:grid;gap:6px}
-.hwitem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border-radius:10px;background:var(--soft)}
+.log p{margin:6px 0;padding:8px 12px;border-radius:16px}
+.log .me{background:#3a3290;text-align:right;margin-left:15%;border-bottom-right-radius:4px}
+.log .bot{background:#123a5c;margin-right:15%;border-bottom-left-radius:4px}
+.hw{display:grid;gap:8px}
+.hwitem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px;border-radius:14px;background:#2a237a;border:1px solid #3d3599}
+.hwitem.cleared{border-color:var(--good);box-shadow:0 0 0 1px var(--good) inset}
 .hwitem .q{font-family:"Courier New",monospace;font-weight:700;font-size:1.1rem;flex:1 1 130px}
-.hwitem .a{font-weight:700;color:var(--good);min-width:90px}
-.hwitem input{width:120px;font-size:1rem;min-height:38px;padding:6px}
-.hwitem .res{font-weight:700;flex-basis:100%;font-size:.95rem}
-.small{font-size:.85rem;color:var(--muted)}
-.paper{background:light-dark(#fffbe6,#2b2610);border:2px dashed var(--accent);padding:8px 10px;border-radius:10px;margin-top:8px;font-size:1.1rem}
-.extra{background:var(--soft);padding:8px 10px;border-radius:10px;margin-top:8px}
+.hwitem .a{font-weight:800;color:var(--good);min-width:90px}
+.hwitem input{width:120px;font-size:1rem;min-height:40px;padding:6px}
+.hwitem .res{font-weight:800;flex-basis:100%;font-size:.95rem}
+.small{font-size:.88rem;color:var(--muted)}
+.paper{background:#fff8e0;color:#3b2a00;border:2px dashed #ffb300;padding:10px 12px;border-radius:14px;margin-top:10px;font-size:1.1rem;transform:rotate(-.4deg)}
+.paper b{color:#b34700}
+.extra{background:#123a5c;padding:8px 12px;border-radius:12px;margin-top:8px}
 .skill{display:grid;grid-template-columns:7em minmax(0,1fr) 6.5em;gap:8px;align-items:center;margin:6px 0;font-size:.95rem}
-.bar{height:12px;border-radius:6px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--good)}
+.bar{height:12px;border-radius:6px;background:#2f2884;overflow:hidden}.bar i{display:block;height:100%;background:var(--good)}
 .bar.weak i{background:var(--bad)}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.badge{padding:10px;border-radius:14px;background:#2a237a;text-align:center;font-size:.85rem;color:var(--muted);border:1px solid #3d3599}
+.badge .ic{font-size:2rem;display:block;filter:grayscale(1) opacity(.35)}
+.badge.got{color:var(--ink);border-color:var(--accent);box-shadow:0 0 16px rgba(255,204,51,.25)}
+.badge.got .ic{filter:none}
+.badge b{display:block;font-family:"Baloo 2",sans-serif;font-size:1rem}
+#toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;pointer-events:none;z-index:50;padding:10px 18px;border-radius:30px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:1.2rem;color:#2a1d00;background:linear-gradient(180deg,#ffe066,#ffb300);box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .35s cubic-bezier(.2,1.6,.4,1),opacity .35s;white-space:nowrap}
+#toast.show{transform:translate(-50%,0);opacity:1}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden,.cell.gone{display:none!important}
 details summary{cursor:pointer;font-weight:700}
+@media (prefers-reduced-motion:reduce){.mic.listening,#talkMode.on{animation:none}.cell,.cell.new{transition:none;animation:none}#toast{transition:none}}
+@media (max-width:420px){.pill{padding:4px 7px;font-size:.85rem}.lvl{width:46px;height:46px}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Math Homework Coach</h1>
-  <p>Long division and multiplication, explained step by step, out loud</p>
+  <div class="hud">
+    <div class="lvl" id="lvl" title="Level"><span id="lvlNum">1</span></div>
+    <div class="who">
+      <h1 id="hudName">Math Quest</h1>
+      <div class="rank" id="rank">Rookie</div>
+      <div class="xpbar" aria-hidden="true"><i id="xpFill"></i></div>
+      <div class="xptext" id="xpText">0 / 150 XP</div>
+    </div>
+    <div class="pills">
+      <span class="pill fire" title="Days in a row" id="streakPill">🔥 0</span>
+      <span class="pill star" title="Stars" id="starPill">⭐ 0</span>
+      <button class="pill" id="soundBtn" aria-label="Sound effects on or off">🔔</button>
+    </div>
+  </div>
 </header>
+<div id="toast" role="status" aria-live="polite"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
 <main>
 
 <section class="card">
@@ -125,6 +172,7 @@ details summary{cursor:pointer;font-weight:700}
     <button class="alt" id="mPractice">Let me try</button>
   </div>
   <div class="err" id="err"></div>
+  <button class="gold hidden" id="resumeBtn" style="width:100%;margin-top:8px"></button>
 </section>
 
 <section class="card hidden" id="work">
@@ -149,8 +197,15 @@ details summary{cursor:pointer;font-weight:700}
     <button class="alt" id="repeat">🔁 Repeat</button>
     <button id="next">Next ▶</button>
   </div>
+  <div class="stepbar" aria-hidden="true"><i id="stepFill"></i></div>
   <div class="status"><span id="stepCount"></span><span id="stars"></span></div>
   <details style="margin-top:10px"><summary id="helperTitle">Times table helper</summary><div class="table" id="table"></div></details>
+</section>
+
+<section class="card">
+  <h2>📂 My saved work</h2>
+  <p class="small">Every problem saves as you go. Tap <b>Continue</b> to pick up right where you stopped, even after closing the app.</p>
+  <div class="hw" id="sessions"></div>
 </section>
 
 <section class="card">
@@ -180,6 +235,12 @@ details summary{cursor:pointer;font-weight:700}
     <div style="flex:0"><button class="alt" id="hwAdd">Add problem</button></div>
   </div>
   <div class="row" style="margin-top:8px"><div style="flex:0"><button class="alt sm" id="hwReset">Reset to this week's worksheets</button></div></div>
+</section>
+
+<section class="card">
+  <h2>🏆 Trophy room</h2>
+  <p class="small" id="trophyNote">Earn XP for every right answer and every finished problem. Level up and unlock badges.</p>
+  <div class="badges" id="badges"></div>
 </section>
 
 <section class="card">
@@ -494,6 +555,9 @@ function render(){
   $('#next').disabled = pend || fi === frames.length - 1;
   $('#next').textContent = fi === frames.length - 2 ? 'See answer ▶' : (f.paper && fi > 0 ? 'I wrote it ▶' : 'Next ▶');
   $('#stepCount').textContent = `Step ${fi + 1} of ${frames.length}`;
+  $('#stepFill').style.width = Math.round(100 * (fi + 1) / frames.length) + '%';
+  if (fi === frames.length - 1) problemDone();
+  saveSession();
   $('#stars').textContent = mode === 'practice' ? `⭐ ${stars}` : '';
   const tb = f.tbl || (P.kind === 'div' ? P.d : P.bs[P.bs.length - 1]);
   let t = '';
@@ -508,11 +572,15 @@ function check(val){
   $('#ans').value = v;
   if (Number(v) === f.ask.a) {
     if (!wrong[fi]) { stars++; record(skillOf(f), true); streak++; recentWrong = Math.max(0, recentWrong - 1); }
+    G.combo = wrong[fi] ? 0 : (G.combo || 0) + 1; sfx.right();
+    award(wrong[fi] ? 5 : 10, wrong[fi] ? 'You got it' : (G.combo >= 3 ? `Combo x${G.combo}!` : 'Right!'));
+    if (G.combo >= 5) unlock('combo5'); if (G.combo >= 15) unlock('combo15');
     if (streak === 6 && style === 'auto') logLine('bot', 'Six right in a row. The app will give fewer hints now.');
     answered[fi] = wrong[fi] ? 'ok' : 'star';
     render();
   } else {
-    if (!wrong[fi]) { record(skillOf(f), false); streak = 0; recentWrong = 2; }
+    if (!wrong[fi]) { record(skillOf(f), false); streak = 0; recentWrong = 2; G.combo = 0; saveG(); }
+    sfx.wrong();
     wrong[fi] = (wrong[fi] || 0) + 1;
     const fb = $('#fb'); fb.className = 'feedback bad';
     if (wrong[fi] >= 3) {
@@ -526,7 +594,7 @@ function check(val){
 }
 function showHint(){ const h = $('#hint'); h.textContent = '💡 ' + frames[fi].ask.hint; h.classList.remove('hidden'); say(h.textContent, true); }
 
-function start(a, op, b, quiet){
+function start(a, op, b, quiet, resume){
   $('#err').textContent = '';
   if (!Number.isInteger(a) || !Number.isInteger(b) || a < 1 || b < 1) { $('#err').textContent = 'Enter two whole numbers bigger than 0.'; return false; }
   if (op === 'div' && (a > 999999999 || b > 9999)) { $('#err').textContent = 'For division, use up to 9 digits ÷ up to 4 digits.'; return false; }
@@ -536,6 +604,12 @@ function start(a, op, b, quiet){
   buildBoard();
   frames = op === 'div' ? framesDiv() : framesMul();
   fi = 0; answered = {}; wrong = {}; lastSpoken = '';
+  P.sid = resume ? resume.id : Date.now();
+  if (resume) {
+    fi = Math.min(resume.fi || 0, frames.length - 1); answered = resume.answered || {}; wrong = resume.wrong || {}; P.completed = !!resume.done;
+    if (resume.mode && resume.mode !== mode) { mode = resume.mode; $('#mLearn').classList.toggle('on', mode === 'learn'); $('#mPractice').classList.toggle('on', mode === 'practice'); }
+    $('#log').innerHTML = ''; (resume.log || []).slice().reverse().forEach(l => logLine(l.c, l.t));
+  }
   $('#work').classList.remove('hidden');
   if (!quiet) render();
   $('#work').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -665,7 +739,7 @@ else $('#mic').textContent = '🎤 Tap to ask one question';
 $('#talkMode').onclick = () => {
   if (!SR) return reply('Hands-free talking needs Chrome on Android or a computer, or Safari on iPhone. You can still type.');
   if (talkMode) { setTalkMode(false); return; }
-  setTalkMode(true); talk = true; $('#talk').textContent = '🔊 Read aloud: On';
+  setTalkMode(true); talk = true; unlock('talk'); $('#talk').textContent = '🔊 Read aloud: On';
   if (P) reply(`I'm listening${who()}. ` + (pending() ? frames[fi].ask.q : `We're on step ${fi + 1}. Say "I wrote it" when you're ready for the next step, or ask me anything.`));
   else reply(`Hi${who()}, I'm listening. Tell me your problem, like "6889 divided by 53", or say "new problem".`);
 };
@@ -713,6 +787,9 @@ function checkHW(i){
   else ok = +raw === p[1] * p[2];
   out.className = 'res ' + (ok ? 'good' : 'bad');
   out.textContent = ok ? '✓ Correct!' : `✗ Not quite. Tap "Teach me" to find where it went wrong.`;
+  const hwKey = p.join(':');
+  if (ok) { out.closest('.hwitem').classList.add('cleared'); sfx.right(); if (!G.hwOk.includes(hwKey)) { G.hwOk.push(hwKey); saveG(); award(15, 'Homework answer right'); if (G.hwOk.length >= 5) unlock('hw5'); } }
+  else sfx.wrong();
   say(out.textContent, true);
 }
 $('#hw').addEventListener('click', e => {
@@ -730,6 +807,111 @@ $('#hwAdd').onclick = () => {
 };
 $('#hwReset').onclick = () => { HW = WEEK.slice(); saveHW(); renderHW(); };
 renderHW();
+
+/* =============== GAME: XP, levels, streak, badges, confetti, sounds =============== */
+const RANKS = ['Rookie', 'Number Scout', 'Digit Explorer', 'Carry Captain', 'Division Knight', 'Remainder Ranger', 'Times Titan', 'Math Wizard', 'Grand Master', 'Legend'];
+const XP_PER_LEVEL = 150;
+const BADGES = [
+  { id: 'first', ic: '🚀', name: 'Blast Off', how: 'Finish your first problem' },
+  { id: 'div5', ic: '➗', name: 'Division Knight', how: 'Finish 5 division problems' },
+  { id: 'mul5', ic: '✖️', name: 'Times Titan', how: 'Finish 5 multiplication problems' },
+  { id: 'combo5', ic: '⚡', name: 'Combo x5', how: '5 right in a row on the first try' },
+  { id: 'combo15', ic: '🌩️', name: 'Unstoppable', how: '15 right in a row on the first try' },
+  { id: 'solo', ic: '🧠', name: 'Solo Mission', how: 'Finish a "Let me try" problem with no wrong answers' },
+  { id: 'hw5', ic: '📝', name: 'Homework Hero', how: 'Check 5 homework answers correct' },
+  { id: 'talk', ic: '🎙️', name: 'Talk Show', how: 'Use Talk with me' },
+  { id: 'streak3', ic: '🔥', name: 'On Fire', how: 'Practice 3 days in a row' },
+  { id: 'streak7', ic: '🌟', name: 'Week Warrior', how: 'Practice 7 days in a row' },
+  { id: 'lvl5', ic: '👑', name: 'Level 5', how: 'Reach level 5' },
+  { id: 'lvl10', ic: '🏆', name: 'Legend', how: 'Reach level 10' }
+];
+let G = { xp: 0, stars: 0, streak: 0, last: '', badges: [], done: { div: 0, mul: 0 }, combo: 0, hwOk: [], sound: true };
+try { G = Object.assign(G, JSON.parse(store('mc_game') || '{}')); } catch (e) {}
+const saveG = () => store('mc_game', JSON.stringify(G));
+const dayKey = d => d.toISOString().slice(0, 10);
+(function streakCheck(){
+  const today = dayKey(new Date()), y = dayKey(new Date(Date.now() - 864e5));
+  if (G.last !== today && G.last !== y) G.streak = 0;
+})();
+function touchStreak(){
+  const today = dayKey(new Date()), y = dayKey(new Date(Date.now() - 864e5));
+  if (G.last === today) return;
+  G.streak = G.last === y ? G.streak + 1 : 1; G.last = today; saveG();
+  if (G.streak >= 2) toast(`🔥 ${G.streak} days in a row!`);
+}
+let actx = null;
+function tone(notes, dur = 0.11, type = 'triangle'){
+  if (!G.sound) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    let t = actx.currentTime;
+    notes.forEach(f => { const o = actx.createOscillator(), g = actx.createGain(); o.type = type; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t + dur + 0.02); t += dur * 0.8; });
+  } catch (e) {}
+}
+const sfx = { right: () => tone([660, 990]), wrong: () => tone([220, 180], 0.14, 'sawtooth'), done: () => tone([523, 659, 784, 1047], 0.13), level: () => tone([392, 523, 659, 784, 1047, 1319], 0.12), badge: () => tone([880, 1175, 1568], 0.1) };
+let toastTimer = null;
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1700);
+}
+function confetti(n = 120){
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const c = $('#fx'), x = c.getContext('2d'); c.width = innerWidth; c.height = innerHeight;
+  const cols = ['#ffcc33', '#3ee0ff', '#9dff5c', '#ff6b8b', '#a78bff', '#fff'];
+  const ps = Array.from({ length: n }, () => ({ x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .35, vx: (Math.random() - .5) * 14, vy: -Math.random() * 13 - 4, r: Math.random() * 6 + 4, c: cols[Math.floor(Math.random() * cols.length)], a: Math.random() * 6, s: Math.random() * .3 - .15 }));
+  const t0 = performance.now();
+  (function frame(now){
+    const el = now - t0; x.clearRect(0, 0, c.width, c.height);
+    ps.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.a += p.s; x.save(); x.translate(p.x, p.y); x.rotate(p.a); x.fillStyle = p.c; x.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2); x.restore(); });
+    if (el < 2200) requestAnimationFrame(frame); else x.clearRect(0, 0, c.width, c.height);
+  })(t0);
+}
+const levelOf = xp => Math.floor(xp / XP_PER_LEVEL) + 1;
+function renderHUD(){
+  const lv = levelOf(G.xp), into = G.xp % XP_PER_LEVEL;
+  $('#lvlNum').textContent = lv;
+  $('#lvl').style.setProperty('--p', Math.round(100 * into / XP_PER_LEVEL) + '%');
+  $('#rank').textContent = `Level ${lv} · ${RANKS[Math.min(lv - 1, RANKS.length - 1)]}`;
+  $('#xpFill').style.width = Math.round(100 * into / XP_PER_LEVEL) + '%';
+  $('#xpText').textContent = `${into} / ${XP_PER_LEVEL} XP to level ${lv + 1}`;
+  $('#streakPill').textContent = `🔥 ${G.streak}`;
+  $('#starPill').textContent = `⭐ ${G.stars}`;
+  $('#soundBtn').textContent = G.sound ? '🔔' : '🔕';
+  const n = $('#name').value.trim(); $('#hudName').textContent = n ? `${n}'s Math Quest` : 'Math Quest';
+  $('#badges').innerHTML = BADGES.map(b => `<div class="badge ${G.badges.includes(b.id) ? 'got' : ''}"><span class="ic">${b.ic}</span><b>${b.name}</b>${b.how}</div>`).join('');
+}
+function unlock(id){
+  if (G.badges.includes(id)) return;
+  const b = BADGES.find(x => x.id === id); if (!b) return;
+  G.badges.push(id); saveG(); renderHUD();
+  setTimeout(() => { toast(`${b.ic} Badge unlocked: ${b.name}!`); sfx.badge(); confetti(80); }, 900);
+}
+function award(xp, why){
+  touchStreak();
+  const before = levelOf(G.xp);
+  G.xp += xp; G.stars += Math.max(1, Math.round(xp / 10)); saveG();
+  toast(`+${xp} XP${why ? ' · ' + why : ''}`);
+  const after = levelOf(G.xp);
+  if (after > before) { setTimeout(() => { toast(`⬆️ LEVEL ${after}! You're a ${RANKS[Math.min(after - 1, RANKS.length - 1)]}!`); sfx.level(); confetti(180); say(`Level up! You reached level ${after}.`, true); }, 1200); }
+  if (G.streak >= 3) unlock('streak3'); if (G.streak >= 7) unlock('streak7');
+  if (after >= 5) unlock('lvl5'); if (after >= 10) unlock('lvl10');
+  renderHUD();
+}
+function problemDone(){
+  if (!P || P.completed) return;
+  P.completed = true;
+  const solo = mode === 'practice' && frames.every((f, i) => !f.ask || !wrong[i]);
+  G.done[P.kind] = (G.done[P.kind] || 0) + 1; saveG();
+  confetti(); sfx.done();
+  award(mode === 'practice' ? (solo ? 40 : 25) : 10, mode === 'practice' ? (solo ? 'Perfect run!' : 'Problem cleared!') : 'Problem watched');
+  unlock('first');
+  if (G.done.div >= 5) unlock('div5'); if (G.done.mul >= 5) unlock('mul5');
+  if (solo) unlock('solo');
+}
+$('#soundBtn').onclick = () => { G.sound = !G.sound; saveG(); renderHUD(); if (G.sound) sfx.right(); };
+$('#name').addEventListener('input', renderHUD);
 
 /* =============== LEARNING STYLE + ADAPTIVE =============== */
 function skillOf(f){ return f.tag === 'Carry' ? 'Multiply' : (f.tag || 'Other'); }
@@ -759,6 +941,42 @@ function applyStyle(s, init){
 $('#style').onchange = e => applyStyle(e.target.value);
 $('#skillReset').onclick = () => { stats = {}; store('mc_stats', '{}'); renderSkills(); };
 
+/* =============== SAVED SESSIONS =============== */
+let SESS = [];
+try { SESS = JSON.parse(store('mc_sessions') || '[]') || []; } catch (e) { SESS = []; }
+function saveSession(){
+  if (!P || !P.sid) return;
+  const rec = { id: P.sid, op: P.kind, a: P.kind === 'div' ? P.a : P.A, b: P.kind === 'div' ? P.b : P.B, fi, total: frames.length, mode, answered, wrong, done: !!P.completed, updated: Date.now(),
+    log: [...document.querySelectorAll('#log p')].filter(x => x.textContent !== 'Thinking…').slice(0, 20).map(x => ({ c: x.className, t: x.textContent })) };
+  SESS = [rec].concat(SESS.filter(x => x.id !== rec.id)).slice(0, 30);
+  store('mc_sessions', JSON.stringify(SESS));
+  renderSessions();
+}
+function ago(t){ const m = Math.round((Date.now() - t) / 60000); if (m < 1) return 'just now'; if (m < 60) return m + ' min ago'; const h = Math.round(m / 60); if (h < 24) return h + ' hr ago'; const d = Math.round(h / 24); return d === 1 ? 'yesterday' : d + ' days ago'; }
+function renderSessions(){
+  const box = $('#sessions');
+  if (!SESS.length) { box.innerHTML = '<p class="small">Nothing saved yet. Start a problem and it will show up here.</p>'; }
+  else box.innerHTML = SESS.map((x, i) => `<div class="hwitem ${x.done ? 'cleared' : ''}">
+    <span class="q">${x.done ? '✅' : '⏸️'} ${x.a} ${x.op === 'div' ? '÷' : '×'} ${x.b}</span>
+    <span class="small" style="flex-basis:100%">${x.done ? 'Finished' : `Step ${x.fi + 1} of ${x.total}`} · ${x.mode === 'practice' ? 'Let me try' : 'Show me how'} · ${ago(x.updated)}</span>
+    <button class="sm ${x.done ? 'alt' : ''}" data-resume="${i}">${x.done ? 'Look again' : '▶ Continue'}</button>
+    ${x.done ? `<button class="sm alt" data-redo="${i}">Do it again</button>` : ''}
+    <button class="sm alt" data-sdel="${i}" aria-label="Delete saved problem">✕</button></div>`).join('');
+  const open = SESS.find(x => !x.done);
+  const rb = $('#resumeBtn');
+  if (open && (!P || P.sid !== open.id)) { rb.textContent = `▶ Continue where you left off: ${open.a} ${open.op === 'div' ? '÷' : '×'} ${open.b} (step ${open.fi + 1} of ${open.total})`; rb.dataset.id = open.id; rb.classList.remove('hidden'); }
+  else rb.classList.add('hidden');
+}
+function resumeSession(rec){ if (rec) { lastSpoken = ''; start(rec.a, rec.op, rec.b, false, rec); } }
+$('#sessions').addEventListener('click', e => {
+  const t = e.target.dataset;
+  if (t.resume !== undefined) resumeSession(SESS[+t.resume]);
+  else if (t.redo !== undefined) { const r = SESS[+t.redo]; start(r.a, r.op, r.b); }
+  else if (t.sdel !== undefined) { SESS.splice(+t.sdel, 1); store('mc_sessions', JSON.stringify(SESS)); renderSessions(); }
+});
+$('#resumeBtn').onclick = () => resumeSession(SESS.find(x => String(x.id) === $('#resumeBtn').dataset.id));
+renderSessions();
+
 /* =============== CONTROLS =============== */
 const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
 $('#go').onclick = () => start(Number($('#numA').value), $('#op').value, Number($('#numB').value));
@@ -785,6 +1003,7 @@ $('#ans').addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
 $('#talk').onclick = () => { talk = !talk; $('#talk').textContent = talk ? '🔊 Read aloud: On' : '🔈 Read aloud: Off'; if (!talk && window.speechSynthesis) speechSynthesis.cancel(); else if (P) { lastSpoken = ''; render(); } };
 $('#spell').onclick = () => { spell = !spell; $('#spell').textContent = spell ? '🔤 Spell numbers: On' : '🔤 Spell numbers: Off'; if (P) { lastSpoken = ''; render(); } };
 applyStyle(style, true);
+renderHUD();
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
 document.addEventListener('visibilitychange', () => { if (document.hidden && talkMode) setTalkMode(false); });
 let deferredInstall = null;
