@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Math Coach">
+<meta name="theme-color" content="#1f4e79">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="robots" content="noindex, nofollow">
+<script src="../samsung-guard.js"></script>
+<title>Math Homework Coach</title>
+<style>
+/* VOICE: patient tutor at the kitchen table
+   IDEA: the worksheet grid itself, solved live
+   PICTURE: the big working board
+   COLOUR and TYPE: chalkboard blue, paper white, pencil yellow highlight; Atkinson Hyperlegible
+   LAYOUT: one column, board first, controls below */
+:root{color-scheme:light dark;--bg:light-dark(#f4f7fb,#10161f);--card:light-dark(#fff,#1a2230);--ink:light-dark(#1d2433,#e9eef6);--muted:light-dark(#5b6475,#9aa6b8);--brand:#1f4e79;--accent:#f2b705;--good:light-dark(#1a7f4b,#4cc98a);--bad:light-dark(#c0392b,#ff7b6b);--hl:light-dark(#ffe9a3,#5c4a10);--new:light-dark(#1f6fd1,#7fb5ff);--line:light-dark(#cfd6e0,#33405a);--soft:light-dark(#eef2f7,#232d3d)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;font:17px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);overflow-x:clip}
+header{background:var(--brand);color:#fff;padding:14px 16px}
+header h1{margin:0;font-size:1.35rem}
+header p{margin:2px 0 0;opacity:.85;font-size:.95rem}
+main{max-width:780px;margin:0 auto;padding:12px}
+.card{background:var(--card);border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+h2{font-size:1.1rem;margin:0 0 10px}
+label{font-size:.88rem;color:var(--muted);display:block;margin-bottom:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+.row>div{flex:1;min-width:100px}
+input,select{width:100%;font-size:1.2rem;padding:10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:48px}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+button{font:inherit;font-weight:700;padding:10px 16px;min-height:46px;border-radius:10px;border:0;background:var(--brand);color:#fff;cursor:pointer}
+button.alt{background:var(--soft);color:var(--ink)}
+button.gold{background:var(--accent);color:#1d2433}
+button.sm{padding:6px 10px;min-height:38px;font-size:.9rem}
+button:disabled{opacity:.4;cursor:default}
+.modes{display:flex;gap:8px;margin-top:12px}.modes button{flex:1}
+.on{box-shadow:0 0 0 3px var(--accent) inset}
+.err{color:var(--bad);font-weight:700;margin-top:6px;min-height:1.2em}
+.chips{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:6px}
+.chip{padding:4px 10px;border-radius:20px;background:var(--soft);font-size:.85rem;font-weight:700;color:var(--muted)}
+.chip.on{background:var(--accent);color:#1d2433;box-shadow:none}
+.title{text-align:center;font-weight:700;font-size:1.15rem}
+.board-wrap{overflow-x:auto;padding:8px 0 4px}
+.board{display:grid;font-family:"Courier New",ui-monospace,monospace;font-size:clamp(1.45rem,6.2vw,2.3rem);font-weight:700;justify-content:center;margin:0 auto}
+.cell{width:1.3em;height:1.45em;display:flex;align-items:center;justify-content:center;position:relative;border-radius:6px;transition:background .25s,color .25s}
+.cell.divisor{width:auto;padding-right:.25em;justify-content:flex-end}
+.cell.dv{border-top:3px solid var(--ink);border-radius:0}
+.cell.dv.first{border-left:3px solid var(--ink);border-top-left-radius:14px 20px}
+.cell.under{border-bottom:3px solid var(--ink);border-radius:0}
+.cell.minus::before{content:"\2212";position:absolute;left:-.6em;color:var(--muted)}
+.cell.carry{height:1em;font-size:.55em;width:2.36em;color:var(--bad)}
+.cell.hide{visibility:hidden}
+.cell.hl{background:var(--hl)}
+.cell.new{color:var(--new)}
+.cell.carry.new{color:var(--bad)}
+.explain{font-size:1.2rem;line-height:1.5;min-height:3em}
+.explain b{color:var(--new)}
+.ask{font-size:1.25rem;font-weight:700;margin-bottom:8px}
+.feedback{font-weight:700;margin-top:8px;min-height:1.3em}
+.good{color:var(--good)}.bad{color:var(--bad)}
+.hint{background:var(--soft);border-left:4px solid var(--new);padding:8px 10px;border-radius:8px;margin-top:8px}
+.nav{display:flex;gap:8px;margin-top:12px}.nav button{flex:1}
+.status{display:flex;justify-content:space-between;color:var(--muted);font-size:.9rem;margin-top:8px}
+.table{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;font-family:"Courier New",monospace;font-size:1rem;margin-top:8px}
+.table div{padding:5px 6px;border-radius:6px;background:var(--soft)}
+.table div.pick{background:var(--hl);font-weight:700}
+.talkbar{display:flex;gap:8px;flex-wrap:wrap}
+.talkbar button{flex:1;min-width:130px}
+.mic{background:var(--bad)}
+.mic.listening{animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.mic.listening{animation:none}.cell{transition:none}}
+.log{margin-top:10px;max-height:260px;overflow-y:auto}
+.log p{margin:6px 0;padding:8px 10px;border-radius:10px}
+.log .me{background:var(--soft);text-align:right}
+.log .bot{background:light-dark(#e9f3ff,#1b2d47)}
+.hw{display:grid;gap:6px}
+.hwitem{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:8px;border-radius:10px;background:var(--soft)}
+.hwitem .q{font-family:"Courier New",monospace;font-weight:700;font-size:1.1rem;flex:1 1 130px}
+.hwitem .a{font-weight:700;color:var(--good);min-width:90px}
+.hwitem input{width:120px;font-size:1rem;min-height:38px;padding:6px}
+.hwitem .res{font-weight:700;flex-basis:100%;font-size:.95rem}
+.small{font-size:.85rem;color:var(--muted)}
+.paper{background:light-dark(#fffbe6,#2b2610);border:2px dashed var(--accent);padding:8px 10px;border-radius:10px;margin-top:8px;font-size:1.1rem}
+.extra{background:var(--soft);padding:8px 10px;border-radius:10px;margin-top:8px}
+.skill{display:grid;grid-template-columns:7em minmax(0,1fr) 6.5em;gap:8px;align-items:center;margin:6px 0;font-size:.95rem}
+.bar{height:12px;border-radius:6px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--good)}
+.bar.weak i{background:var(--bad)}
+.hidden,.cell.gone{display:none!important}
+details summary{cursor:pointer;font-weight:700}
+</style>
+</head>
+<body>
+<header>
+  <h1>Math Homework Coach</h1>
+  <p>Long division and multiplication, explained step by step, out loud</p>
+</header>
+<main>
+
+<section class="card">
+  <div class="row">
+    <div><label for="numA">First number</label><input id="numA" type="number" inputmode="numeric" min="1" placeholder="9867"></div>
+    <div style="flex:0 0 90px"><label for="op">Sign</label><select id="op"><option value="div">÷</option><option value="mul">×</option></select></div>
+    <div><label for="numB">Second number</label><input id="numB" type="number" inputmode="numeric" min="1" placeholder="12"></div>
+    <div style="flex:0"><button id="go">Start</button></div>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div><label for="level">Or a practice problem</label>
+      <select id="level">
+        <option value="d1">Division: 3 digits ÷ 1 digit</option>
+        <option value="d2" selected>Division: 4 digits ÷ 2 digits</option>
+        <option value="m1">Multiplication: 2 digits × 2 digits</option>
+        <option value="m2">Multiplication: 3 digits × 3 digits</option>
+      </select></div>
+    <div style="flex:0"><button class="gold" id="rand">New problem</button></div>
+  </div>
+  <div class="modes">
+    <button class="alt on" id="mLearn">Show me how</button>
+    <button class="alt" id="mPractice">Let me try</button>
+  </div>
+  <div class="err" id="err"></div>
+</section>
+
+<section class="card hidden" id="work">
+  <div class="title" id="probTitle"></div>
+  <div class="chips" id="chips"></div>
+  <div class="board-wrap"><div class="board" id="board"></div></div>
+  <div id="explain" class="explain" aria-live="polite"></div>
+  <div id="extra" class="extra hidden"></div>
+  <div id="paper" class="paper hidden"></div>
+  <div id="practice" class="hidden">
+    <div class="ask" id="askText"></div>
+    <div class="row">
+      <div><input id="ans" type="number" inputmode="numeric" placeholder="Your answer"></div>
+      <div style="flex:0"><button id="check">Check</button></div>
+      <div style="flex:0"><button class="alt" id="hintBtn">Hint</button></div>
+    </div>
+    <div class="feedback" id="fb"></div>
+    <div class="hint hidden" id="hint"></div>
+  </div>
+  <div class="nav">
+    <button class="alt" id="back">◀ Back</button>
+    <button class="alt" id="repeat">🔁 Repeat</button>
+    <button id="next">Next ▶</button>
+  </div>
+  <div class="status"><span id="stepCount"></span><span id="stars"></span></div>
+  <details style="margin-top:10px"><summary id="helperTitle">Times table helper</summary><div class="table" id="table"></div></details>
+</section>
+
+<section class="card">
+  <h2>Ask me a question</h2>
+  <div class="talkbar">
+    <button class="mic" id="mic">🎤 Hold on, tap to talk</button>
+    <button class="alt" id="talk">🔊 Read aloud: On</button>
+    <button class="alt" id="spell">🔤 Spell numbers: Off</button>
+  </div>
+  <div class="row" style="margin-top:10px">
+    <div><input id="typed" type="text" placeholder="Or type: why do we bring down?"></div>
+    <div style="flex:0"><button id="askBtn">Ask</button></div>
+  </div>
+  <p class="small" id="micNote">Try: "What is 9867 divided by 12?", "How many times does 53 go into 158?", "Why do we subtract?", "Next", "Say that again", "What's the answer?" During "Let me try" he can just say his answer.</p>
+  <div class="log" id="log"></div>
+</section>
+
+<section class="card">
+  <h2>Homework answers</h2>
+  <p class="small">Tap <b>Teach me</b> to walk through a problem, <b>Answer</b> to see the correct answer, or type his answer and tap <b>Check</b>.</p>
+  <div class="hw" id="hw"></div>
+  <div class="row" style="margin-top:10px">
+    <div><input id="hwA" type="number" inputmode="numeric" placeholder="First number"></div>
+    <div style="flex:0 0 80px"><select id="hwOp"><option value="div">÷</option><option value="mul">×</option></select></div>
+    <div><input id="hwB" type="number" inputmode="numeric" placeholder="Second number"></div>
+    <div style="flex:0"><button class="alt" id="hwAdd">Add problem</button></div>
+  </div>
+  <div class="row" style="margin-top:8px"><div style="flex:0"><button class="alt sm" id="hwReset">Reset to this week's worksheets</button></div></div>
+</section>
+
+<section class="card">
+  <h2>How he learns best</h2>
+  <div class="row">
+    <div><label for="style">Learning style</label>
+      <select id="style">
+        <option value="auto">Adaptive (the app adjusts as he works)</option>
+        <option value="hear">Hear it (reads every step aloud slowly, spells numbers)</option>
+        <option value="see">See it (pictures, highlights, extra breakdowns)</option>
+        <option value="do">Do it (he answers each step and writes it on paper)</option>
+      </select></div>
+  </div>
+  <p class="small" id="styleNote"></p>
+  <div id="skills"></div>
+  <div class="row" style="margin-top:6px"><div style="flex:0"><button class="alt sm" id="skillReset">Reset progress</button></div></div>
+</section>
+
+<section class="card">
+  <div class="row" style="align-items:center">
+    <div><label for="name">Student's name</label><input id="name" type="text" placeholder="Name"></div>
+  </div>
+  <div class="row" style="margin-top:10px"><div style="flex:0"><button class="gold hidden" id="installBtn">⬇ Install app</button></div></div>
+  <details style="margin-top:10px" id="installHelp"><summary>Install this app on a phone or computer</summary>
+    <p class="small"><b>iPhone/iPad (Safari):</b> tap Share, then "Add to Home Screen".<br><b>Android (Chrome):</b> tap ⋮, then "Install app" or "Add to Home screen".<br><b>Computer (Chrome/Edge):</b> click the install icon at the right end of the address bar.</p>
+  </details>
+  <p class="small">Whole numbers only. Division answers with a remainder are written like 822 R3.</p>
+</section>
+
+</main>
+<script>
+{
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = n => Number(n).toLocaleString('en-US');
+const runSum = ns => { let r = ns[0]; return ns.slice(1).map(n => `${r} + ${n} = ${r += n}`).join(', '); };
+const ORD = ['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth'];
+const ord = n => ORD[n - 1] || n + 'th';
+const PLACES = ['ones','tens','hundreds','thousands','ten-thousands','hundred-thousands','millions','ten-millions','hundred-millions','billions'];
+const multiples = (d, upto) => { const o = []; for (let k = 1; k <= 10 && d * k <= upto + d; k++) o.push(`${d} × ${k} = ${d * k}`); return o.join(', '); };
+function store(k, v){ try{ if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); }catch(e){ return null; } }
+
+let P = null, frames = [], fi = 0, mode = 'learn', answered = {}, wrong = {}, stars = 0;
+let talk = true, spell = false, lastSpoken = '', streak = 0, recentWrong = 0;
+let style = store('mc_style') || 'auto', stats = {};
+try { stats = JSON.parse(store('mc_stats') || '{}') || {}; } catch (e) { stats = {}; }
+
+$('#name').value = store('mc_name') || 'Ezekiel';
+$('#name').addEventListener('input', e => store('mc_name', e.target.value));
+const who = () => { const n = $('#name').value.trim(); return n ? ', ' + n : ''; };
+
+/* =============== SPEECH OUT =============== */
+function speechText(t){
+  t = t.replace(/(\d),(?=\d{3})/g, '$1');
+  if (spell) t = t.replace(/\d{2,}/g, m => `${m}, spelled ${m.split('').join(', ')},`);
+  return t.replace(/−/g, ' minus ').replace(/×/g, ' times ').replace(/÷/g, ' divided by ').replace(/\+/g, ' plus ').replace(/=/g, ' equals ')
+          .replace(/(\d) R(\d)/g, '$1 remainder $2').replace(/[🎉✓✅💡⭐🔊🎤]/g, '');
+}
+function say(text, force){
+  if (!talk || !window.speechSynthesis) return;
+  if (!force && text === lastSpoken) return;
+  lastSpoken = text;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(speechText(text)); u.rate = style === 'hear' || recentWrong > 0 ? 0.78 : 0.9; u.lang = 'en-US';
+  speechSynthesis.speak(u);
+}
+
+/* =============== DIVISION =============== */
+function solveDiv(dividend, d){
+  const ds = String(dividend).split('').map(Number), n = ds.length;
+  let idx = 0, cur = ds[0];
+  while (cur < d && idx < n - 1) { idx++; cur = cur * 10 + ds[idx]; }
+  const steps = []; let rem = 0;
+  for (let col = idx; col < n; col++) {
+    if (col > idx) cur = rem * 10 + ds[col];
+    const q = Math.floor(cur / d), p = q * d;
+    const curLen = steps.length ? String(rem).length + 1 : String(cur).length;
+    rem = cur - p;
+    steps.push({ col, cur, q, p, rem, curLen });
+  }
+  return { kind: 'div', a: dividend, b: d, d, ds, n, start: idx, steps, Q: Math.floor(dividend / d), R: dividend % d };
+}
+function gridDiv(){
+  const S = P.steps, rows = 2 + 2 * S.length, cols = P.n + 1;
+  const g = blank(rows, cols);
+  g[1][0] = { ch: P.d, cls: ['divisor'] };
+  for (let r = 0; r < rows; r++) if (r !== 1) g[r][0] = { ch: '', cls: ['divisor'] };
+  P.ds.forEach((v, j) => g[1][j + 1] = { ch: v, cls: ['dv'].concat(j === 0 ? ['first'] : []) });
+  S.forEach((s, i) => {
+    g[0][s.col + 1] = { ch: s.q, cls: [], g: 'q' + i };
+    const pr = 2 + 2 * i, ps = String(s.p), w = Math.max(ps.length, s.curLen);
+    for (let k = 0; k < w; k++) {
+      const j = s.col - k; if (j < 0) break;
+      g[pr][j + 1] = { ch: k < ps.length ? ps[ps.length - 1 - k] : '', cls: ['under'].concat(k === w - 1 || j === 0 ? ['minus'] : []), g: 'p' + i };
+    }
+    const rs = String(s.rem);
+    for (let k = 0; k < rs.length; k++) g[pr + 1][s.col - k + 1] = { ch: rs[rs.length - 1 - k], cls: [], g: 'r' + i };
+    if (i < S.length - 1) g[pr + 1][s.col + 2] = { ch: P.ds[s.col + 1], cls: [], g: 'b' + i };
+  });
+  return { g, tpl: `auto repeat(${P.n}, 1.3em)` };
+}
+function divCur(i){
+  const s = P.steps[i], row = i === 0 ? 1 : 3 + 2 * (i - 1), out = [];
+  for (let k = 0; k < s.curLen; k++) out.push(row + '_' + (s.col - k + 1));
+  return out;
+}
+const span = (r, a, b) => { const o = []; for (let c = a; c <= b; c++) o.push(r + '_' + c); return o; };
+function framesDiv(){
+  const F = [], d = P.d, S = P.steps;
+  F.push({ tag: '', paper: `Find ${d} ) ${P.a} on your worksheet. ${d} is outside the bracket, ${P.a} is inside. The answer goes in the boxes on top.`, text: `Let's divide <b>${P.a}</b> by <b>${d}</b>. Every round has 4 moves: <b>Divide, Multiply, Subtract, Bring down</b>. To remember it: <i>"Does McDonald's Sell Burgers?"</i>`, hl: ['1_0'],
+    why: `Long division breaks a big division into small easy pieces, one digit at a time.` });
+  if (P.start > 0) {
+    const part = P.ds.slice(0, P.start).join('');
+    F.push({ tag: '', paper: `Write a <b>0</b> in the top box${P.start > 1 ? 'es' : ''} above the ${part.split('').join(' and the ')}, or leave ${P.start > 1 ? 'them' : 'it'} blank if your teacher says so.`, text: `${d} can't go into <b>${part}</b>, because ${part} is smaller than ${d}. So we use the first ${P.start + 1} digits together: <b>${S[0].cur}</b>.`, hl: divCur(0),
+      why: `If the number is smaller than ${d}, ${d} fits zero times, so we grab one more digit to make a number big enough.` });
+  }
+  S.forEach((s, i) => {
+    const cc = divCur(i), qCell = '0_' + (s.col + 1), last = i === S.length - 1;
+    let dt;
+    if (s.q === 0) dt = `<b>Divide:</b> How many times does ${d} fit into ${s.cur}? It doesn't fit, because ${s.cur} is smaller than ${d}. Write <b>0</b> on top.`;
+    else dt = `<b>Divide:</b> How many times does ${d} fit into ${s.cur}? ${d} × ${s.q} = ${s.p}` + (s.q < 9 ? `, and ${d} × ${s.q + 1} = ${(s.q + 1) * d} is too big` : '') + `. So write <b>${s.q}</b> on top.`;
+    if (d >= 10 && s.q > 0) dt += ` Tip: round ${d} to ${Math.round(d / 10) * 10} to make a first guess.`;
+    F.push({ tag: 'Divide', text: dt, paper: `Write <b>${s.q}</b> in the top box above the ${P.ds[s.col]} (the ${ord(s.col + 1)} digit).`, extra: `Count by ${d}s: ${multiples(d, s.cur)}. Stop before you go past ${s.cur}.`, hl: cc.concat(['1_0', qCell]), reveal: ['q' + i], pick: s.q, tbl: d,
+      ask: { q: `How many times does ${d} go into ${s.cur}?`, a: s.q, hint: `Look at the ${d}s times table helper. Find the biggest answer that is not more than ${s.cur}.` },
+      why: `We divide to find how many whole groups of ${d} fit. That number is part of the answer, so it goes on top.` });
+    const pRow = 2 + 2 * i, pCells = span(pRow, s.col - String(s.p).length + 2, s.col + 1);
+    F.push({ tag: 'Multiply', text: `<b>Multiply:</b> ${s.q} × ${d} = <b>${s.p}</b>. Write ${s.p} under ${s.cur}.`, paper: `On the next row, write <b>${s.p}</b> under ${s.cur}, one digit per box. The last digit goes right under the ${P.ds[s.col]}. Put a minus sign on the left.`, extra: `${s.q} groups of ${d}: ${Array.from({length: Math.min(s.q, 9)}, (_, k) => d * (k + 1)).join(', ') || '0'}.`, hl: [qCell, '1_0'].concat(pCells), reveal: ['p' + i], tbl: d, pick: s.q,
+      ask: { q: `What is ${s.q} × ${d}?`, a: s.p, hint: `Count by ${d}s, ${s.q} times, or find ${d} × ${s.q} in the times table helper.` },
+      why: `We multiply to see exactly how much those ${s.q} groups of ${d} use up.` });
+    const rCells = span(pRow + 1, s.col - String(s.rem).length + 2, s.col + 1);
+    F.push({ tag: 'Subtract', paper: `Draw a line under ${s.p}. Under the line, write <b>${s.rem}</b>, lined up on the right under the ${P.ds[s.col]}.`, extra: `Count up from ${s.p} to ${s.cur}: that's ${s.rem}. Or check it: ${s.p} + ${s.rem} = ${s.cur}.`, text: `<b>Subtract:</b> ${s.cur} − ${s.p} = <b>${s.rem}</b>. ${s.rem} is smaller than ${d}, so the number on top is right.`, hl: cc.concat(pCells, rCells), reveal: ['r' + i],
+      ask: { q: `What is ${s.cur} − ${s.p}?`, a: s.rem, hint: `Start at ${s.cur} and take away ${s.p}. Your answer must be smaller than ${d}. If it isn't, the number on top should be bigger.` },
+      why: `We subtract to find what is left over that hasn't been divided yet. If what's left is ${d} or more, we didn't use enough groups.` });
+    if (!last) {
+      const nx = P.ds[s.col + 1], ncur = S[i + 1].cur;
+      F.push({ tag: 'Bring down', paper: `Draw an arrow down from the ${nx} on top. Write <b>${nx}</b> in the box right after the ${s.rem}. Now that row says ${ncur}.`, text: `<b>Bring down</b> the next digit, <b>${nx}</b>. Now we have <b>${ncur}</b>. Start the 4 moves again.`, hl: ['1_' + (s.col + 2), (pRow + 1) + '_' + (s.col + 2)], reveal: ['b' + i],
+        why: `We bring down the next digit so we can keep dividing what's left, one place value at a time.` });
+    } else {
+      F.push({ tag: 'Bring down', paper: `In the box next to the R at the bottom, write <b>${s.rem}</b>.`, text: `There are no more digits to bring down, so we're done dividing.` + (s.rem ? ` The <b>${s.rem}</b> left over is the <b>remainder</b>.` : ` Nothing is left over, so there is no remainder.`), hl: rCells,
+        why: `The remainder is the part that was too small to make another full group of ${d}.` });
+    }
+  });
+  const ans = P.R ? `${P.Q} R${P.R}` : `${P.Q}`;
+  F.push({ tag: '', paper: `Check your paper: the top boxes say <b>${P.Q}</b> and the R box says <b>${P.R}</b>.`, text: `🎉 Done${esc(who())}! <b>${P.a} ÷ ${d} = ${ans}</b>.<br>Check it: ${P.Q} × ${d} = ${P.Q * d}` + (P.R ? `, plus ${P.R} = ${P.a}` : '') + `. ✓ It matches!`,
+    hl: S.map(s => '0_' + (s.col + 1)), why: `To check division, multiply the answer by ${d} and add the remainder. You should get back ${P.a}.` });
+  return F;
+}
+
+/* =============== MULTIPLICATION =============== */
+function solveMul(A, B){ return { kind: 'mul', a: A, b: B, A, B, as: String(A).split('').map(Number), bs: String(B).split('').map(Number), T: A * B }; }
+function mulLayout(){
+  const L = P.bs.length, W = String(P.T).length + 1;
+  return { L, W, CR: k => L - 1 - k, AR: L, BR: L + 1, PR: k => L + 2 + k, SR: 2 * L + 2 };
+}
+function gridMul(){
+  const M = mulLayout(), { L, W } = M, rows = L > 1 ? 2 * L + 3 : L + 2 + L;
+  const g = blank(rows, W);
+  for (let k = 0; k < L; k++) for (let c = 0; c < W; c++) g[M.CR(k)][c] = { ch: '', cls: ['carry'] };
+  P.as.forEach((v, j) => g[M.AR][W - P.as.length + j] = { ch: v, cls: [] });
+  for (let c = 0; c < W; c++) g[M.BR][c] = { ch: '', cls: ['under'] };
+  P.bs.forEach((v, j) => g[M.BR][W - P.bs.length + j] = { ch: v, cls: ['under'] });
+  g[M.BR][W - P.bs.length - 1] = { ch: '×', cls: ['under'] };
+  const ar = P.as.slice().reverse(), br = P.bs.slice().reverse();
+  P.mulSteps = [];
+  br.forEach((b, k) => {
+    const pr = M.PR(k);
+    for (let z = 0; z < k; z++) g[pr][W - 1 - z] = { ch: '0', cls: [], g: 'z' + k };
+    let carry = 0;
+    ar.forEach((a, j) => {
+      const prod = a * b + carry, col = W - 1 - k - j, lastJ = j === ar.length - 1, cin = carry;
+      const cells = [];
+      if (!lastJ) {
+        g[pr][col] = { ch: prod % 10, cls: [], g: `m${k}_${j}` }; cells.push(pr + '_' + col);
+        carry = Math.floor(prod / 10);
+        if (carry) g[M.CR(k)][W - 2 - j] = { ch: carry, cls: ['carry'], g: `c${k}_${j}` };
+      } else {
+        const s = String(prod);
+        for (let t = 0; t < s.length; t++) { g[pr][col - t] = { ch: s[s.length - 1 - t], cls: [], g: `m${k}_${j}` }; cells.push(pr + '_' + (col - t)); }
+        carry = 0;
+      }
+      P.mulSteps.push({ k, j, a, b, cin, prod, cout: lastJ ? 0 : Math.floor(prod / 10), lastJ, cells, col });
+    });
+  });
+  if (L > 1) {
+    for (let c = 0; c < W; c++) g[M.PR(L - 1)][c] = Object.assign({ ch: '', cls: [] }, g[M.PR(L - 1)][c], { cls: ['under'].concat(c === 0 ? [] : []) });
+    g[M.PR(L - 1)][0].cls.push('minus'); g[M.PR(L - 1)][0].plus = true;
+    const ts = String(P.T);
+    for (let t = 0; t < ts.length; t++) g[M.SR][W - 1 - t] = { ch: ts[ts.length - 1 - t], cls: [], g: 's' + (W - 1 - t) };
+  }
+  P.grid = g; P.M = M;
+  return { g, tpl: `repeat(${W}, 1.3em)` };
+}
+const placeName = k => ['ones', 'tens', 'hundreds', 'thousands'][k] || `place ${k + 1}`;
+function framesMul(){
+  const F = [], M = P.M, { L, W } = M, g = P.grid;
+  F.push({ tag: '', paper: `Find ${P.A} × ${P.B} on your worksheet. You will write one answer row for each digit of ${P.B}, then add them.`, text: `Let's multiply <b>${P.A}</b> × <b>${P.B}</b>. We multiply the top number by each digit of the bottom number, starting on the right. Then we add the rows.`, hl: [],
+    why: `Breaking ${P.B} into its digits turns one hard problem into small times-table facts.` });
+  const allCarries = k => P.mulSteps.filter(s => s.k === k).map(s => `c${k}_${s.j}`);
+  for (let k = 0; k < L; k++) {
+    const b = P.bs[L - 1 - k], bCell = M.BR + '_' + (W - 1 - k);
+    if (k === 0) {
+      F.push({ tag: 'Multiply', paper: `Put your pencil on the first answer row, under the line, at the right side.`, text: `Start with the <b>ones</b> digit on the bottom: <b>${b}</b>. Multiply it by each top digit, right to left.`, hl: [bCell],
+        why: `We always start with the ones place, on the right, so carries move to the left.` });
+    } else {
+      F.push({ tag: 'Placeholder', paper: `Cross out the small carry numbers from the last row. Go to answer row ${k + 1} and write <b>${k === 1 ? '0' : k + ' zeros'}</b> on the far right.`, text: `Next, the <b>${placeName(k)}</b> digit: <b>${b}</b>. It's really worth ${b}${'0'.repeat(k)}, so first write <b>${k === 1 ? 'one zero' : k + ' zeros'}</b> on the right as a placeholder.`,
+        hl: [bCell].concat(Array.from({ length: k }, (_, z) => M.PR(k) + '_' + (W - 1 - z))), reveal: ['z' + k], clear: allCarries(k - 1),
+        why: `The ${placeName(k)} digit is worth ${'ten'}${k > 1 ? ' times ten' : ''} times more, so the zero shifts this whole row one place to the left.` });
+    }
+    P.mulSteps.filter(s => s.k === k).forEach(s => {
+      const aCell = M.AR + '_' + (W - 1 - s.j);
+      const hl = [aCell, bCell].concat(s.cells);
+      if (s.cin) hl.push(M.CR(k) + '_' + (W - 1 - s.j));
+      let t = `<b>Multiply:</b> ${s.b} × ${s.a} = ${s.a * s.b}` + (s.cin ? `, plus the carried ${s.cin}, makes ${s.prod}` : '') + '.';
+      if (s.lastJ) t += ` That's the last top digit, so write all of <b>${s.prod}</b>.`;
+      else if (s.cout) t += ` Write the <b>${s.prod % 10}</b> and carry the <b>${s.cout}</b> up to the next column.`;
+      else t += ` Write <b>${s.prod}</b>.`;
+      const rv = [`m${k}_${s.j}`]; if (s.cout) rv.push(`c${k}_${s.j}`);
+      const pl = c => PLACES[W - 1 - c];
+      let paper = s.lastJ && s.prod >= 10 ? `On answer row ${k + 1}, write <b>${s.prod}</b>: the ${s.prod % 10} in the ${pl(s.col)} column and the ${Math.floor(s.prod / 10)} in the ${pl(s.col - 1)} column.` : `On answer row ${k + 1}, write <b>${s.prod % 10}</b> in the ${pl(s.col)} column.`;
+      if (s.cout && !s.lastJ) paper += ` Then write a small <b>${s.cout}</b> above the ${P.as[P.as.length - 2 - s.j]} on top.`;
+      F.push({ tag: s.cout && !s.lastJ ? 'Carry' : 'Multiply', text: t, paper, extra: `${s.a} groups of ${s.b}: ${Array.from({length: s.a}, (_, x) => s.b * (x + 1)).join(', ') || '0'}.` + (s.cin ? ` Then ${s.a * s.b} + ${s.cin} = ${s.prod}.` : ''), hl, reveal: rv, tbl: s.b, pick: s.a,
+        ask: { q: s.cin ? `What is ${s.b} × ${s.a}, plus ${s.cin}?` : `What is ${s.b} × ${s.a}?`, a: s.prod, hint: `${s.b} × ${s.a} = ${s.a * s.b} is in the times table helper.` + (s.cin ? ` Then add the carried ${s.cin}.` : '') },
+        why: s.cout && !s.lastJ ? `A box can only hold one digit. The ${s.cout} is ${s.cout} ten${s.cout > 1 ? 's' : ''}, so it moves to the next column.` : `Each top digit gets multiplied by ${s.b}.` });
+    });
+  }
+  if (L > 1) {
+    F.push({ tag: 'Add', paper: `Cross out the carry numbers. Draw a line under the last answer row and put a + sign on the left.`, reveal: ['plus'], text: `Now <b>add the rows</b> together, one column at a time, starting on the right.`, hl: [], clear: allCarries(L - 1),
+      why: `Each row is one part of the answer. Adding the parts gives the whole answer.` });
+    const ts = String(P.T); let carry = 0;
+    for (let t = 0; t < ts.length; t++) {
+      const c = W - 1 - t, nums = [];
+      for (let k = 0; k < L; k++) { const ch = g[M.PR(k)][c].ch; if (ch !== '' && ch !== undefined) nums.push(Number(ch)); }
+      const sum = nums.reduce((x, y) => x + y, 0) + carry, cin = carry;
+      const lastCol = t === ts.length - 1;
+      carry = Math.floor(sum / 10);
+      const parts = nums.length ? nums.join(' + ') : '0';
+      let txt = `<b>Add</b> the ${t === 0 ? 'right-most ' : ''}column: ${parts}` + (cin ? ` + the carried ${cin}` : '') + ` = ${sum}.`;
+      txt += (!lastCol && carry) ? ` Write <b>${sum % 10}</b>, carry the <b>${carry}</b>.` : ` Write <b>${lastCol ? sum : sum % 10}</b>.`;
+      const hl = []; for (let k = 0; k < L; k++) hl.push(M.PR(k) + '_' + c); hl.push(M.SR + '_' + c);
+      F.push({ tag: 'Add', text: txt, hl, paper: `Under the line, write <b>${lastCol ? sum : sum % 10}</b> in the ${PLACES[t]} column` + (!lastCol && carry ? `. Write a small <b>${carry}</b> at the top of the ${PLACES[t + 1]} column.` : '.'), extra: nums.length > 1 ? `Add them one at a time: ${runSum(nums)}` + (cin ? `, then + ${cin} = ${sum}.` : '.') : '', reveal: ['s' + c],
+        ask: { q: `What is ${parts}` + (cin ? ` + ${cin}` : '') + `?`, a: sum, hint: `Add the numbers in the column one at a time.` },
+        why: `When a column adds up to 10 or more, the tens part carries to the next column on the left.` });
+      if (lastCol) break;
+    }
+  }
+  const lead = n => { const p = 10 ** (String(n).length - 1); return Math.round(n / p) * p; }, ra = lead(P.A), rb = lead(P.B);
+  F.push({ tag: '', paper: `Check your paper: the bottom answer row says <b>${fmt(P.T)}</b>.`, text: `🎉 Done${esc(who())}! <b>${P.A} × ${P.B} = ${fmt(P.T)}</b>.<br>Quick check: ${P.A} is about ${ra} and ${P.B} is about ${rb}. ${ra} × ${rb} = ${fmt(ra * rb)}, which is close to ${fmt(P.T)}. ✓`,
+    hl: span(L > 1 ? M.SR : M.PR(0), 0, W - 1), why: `Rounding both numbers is a fast way to see if the answer is about the right size.` });
+  return F;
+}
+
+/* =============== BOARD + RENDER =============== */
+function blank(rows, cols){ const g = []; for (let r = 0; r < rows; r++) { g[r] = []; for (let c = 0; c < cols; c++) g[r][c] = { ch: '', cls: [] }; } return g; }
+function buildBoard(){
+  const { g, tpl } = P.kind === 'div' ? gridDiv() : gridMul();
+  const b = $('#board'); b.innerHTML = ''; b.style.gridTemplateColumns = tpl;
+  g.forEach((row, r) => row.forEach((x, c) => {
+    const el = document.createElement('div');
+    el.className = 'cell ' + (x.cls || []).join(' ');
+    el.textContent = x.ch; el.dataset.id = r + '_' + c;
+    if (x.g) el.dataset.g = x.g;
+    b.appendChild(el);
+  }));
+  // a plus sign for the addition line in multiplication
+  if (P.kind === 'mul' && P.M.L > 1) { const el = b.querySelector(`[data-id="${P.M.PR(P.M.L - 1)}_0"]`); if (el) { el.classList.remove('minus'); if (!el.textContent) { el.textContent = '+'; el.dataset.g = 'plus'; } } }
+}
+function visibleSet(upto){
+  const vis = new Set();
+  for (let i = 0; i <= upto; i++) { (frames[i].clear || []).forEach(x => vis.delete(x)); (frames[i].reveal || []).forEach(x => vis.add(x)); }
+  return vis;
+}
+function pending(){ const f = frames[fi]; return mode === 'practice' && f.ask && !answered[fi]; }
+function render(){
+  const f = frames[fi], pend = pending(), vis = visibleSet(pend ? fi - 1 : fi);
+  if (pend) (f.clear || []).forEach(x => vis.delete(x));
+  const fresh = new Set(pend ? [] : (f.reveal || []));
+  document.querySelectorAll('#board .cell').forEach(el => {
+    const g = el.dataset.g;
+    el.classList.toggle('hide', !!g && !vis.has(g));
+    el.classList.toggle('new', !!g && fresh.has(g));
+    el.classList.toggle('hl', (f.hl || []).includes(el.dataset.id));
+  });
+  const rowsMap = {};
+  document.querySelectorAll('#board .cell').forEach(el => { const r = el.dataset.id.split('_')[0]; (rowsMap[r] = rowsMap[r] || []).push(el); });
+  Object.values(rowsMap).forEach(cells => { const show = cells.some(el => !el.classList.contains('hide') && el.textContent !== ''); cells.forEach(el => el.classList.toggle('gone', !show)); });
+  const tags = P.kind === 'div' ? ['Divide', 'Multiply', 'Subtract', 'Bring down'] : ['Multiply', 'Carry', 'Placeholder', 'Add'];
+  $('#chips').innerHTML = tags.map(t => `<span class="chip ${t === f.tag ? 'on' : ''}">${t}</span>`).join('');
+  $('#probTitle').textContent = P.kind === 'div' ? `${P.a} ÷ ${P.b}` : `${P.A} × ${P.B}`;
+  $('#practice').classList.toggle('hidden', !pend);
+  $('#explain').classList.toggle('hidden', pend);
+  const showExtra = !!f.extra && (style === 'see' || weak(skillOf(f)));
+  $('#extra').classList.toggle('hidden', pend || !showExtra);
+  $('#extra').textContent = showExtra ? '🔎 Break it down: ' + f.extra : '';
+  $('#paper').classList.toggle('hidden', pend || !f.paper);
+  $('#paper').innerHTML = f.paper ? '✏️ <b>On your paper:</b> ' + f.paper : '';
+  if (pend) {
+    $('#askText').textContent = f.ask.q;
+    $('#ans').value = ''; $('#fb').textContent = ''; $('#fb').className = 'feedback';
+    $('#hint').classList.add('hidden');
+    if (weak(skillOf(f)) || style === 'see') { $('#hint').textContent = '💡 ' + f.ask.hint + (f.extra ? ' ' + f.extra : ''); $('#hint').classList.remove('hidden'); }
+    say(f.ask.q + (weak(skillOf(f)) ? ' Take your time with this one.' : ''));
+  } else {
+    $('#explain').innerHTML = (mode === 'practice' && f.ask && answered[fi] === 'star' ? '✅ Right! ' : '') + f.text;
+    say($('#explain').textContent + ($('#extra').classList.contains('hidden') ? '' : ' ' + $('#extra').textContent) + (f.paper ? ' On your paper: ' + $('#paper').textContent.replace('✏️ On your paper: ', '') : ''));
+  }
+  $('#back').disabled = fi === 0;
+  $('#next').disabled = pend || fi === frames.length - 1;
+  $('#next').textContent = fi === frames.length - 2 ? 'See answer ▶' : (f.paper && fi > 0 ? 'I wrote it ▶' : 'Next ▶');
+  $('#stepCount').textContent = `Step ${fi + 1} of ${frames.length}`;
+  $('#stars').textContent = mode === 'practice' ? `⭐ ${stars}` : '';
+  const tb = f.tbl || (P.kind === 'div' ? P.d : P.bs[P.bs.length - 1]);
+  let t = '';
+  for (let k = 1; k <= 9; k++) t += `<div class="${!pend && f.pick === k ? 'pick' : ''}">${tb} × ${k} = ${tb * k}</div>`;
+  $('#table').innerHTML = t;
+  $('#helperTitle').textContent = `${tb}s times table helper`;
+}
+function check(val){
+  const f = frames[fi]; if (!pending()) return;
+  const v = val !== undefined ? String(val) : $('#ans').value.trim();
+  if (v === '') return;
+  $('#ans').value = v;
+  if (Number(v) === f.ask.a) {
+    if (!wrong[fi]) { stars++; record(skillOf(f), true); streak++; recentWrong = Math.max(0, recentWrong - 1); }
+    if (streak === 6 && style === 'auto') logLine('bot', 'Six right in a row. The app will give fewer hints now.');
+    answered[fi] = wrong[fi] ? 'ok' : 'star';
+    render();
+  } else {
+    if (!wrong[fi]) { record(skillOf(f), false); streak = 0; recentWrong = 2; }
+    wrong[fi] = (wrong[fi] || 0) + 1;
+    const fb = $('#fb'); fb.className = 'feedback bad';
+    if (wrong[fi] >= 3) {
+      fb.textContent = `The answer is ${f.ask.a}. Let's keep going.`; say(fb.textContent, true);
+      answered[fi] = 'ok'; setTimeout(render, 2200);
+    } else {
+      fb.textContent = `${v} is not quite it. Try again!`; say(fb.textContent, true);
+      if (wrong[fi] >= (weak(skillOf(f)) ? 1 : 2)) showHint();
+    }
+  }
+}
+function showHint(){ const h = $('#hint'); h.textContent = '💡 ' + frames[fi].ask.hint; h.classList.remove('hidden'); say(h.textContent, true); }
+
+function start(a, op, b, quiet){
+  $('#err').textContent = '';
+  if (!Number.isInteger(a) || !Number.isInteger(b) || a < 1 || b < 1) { $('#err').textContent = 'Enter two whole numbers bigger than 0.'; return false; }
+  if (op === 'div' && (a > 999999999 || b > 9999)) { $('#err').textContent = 'For division, use up to 9 digits ÷ up to 4 digits.'; return false; }
+  if (op === 'mul' && (a > 99999 || b > 9999)) { $('#err').textContent = 'For multiplication, use up to 5 digits × up to 4 digits.'; return false; }
+  $('#numA').value = a; $('#numB').value = b; $('#op').value = op;
+  P = op === 'div' ? solveDiv(a, b) : solveMul(a, b);
+  buildBoard();
+  frames = op === 'div' ? framesDiv() : framesMul();
+  fi = 0; answered = {}; wrong = {}; lastSpoken = '';
+  $('#work').classList.remove('hidden');
+  if (!quiet) render();
+  $('#work').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  return true;
+}
+const go = i => { if (!P) return; fi = Math.max(0, Math.min(frames.length - 1, i)); render(); };
+
+/* =============== QUESTIONS (voice + typed) =============== */
+function logLine(who, text){
+  const p = document.createElement('p'); p.className = who; p.textContent = text;
+  $('#log').prepend(p);
+}
+function reply(text){ logLine('bot', text); say(text, true); }
+function answerOf(){ return P.kind === 'div' ? (P.R ? `${P.Q} R${P.R}` : `${P.Q}`) : fmt(P.T); }
+function handleQ(raw){
+  const t = raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/(\d) (?=\d{3}\b)/g, '$1').trim();
+  logLine('me', raw);
+  const nums = (t.match(/\d+/g) || []).map(Number);
+  let m;
+  if (P && pending() && nums.length === 1 && !/divid|times|minus|plus|go into/.test(t)) { check(nums[0]); return; }
+  if ((m = t.match(/(\d+)\s*(?:go(?:es)?|fit)s?\s*(?:in|into|in to)\s*(\d+)/))) {
+    const d = +m[1], n = +m[2], q = Math.floor(n / d);
+    return reply(q === 0 ? `${d} doesn't fit into ${n}, because ${n} is smaller than ${d}. That's 0 times.` :
+      `${d} goes into ${n} ${q} time${q > 1 ? 's' : ''}. ${d} × ${q} = ${d * q}` + (n - d * q ? `, with ${n - d * q} left over.` : ', exactly.') + (q < 9 || d * (q + 1) > n ? ` ${d} × ${q + 1} = ${d * (q + 1)} is too big.` : ''));
+  }
+  if ((m = t.match(/(\d+)\s*(?:divided by|÷|\/|over|divide by)\s*(\d+)/)) || (m = t.match(/divide\s*(\d+)\s*by\s*(\d+)/))) {
+    if (start(+m[1], 'div', +m[2], true)) { reply(`${m[1]} ÷ ${m[2]} = ${answerOf()}. Let's go through it step by step.`); setTimeout(render, 400); }
+    return;
+  }
+  if ((m = t.match(/(\d+)\s*(?:times|x|×|\*|multiplied by)\s*(\d+)/))) {
+    const a = +m[1], b = +m[2];
+    if (a <= 12 && b <= 12) return reply(`${a} × ${b} = ${a * b}.`);
+    if (start(a, 'mul', b, true)) { reply(`${a} × ${b} = ${fmt(a * b)}. Let's go through it step by step.`); setTimeout(render, 400); }
+    return;
+  }
+  if ((m = t.match(/(\d+)\s*(?:minus|−|-|take away|subtract)\s*(\d+)/))) return reply(`${m[1]} − ${m[2]} = ${+m[1] - +m[2]}.`);
+  if ((m = t.match(/(\d+)\s*(?:plus|\+|add|and)\s*(\d+)/))) return reply(`${m[1]} + ${m[2]} = ${+m[1] + +m[2]}.`);
+  if (/\b(next|go on|continue|keep going|okay|ok)\b/.test(t)) { if (!P) return reply('Give me a problem first.'); if (pending()) return reply(`First answer this one: ${frames[fi].ask.q}`); go(fi + 1); logLine('bot', $('#explain').textContent); return; }
+  if (/\b(back|previous|before)\b/.test(t)) { if (P) { go(fi - 1); logLine('bot', $('#explain').textContent); } return; }
+  if (/(repeat|again|say that|what did you say|didn.?t hear)/.test(t)) { if (P) { lastSpoken = ''; render(); } return; }
+  if (/remainder/.test(t)) return reply(`The remainder is what's left over when the number can't be split into any more full groups. It's always smaller than the number you divide by.` + (P && P.kind === 'div' ? ` In this problem the remainder is ${P.R}.` : ''));
+  if (/(carry|carried)/.test(t)) return reply(`When you get a two-digit number, only the ones digit fits in the box. The tens digit is carried to the next column on the left, and you add it after you multiply there.`);
+  if (/(zero|placeholder)/.test(t)) return reply(`The placeholder zero is there because the tens digit is really worth ten times more. The zero moves that row one place to the left.`);
+  if (/(answer|what did we get|final)/.test(t)) return P ? reply(`The answer is ${answerOf()}.`) : reply('Give me a problem first.');
+  if (/\bwhy\b/.test(t)) return P ? reply(frames[fi].why || 'This step gets us closer to the answer.') : reply('Start a problem and ask me why at any step.');
+  if (/(don.?t (get|understand|know)|confus|help|explain|how do|stuck|hint)/.test(t)) {
+    if (!P) return reply('Tell me the problem, like "9867 divided by 12", and I will walk you through it.');
+    const f = frames[fi]; const extra = f.ask ? ' ' + f.ask.hint : '';
+    return reply(pending() ? f.ask.hint + (f.extra ? ' ' + f.extra : '') : ((f.why || '') + ' ' + f.text.replace(/<[^>]+>/g, '') + (f.extra ? ' ' + f.extra : '') + extra));
+  }
+  if (/(what (step|do i do)|now what)/.test(t)) return P ? reply(pending() ? frames[fi].ask.q : $('#explain').textContent) : reply('Give me a problem first.');
+  reply(`I can help with division and multiplication. Try asking "what is 2976 divided by 83", "how many times does 15 go into 88", "why", "next", "repeat", or "what's the answer".`);
+}
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec = null;
+if (!SR) { $('#mic').disabled = true; $('#mic').textContent = '🎤 Voice not available here'; $('#micNote').textContent += ' Voice questions need Chrome, Edge or Safari with microphone permission. Typing works everywhere.'; }
+else $('#mic').textContent = '🎤 Tap to ask out loud';
+$('#mic').onclick = () => {
+  if (!SR) return;
+  if (rec) { rec.stop(); return; }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  try {
+    rec = new SR(); rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
+    rec.onresult = e => handleQ(e.results[0][0].transcript);
+    rec.onerror = e => { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') reply('I need microphone permission to hear you. You can also type your question.'); else if (e.error === 'no-speech') reply("I didn't hear anything. Tap the microphone and try again."); };
+    rec.onend = () => { rec = null; $('#mic').classList.remove('listening'); $('#mic').textContent = '🎤 Tap to ask out loud'; };
+    rec.start(); $('#mic').classList.add('listening'); $('#mic').textContent = '🎤 Listening… tap to stop';
+  } catch (e) { rec = null; reply('The microphone could not start here. You can type your question instead.'); }
+};
+$('#askBtn').onclick = () => { const v = $('#typed').value.trim(); if (v) { handleQ(v); $('#typed').value = ''; } };
+$('#typed').addEventListener('keydown', e => { if (e.key === 'Enter') $('#askBtn').click(); });
+
+/* =============== HOMEWORK LIST =============== */
+const WEEK = [
+  ['div',6889,53],['div',9867,12],['div',5081,85],['div',1435,51],['div',9883,55],['div',2650,88],['div',8794,64],['div',8897,15],['div',2976,83],
+  ['mul',185,865],['mul',706,717],['mul',919,736],['mul',470,365],['mul',318,879],['mul',971,920],['mul',172,564],['mul',609,155],['mul',766,563],['mul',511,167],
+  ['mul',386,266],['mul',586,793],['mul',290,770],['mul',931,543],['mul',245,147],['mul',941,601],['mul',312,766],['mul',119,572],['mul',943,481],['mul',409,528]
+];
+let HW;
+try { HW = JSON.parse(store('mc_hw') || 'null') || WEEK.slice(); } catch (e) { HW = WEEK.slice(); }
+const saveHW = () => store('mc_hw', JSON.stringify(HW));
+const hwAns = ([op, a, b]) => op === 'div' ? (a % b ? `${Math.floor(a / b)} R${a % b}` : `${a / b}`) : fmt(a * b);
+function renderHW(){
+  $('#hw').innerHTML = HW.map((p, i) => `<div class="hwitem">
+    <span class="q">${i + 1}. ${p[1]} ${p[0] === 'div' ? '÷' : '×'} ${p[2]}</span>
+    <button class="sm" data-teach="${i}">Teach me</button>
+    <button class="sm alt" data-show="${i}">Answer</button>
+    <span class="a hidden" id="hwa${i}">${hwAns(p)}</span>
+    <input type="text" inputmode="numeric" placeholder="${p[0] === 'div' ? 'e.g. 129 R52' : 'His answer'}" id="hwi${i}" aria-label="His answer for problem ${i + 1}">
+    <button class="sm alt" data-check="${i}">Check</button>
+    <button class="sm alt" data-del="${i}" aria-label="Remove problem ${i + 1}">✕</button>
+    <span class="res" id="hwr${i}"></span></div>`).join('');
+}
+function checkHW(i){
+  const p = HW[i], raw = $('#hwi' + i).value.toUpperCase().replace(/[, ]/g, ''), out = $('#hwr' + i);
+  if (!raw) return;
+  let ok;
+  if (p[0] === 'div') { const m = raw.match(/^(\d+)(?:R(\d+))?$/); ok = m && +m[1] === Math.floor(p[1] / p[2]) && (+(m[2] || 0)) === p[1] % p[2]; }
+  else ok = +raw === p[1] * p[2];
+  out.className = 'res ' + (ok ? 'good' : 'bad');
+  out.textContent = ok ? '✓ Correct!' : `✗ Not quite. Tap "Teach me" to find where it went wrong.`;
+  say(out.textContent, true);
+}
+$('#hw').addEventListener('click', e => {
+  const t = e.target.dataset;
+  if (t.teach !== undefined) { const p = HW[+t.teach]; start(p[1], p[0], p[2]); }
+  else if (t.show !== undefined) { const el = $('#hwa' + t.show); el.classList.toggle('hidden'); if (!el.classList.contains('hidden')) say(`The answer is ${el.textContent}.`, true); }
+  else if (t.check !== undefined) checkHW(+t.check);
+  else if (t.del !== undefined) { HW.splice(+t.del, 1); saveHW(); renderHW(); }
+});
+$('#hw').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id.startsWith('hwi')) checkHW(+e.target.id.slice(3)); });
+$('#hwAdd').onclick = () => {
+  const a = +$('#hwA').value, b = +$('#hwB').value;
+  if (!Number.isInteger(a) || !Number.isInteger(b) || a < 1 || b < 1) return;
+  HW.push([$('#hwOp').value, a, b]); saveHW(); renderHW(); $('#hwA').value = ''; $('#hwB').value = '';
+};
+$('#hwReset').onclick = () => { HW = WEEK.slice(); saveHW(); renderHW(); };
+renderHW();
+
+/* =============== LEARNING STYLE + ADAPTIVE =============== */
+function skillOf(f){ return f.tag === 'Carry' ? 'Multiply' : (f.tag || 'Other'); }
+function record(tag, ok){ const s = stats[tag] || (stats[tag] = { r: 0, w: 0 }); ok ? s.r++ : s.w++; store('mc_stats', JSON.stringify(stats)); renderSkills(); }
+function weak(tag){ if (style !== 'auto' && style !== 'see') return false; const s = stats[tag]; return !!s && s.r + s.w >= 3 && s.w / (s.r + s.w) > 0.3; }
+function renderSkills(){
+  const names = ['Divide', 'Multiply', 'Subtract', 'Add'];
+  $('#skills').innerHTML = names.map(n => { const s = stats[n] || { r: 0, w: 0 }, t = s.r + s.w, pc = t ? Math.round(100 * s.r / t) : 0, wk = weak(n);
+    return `<div class="skill"><span>${n}</span><span class="bar ${wk ? 'weak' : ''}"><i style="width:${pc}%"></i></span><span>${t ? pc + '% right' : 'no tries yet'}${wk ? ' · extra help on' : ''}</span></div>`; }).join('');
+}
+const STYLE_NOTES = {
+  auto: 'Adaptive: the app counts which steps he gets right on the first try. When a step gives him trouble, it slows the voice, shows the hint before he answers, and adds a "break it down" line for that step until he improves.',
+  hear: 'Hear it: every step and every paper direction is read aloud slowly, and numbers are spelled digit by digit.',
+  see: 'See it: highlights, the times table helper, and a "break it down" line on every step. Read aloud is off; turn it on any time.',
+  do: 'Do it: he answers each step himself, then writes it on his paper and taps "I wrote it".'
+};
+function applyStyle(s, init){
+  style = s; store('mc_style', s); $('#style').value = s; $('#styleNote').textContent = STYLE_NOTES[s];
+  if (s === 'hear') { talk = true; spell = true; }
+  else if (s === 'see') { talk = false; spell = false; document.querySelector('#work details').open = true; }
+  else { talk = true; spell = false; }
+  if (s === 'do') setMode('practice'); else if (!init && mode === 'practice' && s !== 'auto') setMode('learn');
+  $('#talk').textContent = talk ? '🔊 Read aloud: On' : '🔈 Read aloud: Off';
+  $('#spell').textContent = spell ? '🔤 Spell numbers: On' : '🔤 Spell numbers: Off';
+  renderSkills(); if (P) { lastSpoken = ''; render(); }
+}
+$('#style').onchange = e => applyStyle(e.target.value);
+$('#skillReset').onclick = () => { stats = {}; store('mc_stats', '{}'); renderSkills(); };
+
+/* =============== CONTROLS =============== */
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+$('#go').onclick = () => start(Number($('#numA').value), $('#op').value, Number($('#numB').value));
+$('#rand').onclick = () => {
+  const L = $('#level').value;
+  if (L === 'd1') start(rnd(100, 999), 'div', rnd(2, 9));
+  else if (L === 'd2') start(rnd(1000, 9999), 'div', rnd(11, 89));
+  else if (L === 'm1') start(rnd(11, 99), 'mul', rnd(11, 99));
+  else start(rnd(101, 999), 'mul', rnd(101, 999));
+};
+function setMode(m){
+  mode = m; $('#mLearn').classList.toggle('on', m === 'learn'); $('#mPractice').classList.toggle('on', m === 'practice');
+  if (P) { fi = 0; answered = {}; wrong = {}; lastSpoken = ''; render(); }
+}
+$('#mLearn').onclick = () => setMode('learn');
+$('#mPractice').onclick = () => setMode('practice');
+$('#next').onclick = () => go(fi + 1);
+$('#back').onclick = () => go(fi - 1);
+$('#repeat').onclick = () => { if (P) { lastSpoken = ''; render(); } };
+$('#check').onclick = () => check();
+$('#hintBtn').onclick = showHint;
+$('#ans').addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
+['#numA', '#numB'].forEach(s => $(s).addEventListener('keydown', e => { if (e.key === 'Enter') $('#go').click(); }));
+$('#talk').onclick = () => { talk = !talk; $('#talk').textContent = talk ? '🔊 Read aloud: On' : '🔈 Read aloud: Off'; if (!talk && window.speechSynthesis) speechSynthesis.cancel(); else if (P) { lastSpoken = ''; render(); } };
+$('#spell').onclick = () => { spell = !spell; $('#spell').textContent = spell ? '🔤 Spell numbers: On' : '🔤 Spell numbers: Off'; if (P) { lastSpoken = ''; render(); } };
+applyStyle(style, true);
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; $('#installBtn').classList.remove('hidden'); });
+$('#installBtn').onclick = async () => {
+  if (!deferredInstall) { $('#installHelp').open = true; return; }
+  deferredInstall.prompt(); try { await deferredInstall.userChoice; } catch (e) {} deferredInstall = null; $('#installBtn').classList.add('hidden');
+};
+window.addEventListener('appinstalled', () => $('#installBtn').classList.add('hidden'));
+}
+</script>
+<script src="notify.js" data-app="Math Coach" defer></script>
+</body>
+</html>

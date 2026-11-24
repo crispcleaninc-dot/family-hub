@@ -1,0 +1,17 @@
+{
+  "name": "Math Homework Coach",
+  "short_name": "Math Coach",
+  "description": "Step-by-step long division and multiplication for Ezekiel: read aloud, paper directions, voice questions, homework answers.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1f4e79",
+  "theme_color": "#1f4e79",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
