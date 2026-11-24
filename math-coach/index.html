@@ -210,6 +210,7 @@ details summary{cursor:pointer;font-weight:700}
 </section>
 
 </main>
+<script src="config.js"></script>
 <script>
 {
 const $ = s => document.querySelector(s);
@@ -548,6 +549,28 @@ function logLine(who, text){
   $('#log').prepend(p);
 }
 function reply(text){ logLine('bot', text); say(text, true); }
+const convo = [];
+const RELAY = (window.MATH_COACH_RELAY || '').trim();
+function screenContext(){
+  if (!P) return 'No problem started yet.';
+  const f = frames[fi];
+  return `Problem: ${P.kind === 'div' ? P.a + ' divided by ' + P.b : P.A + ' times ' + P.B} (answer ${answerOf()}). Step ${fi + 1} of ${frames.length}. ` +
+    (pending() ? `The app is asking him: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '');
+}
+async function askAI(question, backup){
+  if (!RELAY || !navigator.onLine) return reply(backup);
+  const thinking = document.createElement('p'); thinking.className = 'bot'; thinking.textContent = 'Thinking…'; $('#log').prepend(thinking);
+  try {
+    const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 20000);
+    const r = await fetch(RELAY, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, signal: ctrl.signal,
+      body: JSON.stringify({ question, name: $('#name').value.trim(), context: screenContext(), history: convo.slice(-8) }) });
+    clearTimeout(timer);
+    const d = await r.json();
+    thinking.remove();
+    if (d.ok && d.answer) { convo.push({ who: 'me', text: question }, { who: 'bot', text: d.answer }); return reply(d.answer); }
+    return reply(backup);
+  } catch (e) { thinking.remove(); return reply(backup); }
+}
 function answerOf(){ return P.kind === 'div' ? (P.R ? `${P.Q} R${P.R}` : `${P.Q}`) : fmt(P.T); }
 const NW = {zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
 function wordsToDigits(t){
@@ -596,14 +619,14 @@ function handleQ(raw){
   if (/(carry|carried)/.test(t)) return reply(`When you get a two-digit number, only the ones digit fits in the box. The tens digit is carried to the next column on the left, and you add it after you multiply there.`);
   if (/(zero|placeholder)/.test(t)) return reply(`The placeholder zero is there because the tens digit is really worth ten times more. The zero moves that row one place to the left.`);
   if (/(answer|what did we get|final)/.test(t)) return P ? reply(`The answer is ${answerOf()}.`) : reply('Give me a problem first.');
-  if (/\bwhy\b/.test(t)) return P ? reply(frames[fi].why || 'This step gets us closer to the answer.') : reply('Start a problem and ask me why at any step.');
+  if (/\bwhy\b/.test(t)) return P ? (RELAY && t.split(' ').length > 2 ? askAI(raw, frames[fi].why || 'This step gets us closer to the answer.') : reply(frames[fi].why || 'This step gets us closer to the answer.')) : reply('Start a problem and ask me why at any step.');
   if (/(don.?t (get|understand|know)|confus|help|explain|how do|stuck|hint)/.test(t)) {
     if (!P) return reply('Tell me the problem, like "9867 divided by 12", and I will walk you through it.');
     const f = frames[fi]; const extra = f.ask ? ' ' + f.ask.hint : '';
-    return reply(pending() ? f.ask.hint + (f.extra ? ' ' + f.extra : '') : ((f.why || '') + ' ' + f.text.replace(/<[^>]+>/g, '') + (f.extra ? ' ' + f.extra : '') + extra));
+    return askAI(raw, pending() ? f.ask.hint + (f.extra ? ' ' + f.extra : '') : ((f.why || '') + ' ' + f.text.replace(/<[^>]+>/g, '') + (f.extra ? ' ' + f.extra : '') + extra));
   }
   if (/(what (step|do i do)|now what)/.test(t)) return P ? reply(pending() ? frames[fi].ask.q : $('#explain').textContent) : reply('Give me a problem first.');
-  reply(`I can help with division and multiplication. Try asking "what is 2976 divided by 83", "how many times does 15 go into 88", "why", "next", "repeat", or "what's the answer".`);
+  askAI(raw, `I can help with division and multiplication. Try asking "what is 2976 divided by 83", "how many times does 15 go into 88", "why", "next", "repeat", or "what's the answer".`);
 }
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let rec = null, talkMode = false, misses = 0;
