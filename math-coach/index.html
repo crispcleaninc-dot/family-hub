@@ -124,6 +124,8 @@ button:disabled{opacity:.4;cursor:default;transform:none}
 #toast.show{transform:translate(-50%,0);opacity:1}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden,.cell.gone{display:none!important}
+#storyPlan{background:#123a5c;border-radius:14px;padding:10px 12px;margin-bottom:10px}
+.planstep{padding:5px 8px;border-radius:10px;margin:3px 0}.planstep.cur{background:rgba(255,204,51,.18);border:1px solid rgba(255,204,51,.5)}
 .lockrow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.1fr);gap:8px;align-items:center;padding:10px;border-radius:14px;background:#2a237a;margin:6px 0;font-size:.95rem}
 .lockrow select{min-height:42px;font-size:.95rem;padding:6px}
 .lockrow .st{font-weight:800}
@@ -206,6 +208,7 @@ details summary{cursor:pointer;font-weight:700}
 </section>
 
 <section class="card hidden" id="work">
+  <div id="storyPlan" class="hidden"></div>
   <div class="title" id="probTitle"></div>
   <div class="chips" id="chips"></div>
   <div class="board-wrap"><div class="board" id="board"></div></div>
@@ -365,7 +368,7 @@ const OPS = { div: 'Long division', mul: 'Multiplication' };
 function gameFor(id){ try { return JSON.parse(localStorage.getItem(id === 'Ezekiel' ? 'mc_game' : 'mc_game__' + id) || '{}'); } catch (e) { return {}; } }
 function profOf(g, op){ const p = (g.prof || {})[op] || { solved: 0, asked: 0, first: 0 }; const acc = p.asked ? p.first / p.asked : 0; return { ...p, acc, mastered: p.solved >= 3 && p.asked >= 10 && acc >= 0.85 }; }
 function lockSetting(id, op){ return ((PARENT.locks || {})[id] || {})[op] || 'auto'; }
-function isLocked(op, id){ id = id || STUDENT || 'Ezekiel'; const s = lockSetting(id, op); if (s === 'locked') return true; if (s === 'unlocked') return false; return profOf(gameFor(id), op).mastered; }
+function isLocked(op, id){ if (!OPS[op]) return false; id = id || STUDENT || 'Ezekiel'; const s = lockSetting(id, op); if (s === 'locked') return true; if (s === 'unlocked') return false; return profOf(gameFor(id), op).mastered; }
 function pickStudent(id){ try { localStorage.setItem('mc_profile', id); } catch (e) {} location.reload(); }
 
 let P = null, frames = [], fi = 0, mode = 'learn', answered = {}, wrong = {}, stars = 0;
@@ -622,10 +625,73 @@ function framesMul(){
   return F;
 }
 
+/* =============== ADDITION / SUBTRACTION (for story steps) =============== */
+function solveAS(A, B, op){ if (op === 'sub' && B > A) { const t = A; A = B; B = t; } return { kind: op, A, B, T: op === 'add' ? A + B : A - B, as: String(A).split('').map(Number), bs: String(B).split('').map(Number) }; }
+const PLACE = ['ones', 'tens', 'hundreds', 'thousands', 'ten-thousands', 'hundred-thousands', 'millions'];
+function gridAS(){
+  const W = Math.max(String(P.A).length, String(P.B).length, String(P.T).length) + 1;
+  const g = blank(4, W);
+  for (let c = 0; c < W; c++) { g[0][c] = { ch: '', cls: ['carry'] }; g[2][c] = { ch: '', cls: ['under'] }; }
+  P.as.forEach((v, j) => g[1][W - P.as.length + j] = { ch: v, cls: [] });
+  P.bs.forEach((v, j) => g[2][W - P.bs.length + j] = { ch: v, cls: ['under'] });
+  g[2][W - Math.max(P.as.length, P.bs.length) - 1] = { ch: P.kind === 'add' ? '+' : '−', cls: ['under'] };
+  const ts = String(P.T);
+  for (let t = 0; t < ts.length; t++) g[3][W - 1 - t] = { ch: ts[ts.length - 1 - t], cls: [], g: 's' + (W - 1 - t) };
+  P.W = W;
+  return { g, tpl: `repeat(${W}, 1.3em)` };
+}
+function framesAS(){
+  const F = [], W = P.W, ts = String(P.T), n = Math.max(P.as.length, P.bs.length);
+  const dig = (arr, c) => { const k = c - (W - arr.length); return k >= 0 && k < arr.length ? arr[k] : 0; };
+  const cell = (r, c) => r + '_' + c;
+  if (P.kind === 'add') {
+    F.push({ tag: 'Line up', text: `Let's add <b>${P.A}</b> + <b>${P.B}</b>. Line the numbers up by place value, ones under ones. Start on the right.`, paper: `Write ${P.A} on top and ${P.B} under it, lined up on the right. Draw a line under them.`, hl: [], marks: {} });
+    let carry = 0; const marks = {};
+    for (let t = 0; t < n || carry; t++) {
+      const c = W - 1 - t, a = dig(P.as, c), b = dig(P.bs, c), sum = a + b + carry, cin = carry, last = t >= ts.length - 1;
+      carry = Math.floor(sum / 10);
+      const write = last ? sum : sum % 10;
+      if (!last && carry) marks[c - 1] = String(carry);
+      F.push({ tag: carry && !last ? 'Carry' : 'Add', text: `<b>Add</b> the ${PLACE[t]} column: ${a} + ${b}` + (cin ? ` + the carried ${cin}` : '') + ` = ${sum}.` + (!last && carry ? ` Write <b>${sum % 10}</b> and carry the <b>${carry}</b>.` : ` Write <b>${write}</b>.`),
+        paper: `Under the line, write <b>${write}</b> in the ${PLACE[t]} column` + (!last && carry ? `, and a small <b>${carry}</b> above the next column.` : '.'),
+        hl: [cell(1, c), cell(2, c), cell(3, c)], reveal: ['s' + c].concat(last && write >= 10 ? ['s' + (c - 1)] : []), marks: Object.assign({}, marks),
+        ask: { q: `What is ${a} + ${b}` + (cin ? ` + ${cin}` : '') + `?`, a: sum, hint: `Add the numbers in the ${PLACE[t]} column one at a time.` },
+        why: `When a column adds up to 10 or more, the tens part carries to the next column on the left.` });
+      if (last) break;
+    }
+  } else {
+    F.push({ tag: 'Line up', text: `Let's subtract <b>${P.A}</b> − <b>${P.B}</b>. Put the bigger number on top and line them up by place value. Start on the right.`, paper: `Write ${P.A} on top and ${P.B} under it, lined up on the right, with a minus sign. Draw a line under them.`, hl: [], marks: {} });
+    const top = []; for (let c = 0; c < W; c++) top[c] = dig(P.as, c);
+    const marks = {};
+    for (let t = 0; t < String(P.A).length; t++) {
+      const c = W - 1 - t, b = dig(P.bs, c);
+      if (top[c] < b) {
+        let k = c - 1; while (k >= 0 && top[k] === 0) k--;
+        const chain = []; top[k] -= 1; marks[k] = String(top[k]); chain.push(k);
+        for (let z = k + 1; z < c; z++) { top[z] = 9; marks[z] = '9'; chain.push(z); }
+        const before = top[c]; top[c] += 10; marks[c] = String(top[c]);
+        F.push({ tag: 'Borrow', text: `<b>Borrow:</b> ${before} is smaller than ${b}, so we can't take ${b} away yet. Borrow 1 from the ${PLACE[W - 1 - k]} column` + (chain.length > 1 ? `, and the zero${chain.length > 2 ? 's' : ''} in between turn${chain.length > 2 ? '' : 's'} into 9` : '') + `. Now the ${PLACE[t]} digit is <b>${top[c]}</b>.`,
+          paper: `Cross out the digit${chain.length > 1 ? 's' : ''} you borrowed from and write the new small numbers above: ${chain.map(z => top[z]).join(', ')}. Write a small <b>${top[c]}</b> above the ${PLACE[t]} column.`,
+          hl: chain.map(z => cell(1, z)).concat([cell(1, c), cell(0, c)]), marks: Object.assign({}, marks),
+          why: `Borrowing trades 1 from the next place for 10 in this place. The number on top stays the same, it's just regrouped.` });
+      }
+      const diff = top[c] - b, last = t === String(P.A).length - 1, lead0 = last && diff === 0 && t > 0;
+      F.push({ tag: 'Subtract', text: `<b>Subtract</b> the ${PLACE[t]} column: ${top[c]} − ${b} = <b>${diff}</b>.` + (lead0 ? ` We don't write a zero in front.` : ` Write ${diff}.`),
+        paper: lead0 ? `Leave the ${PLACE[t]} spot empty, because a zero in front doesn't count.` : `Under the line, write <b>${diff}</b> in the ${PLACE[t]} column.`,
+        hl: [cell(1, c), cell(2, c), cell(3, c)], reveal: lead0 ? [] : ['s' + c], marks: Object.assign({}, marks),
+        ask: { q: `What is ${top[c]} − ${b}?`, a: diff, hint: `Start at ${top[c]} and count back ${b}.` },
+        why: `We subtract one place at a time, starting with the ones.` });
+    }
+  }
+  F.push({ tag: '', text: `🎉 Done${esc(who())}! <b>${fmt(P.A)} ${P.kind === 'add' ? '+' : '−'} ${fmt(P.B)} = ${fmt(P.T)}</b>.` + (P.kind === 'sub' ? `<br>Check it: ${fmt(P.T)} + ${fmt(P.B)} = ${fmt(P.T + P.B)}. ✓` : `<br>Check it: ${fmt(P.T)} − ${fmt(P.B)} = ${fmt(P.A)}. ✓`), hl: [], marks: frames.length ? {} : {} });
+  F[F.length - 1].marks = Object.assign({}, F[F.length - 2] ? F[F.length - 2].marks : {});
+  return F;
+}
+
 /* =============== BOARD + RENDER =============== */
 function blank(rows, cols){ const g = []; for (let r = 0; r < rows; r++) { g[r] = []; for (let c = 0; c < cols; c++) g[r][c] = { ch: '', cls: [] }; } return g; }
 function buildBoard(){
-  const { g, tpl } = P.kind === 'div' ? gridDiv() : gridMul();
+  const { g, tpl } = P.kind === 'div' ? gridDiv() : P.kind === 'mul' ? gridMul() : gridAS();
   const b = $('#board'); b.innerHTML = ''; b.style.gridTemplateColumns = tpl;
   g.forEach((row, r) => row.forEach((x, c) => {
     const el = document.createElement('div');
@@ -655,12 +721,13 @@ function render(){
     el.classList.toggle('new', !!g && fresh.has(g));
     el.classList.toggle('hl', (f.hl || []).includes(el.dataset.id));
   });
+  if (P.kind === 'add' || P.kind === 'sub') { const mk = (frames[pend ? Math.max(0, fi - 1) : fi].marks) || {}; document.querySelectorAll('#board .cell').forEach(el => { const [r, c] = el.dataset.id.split('_'); if (r === '0') el.textContent = mk[c] || ''; }); }
   const rowsMap = {};
   document.querySelectorAll('#board .cell').forEach(el => { const r = el.dataset.id.split('_')[0]; (rowsMap[r] = rowsMap[r] || []).push(el); });
   Object.values(rowsMap).forEach(cells => { const show = cells.some(el => !el.classList.contains('hide') && el.textContent !== ''); cells.forEach(el => el.classList.toggle('gone', !show)); });
-  const tags = P.kind === 'div' ? ['Divide', 'Multiply', 'Subtract', 'Bring down'] : ['Multiply', 'Carry', 'Placeholder', 'Add'];
+  const tags = P.kind === 'div' ? ['Divide', 'Multiply', 'Subtract', 'Bring down'] : P.kind === 'mul' ? ['Multiply', 'Carry', 'Placeholder', 'Add'] : P.kind === 'add' ? ['Line up', 'Add', 'Carry'] : ['Line up', 'Borrow', 'Subtract'];
   $('#chips').innerHTML = tags.map(t => `<span class="chip ${t === f.tag ? 'on' : ''}">${t}</span>`).join('');
-  $('#probTitle').textContent = P.kind === 'div' ? `${P.a} ÷ ${P.b}` : `${P.A} × ${P.B}`;
+  $('#probTitle').textContent = P.kind === 'div' ? `${P.a} ÷ ${P.b}` : `${P.A} ${({ mul: '×', add: '+', sub: '−' })[P.kind]} ${P.B}`;
   $('#practice').classList.toggle('hidden', !pend);
   $('#explain').classList.toggle('hidden', pend);
   const showExtra = !!f.extra && (style === 'see' || weak(skillOf(f)));
@@ -676,6 +743,7 @@ function render(){
     say(f.ask.q + (weak(skillOf(f)) ? ' Take your time with this one.' : ''), false, justWrongClip ? [] : (f.tag ? [{ clip: tagClip(f.tag) }] : []));
     justWrongClip = false;
   } else {
+    if (fi === frames.length - 1) finishStoryStep();
     $('#explain').innerHTML = (mode === 'practice' && f.ask && answered[fi] === 'star' ? '✅ Right! ' : '') + f.text;
     if (fi === frames.length - 1 && P.story && P.story.after) $('#explain').innerHTML += '<br>📖 <b>Story answer:</b> ' + esc(P.story.after);
     let body = $('#explain').textContent.replace(/^✅ Right! /, '');
@@ -685,18 +753,21 @@ function render(){
     const post = []; if (!$('#extra').classList.contains('hidden')) post.push($('#extra').textContent);
     if (f.paper) { const pt = $('#paper').textContent.replace('✏️ On your paper: ', ''); if (momHas('paper')) post.push({ clip: 'paper' }, pt); else post.push('On your paper: ' + pt); }
     if (fi === frames.length - 1 && P.story && P.story.after) post.push(P.story.after);
+    if (fi === frames.length - 1 && storyHasNext()) { $('#explain').innerHTML += `<br>▶ Keep that answer, <b>${fmt(STORY.results[STORY.i])}</b>. Tap <b>Next story step</b> for step ${STORY.i + 2}.`; post.push(`Keep that answer, ${fmt(STORY.results[STORY.i])}. Tap next story step when you're ready.`); }
     if (fi === frames.length - 1) post.push({ clip: 'done' });
     say(body, justRight, pre, post); justRight = false;
   }
   $('#back').disabled = fi === 0;
-  $('#next').disabled = pend || fi === frames.length - 1;
-  $('#next').textContent = fi === frames.length - 2 ? 'See answer ▶' : (f.paper && fi > 0 ? 'I wrote it ▶' : 'Next ▶');
+  if (fi === frames.length - 1) finishStoryStep();
+  $('#next').disabled = pend || (fi === frames.length - 1 && !storyHasNext());
+  $('#next').textContent = fi === frames.length - 1 && storyHasNext() ? 'Next story step ▶' : fi === frames.length - 2 ? 'See answer ▶' : (f.paper && fi > 0 ? 'I wrote it ▶' : 'Next ▶');
   $('#stepCount').textContent = `Step ${fi + 1} of ${frames.length}`;
   $('#stepFill').style.width = Math.round(100 * (fi + 1) / frames.length) + '%';
   if (fi === frames.length - 1) problemDone();
   saveSession();
   drawPic();
   $('#stars').textContent = mode === 'practice' ? `⭐ ${stars}` : '';
+  document.querySelector('#work details').classList.toggle('hidden', P.kind === 'add' || P.kind === 'sub');
   const tb = f.tbl || (P.kind === 'div' ? P.d : P.bs[P.bs.length - 1]);
   let t = '';
   for (let k = 1; k <= 9; k++) t += `<div class="${!pend && f.pick === k ? 'pick' : ''}">${tb} × ${k} = ${tb * k}</div>`;
@@ -740,14 +811,16 @@ function check(val){
 function showHint(){ const h = $('#hint'); h.textContent = '💡 ' + frames[fi].ask.hint; h.classList.remove('hidden'); say(frames[fi].ask.hint, true, momHas('hint') ? [{ clip: 'hint' }] : []); }
 
 function start(a, op, b, quiet, resume){
+  if (STORY && !storyStarting) { STORY = null; setTimeout(renderPlan, 0); }
   $('#err').textContent = '';
   if (!Number.isInteger(a) || !Number.isInteger(b) || a < 1 || b < 1) { $('#err').textContent = 'Enter two whole numbers bigger than 0.'; return false; }
   if (op === 'div' && (a > 999999999 || b > 9999)) { $('#err').textContent = 'For division, use up to 9 digits ÷ up to 4 digits.'; return false; }
   if (op === 'mul' && (a > 99999 || b > 9999)) { $('#err').textContent = 'For multiplication, use up to 5 digits × up to 4 digits.'; return false; }
-  $('#numA').value = a; $('#numB').value = b; $('#op').value = op;
-  P = op === 'div' ? solveDiv(a, b) : solveMul(a, b);
+  if ((op === 'add' || op === 'sub') && (a > 9999999 || b > 9999999)) { $('#err').textContent = 'Use numbers up to 7 digits.'; return false; }
+  if (op === 'div' || op === 'mul') { $('#numA').value = a; $('#numB').value = b; $('#op').value = op; }
+  P = op === 'div' ? solveDiv(a, b) : op === 'mul' ? solveMul(a, b) : solveAS(a, b, op);
   buildBoard();
-  frames = op === 'div' ? framesDiv() : framesMul();
+  frames = op === 'div' ? framesDiv() : op === 'mul' ? framesMul() : framesAS();
   fi = 0; answered = {}; wrong = {}; lastSpoken = '';
   P.sid = resume ? resume.id : Date.now();
   if (isLocked(op) && mode === 'learn') { mode = 'practice'; $('#mLearn').classList.remove('on'); $('#mPractice').classList.add('on'); toast(`🔒 Show me how is locked for ${OPS[op].toLowerCase()}. You've got this!`); }
@@ -775,7 +848,7 @@ const RELAY = (window.MATH_COACH_RELAY || '').trim();
 function screenContext(){
   if (!P) return 'No problem started yet.';
   const f = frames[fi];
-  return `Problem: ${P.kind === 'div' ? P.a + ' divided by ' + P.b : P.A + ' times ' + P.B} (answer ${answerOf()}). Step ${fi + 1} of ${frames.length}. ` +
+  return `Problem: ${P.kind === 'div' ? P.a + ' divided by ' + P.b : P.A + ' ' + ({ mul: 'times', add: 'plus', sub: 'minus' })[P.kind] + ' ' + P.B} (answer ${answerOf()}). Step ${fi + 1} of ${frames.length}. ` +
     (pending() ? `The app is asking the student: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '') +
     (isLocked(P.kind) && !P.completed ? ' IMPORTANT: answers are locked by the parent for this skill. Do NOT say the final answer or the answer to the current step. Coach with hints and questions only.' : '');
 }
@@ -794,6 +867,7 @@ async function askAI(question, backup){
   } catch (e) { thinking.remove(); return reply(backup); }
 }
 function answerOf(){ return P.kind === 'div' ? (P.R ? `${P.Q} R${P.R}` : `${P.Q}`) : fmt(P.T); }
+const SIGN = { div: '÷', mul: '×', add: '+', sub: '−' };
 const NW = {zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
 function wordsToDigits(t){
   const w = Object.keys(NW).join('|');
@@ -836,7 +910,7 @@ function handleQ(raw){
   if (/(stop talking|stop listening|i.?m done for|bye|goodbye|that.?s all)/.test(t)) { setTalkMode(false); return reply('Okay. Tap Talk with me when you want to keep going.'); }
   if (/(new problem|another (1|one|problem)|give me (1|one|a problem)|practice problem)/.test(t)) { $('#rand').click(); return; }
   if (/\b(hello|hi there|hey)\b/.test(t) && !P) return reply(`Hi${who()}! Tell me your problem, like "6889 divided by 53" or "318 times 879", and we'll do it together.`);
-  if (/(i wrote it|wrote it|i.?m done|done|got it|finished|ready|yes|yeah|yep|what.?s next)/.test(t) && P && !pending()) { if (fi < frames.length - 1) { go(fi + 1); logLine('bot', $('#explain').textContent); } else reply(`That's the whole problem. Say "new problem" or tell me the next one from your homework.`); return; }
+  if (/(i wrote it|wrote it|i.?m done|done|got it|finished|ready|yes|yeah|yep|what.?s next)/.test(t) && P && !pending()) { if (fi < frames.length - 1) { go(fi + 1); logLine('bot', $('#explain').textContent); } else if (!nextStoryStep()) reply(`That's the whole problem. Say "new problem" or tell me the next one from your homework.`); return; }
   if (/\b(next|go on|continue|keep going|okay|ok)\b/.test(t)) { if (!P) return reply('Give me a problem first.'); if (pending()) return reply(`First answer this one: ${frames[fi].ask.q}`); go(fi + 1); logLine('bot', $('#explain').textContent); return; }
   if (/\b(back|previous|before)\b/.test(t)) { if (P) { go(fi - 1); logLine('bot', $('#explain').textContent); } return; }
   if (/(repeat|again|say that|what did you say|didn.?t hear)/.test(t)) { if (P) { lastSpoken = ''; render(); } return; }
@@ -1162,7 +1236,16 @@ function drawPic(){
   box.classList.remove('hidden');
   const f = frames[fi], pend = pending();
   let svg = '', cap = '';
-  if (P.kind === 'div') {
+  if (P.kind === 'add' || P.kind === 'sub') {
+    const W = 400, mx = Math.max(P.A, P.B, P.T), w = v => Math.max(6, Math.round(W * v / mx));
+    const bars = P.kind === 'add' ? [[P.A, '#3ee0ff'], [P.B, '#9dff5c']] : [[P.A, '#3ee0ff']];
+    let g2 = '', y = 10;
+    if (P.kind === 'add') { g2 += `<rect x="0" y="${y}" width="${w(P.A)}" height="26" rx="8" fill="#3ee0ff"/><rect x="${w(P.A)}" y="${y}" width="${w(P.B)}" height="26" rx="8" fill="#9dff5c"/><text x="6" y="${y + 18}" fill="#1a1442" font-size="14" font-weight="800">${fmt(P.A)} + ${fmt(P.B)}</text>`; }
+    else { g2 += `<rect x="0" y="${y}" width="${w(P.A)}" height="26" rx="8" fill="#3ee0ff"/><rect x="${w(P.T)}" y="${y}" width="${w(P.A) - w(P.T)}" height="26" rx="8" fill="#ff6b8b" opacity=".85"/><text x="6" y="${y + 18}" fill="#1a1442" font-size="14" font-weight="800">${fmt(P.A)} take away ${fmt(P.B)}</text>`; }
+    const done = fi === frames.length - 1;
+    svg = svgWrap(W, 50, g2);
+    cap = P.kind === 'add' ? `Putting <b>${fmt(P.A)}</b> and <b>${fmt(P.B)}</b> together` + (done ? ` makes <b>${fmt(P.T)}</b>.` : '.') : `Start with <b>${fmt(P.A)}</b> and take away <b>${fmt(P.B)}</b> (the pink part)` + (done ? `. <b>${fmt(P.T)}</b> is left.` : '.');
+  } else if (P.kind === 'div') {
     const idx = P.steps.findIndex((st, i) => f.reveal && (f.reveal.includes('q' + i) || f.reveal.includes('p' + i) || f.reveal.includes('r' + i) || f.reveal.includes('b' + i)));
     const st = idx >= 0 ? P.steps[idx] : null;
     if (st && f.tag !== 'Bring down') {
@@ -1208,7 +1291,7 @@ function renderSessions(){
   const box = $('#sessions');
   if (!SESS.length) { box.innerHTML = '<p class="small">Nothing saved yet. Start a problem and it will show up here.</p>'; }
   else box.innerHTML = SESS.map((x, i) => `<div class="hwitem ${x.done ? 'cleared' : ''}">
-    <span class="q">${x.done ? '✅' : '⏸️'} ${x.a} ${x.op === 'div' ? '÷' : '×'} ${x.b}</span>
+    <span class="q">${x.done ? '✅' : '⏸️'} ${x.a} ${SIGN[x.op] || '×'} ${x.b}</span>
     <span class="small" style="flex-basis:100%">${x.done ? 'Finished' : `Step ${x.fi + 1} of ${x.total}`} · ${x.mode === 'practice' ? 'Let me try' : 'Show me how'} · ${ago(x.updated)}</span>
     <button class="sm ${x.done ? 'alt' : ''}" data-resume="${i}">${x.done ? 'Look again' : '▶ Continue'}</button>
     ${x.done ? `<button class="sm alt" data-redo="${i}">Do it again</button>` : ''}
@@ -1270,16 +1353,29 @@ document.getElementById('lockRows').addEventListener('change', e => {
 /* =============== STORY (WORD) PROBLEMS =============== */
 function looksLikeStory(t){ const words = t.split(/\s+/).length, n = (t.match(/\d+/g) || []).length; return words >= 12 && n >= 2 && /(how many|how much|each|total|altogether|in all|left|share|split|equal|per |groups?|rows?|spend|cost|buy|save|more than|fewer)/.test(t); }
 function guessStory(t){
-  const nums = (t.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n > 0);
+  // Built-in reader (used when the AI tutor isn't available). Understands the common 4th–5th grade patterns.
+  const q = (t.split(/[.!]\s+/).filter(x => /\?|how many|how much/.test(x)).pop() || t);
+  const EACH = '(?:each|apiece|a piece|per \\w+|a pair|a box|a pack|a bag|for one)';
+  const cp = t.match(new RegExp('(\\d+)\\s+(?:[a-z]+\\s+){0,3}?(?:for|at|that cost|costing|cost)\\s+\\$?(\\d+)\\s*' + EACH))
+          || t.match(new RegExp('(\\d+)\\s+(?:[a-z]+\\s+){0,3}?(?:with|of)\\s+(\\d+)\\s+(?:[a-z]+\\s+){0,2}?(?:in each|each|per)'));
+  const priceOnly = t.match(new RegExp('\\$?(\\d+)\\s*' + EACH));
+  const tot = t.match(/(?:saved|has|had|have|earned|got|with|starts? with|collected|there (?:are|were))\s+\$?(\d+)/);
+  const nums = (t.match(/\d+/g) || []).map(Number);
+  const wantsLeft = /(left|change|remain|still)/.test(q), wantsTotal = /(in all|altogether|total|how much (?:did|does|will|would) .*(?:cost|spend|pay)|combined)/.test(q);
+  const howMany = /how many/.test(q);
+  if (cp) {
+    const n = +cp[1], per = +cp[2];
+    if (tot && wantsLeft && +tot[1] !== n) return { op: 'multi', steps: [{ op: 'mul', a: n, b: per, label: 'the cost of all of them' }, { op: 'sub', a: +tot[1], b: 'S1', label: 'how much is left' }] };
+    if (wantsTotal || !tot) return { op: 'mul', a: n, b: per };
+  }
+  if (tot && priceOnly && howMany && +priceOnly[1] !== +tot[1]) return { op: 'div', a: +tot[1], b: +priceOnly[1] };
   if (nums.length < 2) return null;
   const big = Math.max(...nums), small = nums.find(n => n !== big) ?? nums[1];
-  let op = null;
-  if (/(each|per|apiece|equally|equal groups|share|split|divide|how many (items|.*can (she|he|they|you) (buy|make|fill|get))|how many (groups|bags|boxes|teams|packs))/.test(t) && /(how many|how much)/.test(t)) op = 'div';
-  if (/(in all|altogether|total)/.test(t) && /(each|per|rows? of|groups? of|packs? of|boxes of)/.test(t)) op = 'mul';
-  if (!op && /(left|remain|fewer|less than|how many more|difference|spent)/.test(t)) op = 'sub';
-  if (!op && /(in all|altogether|total|combined|sum)/.test(t)) op = 'add';
-  if (!op) return null;
-  return op === 'mul' ? { op, a: nums[0], b: nums[1] } : { op, a: big, b: small };
+  if (/(share|split|equally|equal groups|divide|each get|per (?:box|bag|row|team|group))/.test(t) && howMany) return { op: 'div', a: big, b: small };
+  if (/(rows? of|groups? of|packs? of|boxes of|bags of|each has|in each)/.test(t) && /(in all|altogether|total|how many)/.test(q)) return { op: 'mul', a: nums[0], b: nums[1] };
+  if (/(left|remain|fewer|less than|how many more|difference|spent|gave away|lost|ate)/.test(t)) return { op: 'sub', a: big, b: small };
+  if (/(in all|altogether|total|combined|sum|more)/.test(t)) return { op: 'add', a: nums[0], b: nums[1] };
+  return null;
 }
 function storyExplain(g, raw){
   const t = raw.toLowerCase(), money = /\$|dollar|cost|price|saved|spend/.test(t);
@@ -1295,34 +1391,69 @@ function storyExplain(g, raw){
   return { lead: `This is an addition story problem. Put ${g.a} and ${g.b} together. Line them up by place value and add, starting on the right.`, after: `${g.a} + ${g.b} = ${g.a + g.b}.` };
 }
 let storyAfter = '';
+/* Multi-step story problems: the AI (or the built-in reader) makes a plan of steps; each step runs on the board,
+   and its answer carries into the next step ("S1" = the answer to step 1). */
+let STORY = null, storyStarting = false;
+const VERB = { div: 'divide', mul: 'multiply', add: 'add', sub: 'subtract' };
+function storyVal(v){ if (typeof v === 'string' && /^s\d+$/i.test(v.trim())) return STORY ? STORY.results[+v.trim().slice(1) - 1] : NaN; return Math.round(Number(String(v).replace(/[$,]/g, ''))); }
+function renderPlan(){
+  const box = $('#storyPlan');
+  if (!STORY) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  box.innerHTML = `<div class="small" style="margin-bottom:6px">📖 ${esc(STORY.text.length > 160 ? STORY.text.slice(0, 157) + '…' : STORY.text)}</div>` +
+    STORY.steps.map((st, i) => { const a = storyVal(st.a), b = storyVal(st.b), known = Number.isFinite(a) && Number.isFinite(b);
+      const state = i < STORY.i || STORY.results[i] !== undefined ? '✅' : i === STORY.i ? '▶' : '⬜';
+      return `<div class="planstep ${i === STORY.i ? 'cur' : ''}">${state} <b>Step ${i + 1}:</b> ${esc(st.label || VERB[st.op])} — ${known ? `${fmt(a)} ${SIGN[st.op]} ${fmt(b)}` : `${VERB[st.op]} using the answer from step ${String(st.a).toUpperCase().startsWith('S') ? st.a.slice(1) : st.b.slice(1)}`}${STORY.results[i] !== undefined ? ` = <b>${fmt(STORY.results[i])}</b>` : ''}</div>`; }).join('') +
+    (STORY.done ? `<div class="planstep cur">📖 <b>Story answer:</b> ${esc(STORY.after || '')}</div>` : '');
+}
+function storyHasNext(){ return !!(STORY && P && P.storyStep === STORY.i && STORY.results[STORY.i] !== undefined && STORY.i < STORY.steps.length - 1); }
+function runStoryStep(i){
+  STORY.i = i; const st = STORY.steps[i];
+  let a = storyVal(st.a), b = storyVal(st.b);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || a < 1 || b < 1) { reply(`Step ${i + 1} needs a number I couldn't figure out. Try typing the story problem again.`); return; }
+  if (st.op === 'sub' && b > a) { const t = a; a = b; b = t; }
+  storyStarting = true; const ok = start(a, st.op, b, true); storyStarting = false; if (!ok) return;
+  P.storyStep = i; renderPlan();
+  const intro = `Step ${i + 1} of ${STORY.steps.length}: ${st.label ? st.label + '. ' : ''}We ${VERB[st.op]} ${fmt(a)} ${({ div: 'by', mul: 'by', add: 'and', sub: 'minus' })[st.op]} ${fmt(b)}.`;
+  logLine('bot', intro); lastSpoken = ''; say(intro, true);
+  setTimeout(() => { lastSpoken = ''; render(); }, 3200);
+}
+function finishStoryStep(){
+  if (!STORY || !P || P.storyStep !== STORY.i || STORY.results[STORY.i] !== undefined) return;
+  STORY.results[STORY.i] = P.kind === 'div' ? P.Q : P.T;
+  if (STORY.i === STORY.steps.length - 1) { STORY.done = true; P.story = { after: STORY.after || `The answer to the story is ${fmt(STORY.results[STORY.i])}.` }; }
+  renderPlan();
+}
+function nextStoryStep(){ if (storyHasNext()) { runStoryStep(STORY.i + 1); return true; } return false; }
+function planFromGuess(g){ return g.steps ? g.steps : [{ op: g.op, a: g.a, b: g.b, label: '' }]; }
 async function solveStory(raw){
   const t = wordsToDigits(raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/\$\s*/g, '$'));
-  let g = null, aiLead = '';
+  let steps = null, lead = '', after = '';
   if (RELAY && navigator.onLine) {
     const thinking = document.createElement('p'); thinking.className = 'bot'; thinking.textContent = 'Reading your story problem…'; $('#log').prepend(thinking);
     try {
-      const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 20000);
-      const q = 'STORY PROBLEM MODE. Read this word problem and reply with ONLY one line of JSON, no other words: {"op":"div|mul|add|sub|multi","a":first number for the long-division or multiplication setup,"b":second number,"lead":"2 to 3 spoken sentences for a child explaining which numbers matter, what the question is asking, and which operation to use and why, without giving the final answer","after":"one sentence giving the final answer in story words, including what any remainder means"}. Word problem: ' + raw;
+      const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 25000);
+      const q = 'STORY PROBLEM MODE. Read this word problem and break it into the arithmetic steps a 5th grader would do, in order. Reply with ONLY one line of JSON, no other words: ' +
+        '{"steps":[{"op":"add|sub|mul|div","a":number or "S1" for the answer of step 1,"b":number or "S2" etc.,"label":"a few words saying what this step finds, in story words"}],' +
+        '"lead":"2 to 3 spoken sentences for a child: which numbers matter, what the question asks, how many steps and why, without giving any answers",' +
+        '"after":"one sentence giving the final answer in story words, including what any remainder means"}. ' +
+        'Rules: use whole numbers only; for division "a" is the number being divided; for "how many can she buy" use the quotient; at most 4 steps. Word problem: ' + raw;
       const r = await fetch(RELAY, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, signal: ctrl.signal, body: JSON.stringify({ question: q, name: $('#name').value.trim(), context: 'The student is reading a story problem from homework.' }) });
       clearTimeout(tm); const d = await r.json(); thinking.remove();
       const js = d.ok && d.answer && d.answer.match(/\{[\s\S]*\}/);
-      if (js) { const o = JSON.parse(js[0]); if (o && o.op && +o.a > 0 && +o.b > 0) { g = { op: o.op, a: Math.round(+o.a), b: Math.round(+o.b) }; aiLead = o.lead || ''; storyAfter = o.after || ''; } }
+      if (js) {
+        const o = JSON.parse(js[0]);
+        if (o && Array.isArray(o.steps) && o.steps.length && o.steps.every(x => VERB[x.op])) { steps = o.steps.slice(0, 4); lead = o.lead || ''; after = o.after || ''; }
+        else if (o && VERB[o.op] && +o.a > 0 && +o.b > 0) { steps = [{ op: o.op, a: +o.a, b: +o.b, label: '' }]; lead = o.lead || ''; after = o.after || ''; }
+      }
     } catch (e) { thinking.remove(); }
   }
-  if (!g) { g = guessStory(t); if (g) { const ex = storyExplain(g, raw); aiLead = ex.lead; storyAfter = ex.after; } }
-  if (!g) return reply(`I couldn't find the numbers in that story yet. Read it again slowly, or type it in the story problem box, and make sure the question at the end is included.`);
-  if (g.op === 'div' || g.op === 'mul') {
-    const locked = isLocked(g.op);
-    if (!aiLead) { const ex = storyExplain(g, raw); aiLead = ex.lead; storyAfter = ex.after; }
-    if (start(g.a, g.op, g.b, true)) {
-      reply(aiLead + (locked ? ` Now you work it out on your paper, one step at a time.` : ` Let's work it out together, step by step.`));
-      if (P) P.story = { text: raw, after: storyAfter };
-      setTimeout(render, 600);
-    }
-    return;
-  }
-  const ex = storyExplain(g, raw);
-  return reply((aiLead || ex.lead) + (isLocked('div') && isLocked('mul') ? '' : ' ' + (storyAfter || ex.after)));
+  if (!steps) { const g = guessStory(t); if (g) { steps = planFromGuess(g); if (!g.steps) { const ex = storyExplain(g, raw); lead = ex.lead; after = ex.after; } else { lead = `First we find how much everything costs, then how much is left.`; } } }
+  if (!steps) return reply(`I couldn't find the numbers in that story yet. Read it again slowly, or type it in the story problem box, and make sure the question at the end is included.`);
+  STORY = { text: raw, steps, i: 0, results: [], after, done: false };
+  const how = steps.length > 1 ? ` This story has ${steps.length} steps: ` + steps.map((x, k) => `step ${k + 1}, ${VERB[x.op]}${x.label ? ' to find ' + x.label.toLowerCase() : ''}`).join('; ') + '.' : '';
+  reply((lead || `Let's figure out what this story is asking.`) + how + (steps.some(x => isLocked(x.op)) ? ' You do the work on your paper, one step at a time.' : ` Let's do it together.`));
+  setTimeout(() => runStoryStep(0), 1200);
 }
 // Read-aloud capture for long story problems: keeps listening through pauses until she taps again
 let storyRec = null;
@@ -1376,7 +1507,7 @@ $('#mLearn').onclick = () => {
   setMode('learn');
 };
 $('#mPractice').onclick = () => setMode('practice');
-$('#next').onclick = () => go(fi + 1);
+$('#next').onclick = () => { if (P && fi === frames.length - 1 && nextStoryStep()) return; go(fi + 1); };
 $('#back').onclick = () => go(fi - 1);
 $('#repeat').onclick = () => { if (P) { lastSpoken = ''; render(); } };
 $('#check').onclick = () => check();
