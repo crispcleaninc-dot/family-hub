@@ -63,7 +63,7 @@ function doPost(e) {
       muteHttpExceptions: true,
       payload: JSON.stringify({
         model: prop_('MODEL') || 'claude-haiku-5-5',
-        max_tokens: 300,
+        max_tokens: 1200,
         system: SYSTEM + (name ? ' The student\'s name is ' + name + '.' : ''),
         messages: messages
       })
@@ -72,6 +72,7 @@ function doPost(e) {
     var out = JSON.parse(res.getContentText() || '{}');
     if (code !== 200) return json_({ ok: false, error: 'ai_error', status: code, detail: (out.error && out.error.message) || '' });
     var text = (out.content || []).filter(function (c) { return c.type === 'text'; }).map(function (c) { return c.text; }).join(' ').trim();
+    if (!text) return json_({ ok: false, error: 'empty_answer', stop: out.stop_reason || '', types: (out.content || []).map(function (c) { return c.type; }).join(',') });
     countUse_();
     return json_({ ok: true, answer: text });
   } catch (err) {
