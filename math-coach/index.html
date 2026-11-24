@@ -156,7 +156,8 @@ details summary{cursor:pointer;font-weight:700}
 <section class="card">
   <h2>Ask me a question</h2>
   <div class="talkbar">
-    <button class="mic" id="mic">🎤 Hold on, tap to talk</button>
+    <button class="gold" id="talkMode" style="flex-basis:100%">🗣️ Talk with me (hands-free)</button>
+    <button class="mic" id="mic">🎤 Tap to ask one question</button>
     <button class="alt" id="talk">🔊 Read aloud: On</button>
     <button class="alt" id="spell">🔤 Spell numbers: Off</button>
   </div>
@@ -164,7 +165,7 @@ details summary{cursor:pointer;font-weight:700}
     <div><input id="typed" type="text" placeholder="Or type: why do we bring down?"></div>
     <div style="flex:0"><button id="askBtn">Ask</button></div>
   </div>
-  <p class="small" id="micNote">Try: "What is 9867 divided by 12?", "How many times does 53 go into 158?", "Why do we subtract?", "Next", "Say that again", "What's the answer?" During "Let me try" he can just say his answer.</p>
+  <p class="small" id="micNote"><b>Talk with me:</b> tap once, then just talk like you would to a tutor. It listens after it finishes speaking. Say "I wrote it" to go on, say your answers out loud ("twelve"), or say "slow down", "spell it", "why", "say that again", "new problem", or "stop listening". Questions to try: "What is 9867 divided by 12?", "How many times does 53 go into 158?", "Why do we subtract?", "Next", "Say that again", "What's the answer?" During "Let me try" he can just say his answer.</p>
   <div class="log" id="log"></div>
 </section>
 
@@ -237,12 +238,16 @@ function speechText(t){
   return t.replace(/−/g, ' minus ').replace(/×/g, ' times ').replace(/÷/g, ' divided by ').replace(/\+/g, ' plus ').replace(/=/g, ' equals ')
           .replace(/(\d) R(\d)/g, '$1 remainder $2').replace(/[🎉✓✅💡⭐🔊🎤]/g, '');
 }
+let sayId = 0, slowVoice = false;
 function say(text, force){
-  if (!talk || !window.speechSynthesis) return;
+  if (!talk || !window.speechSynthesis) { if (typeof afterSpeak === 'function') setTimeout(afterSpeak, 400); return; }
   if (!force && text === lastSpoken) return;
   lastSpoken = text;
+  if (typeof stopListening === 'function') stopListening();
   speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(speechText(text)); u.rate = style === 'hear' || recentWrong > 0 ? 0.78 : 0.9; u.lang = 'en-US';
+  const id = ++sayId;
+  const u = new SpeechSynthesisUtterance(speechText(text)); u.rate = slowVoice ? 0.7 : (style === 'hear' || recentWrong > 0 ? 0.78 : 0.9); u.lang = 'en-US';
+  u.onend = u.onerror = () => { if (id === sayId && typeof afterSpeak === 'function') afterSpeak(); };
   speechSynthesis.speak(u);
 }
 
@@ -307,7 +312,7 @@ function framesDiv(){
     const pRow = 2 + 2 * i, pCells = span(pRow, s.col - String(s.p).length + 2, s.col + 1);
     F.push({ tag: 'Multiply', text: `<b>Multiply:</b> ${s.q} × ${d} = <b>${s.p}</b>. Write ${s.p} under ${s.cur}.`, paper: `On the next row, write <b>${s.p}</b> under ${s.cur}, one digit per box. The last digit goes right under the ${P.ds[s.col]}. Put a minus sign on the left.`, extra: `${s.q} groups of ${d}: ${Array.from({length: Math.min(s.q, 9)}, (_, k) => d * (k + 1)).join(', ') || '0'}.`, hl: [qCell, '1_0'].concat(pCells), reveal: ['p' + i], tbl: d, pick: s.q,
       ask: { q: `What is ${s.q} × ${d}?`, a: s.p, hint: `Count by ${d}s, ${s.q} times, or find ${d} × ${s.q} in the times table helper.` },
-      why: `We multiply to see exactly how much those ${s.q} groups of ${d} use up.` });
+      why: `We multiply to see exactly how much ${s.q === 1 ? 'that 1 group' : 'those ' + s.q + ' groups'} of ${d} use up.` });
     const rCells = span(pRow + 1, s.col - String(s.rem).length + 2, s.col + 1);
     F.push({ tag: 'Subtract', paper: `Draw a line under ${s.p}. Under the line, write <b>${s.rem}</b>, lined up on the right under the ${P.ds[s.col]}.`, extra: `Count up from ${s.p} to ${s.cur}: that's ${s.rem}. Or check it: ${s.p} + ${s.rem} = ${s.cur}.`, text: `<b>Subtract:</b> ${s.cur} − ${s.p} = <b>${s.rem}</b>. ${s.rem} is smaller than ${d}, so the number on top is right.`, hl: cc.concat(pCells, rCells), reveal: ['r' + i],
       ask: { q: `What is ${s.cur} − ${s.p}?`, a: s.rem, hint: `Start at ${s.cur} and take away ${s.p}. Your answer must be smaller than ${d}. If it isn't, the number on top should be bigger.` },
@@ -544,8 +549,18 @@ function logLine(who, text){
 }
 function reply(text){ logLine('bot', text); say(text, true); }
 function answerOf(){ return P.kind === 'div' ? (P.R ? `${P.Q} R${P.R}` : `${P.Q}`) : fmt(P.T); }
+const NW = {zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90};
+function wordsToDigits(t){
+  const w = Object.keys(NW).join('|');
+  const re = new RegExp(`\\b(?:(?:${w}|hundred|thousand)(?:[\\s-]+(?:and[\\s-]+)?(?=(?:${w}|hundred|thousand)\\b))?)+\\b`, 'g');
+  return t.replace(re, run => {
+    let total = 0, cur = 0;
+    run.split(/[\s-]+/).forEach(x => { if (x === 'and') return; if (x === 'hundred') cur = (cur || 1) * 100; else if (x === 'thousand') { total += (cur || 1) * 1000; cur = 0; } else cur += NW[x]; });
+    return String(total + cur);
+  });
+}
 function handleQ(raw){
-  const t = raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/(\d) (?=\d{3}\b)/g, '$1').trim();
+  const t = wordsToDigits(raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/(\d) (?=\d{3}\b)/g, '$1').trim());
   logLine('me', raw);
   const nums = (t.match(/\d+/g) || []).map(Number);
   let m;
@@ -567,6 +582,13 @@ function handleQ(raw){
   }
   if ((m = t.match(/(\d+)\s*(?:minus|−|-|take away|subtract)\s*(\d+)/))) return reply(`${m[1]} − ${m[2]} = ${+m[1] - +m[2]}.`);
   if ((m = t.match(/(\d+)\s*(?:plus|\+|add|and)\s*(\d+)/))) return reply(`${m[1]} + ${m[2]} = ${+m[1] + +m[2]}.`);
+  if (/(slow down|too fast|slower)/.test(t)) { slowVoice = true; return reply('Okay, I will talk slower.' + (P ? ' ' + (pending() ? frames[fi].ask.q : $('#explain').textContent) : '')); }
+  if (/(speed up|faster|normal speed)/.test(t)) { slowVoice = false; return reply('Okay, back to normal speed.'); }
+  if (/\bspell\b/.test(t)) { spell = true; $('#spell').textContent = '🔤 Spell numbers: On'; if (P) { lastSpoken = ''; render(); return; } return reply('Okay, I will spell the numbers.'); }
+  if (/(stop talking|stop listening|i.?m done for|bye|goodbye|that.?s all)/.test(t)) { setTalkMode(false); return reply('Okay. Tap Talk with me when you want to keep going.'); }
+  if (/(new problem|another (1|one|problem)|give me (1|one|a problem)|practice problem)/.test(t)) { $('#rand').click(); return; }
+  if (/\b(hello|hi there|hey)\b/.test(t) && !P) return reply(`Hi${who()}! Tell me your problem, like "6889 divided by 53" or "318 times 879", and we'll do it together.`);
+  if (/(i wrote it|wrote it|i.?m done|done|got it|finished|ready|yes|yeah|yep|what.?s next)/.test(t) && P && !pending()) { if (fi < frames.length - 1) { go(fi + 1); logLine('bot', $('#explain').textContent); } else reply(`That's the whole problem. Say "new problem" or tell me the next one from your homework.`); return; }
   if (/\b(next|go on|continue|keep going|okay|ok)\b/.test(t)) { if (!P) return reply('Give me a problem first.'); if (pending()) return reply(`First answer this one: ${frames[fi].ask.q}`); go(fi + 1); logLine('bot', $('#explain').textContent); return; }
   if (/\b(back|previous|before)\b/.test(t)) { if (P) { go(fi - 1); logLine('bot', $('#explain').textContent); } return; }
   if (/(repeat|again|say that|what did you say|didn.?t hear)/.test(t)) { if (P) { lastSpoken = ''; render(); } return; }
@@ -584,9 +606,46 @@ function handleQ(raw){
   reply(`I can help with division and multiplication. Try asking "what is 2976 divided by 83", "how many times does 15 go into 88", "why", "next", "repeat", or "what's the answer".`);
 }
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-let rec = null;
-if (!SR) { $('#mic').disabled = true; $('#mic').textContent = '🎤 Voice not available here'; $('#micNote').textContent += ' Voice questions need Chrome, Edge or Safari with microphone permission. Typing works everywhere.'; }
-else $('#mic').textContent = '🎤 Tap to ask out loud';
+let rec = null, talkMode = false, misses = 0;
+function stopListening(){ if (rec) { try { rec.abort(); } catch (e) {} rec = null; } $('#mic').classList.remove('listening'); }
+function listenOnce(){
+  if (!SR || rec) return;
+  try {
+    rec = new SR(); rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
+    let heard = false;
+    rec.onresult = e => { heard = true; misses = 0; const said = e.results[0][0].transcript; rec = null; handleQ(said); };
+    rec.onerror = e => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { setTalkMode(false); reply('I need microphone permission to hear you. Tap Allow when the phone asks, or type your question.'); }
+    };
+    rec.onend = () => {
+      rec = null; $('#mic').classList.remove('listening');
+      if (talkMode && !heard) {
+        misses++;
+        if (misses >= 4) { setTalkMode(false); reply("I'll wait. Tap Talk with me when you're ready."); }
+        else setTimeout(() => { if (talkMode && !speechSynthesis.speaking) listenOnce(); }, 300);
+      }
+      $('#mic').textContent = '🎤 Tap to ask one question';
+    };
+    rec.start(); $('#mic').classList.add('listening');
+    $('#talkMode').textContent = talkMode ? '🗣️ Listening… just talk (tap to stop)' : '🗣️ Talk with me (hands-free)';
+  } catch (e) { rec = null; }
+}
+function afterSpeak(){ if (talkMode) setTimeout(() => { if (talkMode && !speechSynthesis.speaking) listenOnce(); }, 250); }
+function setTalkMode(on){
+  talkMode = on; misses = 0;
+  $('#talkMode').classList.toggle('on', on);
+  $('#talkMode').textContent = on ? '🗣️ Listening… just talk (tap to stop)' : '🗣️ Talk with me (hands-free)';
+  if (!on) stopListening();
+}
+if (!SR) { $('#talkMode').disabled = true; $('#mic').disabled = true; $('#mic').textContent = '🎤 Voice not available here'; $('#micNote').textContent += ' Voice questions need Chrome, Edge or Safari with microphone permission. Typing works everywhere.'; }
+else $('#mic').textContent = '🎤 Tap to ask one question';
+$('#talkMode').onclick = () => {
+  if (!SR) return reply('Hands-free talking needs Chrome on Android or a computer, or Safari on iPhone. You can still type.');
+  if (talkMode) { setTalkMode(false); return; }
+  setTalkMode(true); talk = true; $('#talk').textContent = '🔊 Read aloud: On';
+  if (P) reply(`I'm listening${who()}. ` + (pending() ? frames[fi].ask.q : `We're on step ${fi + 1}. Say "I wrote it" when you're ready for the next step, or ask me anything.`));
+  else reply(`Hi${who()}, I'm listening. Tell me your problem, like "6889 divided by 53", or say "new problem".`);
+};
 $('#mic').onclick = () => {
   if (!SR) return;
   if (rec) { rec.stop(); return; }
@@ -595,7 +654,7 @@ $('#mic').onclick = () => {
     rec = new SR(); rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
     rec.onresult = e => handleQ(e.results[0][0].transcript);
     rec.onerror = e => { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') reply('I need microphone permission to hear you. You can also type your question.'); else if (e.error === 'no-speech') reply("I didn't hear anything. Tap the microphone and try again."); };
-    rec.onend = () => { rec = null; $('#mic').classList.remove('listening'); $('#mic').textContent = '🎤 Tap to ask out loud'; };
+    rec.onend = () => { rec = null; $('#mic').classList.remove('listening'); $('#mic').textContent = '🎤 Tap to ask one question'; };
     rec.start(); $('#mic').classList.add('listening'); $('#mic').textContent = '🎤 Listening… tap to stop';
   } catch (e) { rec = null; reply('The microphone could not start here. You can type your question instead.'); }
 };
@@ -704,6 +763,7 @@ $('#talk').onclick = () => { talk = !talk; $('#talk').textContent = talk ? '🔊
 $('#spell').onclick = () => { spell = !spell; $('#spell').textContent = spell ? '🔤 Spell numbers: On' : '🔤 Spell numbers: Off'; if (P) { lastSpoken = ''; render(); } };
 applyStyle(style, true);
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(() => {});
+document.addEventListener('visibilitychange', () => { if (document.hidden && talkMode) setTalkMode(false); });
 let deferredInstall = null;
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; $('#installBtn').classList.remove('hidden'); });
 $('#installBtn').onclick = async () => {
