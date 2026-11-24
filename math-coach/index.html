@@ -124,6 +124,10 @@ button:disabled{opacity:.4;cursor:default;transform:none}
 #toast.show{transform:translate(-50%,0);opacity:1}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden,.cell.gone{display:none!important}
+.lockrow{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1.1fr);gap:8px;align-items:center;padding:10px;border-radius:14px;background:#2a237a;margin:6px 0;font-size:.95rem}
+.lockrow select{min-height:42px;font-size:.95rem;padding:6px}
+.lockrow .st{font-weight:800}
+@media (max-width:600px){.lockrow{grid-template-columns:1fr}}
 #picker{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:rgba(10,8,35,.82);backdrop-filter:blur(6px);padding:16px}
 .pickbox{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid #3d3599;border-radius:24px;padding:24px;max-width:520px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.5)}
 .pickbox h2{font-size:1.7rem;color:var(--accent)}
@@ -242,6 +246,15 @@ details summary{cursor:pointer;font-weight:700}
 
 <section class="card" id="askCard">
   <h2>Ask me a question</h2>
+  <details id="storyBox" style="margin-bottom:12px">
+    <summary>📖 Story problem (word problem)</summary>
+    <p class="small">Read the whole story problem out loud, or type it. I'll find the numbers, tell you what kind of problem it is, and set it up with you.</p>
+    <textarea id="storyText" rows="4" style="width:100%;font:inherit;font-size:1.05rem;padding:10px;border:2px solid var(--line);border-radius:14px;background:#171247;color:var(--ink)" placeholder="Example: Marnina saved $80 from babysitting. Shirts and pants are $17 each. How many items can she buy?"></textarea>
+    <div class="talkbar" style="margin-top:8px">
+      <button class="mic" id="storyMic">🎤 Read it to me</button>
+      <button class="gold" id="storyGo">Solve it with me</button>
+    </div>
+  </details>
   <div class="talkbar">
     <button class="gold" id="talkMode" style="flex-basis:100%">🗣️ Talk with me (hands-free)</button>
     <button class="mic" id="mic">🎤 Tap to ask one question</button>
@@ -297,6 +310,20 @@ details summary{cursor:pointer;font-weight:700}
   <div class="row" style="margin-top:6px"><div style="flex:0"><button class="alt sm" id="skillReset">Reset progress</button></div></div>
 </section>
 
+<section class="card" id="parentCard">
+  <h2>👪 Parent controls</h2>
+  <p class="small">Once a child shows they've mastered a skill (3 problems solved on their own, with 85% or more right on the first try), "Show me how," the answers and step answers lock automatically for that skill. Unlock them here if they need more help.</p>
+  <div id="parentLock">
+    <div class="row"><div><label for="pinIn" id="pinLabel">Parent PIN</label><input id="pinIn" type="password" inputmode="numeric" maxlength="8" autocomplete="off" placeholder="4-digit PIN"></div>
+    <div style="flex:0"><button id="pinGo">Open</button></div></div>
+    <div class="err" id="pinErr"></div>
+  </div>
+  <div id="parentPanel" class="hidden">
+    <div id="lockRows"></div>
+    <div class="row" style="margin-top:10px"><div style="flex:0"><button class="alt sm" id="pinChange">Change PIN</button></div><div style="flex:0"><button class="alt sm" id="parentClose">🔒 Close parent controls</button></div></div>
+  </div>
+</section>
+
 <section class="card">
   <div class="row" style="align-items:center">
     <div><label for="name">Student's name</label><input id="name" type="text" placeholder="Name"></div>
@@ -325,11 +352,20 @@ const multiples = (d, upto) => { const o = []; for (let k = 1; k <= 10 && d * k 
 /* Students: no login. Each student's progress, saved work and settings are kept apart on this device.
    Ezekiel keeps the original keys (his existing progress stays); other students get their own keys. */
 const STUDENTS = [{ id: 'Ezekiel', ic: '👦' }, { id: 'Emma', ic: '👧' }];
-const SHARED_KEYS = ['mc_profile', 'mc_voice', 'mc_momvoice'];
+const SHARED_KEYS = ['mc_profile', 'mc_voice', 'mc_momvoice', 'mc_parent'];
 function rawGet(k){ try { return localStorage.getItem(k); } catch (e) { return null; } }
 let STUDENT = rawGet('mc_profile') || '';
 function skey(k){ return (SHARED_KEYS.includes(k) || !STUDENT || STUDENT === 'Ezekiel') ? k : k + '__' + STUDENT; }
 function store(k, v){ try{ if (v === undefined) return localStorage.getItem(skey(k)); localStorage.setItem(skey(k), v); }catch(e){ return null; } }
+/* Parent controls: one PIN for the device; per child, per skill: auto (locks itself once mastered) / locked / unlocked */
+let PARENT = { pin: '', locks: {} };
+try { PARENT = Object.assign(PARENT, JSON.parse(rawGet('mc_parent') || '{}')); } catch (e) {}
+const saveParent = () => { try { localStorage.setItem('mc_parent', JSON.stringify(PARENT)); } catch (e) {} };
+const OPS = { div: 'Long division', mul: 'Multiplication' };
+function gameFor(id){ try { return JSON.parse(localStorage.getItem(id === 'Ezekiel' ? 'mc_game' : 'mc_game__' + id) || '{}'); } catch (e) { return {}; } }
+function profOf(g, op){ const p = (g.prof || {})[op] || { solved: 0, asked: 0, first: 0 }; const acc = p.asked ? p.first / p.asked : 0; return { ...p, acc, mastered: p.solved >= 3 && p.asked >= 10 && acc >= 0.85 }; }
+function lockSetting(id, op){ return ((PARENT.locks || {})[id] || {})[op] || 'auto'; }
+function isLocked(op, id){ id = id || STUDENT || 'Ezekiel'; const s = lockSetting(id, op); if (s === 'locked') return true; if (s === 'unlocked') return false; return profOf(gameFor(id), op).mastered; }
 function pickStudent(id){ try { localStorage.setItem('mc_profile', id); } catch (e) {} location.reload(); }
 
 let P = null, frames = [], fi = 0, mode = 'learn', answered = {}, wrong = {}, stars = 0;
@@ -641,12 +677,14 @@ function render(){
     justWrongClip = false;
   } else {
     $('#explain').innerHTML = (mode === 'practice' && f.ask && answered[fi] === 'star' ? '✅ Right! ' : '') + f.text;
+    if (fi === frames.length - 1 && P.story && P.story.after) $('#explain').innerHTML += '<br>📖 <b>Story answer:</b> ' + esc(P.story.after);
     let body = $('#explain').textContent.replace(/^✅ Right! /, '');
     const tc = f.tag ? tagClip(f.tag) : null, useTag = tc && momHas(tc) && mode !== 'practice';
     if (useTag) body = body.replace(/^(Divide|Multiply|Subtract|Bring down|Add):\s*/i, '');
     const pre = []; if (justRight) pre.push({ clip: G.combo >= 3 && Math.random() < .5 ? 'combo' : 'right' }); else if (useTag) pre.push({ clip: tc });
     const post = []; if (!$('#extra').classList.contains('hidden')) post.push($('#extra').textContent);
     if (f.paper) { const pt = $('#paper').textContent.replace('✏️ On your paper: ', ''); if (momHas('paper')) post.push({ clip: 'paper' }, pt); else post.push('On your paper: ' + pt); }
+    if (fi === frames.length - 1 && P.story && P.story.after) post.push(P.story.after);
     if (fi === frames.length - 1) post.push({ clip: 'done' });
     say(body, justRight, pre, post); justRight = false;
   }
@@ -670,6 +708,8 @@ function check(val){
   const v = val !== undefined ? String(val) : $('#ans').value.trim();
   if (v === '') return;
   $('#ans').value = v;
+  const firstAttempt = !wrong[fi];
+  if (firstAttempt) { G.prof = G.prof || {}; const pr = G.prof[P.kind] = G.prof[P.kind] || { solved: 0, asked: 0, first: 0 }; pr.asked++; if (Number(v) === f.ask.a) pr.first++; saveG(); }
   if (Number(v) === f.ask.a) {
     if (!wrong[fi]) { stars++; record(skillOf(f), true); streak++; recentWrong = Math.max(0, recentWrong - 1); }
     G.combo = wrong[fi] ? 0 : (G.combo || 0) + 1; sfx.right();
@@ -683,7 +723,11 @@ function check(val){
     sfx.wrong();
     wrong[fi] = (wrong[fi] || 0) + 1;
     const fb = $('#fb'); fb.className = 'feedback bad';
-    if (wrong[fi] >= 3) {
+    if (wrong[fi] >= 3 && P && isLocked(P.kind)) {
+      fb.textContent = `${v} is not it yet. Look at the hint and the picture, and try once more. If you're stuck, ask a parent.`;
+      say(fb.textContent, true); showHint();
+      if (f.extra) { $('#hint').textContent += ' ' + f.extra; }
+    } else if (wrong[fi] >= 3) {
       fb.textContent = `The answer is ${f.ask.a}. Let's keep going.`; say(fb.textContent, true);
       answered[fi] = 'ok'; setTimeout(render, 2200);
     } else {
@@ -706,6 +750,8 @@ function start(a, op, b, quiet, resume){
   frames = op === 'div' ? framesDiv() : framesMul();
   fi = 0; answered = {}; wrong = {}; lastSpoken = '';
   P.sid = resume ? resume.id : Date.now();
+  if (isLocked(op) && mode === 'learn') { mode = 'practice'; $('#mLearn').classList.remove('on'); $('#mPractice').classList.add('on'); toast(`🔒 Show me how is locked for ${OPS[op].toLowerCase()}. You've got this!`); }
+  if (resume && isLocked(op) && resume.mode === 'learn') resume = Object.assign({}, resume, { mode: 'practice', fi: 0, answered: {}, wrong: {} });
   if (resume) {
     fi = Math.min(resume.fi || 0, frames.length - 1); answered = resume.answered || {}; wrong = resume.wrong || {}; P.completed = !!resume.done;
     if (resume.mode && resume.mode !== mode) { mode = resume.mode; $('#mLearn').classList.toggle('on', mode === 'learn'); $('#mPractice').classList.toggle('on', mode === 'practice'); }
@@ -730,7 +776,8 @@ function screenContext(){
   if (!P) return 'No problem started yet.';
   const f = frames[fi];
   return `Problem: ${P.kind === 'div' ? P.a + ' divided by ' + P.b : P.A + ' times ' + P.B} (answer ${answerOf()}). Step ${fi + 1} of ${frames.length}. ` +
-    (pending() ? `The app is asking the student: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '');
+    (pending() ? `The app is asking the student: ${f.ask.q}` : `The app says: ${f.text.replace(/<[^>]+>/g, '')}`) + (f.paper ? ` Paper direction: ${f.paper.replace(/<[^>]+>/g, '')}` : '') +
+    (isLocked(P.kind) && !P.completed ? ' IMPORTANT: answers are locked by the parent for this skill. Do NOT say the final answer or the answer to the current step. Coach with hints and questions only.' : '');
 }
 async function askAI(question, backup){
   if (!RELAY || !navigator.onLine) return reply(backup);
@@ -764,6 +811,7 @@ function handleQ(raw){
   if (/(you.?re not listening|not listening|don.?t think you.?re listening)/.test(t)) return reply(`I'm listening${who()}. Speak a little closer to the microphone and say the whole problem, like 1435 divided by 51.`);
   const nums = (t.match(/\d+/g) || []).map(Number);
   let m;
+  if (looksLikeStory(t)) return solveStory(raw);
   if (P && pending() && nums.length === 1 && !/divid|times|minus|plus|go into/.test(t)) { check(nums[0]); return; }
   if ((m = t.match(/(\d+)\s*(?:go(?:es)?|fit)s?\s*(?:in|into|in to)\s*(\d+)/))) {
     const d = +m[1], n = +m[2], q = Math.floor(n / d);
@@ -771,13 +819,13 @@ function handleQ(raw){
       `${d} goes into ${n} ${q} time${q > 1 ? 's' : ''}. ${d} × ${q} = ${d * q}` + (n - d * q ? `, with ${n - d * q} left over.` : ', exactly.') + (q < 9 || d * (q + 1) > n ? ` ${d} × ${q + 1} = ${d * (q + 1)} is too big.` : ''));
   }
   if ((m = t.match(/(\d+)\s*(?:divided by|÷|\/|over|divide by)\s*(\d+)/)) || (m = t.match(/divide\s*(\d+)\s*by\s*(\d+)/))) {
-    if (start(+m[1], 'div', +m[2], true)) { reply(`${m[1]} ÷ ${m[2]} = ${answerOf()}. Let's go through it step by step.`); setTimeout(render, 400); }
+    if (start(+m[1], 'div', +m[2], true)) { reply(isLocked('div') ? `Let's work out ${m[1]} ÷ ${m[2]} together. You do each step.` : `${m[1]} ÷ ${m[2]} = ${answerOf()}. Let's go through it step by step.`); setTimeout(render, 400); }
     return;
   }
   if ((m = t.match(/(\d+)\s*(?:times|x|×|\*|multiplied by)\s*(\d+)/))) {
     const a = +m[1], b = +m[2];
     if (a <= 12 && b <= 12) return reply(`${a} × ${b} = ${a * b}.`);
-    if (start(a, 'mul', b, true)) { reply(`${a} × ${b} = ${fmt(a * b)}. Let's go through it step by step.`); setTimeout(render, 400); }
+    if (start(a, 'mul', b, true)) { reply(isLocked('mul') ? `Let's work out ${a} × ${b} together. You do each step.` : `${a} × ${b} = ${fmt(a * b)}. Let's go through it step by step.`); setTimeout(render, 400); }
     return;
   }
   if ((m = t.match(/(\d+)\s*(?:minus|−|-|take away|subtract)\s*(\d+)/))) return reply(`${m[1]} − ${m[2]} = ${+m[1] - +m[2]}.`);
@@ -795,7 +843,7 @@ function handleQ(raw){
   if (/remainder/.test(t)) return reply(`The remainder is what's left over when the number can't be split into any more full groups. It's always smaller than the number you divide by.` + (P && P.kind === 'div' ? ` In this problem the remainder is ${P.R}.` : ''));
   if (/(carry|carried)/.test(t)) return reply(`When you get a two-digit number, only the ones digit fits in the box. The tens digit is carried to the next column on the left, and you add it after you multiply there.`);
   if (/(zero|placeholder)/.test(t)) return reply(`The placeholder zero is there because the tens digit is really worth ten times more. The zero moves that row one place to the left.`);
-  if (/(answer|what did we get|final)/.test(t)) return P ? reply(`The answer is ${answerOf()}.`) : reply('Give me a problem first.');
+  if (/(answer|what did we get|final)/.test(t)) return P ? (isLocked(P.kind) && !P.completed ? reply(`Answers are locked for this skill because you already showed you can do it. Let's finish the steps and you'll find it yourself.`) : reply(`The answer is ${answerOf()}.`)) : reply('Give me a problem first.');
   if (/\bwhy\b/.test(t)) return P ? (RELAY && t.split(' ').length > 2 ? askAI(raw, frames[fi].why || 'This step gets us closer to the answer.') : reply(frames[fi].why || 'This step gets us closer to the answer.')) : reply('Start a problem and ask me why at any step.');
   if (/(don.?t (get|understand|know)|confus|help|explain|how do|stuck|hint)/.test(t)) {
     if (!P) return reply('Tell me the problem, like "9867 divided by 12", and I will walk you through it.');
@@ -890,7 +938,7 @@ function renderHW(){
   $('#hw').innerHTML = HW.map((p, i) => `<div class="hwitem">
     <span class="q">${i + 1}. ${p[1]} ${p[0] === 'div' ? '÷' : '×'} ${p[2]}</span>
     <button class="sm" data-teach="${i}">Teach me</button>
-    <button class="sm alt" data-show="${i}">Answer</button>
+    ${isLocked(p[0]) ? '<span class="small">🔒 Answer locked</span>' : `<button class="sm alt" data-show="${i}">Answer</button>`}
     <span class="a hidden" id="hwa${i}">${hwAns(p)}</span>
     <input type="text" inputmode="numeric" placeholder="${p[0] === 'div' ? 'e.g. 129 R52' : 'Your answer'}" id="hwi${i}" aria-label="Your answer for problem ${i + 1}">
     <button class="sm alt" data-check="${i}">Check</button>
@@ -1024,7 +1072,11 @@ function problemDone(){
   if (!P || P.completed) return;
   P.completed = true;
   const solo = mode === 'practice' && frames.every((f, i) => !f.ask || !wrong[i]);
-  G.done[P.kind] = (G.done[P.kind] || 0) + 1; saveG();
+  G.done[P.kind] = (G.done[P.kind] || 0) + 1;
+  const wasLocked = isLocked(P.kind);
+  if (mode === 'practice') { G.prof = G.prof || {}; const pr = G.prof[P.kind] = G.prof[P.kind] || { solved: 0, asked: 0, first: 0 }; pr.solved++; }
+  saveG();
+  if (!wasLocked && isLocked(P.kind)) setTimeout(() => { toast(`🏅 ${OPS[P.kind]} mastered! You'll solve these on your own now.`); say(`You mastered ${OPS[P.kind].toLowerCase()}! From now on you'll solve these on your own. A parent can turn the step-by-step help back on.`, true); renderLocks(); }, 2600);
   confetti(); sfx.done();
   award(mode === 'practice' ? (solo ? 40 : 25) : 10, mode === 'practice' ? (solo ? 'Perfect run!' : 'Problem cleared!') : 'Problem watched');
   unlock('first');
@@ -1175,6 +1227,120 @@ $('#sessions').addEventListener('click', e => {
 $('#resumeBtn').onclick = () => resumeSession(SESS.find(x => String(x.id) === $('#resumeBtn').dataset.id));
 renderSessions();
 
+/* =============== PARENT CONTROLS =============== */
+async function hashPin(pin){
+  try { const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('mc|' + pin)); return [...new Uint8Array(b)].map(x => x.toString(16).padStart(2, '0')).join(''); }
+  catch (e) { let h = 0; for (const c of 'mc|' + pin) h = (h * 31 + c.charCodeAt(0)) | 0; return 'x' + h; }
+}
+let pinMode = PARENT.pin ? 'enter' : 'create';
+function pinUI(){ $('#pinLabel').textContent = pinMode === 'create' ? 'Create a parent PIN (4+ digits)' : pinMode === 'change' ? 'New parent PIN (4+ digits)' : 'Parent PIN'; $('#pinGo').textContent = pinMode === 'enter' ? 'Open' : 'Save PIN'; }
+pinUI();
+$('#pinGo').onclick = async () => {
+  const v = $('#pinIn').value.trim(); $('#pinErr').textContent = '';
+  if (!/^\d{4,8}$/.test(v)) { $('#pinErr').textContent = 'Use 4 to 8 numbers.'; return; }
+  if (pinMode === 'enter') {
+    if (await hashPin(v) !== PARENT.pin) { $('#pinErr').textContent = 'That PIN is not right.'; $('#pinIn').value = ''; return; }
+  } else { PARENT.pin = await hashPin(v); saveParent(); pinMode = 'enter'; pinUI(); }
+  $('#pinIn').value = ''; $('#parentLock').classList.add('hidden'); $('#parentPanel').classList.remove('hidden'); renderLocks();
+};
+$('#pinIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('#pinGo').click(); });
+$('#parentClose').onclick = () => { $('#parentPanel').classList.add('hidden'); $('#parentLock').classList.remove('hidden'); };
+$('#pinChange').onclick = () => { pinMode = 'change'; pinUI(); $('#parentPanel').classList.add('hidden'); $('#parentLock').classList.remove('hidden'); $('#pinIn').focus(); };
+function renderLocks(){
+  const box = document.getElementById('lockRows'); if (!box) return;
+  box.innerHTML = STUDENTS.map(st => Object.keys(OPS).map(op => {
+    const g = gameFor(st.id), pr = profOf(g, op), set = lockSetting(st.id, op), locked = isLocked(op, st.id);
+    const why = set === 'locked' ? 'locked by you' : set === 'unlocked' ? 'unlocked by you' : pr.mastered ? 'mastered, locked automatically' : 'still learning';
+    return `<div class="lockrow"><div>${st.ic} <b>${st.id}</b> · ${OPS[op]}<div class="small">${pr.solved} solved alone · ${pr.asked ? Math.round(pr.acc * 100) : 0}% right first try</div></div>
+      <div class="st ${locked ? 'bad' : 'good'}">${locked ? '🔒 Locked' : '🔓 Open'}<div class="small">${why}</div></div>
+      <select data-lk="${st.id}|${op}" aria-label="Lock setting for ${st.id} ${OPS[op]}">
+        <option value="auto" ${set === 'auto' ? 'selected' : ''}>Automatic (lock when mastered)</option>
+        <option value="unlocked" ${set === 'unlocked' ? 'selected' : ''}>Unlocked (show steps and answers)</option>
+        <option value="locked" ${set === 'locked' ? 'selected' : ''}>Locked (no steps or answers)</option>
+      </select></div>`; }).join('')).join('');
+}
+document.getElementById('lockRows').addEventListener('change', e => {
+  const k = e.target.dataset.lk; if (!k) return; const [id, op] = k.split('|');
+  PARENT.locks = PARENT.locks || {}; PARENT.locks[id] = PARENT.locks[id] || {}; PARENT.locks[id][op] = e.target.value; saveParent(); renderLocks();
+  if (typeof renderHW === 'function') renderHW();
+  toast(`${id} · ${OPS[op]}: ${e.target.selectedOptions[0].textContent}`);
+});
+
+/* =============== STORY (WORD) PROBLEMS =============== */
+function looksLikeStory(t){ const words = t.split(/\s+/).length, n = (t.match(/\d+/g) || []).length; return words >= 12 && n >= 2 && /(how many|how much|each|total|altogether|in all|left|share|split|equal|per |groups?|rows?|spend|cost|buy|save|more than|fewer)/.test(t); }
+function guessStory(t){
+  const nums = (t.match(/\d+(?:\.\d+)?/g) || []).map(Number).filter(n => n > 0);
+  if (nums.length < 2) return null;
+  const big = Math.max(...nums), small = nums.find(n => n !== big) ?? nums[1];
+  let op = null;
+  if (/(each|per|apiece|equally|equal groups|share|split|divide|how many (items|.*can (she|he|they|you) (buy|make|fill|get))|how many (groups|bags|boxes|teams|packs))/.test(t) && /(how many|how much)/.test(t)) op = 'div';
+  if (/(in all|altogether|total)/.test(t) && /(each|per|rows? of|groups? of|packs? of|boxes of)/.test(t)) op = 'mul';
+  if (!op && /(left|remain|fewer|less than|how many more|difference|spent)/.test(t)) op = 'sub';
+  if (!op && /(in all|altogether|total|combined|sum)/.test(t)) op = 'add';
+  if (!op) return null;
+  return op === 'mul' ? { op, a: nums[0], b: nums[1] } : { op, a: big, b: small };
+}
+function storyExplain(g, raw){
+  const t = raw.toLowerCase(), money = /\$|dollar|cost|price|saved|spend/.test(t);
+  const unit = money ? '$' : '';
+  if (g.op === 'div') {
+    const q = Math.floor(g.a / g.b), r = g.a % g.b;
+    const lead = `This is a division story problem. We have ${unit}${g.a} total, and each one costs or holds ${unit}${g.b}. The question asks how many groups of ${g.b} fit into ${g.a}, so we divide: ${g.a} ÷ ${g.b}.`;
+    const meaning = r ? ` When we finish, the remainder means what's left over that isn't enough for another one, so it doesn't count as another item.` : '';
+    return { lead: lead + meaning, after: r ? `So the answer to the story is ${q}, with ${unit}${r} left over.` : `So the answer to the story is ${q}.` };
+  }
+  if (g.op === 'mul') return { lead: `This is a multiplication story problem: ${g.a} groups with ${g.b} in each. To find how many in all, we multiply ${g.a} × ${g.b}.`, after: `So there are ${fmt(g.a * g.b)} in all.` };
+  if (g.op === 'sub') return { lead: `This is a subtraction story problem. Start with ${g.a} and take away ${g.b}. Write ${g.a} on top, ${g.b} under it, and subtract column by column, starting on the right.`, after: `${g.a} − ${g.b} = ${g.a - g.b}.` };
+  return { lead: `This is an addition story problem. Put ${g.a} and ${g.b} together. Line them up by place value and add, starting on the right.`, after: `${g.a} + ${g.b} = ${g.a + g.b}.` };
+}
+let storyAfter = '';
+async function solveStory(raw){
+  const t = wordsToDigits(raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/\$\s*/g, '$'));
+  let g = null, aiLead = '';
+  if (RELAY && navigator.onLine) {
+    const thinking = document.createElement('p'); thinking.className = 'bot'; thinking.textContent = 'Reading your story problem…'; $('#log').prepend(thinking);
+    try {
+      const ctrl = new AbortController(); const tm = setTimeout(() => ctrl.abort(), 20000);
+      const q = 'STORY PROBLEM MODE. Read this word problem and reply with ONLY one line of JSON, no other words: {"op":"div|mul|add|sub|multi","a":first number for the long-division or multiplication setup,"b":second number,"lead":"2 to 3 spoken sentences for a child explaining which numbers matter, what the question is asking, and which operation to use and why, without giving the final answer","after":"one sentence giving the final answer in story words, including what any remainder means"}. Word problem: ' + raw;
+      const r = await fetch(RELAY, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, signal: ctrl.signal, body: JSON.stringify({ question: q, name: $('#name').value.trim(), context: 'The student is reading a story problem from homework.' }) });
+      clearTimeout(tm); const d = await r.json(); thinking.remove();
+      const js = d.ok && d.answer && d.answer.match(/\{[\s\S]*\}/);
+      if (js) { const o = JSON.parse(js[0]); if (o && o.op && +o.a > 0 && +o.b > 0) { g = { op: o.op, a: Math.round(+o.a), b: Math.round(+o.b) }; aiLead = o.lead || ''; storyAfter = o.after || ''; } }
+    } catch (e) { thinking.remove(); }
+  }
+  if (!g) { g = guessStory(t); if (g) { const ex = storyExplain(g, raw); aiLead = ex.lead; storyAfter = ex.after; } }
+  if (!g) return reply(`I couldn't find the numbers in that story yet. Read it again slowly, or type it in the story problem box, and make sure the question at the end is included.`);
+  if (g.op === 'div' || g.op === 'mul') {
+    const locked = isLocked(g.op);
+    if (!aiLead) { const ex = storyExplain(g, raw); aiLead = ex.lead; storyAfter = ex.after; }
+    if (start(g.a, g.op, g.b, true)) {
+      reply(aiLead + (locked ? ` Now you work it out on your paper, one step at a time.` : ` Let's work it out together, step by step.`));
+      if (P) P.story = { text: raw, after: storyAfter };
+      setTimeout(render, 600);
+    }
+    return;
+  }
+  const ex = storyExplain(g, raw);
+  return reply((aiLead || ex.lead) + (isLocked('div') && isLocked('mul') ? '' : ' ' + (storyAfter || ex.after)));
+}
+// Read-aloud capture for long story problems: keeps listening through pauses until she taps again
+let storyRec = null;
+$('#storyMic').onclick = () => {
+  if (!SR) { toast('Voice is not available in this browser. Please type the story problem.'); return; }
+  if (storyRec) { storyRec.stop(); return; }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  if (typeof setTalkMode === 'function' && talkMode) setTalkMode(false);
+  const base = $('#storyText').value.trim();
+  try {
+    storyRec = new SR(); storyRec.lang = 'en-US'; storyRec.continuous = true; storyRec.interimResults = true;
+    storyRec.onresult = e => { let txt = ''; for (let i = 0; i < e.results.length; i++) txt += e.results[i][0].transcript + ' '; $('#storyText').value = (base ? base + ' ' : '') + txt.trim(); };
+    storyRec.onerror = e => { if (e.error === 'not-allowed') toast('Please allow the microphone, or type the story problem.'); };
+    storyRec.onend = () => { storyRec = null; $('#storyMic').classList.remove('listening'); $('#storyMic').textContent = '🎤 Read it to me'; if ($('#storyText').value.trim().split(/\s+/).length >= 8) $('#storyGo').click(); };
+    storyRec.start(); $('#storyMic').classList.add('listening'); $('#storyMic').textContent = '⏹ Tap when you finish reading';
+  } catch (e) { storyRec = null; }
+};
+$('#storyGo').onclick = () => { const v = $('#storyText').value.trim(); if (!v) return; logLine('me', v); solveStory(v); };
+
 /* =============== STUDENT PICKER =============== */
 function levelFor(id){ try { const g = JSON.parse(localStorage.getItem(id === 'Ezekiel' ? 'mc_game' : 'mc_game__' + id) || '{}'); return Math.floor((g.xp || 0) / 150) + 1; } catch (e) { return 1; } }
 function openPicker(first){
@@ -1203,7 +1369,11 @@ function setMode(m){
   mode = m; $('#mLearn').classList.toggle('on', m === 'learn'); $('#mPractice').classList.toggle('on', m === 'practice');
   if (P) { fi = 0; answered = {}; wrong = {}; lastSpoken = ''; render(); }
 }
-$('#mLearn').onclick = () => setMode('learn');
+$('#mLearn').onclick = () => {
+  const op = P ? P.kind : $('#op').value;
+  if (isLocked(op)) { toast(`🔒 Show me how is locked for ${OPS[op].toLowerCase()}. Ask a parent to unlock it.`); say(`Show me how is locked for ${OPS[op].toLowerCase()}, because you already showed you can do it. Try it yourself, or ask a parent to unlock it.`, true); return; }
+  setMode('learn');
+};
 $('#mPractice').onclick = () => setMode('practice');
 $('#next').onclick = () => go(fi + 1);
 $('#back').onclick = () => go(fi - 1);

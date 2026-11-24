@@ -1,6 +1,6 @@
 /* Math Homework Coach - service worker. Keeps the app files on the device so it opens offline. */
 try { importScripts('notify-sw.js'); } catch (e) {} // Cyars Notify: alerts + taps
-var SHELL = 'mhc-shell-v9';
+var SHELL = 'mhc-shell-v10';
 var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './config.js', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', '../samsung-guard.js'];
 
 self.addEventListener('install', function (e) {
