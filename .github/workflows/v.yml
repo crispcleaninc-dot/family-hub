@@ -1,5 +1,5 @@
-name: mc-voice
-on: { push: { branches: [mc-voice] } }
+name: mc-voice2
+on: { push: { branches: [mc-voice2] } }
 permissions: { contents: write }
 jobs:
   v:
@@ -15,4 +15,4 @@ jobs:
         run: |
           git config user.name "vf"; git config user.email "noreply@anthropic.com"
           git rm -q --cached gen/ref.wav || true
-          git checkout -b mc-voice-out && git add -f out && git commit -qm o && git push -f origin mc-voice-out
+          git checkout -b mc-voice2-out && git add -f out && git commit -qm o && git push -f origin mc-voice2-out
