@@ -124,6 +124,15 @@ button:disabled{opacity:.4;cursor:default;transform:none}
 #toast.show{transform:translate(-50%,0);opacity:1}
 #fx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden,.cell.gone{display:none!important}
+.pic svg{width:100%;height:auto;display:block}
+.pic .cap{font-size:1.05rem;margin-top:8px}
+.pic .cap b{color:var(--accent)}
+@media (min-width:1100px){
+  main{max-width:1240px;display:grid;grid-template-columns:minmax(0,1fr) 440px;gap:18px;align-items:start}
+  #mainCol{min-width:0}
+  #side{position:sticky;top:96px;max-height:calc(100vh - 110px);overflow-y:auto;scrollbar-width:thin}
+  header{padding-inline:max(12px,calc((100vw - 1240px)/2))}
+}
 details summary{cursor:pointer;font-weight:700}
 @media (prefers-reduced-motion:reduce){.mic.listening,#talkMode.on{animation:none}.cell,.cell.new{transition:none;animation:none}#toast{transition:none}}
 @media (max-width:420px){.pill{padding:4px 7px;font-size:.85rem}.lvl{width:46px;height:46px}}
@@ -149,6 +158,7 @@ details summary{cursor:pointer;font-weight:700}
 <div id="toast" role="status" aria-live="polite"></div>
 <canvas id="fx" aria-hidden="true"></canvas>
 <main>
+<div id="mainCol">
 
 <section class="card">
   <div class="row">
@@ -202,13 +212,19 @@ details summary{cursor:pointer;font-weight:700}
   <details style="margin-top:10px"><summary id="helperTitle">Times table helper</summary><div class="table" id="table"></div></details>
 </section>
 
+<section class="card pic hidden" id="pic">
+  <h2>🎨 Picture it</h2>
+  <div id="picSvg"></div>
+  <div class="cap" id="picCap"></div>
+</section>
+
 <section class="card">
   <h2>📂 My saved work</h2>
   <p class="small">Every problem saves as you go. Tap <b>Continue</b> to pick up right where you stopped, even after closing the app.</p>
   <div class="hw" id="sessions"></div>
 </section>
 
-<section class="card">
+<section class="card" id="askCard">
   <h2>Ask me a question</h2>
   <div class="talkbar">
     <button class="gold" id="talkMode" style="flex-basis:100%">🗣️ Talk with me (hands-free)</button>
@@ -276,6 +292,8 @@ details summary{cursor:pointer;font-weight:700}
   <p class="small">Whole numbers only. Division answers with a remainder are written like 822 R3.</p>
 </section>
 
+</div>
+<aside id="side"></aside>
 </main>
 <script src="config.js"></script>
 <script>
@@ -614,6 +632,7 @@ function render(){
   $('#stepFill').style.width = Math.round(100 * (fi + 1) / frames.length) + '%';
   if (fi === frames.length - 1) problemDone();
   saveSession();
+  drawPic();
   $('#stars').textContent = mode === 'practice' ? `⭐ ${stars}` : '';
   const tb = f.tbl || (P.kind === 'div' ? P.d : P.bs[P.bs.length - 1]);
   let t = '';
@@ -716,6 +735,8 @@ function wordsToDigits(t){
 function handleQ(raw){
   const t = wordsToDigits(raw.toLowerCase().replace(/(\d),(\d)/g, '$1$2').replace(/(\d) (?=\d{3}\b)/g, '$1').trim());
   logLine('me', raw);
+  if (/(can you hear me|are you (listening|there)|you there|hello\??$|do you hear)/.test(t)) return reply(`Yes${who()}, I can hear you. ` + (P ? (pending() ? frames[fi].ask.q : 'Say "I wrote it" when you are ready for the next step, or ask me anything.') : 'Tell me a problem, like 1435 divided by 51.'));
+  if (/(you.?re not listening|not listening|don.?t think you.?re listening)/.test(t)) return reply(`I'm listening${who()}. Speak a little closer to the microphone and say the whole problem, like 1435 divided by 51.`);
   const nums = (t.match(/\d+/g) || []).map(Number);
   let m;
   if (P && pending() && nums.length === 1 && !/divid|times|minus|plus|go into/.test(t)) { check(nums[0]); return; }
@@ -757,7 +778,7 @@ function handleQ(raw){
     return askAI(raw, pending() ? f.ask.hint + (f.extra ? ' ' + f.extra : '') : ((f.why || '') + ' ' + f.text.replace(/<[^>]+>/g, '') + (f.extra ? ' ' + f.extra : '') + extra));
   }
   if (/(what (step|do i do)|now what)/.test(t)) return P ? reply(pending() ? frames[fi].ask.q : $('#explain').textContent) : reply('Give me a problem first.');
-  askAI(raw, `I can help with division and multiplication. Try asking "what is 2976 divided by 83", "how many times does 15 go into 88", "why", "next", "repeat", or "what's the answer".`);
+  askAI(raw, `I didn't catch that${who()}. Try saying a problem like "2976 divided by 83", or say "next", "why", or "say that again".`);
 }
 const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 let rec = null, talkMode = false, misses = 0;
@@ -767,7 +788,11 @@ function listenOnce(){
   try {
     rec = new SR(); rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 1;
     let heard = false;
-    rec.onresult = e => { heard = true; misses = 0; const said = e.results[0][0].transcript; rec = null; handleQ(said); };
+    rec.onresult = e => {
+      const r0 = e.results[0][0], said = r0.transcript.trim(); rec = null;
+      if (isNoise(said, r0.confidence)) { heard = false; return; }   // ignore "um", "where", its own echo; keep listening
+      heard = true; misses = 0; handleQ(said);
+    };
     rec.onerror = e => {
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { setTalkMode(false); reply('I need microphone permission to hear you. Tap Allow when the phone asks, or type your question.'); }
     };
@@ -784,7 +809,18 @@ function listenOnce(){
     $('#talkMode').textContent = talkMode ? '🗣️ Listening… just talk (tap to stop)' : '🗣️ Talk with me (hands-free)';
   } catch (e) { rec = null; }
 }
-function afterSpeak(){ if (talkMode) setTimeout(() => { if (talkMode && !speechSynthesis.speaking) listenOnce(); }, 250); }
+function afterSpeak(){ if (talkMode) setTimeout(() => { if (talkMode && !speechSynthesis.speaking) listenOnce(); }, 700); }
+const FILLER = /^(um+|uh+|hm+|mm+|ah+|oh+|er+|like|so|and|the|a|where|what|huh|okay so|yeah um|hmm+)\.?$/i;
+function isNoise(said, conf){
+  const t = said.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim();
+  if (!t) return true;
+  if (FILLER.test(t)) return true;
+  if (typeof conf === 'number' && conf > 0 && conf < 0.35 && !/\d/.test(t)) return true;
+  // echo: most words were just spoken by the app itself
+  const last = String(lastSpoken || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ');
+  const w = t.split(/\s+/); if (w.length >= 3) { const hit = w.filter(x => x.length > 2 && last.includes(x)).length; if (hit / w.length > 0.7) return true; }
+  return false;
+}
 function setTalkMode(on){
   talkMode = on; misses = 0;
   $('#talkMode').classList.toggle('on', on);
@@ -1004,6 +1040,79 @@ $('#momVoice').onchange = e => { momVoice = e.target.checked; store('mc_momvoice
 $('#voiceTest').onclick = () => { lastSpoken = ''; say('9867 divided by 12. How many times does 12 go into 98? 8 times, because 12 times 8 is 96.', true, momHas('hello') ? [{ clip: 'hello' }] : [], momHas('right') ? [{ clip: 'right' }] : []); };
 renderVoiceUI();
 $('#skillReset').onclick = () => { stats = {}; store('mc_stats', '{}'); renderSkills(); };
+
+/* =============== PICTURE IT (side panel drawing of the current step) =============== */
+const COLS = ['#3ee0ff', '#9dff5c', '#ffcc33', '#ff8aa5', '#a78bff', '#5cf2c0', '#ffb15c', '#7fb5ff', '#f78cff'];
+function svgWrap(w, h, inner){ return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Picture of the step">${inner}</svg>`; }
+function drawGroups(cur, d, q, showAnswer){
+  const W = 400, bh = 24, gap = 7, rows = showAnswer ? q + (cur - q * d > 0 ? 1 : 0) : 2, H = Math.max(60, rows * (bh + gap) + 30);
+  let g = `<text x="0" y="14" fill="#b7b1e6" font-size="13">Each bar is one group of ${d}</text>`;
+  const unit = W / Math.max(d, 1);
+  if (!showAnswer) {
+    const full = Math.min(W, cur * unit / Math.max(1, Math.ceil(cur / d)) * Math.ceil(cur / d));
+    g += `<rect x="0" y="24" width="${W}" height="${bh}" rx="8" fill="#3a3290"/><text x="8" y="41" fill="#fff" font-size="14" font-weight="700">${cur} to share</text>`;
+    g += `<rect x="0" y="${24 + bh + gap}" width="${Math.min(W, d * unit)}" height="${bh}" rx="8" fill="${COLS[0]}" opacity=".9"/><text x="8" y="${41 + bh + gap}" fill="#1a1442" font-size="14" font-weight="800">one group = ${d}. How many fit?</text>`;
+    return svgWrap(W, H, g);
+  }
+  for (let k = 0; k < q; k++) {
+    const y = 24 + k * (bh + gap);
+    g += `<rect x="0" y="${y}" width="${W}" height="${bh}" rx="8" fill="${COLS[k % COLS.length]}"><animate attributeName="width" from="0" to="${W}" dur=".35s" begin="${k * 0.08}s" fill="freeze"/></rect><text x="8" y="${y + 17}" fill="#1a1442" font-size="14" font-weight="800">group ${k + 1}: ${d}</text>`;
+  }
+  const rem = cur - q * d;
+  if (rem > 0) { const y = 24 + q * (bh + gap); g += `<rect x="0" y="${y}" width="${W}" height="${bh}" rx="8" fill="none" stroke="#ff6b8b" stroke-dasharray="6 5"/><rect x="0" y="${y}" width="${rem * unit}" height="${bh}" rx="8" fill="#ff6b8b"/><text x="8" y="${y + 17}" fill="#fff" font-size="14" font-weight="800">${rem} left over (not enough for a group)</text>`; }
+  return svgWrap(W, H, g);
+}
+function drawArea(){
+  const A = P.as, B = P.bs, W = 400, cw = W / A.length, ch = 46, top = 26, left = 0, H = top + B.length * ch + 10;
+  const f = frames[fi], m = (f.text || '').match(/Multiply:<\/b> (\d) × (\d)/);
+  const cur = P.mulSteps && P.mulSteps.find(st => f.reveal && f.reveal.includes(`m${st.k}_${st.j}`));
+  let g = '';
+  A.forEach((a, j) => { const pv = a * 10 ** (A.length - 1 - j); g += `<text x="${left + j * cw + cw / 2}" y="16" text-anchor="middle" fill="#ffcc33" font-size="14" font-weight="800">${pv}</text>`; });
+  B.slice().reverse().forEach((b, k) => {
+    const pvb = b * 10 ** k, y = top + k * ch;
+    A.forEach((a, j) => {
+      const pva = a * 10 ** (A.length - 1 - j), isCur = cur && cur.k === k && cur.j === A.length - 1 - j, inRow = cur && cur.k === k;
+      g += `<rect x="${left + j * cw + 2}" y="${y + 2}" width="${cw - 4}" height="${ch - 4}" rx="8" fill="${isCur ? '#ffcc33' : inRow ? '#3a3290' : '#2a237a'}" stroke="#4a41a8"/>`;
+      g += `<text x="${left + j * cw + cw / 2}" y="${y + ch / 2 + 5}" text-anchor="middle" fill="${isCur ? '#1a1442' : '#fff'}" font-size="${String(pva * pvb).length > 6 ? 12 : 14}" font-weight="700">${fmt(pva * pvb)}</text>`;
+    });
+    g += `<text x="${W + 6}" y="${y + ch / 2 + 5}" fill="#3ee0ff" font-size="13" font-weight="800">×${pvb}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W + 60} ${H}" role="img" aria-label="Box model">${g}</svg>`;
+}
+function drawPic(){
+  const box = $('#pic'); if (!P) { box.classList.add('hidden'); return; }
+  box.classList.remove('hidden');
+  const f = frames[fi], pend = pending();
+  let svg = '', cap = '';
+  if (P.kind === 'div') {
+    const idx = P.steps.findIndex((st, i) => f.reveal && (f.reveal.includes('q' + i) || f.reveal.includes('p' + i) || f.reveal.includes('r' + i) || f.reveal.includes('b' + i)));
+    const st = idx >= 0 ? P.steps[idx] : null;
+    if (st && f.tag !== 'Bring down') {
+      svg = drawGroups(st.cur, P.d, st.q, !pend);
+      cap = pend ? `How many groups of <b>${P.d}</b> can you make from <b>${st.cur}</b>?` : `<b>${st.cur}</b> makes <b>${st.q}</b> group${st.q === 1 ? '' : 's'} of ${P.d} (that's ${st.p})` + (st.rem ? `, with <b>${st.rem}</b> left over.` : ', with nothing left over.');
+    } else if (st && f.tag === 'Bring down' && idx < P.steps.length - 1) {
+      const nx = P.steps[idx + 1];
+      svg = svgWrap(400, 90, `<rect x="0" y="10" width="190" height="60" rx="12" fill="#ff6b8b"/><text x="95" y="48" text-anchor="middle" fill="#fff" font-size="22" font-weight="800">${st.rem} left</text><text x="200" y="48" fill="#fff" font-size="26" font-weight="800">+</text><rect x="225" y="10" width="70" height="60" rx="12" fill="#3ee0ff"/><text x="260" y="50" text-anchor="middle" fill="#1a1442" font-size="26" font-weight="800">${P.ds[st.col + 1]}</text><text x="305" y="48" fill="#fff" font-size="24" font-weight="800">→ ${nx.cur}</text>`);
+      cap = `The leftover <b>${st.rem}</b> slides over and the next digit <b>${P.ds[st.col + 1]}</b> joins it. Now we share <b>${nx.cur}</b>.`;
+    } else {
+      svg = drawGroups(P.a <= 200 ? P.a : P.d * 3, P.d, P.a <= 200 ? Math.floor(P.a / P.d) : 3, fi === frames.length - 1 && P.a <= 200);
+      cap = fi === frames.length - 1 ? `${P.a} ÷ ${P.d} = <b>${answerOf()}</b>. Check: ${P.Q} groups of ${P.d} = ${P.Q * P.d}` + (P.R ? `, plus ${P.R} left = ${P.a}.` : '.') : `Dividing means sharing <b>${P.a}</b> into equal groups of <b>${P.d}</b>. We do it one digit at a time.`;
+    }
+  } else {
+    svg = drawArea();
+    const cur = P.mulSteps && P.mulSteps.find(st => f.reveal && f.reveal.includes(`m${st.k}_${st.j}`));
+    cap = cur ? `The gold box is this step: <b>${cur.a * 10 ** cur.j} × ${cur.b * 10 ** cur.k}</b>. All the boxes added together make the answer.` :
+      (fi === frames.length - 1 ? `Add every box: they make <b>${fmt(P.T)}</b>.` : `Box model: ${P.A} split by place value across the top, ${P.B} down the side. Each box is one small multiplication.`);
+  }
+  $('#picSvg').innerHTML = svg; $('#picCap').innerHTML = cap;
+}
+function placePanels(){
+  const wide = window.matchMedia('(min-width:1100px)').matches, side = $('#side'), mainCol = $('#mainCol');
+  if (wide) { side.appendChild($('#pic')); side.appendChild($('#askCard')); }
+  else { const w = $('#work'); w.after($('#pic')); const sv = $('#sessions').closest('section'); sv.after($('#askCard')); }
+}
+window.matchMedia('(min-width:1100px)').addEventListener('change', placePanels);
+placePanels();
 
 /* =============== SAVED SESSIONS =============== */
 let SESS = [];
