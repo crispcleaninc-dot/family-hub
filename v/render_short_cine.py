@@ -111,6 +111,16 @@ for k, (sid, a, b) in enumerate(segs):
     dd = max(0.5, b - a); out = f'{W}/seg{k:02d}.mp4'
     if sid == 'TITLE':
         src = f'{W}/TITLE.png'; vf = 'scale=1080:1920,fps=30,format=yuv420p,fade=t=in:d=0.4'
+    elif os.environ.get('MOTION') and os.path.exists(f"{os.environ['MOTION']}/{sid}.mp4"):
+        mv = f"{os.environ['MOTION']}/{sid}.mp4"; md = dur(mv)
+        if dd <= md * 1.6:
+            sp = dd / md; pre = f"[0:v]setpts={sp:.4f}*PTS[v]"
+        else:  # ping-pong loop for long segments
+            sp = 1.3; n = int(dd / (2 * md * sp)) + 1
+            pre = f"[0:v]setpts={sp}*PTS,split[a][b];[b]reverse[r];[a][r]concat=n=2:v=1[pp];[pp]loop=loop={n}:size=999:start=0[v]"
+        fc2 = pre + ";[v]scale=1108:1920:flags=lanczos,crop=1080:1920,fps=30,eq=contrast=1.06:saturation=0.92,vignette=PI/5,setsar=1,format=yuv420p,fade=t=in:d=0.3[o]"
+        subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', mv, '-filter_complex', fc2, '-map', '[o]', '-t', f'{dd:.3f}', '-an',
+                        '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '20', out], check=True); lst.append(out); continue
     else:
         cover(img(sid), (1296, 2304)).save(f'{W}/i{k}.png'); src = f'{W}/i{k}.png'
         z = "min(1+0.0005*on,1.15)" if k % 2 == 0 else "max(1.15-0.0005*on,1)"
