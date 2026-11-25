@@ -1,0 +1,2 @@
+b06 /generate_video ['input_image', 'prompt', 'steps', 'negative_prompt', 'duration_seconds', 'seed', 'randomize_seed']
+b06 ok via zerogpu-aoti/wan2-2-fp8da-aoti-faster
