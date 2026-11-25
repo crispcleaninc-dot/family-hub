@@ -1,0 +1,14 @@
+name: v2-ehasr
+on: { push: { branches: [v2-ehasr] } }
+permissions: { contents: write }
+jobs:
+  asr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q faster-whisper && python3 asr/a.py || true
+      - run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan eh-asr && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin eh-asr
