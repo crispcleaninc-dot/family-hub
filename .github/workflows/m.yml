@@ -5,7 +5,7 @@ jobs:
   i2v:
     runs-on: ubuntu-latest
     timeout-minutes: 60
-    strategy: { fail-fast: false, max-parallel: 14, matrix: { g: ["c01","c02","c03","c04","c05","c06","c07","c09","c10","c12","c13","c14"] } }
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { g: ["c03","c05","c08"] } }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -17,7 +17,7 @@ jobs:
           git checkout --orphan ehm-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin ehm-${{ matrix.g }}
   img:
     runs-on: ubuntu-latest
-    strategy: { fail-fast: false, matrix: { g: ["c08","c11"] } }
+    strategy: { fail-fast: false, matrix: { g: ["c11"] } }
     steps:
       - uses: actions/checkout@v4
       - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen8/img.py || true
