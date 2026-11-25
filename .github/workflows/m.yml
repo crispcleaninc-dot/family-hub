@@ -1,0 +1,26 @@
+name: v2-ehmot
+on: { push: { branches: [v2-ehmot] } }
+permissions: { contents: write }
+jobs:
+  i2v:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy: { fail-fast: false, max-parallel: 14, matrix: { g: ["c01","c02","c03","c04","c05","c06","c07","c09","c10","c12","c13","c14"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen8/i2v.py || true
+      - if: always()
+        run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan ehm-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin ehm-${{ matrix.g }}
+  img:
+    runs-on: ubuntu-latest
+    strategy: { fail-fast: false, matrix: { g: ["c08","c11"] } }
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q gradio_client; SHOTS=${{ matrix.g }} python3 gen8/img.py || true
+      - run: |
+          git config user.name "v2"; git config user.email "noreply@anthropic.com"
+          git checkout --orphan eh2-img-${{ matrix.g }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin eh2-img-${{ matrix.g }}
