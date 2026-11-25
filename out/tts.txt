@@ -1,0 +1,31 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+e01__he-IL-AvriNeural ok
+e01__ar-JO-TaimNeural ok
+e01__en-US-AndrewMultilingualNeural ok
+k01__ar-EG-ShakirNeural ok
+k01__ar-SA-HamedNeural ok
+k01__fa-IR-FaridNeural ok
+e02__he-IL-AvriNeural ok
+e02__ar-JO-TaimNeural ok
+e02__en-US-AndrewMultilingualNeural ok
+s01__fa-IR-FaridNeural ok
+s01__ar-SA-HamedNeural ok
+s01__ar-JO-TaimNeural ok
+e03__he-IL-AvriNeural ok
+e03__ar-JO-TaimNeural ok
+e03__en-US-AndrewMultilingualNeural ok
+e01__ar-JO-TaimNeural.mp3 => I have a secret iraned unto thee, Oken.
+e01__en-US-AndrewMultilingualNeural.mp3 => I have a secret errand onto thee, O King.
+e01__he-IL-AvriNeural.mp3 => I have a secret errand on to thee, O King.
+e02__ar-JO-TaimNeural.mp3 => I have a message from Koudan to thee
+e02__en-US-AndrewMultilingualNeural.mp3 => I have a message from God unto thee.
+e02__he-IL-AvriNeural.mp3 => I have a message from God unto thee.
+e03__ar-JO-TaimNeural.mp3 => follow after me for the Lord hath delivered your enemies the Moibates into your hand
+e03__en-US-AndrewMultilingualNeural.mp3 => Follow after me, for the Lord hath delivered your enemies the Moabites into your hand.
+e03__he-IL-AvriNeural.mp3 => Follow after me. For the Lord has delivered your enemies, the Moabites into your hand.
+k01__ar-EG-ShakirNeural.mp3 => Keep silence.
+k01__ar-SA-HamedNeural.mp3 => Keep the silence.
+k01__fa-IR-FaridNeural.mp3 => Keep silence.
+s01__ar-JO-TaimNeural.mp3 => Surely he cuffed his feet in his summer chamber.
+s01__ar-SA-HamedNeural.mp3 => surely he kept his feet in his summer chamber
+s01__fa-IR-FaridNeural.mp3 => Surely he covered his feet in his summer chamber.
