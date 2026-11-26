@@ -1,0 +1,28 @@
+2 0 ormers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [10:38<10:38, 638.48s/it]
+100%|██████████| 2/2 [10:38<00:00, 319.24s/it]
+
+8 0 ormers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [10:01<10:01, 601.83s/it]
+100%|██████████| 2/2 [10:01<00:00, 300.92s/it]
+
+91 0 ormers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [10:58<10:58, 658.97s/it]
+100%|██████████| 2/2 [10:58<00:00, 329.49s/it]
+
+210 0 ormers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+
+  0%|          | 0/2 [00:00<?, ?it/s]
+ 50%|█████     | 1/2 [11:14<11:14, 674.60s/it]
+100%|██████████| 2/2 [11:14<00:00, 337.30s/it]
+
