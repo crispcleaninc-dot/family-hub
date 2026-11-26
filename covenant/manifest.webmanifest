@@ -1,0 +1,20 @@
+{
+  "name": "Family Covenant",
+  "short_name": "Covenant",
+  "description": "Our family's covenant: daily Scripture, walks, logs, Wisdom Reels, skits and gospel music.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#2a2040",
+  "theme_color": "#2a2040",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Reels & Music", "url": "./?reel=0", "icons": [{ "src": "icon-192.png", "sizes": "192x192" }] }
+  ]
+}
