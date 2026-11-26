@@ -5,7 +5,7 @@
  *     original "save a key with the gear button" method still works exactly as before.
  *  2. Cloud backup: gives the app's existing "Saved to Mom's Google account" code a way to reach the
  *     same Apps Script from the installed app (it used google.script.run, which only exists inside Apps Script).
- *  3. Amir's photo is kept on this device only (not in the public app files). Grown-ups add or change it.
+ *  3. Amir's photo is built in; grown-ups can swap it on a device and go back to the original.
  *  4. Install button, offline copy (sw.js).
  */
 (function () {

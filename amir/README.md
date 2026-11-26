@@ -9,7 +9,8 @@ Animal Sounds, Where Is Your…?, For Grown-Ups (10 minutes, words he says, CDC 
 
 ## What changed
 - Installable + works offline (manifest, sw.js, icons), Cyars Notify bell, Samsung install guard, listed in Family Hub + Command Center.
-- Amir's photo is no longer inside the app files (this repo is public). Grown-ups add it on each device: For Grown-Ups › This device › Add photo.
+- Amir's photo is built in (put back Nov 26 at her request). Grown-ups can swap it on a device and go back to the original.
+- Font: Andika (clear print letters made for early readers, saved with the app so it works offline) replaces the cursive fallback.
 - AI model updated from claude-sonnet-4-6 to claude-haiku-5-5.
 - Optional relay (below) so AI needs no key on the tablet and progress backs up to Google.
 
