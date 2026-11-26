@@ -1,0 +1,17 @@
+{
+  "name": "School & Chores",
+  "short_name": "School",
+  "description": "Each child's homework, missing work, grades and daily chores, updated from Skyward every day.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1B2951",
+  "theme_color": "#1B2951",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

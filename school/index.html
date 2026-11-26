@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B2951">
+<title>School &amp; Chores</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2951;--gold:#C9A961;--gold-soft:#efe2bf;--paper:#FAF7F0;--card:#fff;--ink:#1c1917;--muted:#6b6459;--line:#e9e1cf;
+    --red:#b91c1c;--red-soft:#fee2e2;--amber:#b45309;--amber-soft:#fef3c7;--ok:#15803d;--ok-soft:#dcfce7;--shadow:0 10px 30px rgba(27,41,81,.12)}
+  @media (prefers-color-scheme: dark){:root{--paper:#0f1424;--card:#18203a;--ink:#f4efe4;--muted:#b9b1a2;--line:#2b3558;
+    --red-soft:#3b1414;--amber-soft:#3a2a10;--ok-soft:#123a24;--gold-soft:#3a3220}}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0} button,input{font:inherit} .hidden{display:none!important}
+  .wrap{max-width:980px;margin:0 auto;padding:0 16px 90px}
+  #login{min-height:100vh;display:grid;place-items:center;padding:24px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:18px;margin:14px 0}
+  .login{max-width:380px;width:100%;text-align:center}
+  .crest{width:70px;height:70px;border-radius:20px;background:var(--navy);color:var(--gold);display:grid;place-items:center;font-size:34px;margin:0 auto 12px}
+  input{width:100%;padding:14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:22px;text-align:center;letter-spacing:.3em}
+  .btn{border:0;border-radius:14px;padding:12px 16px;font-weight:900;cursor:pointer;background:var(--navy);color:#fff;font-size:16px}
+  .btn.gold{background:var(--gold);color:var(--navy)} .btn.ghost{background:transparent;color:var(--muted);border:2px solid var(--line)}
+  .btn.block{width:100%;margin-top:14px} .err{color:var(--red);font-weight:800;min-height:22px;margin-top:10px}
+  header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;gap:10px;height:60px;padding-bottom:0}
+  header .t{font-family:Fraunces,serif;font-weight:800;font-size:19px;flex:1}
+  .stamp{font-size:12px;color:var(--muted)}
+  .tabs{display:flex;gap:8px;overflow-x:auto;padding:12px 0}
+  .tab{flex:0 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-weight:900;cursor:pointer}
+  .tab.on{background:var(--navy);color:#fff;border-color:var(--navy)} .tab .n{display:inline-block;min-width:22px;padding:0 6px;border-radius:99px;background:var(--red);color:#fff;font-size:12px;margin-left:6px}
+  .alerts{display:grid;gap:10px}
+  .al{border-radius:16px;padding:12px 14px;font-weight:800;display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+  .al.red{background:var(--red-soft);color:var(--red)} .al.amber{background:var(--amber-soft);color:var(--amber)} .al.ok{background:var(--ok-soft);color:var(--ok)}
+  .al small{display:block;font-weight:700;color:var(--ink);opacity:.8}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+  .kid{border-radius:18px;padding:14px;background:var(--card);border:1px solid var(--line);cursor:pointer}
+  .kid .big{font-size:30px} .kid b{font-family:Fraunces,serif;font-size:18px}
+  .pill{display:inline-block;border-radius:99px;padding:2px 9px;font-weight:900;font-size:12px;margin:3px 3px 0 0}
+  .pill.red{background:var(--red-soft);color:var(--red)} .pill.amber{background:var(--amber-soft);color:var(--amber)} .pill.ok{background:var(--ok-soft);color:var(--ok)}
+  .daybar{display:flex;align-items:center;gap:8px;flex-wrap:wrap} .daybar .d{font-family:Fraunces,serif;font-size:20px;font-weight:800;flex:1}
+  .key{display:inline-block;padding:4px 10px;border-radius:10px;font-weight:900;font-size:13px}
+  ul.chk{list-style:none;padding:0;margin:8px 0} ul.chk li{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line)}
+  ul.chk input{width:24px;height:24px;flex:0 0 24px;margin-top:1px} ul.chk li.done span{text-decoration:line-through;opacity:.55}
+  .sub{font-size:13px;color:var(--muted);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:15px} td,th{padding:8px 6px;border-bottom:1px solid var(--line);text-align:left} th{font-size:12px;color:var(--muted);text-transform:uppercase}
+  .g{font-weight:900;border-radius:8px;padding:2px 8px} .gA{background:var(--ok-soft);color:var(--ok)} .gB{background:#e0f2fe;color:#0369a1} .gC{background:var(--amber-soft);color:var(--amber)} .gD,.gE{background:var(--red-soft);color:var(--red)}
+  details summary{cursor:pointer;font-weight:900;margin:6px 0}
+  .stale{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:8px 12px;font-weight:800;margin-top:10px}
+  #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
+  #toast.on{opacity:1}
+</style>
+</head>
+<body>
+<section id="login">
+  <div class="card login">
+    <div class="crest">📚</div>
+    <h1>School &amp; Chores</h1>
+    <p class="sub">Homework, missing work, grades and today's chores, updated from Skyward every day.</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" aria-label="PIN">
+    <button class="btn block" id="go">Open</button>
+    <div class="err" id="err"></div>
+    <button class="btn ghost block hidden" id="installBtn">⬇ Install app</button>
+    <p class="sub">iPhone: Share, then Add to Home Screen. Android: ⋮ then Install app. Computer: install icon in the address bar.</p>
+  </div>
+</section>
+
+<div id="app" class="hidden">
+  <header><div class="wrap">
+    <span style="font-size:24px">📚</span><div class="t">School &amp; Chores<div class="stamp" id="stamp"></div></div>
+    <button class="btn ghost" id="refresh" title="Get the newest copy">↻</button>
+    <button class="btn ghost" id="out">Lock</button>
+  </div></header>
+  <div class="wrap">
+    <div id="staleBox"></div>
+    <div class="tabs" id="tabs"></div>
+    <div id="view"></div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script src="config.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS = {pin:'sc_pin_v1', data:'sc_data_v1', chk:'sc_chk_v1'};
+const get = k => { try{ return localStorage.getItem(k); }catch(e){ return null; } };
+const put = (k,v) => { try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } };
+function toast(t){ const el=$('toast'); el.textContent=t; el.classList.add('on'); setTimeout(()=>el.classList.remove('on'),2200); }
+
+let S = { role:null, kid:null, data:null, tab:'home', day:todayISO() };
+
+function todayISO(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function parse(iso){ const [y,m,d]=iso.split('-').map(Number); return new Date(y,m-1,d); }
+function addDays(iso,n){ const d=parse(iso); d.setDate(d.getDate()+n); return todayISO(d); }
+function niceDate(iso){ return parse(iso).toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'}); }
+function short(iso){ return parse(iso).toLocaleDateString(undefined,{month:'numeric',day:'numeric'}); }
+function gClass(g){ const l=String(g||'').charAt(0).toUpperCase(); return 'ABCDE'.includes(l)&&l?'g g'+l:'g'; }
+function isLow(g){ return /^[DE]/i.test(String(g||'')); }
+
+async function relay(pin){
+  if(!window.SCHOOL_RELAY) throw new Error('not_set_up');
+  const r = await fetch(window.SCHOOL_RELAY,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'get',pin})});
+  return r.json();
+}
+async function open(pin, quiet){
+  try{
+    const r = await relay(pin);
+    if(!r.ok){
+      const msg = {bad_pin:'That PIN didn’t work.',locked:'Too many tries. Wait 15 minutes.',no_data:'No school data yet. It fills in after the first daily update.',not_configured:'The relay needs its PIN set up.'}[r.error]||('Could not open ('+(r.error||'error')+')');
+      if(quiet && get(LS.data)) return showCached(); $('err').textContent=msg; return;
+    }
+    put(LS.pin,pin); put(LS.data,JSON.stringify({role:r.role,kid:r.kid,data:r.data}));
+    start(r.role,r.kid,r.data);
+  }catch(e){
+    if(get(LS.data)) return showCached(true);
+    $('err').textContent = e.message==='not_set_up' ? 'Almost ready: the private relay link still needs to be added.' : 'No connection. Try again when you are online.';
+  }
+}
+function showCached(offline){ const c=JSON.parse(get(LS.data)); start(c.role,c.kid,c.data); if(offline) toast('Offline: showing the last saved copy'); }
+
+function start(role,kid,data){
+  S.role=role; S.kid=kid; S.data=data; S.tab = role==='kid' ? kid : (S.tab||'home');
+  $('login').classList.add('hidden'); $('app').classList.remove('hidden');
+  const up = new Date(data.updated||data.fileUpdated);
+  $('stamp').textContent = 'Skyward copy: '+up.toLocaleString(undefined,{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+  const hrs = (Date.now()-up.getTime())/36e5;
+  $('staleBox').innerHTML = hrs>36 ? '<div class="stale">⚠️ This copy is '+Math.round(hrs/24)+' day(s) old. The daily Skyward update may have missed a day.</div>' : '';
+  render(); scheduleAlerts();
+}
+
+/* ---------- planning rules ---------- */
+function kidByName(n){ return (S.data.kids||[]).find(k=>k.name===n); }
+function catchUpPerDay(k){ return k.missing.length>=20 ? 4 : 2; }
+/* Missing work spread across the days, newest (current marking period) first. */
+function catchUpFor(k, day){
+  const list = k.missing.slice().sort((a,b)=> (a.mp===b.mp ? (a.due<b.due?1:-1) : (a.mp==='MP2'?-1:1)));
+  const today = todayISO(); const offset = Math.max(0, Math.round((parse(day)-parse(today))/864e5));
+  const n = catchUpPerDay(k); return list.slice(offset*n, offset*n+n);
+}
+function dueOn(k, day){ return (k.upcoming||[]).filter(u=>u.due===day); }
+function eventsFor(name, from, days){ return (S.data.events||[]).filter(e=> (e.who||[]).includes(name) && e.date>=from && e.date<=addDays(from,days)); }
+function dayPlan(k, day){
+  const dow = parse(day).getDay(); const tomorrow = addDays(day,1);
+  const dueTom = dueOn(k,tomorrow), catchUp = catchUpFor(k,day);
+  const ch = (S.data.chores||{})[k.name] || {daily:[],big:[]};
+  const heavy = dueTom.length>0 || catchUp.length>=3;
+  let key, chores = ch.daily.slice();
+  if(dow===6){ key={t:'Saturday: big chore day',c:'ok'}; chores = chores.concat(ch.big); }
+  else if(dow===0){ key={t:'Sunday: rest + 3 upkeep chores',c:'ok'}; }
+  else if(heavy){ key={t:'Homework first: 3 upkeep chores only',c:'red'}; }
+  else { key={t:'Light homework: upkeep + 1 bigger chore',c:'amber'}; if(ch.big.length) chores.push(ch.big[parse(day).getDate()%ch.big.length]); }
+  return {key, dueTom, catchUp, chores};
+}
+
+/* ---------- alerts ---------- */
+function alertsFor(k){
+  const a=[]; const t=todayISO();
+  const cur = k.missing.filter(m=>m.mp==='MP2').length;
+  if(k.missing.length) a.push({c:'red',t:k.name+': '+k.missing.length+' missing assignment'+(k.missing.length>1?'s':''), s:cur?cur+' from this marking period - turn in before progress reports close':'All from the first marking period - ask the teacher what can still count'});
+  (k.grades||[]).filter(g=>isLow(g.current)).forEach(g=>a.push({c:'red',t:k.name+': '+g.cls+' is at '+g.current, s:'Current marking period grade'}));
+  dueOn(k,addDays(t,1)).concat(dueOn(k,t)).forEach(u=>a.push({c:'amber',t:k.name+': '+u.title+' due '+short(u.due),s:u.cls}));
+  eventsFor(k.name,t,4).filter(e=>!e.info).forEach(e=>a.push({c:'amber',t:k.name+': '+e.text,s:niceDate(e.date)}));
+  return a;
+}
+
+/* ---------- views ---------- */
+function render(){
+  const kids = S.data.kids||[];
+  $('tabs').innerHTML = (S.role==='parent'?'<button class="tab'+(S.tab==='home'?' on':'')+'" data-t="home">🏠 At a glance</button>':'') +
+    kids.map(k=>'<button class="tab'+(S.tab===k.name?' on':'')+'" data-t="'+esc(k.name)+'">'+esc(k.emoji||'')+' '+esc(k.name)+(k.missing.length?'<span class="n">'+k.missing.length+'</span>':'')+'</button>').join('');
+  $('tabs').querySelectorAll('.tab').forEach(b=>b.onclick=()=>{S.tab=b.dataset.t; S.day=todayISO(); render(); scrollTo(0,0);});
+  $('view').innerHTML = S.tab==='home' ? homeView(kids) : kidView(kidByName(S.tab));
+  bind();
+}
+function homeView(kids){
+  const all = kids.flatMap(alertsFor);
+  return '<div class="card"><h2>Needs attention</h2><div class="alerts" style="margin-top:10px">'+
+    (all.length? all.map(x=>'<div class="al '+x.c+'" data-kid="'+esc(x.t.split(':')[0])+'">'+(x.c==='red'?'🔴':'🟠')+'<div>'+esc(x.t)+'<small>'+esc(x.s)+'</small></div></div>').join('') : '<div class="al ok">✅ Nothing overdue. Everyone is caught up.</div>')+
+    '</div></div><div class="grid">'+kids.map(k=>{
+      const p=dayPlan(k,todayISO()); const low=(k.grades||[]).filter(g=>isLow(g.current));
+      return '<div class="kid" data-kid="'+esc(k.name)+'"><div class="big">'+esc(k.emoji||'🙂')+'</div><b>'+esc(k.name)+'</b><div class="sub">'+esc(k.school)+'</div>'+
+        (k.missing.length?'<span class="pill red">'+k.missing.length+' missing</span>':'<span class="pill ok">0 missing</span>')+
+        low.map(g=>'<span class="pill red">'+esc(g.cls)+' '+esc(g.current)+'</span>').join('')+
+        (k.gradesAvailable?'':'<span class="pill amber">No grades in Skyward</span>')+
+        '<div class="sub" style="margin-top:6px">Today: '+esc(p.key.t)+'</div></div>';
+    }).join('')+'</div>';
+}
+function chk(id){ try{ return (JSON.parse(get(LS.chk)||'{}'))[id]; }catch(e){ return false; } }
+function setChk(id,v){ let o={}; try{ o=JSON.parse(get(LS.chk)||'{}'); }catch(e){} if(v) o[id]=1; else delete o[id]; put(LS.chk,JSON.stringify(o)); }
+function li(id,text,sub){ const d=chk(id); return '<li class="'+(d?'done':'')+'"><input type="checkbox" data-id="'+esc(id)+'"'+(d?' checked':'')+'><span>'+esc(text)+(sub?'<div class="sub">'+esc(sub)+'</div>':'')+'</span></li>'; }
+function kidView(k){
+  if(!k) return '';
+  const day=S.day, p=dayPlan(k,day);
+  const hw = p.dueTom.map(u=>li(day+'|'+k.name+'|due|'+u.title, u.title, 'Due '+niceDate(u.due)+' · '+u.cls))
+    .concat(p.catchUp.map(m=>li(day+'|'+k.name+'|miss|'+m.title+m.due, 'Catch up: '+m.title, m.cls+' · was due '+short(m.due))));
+  const ev = eventsFor(k.name,day,6);
+  let h = '<div class="card"><div class="daybar"><button class="btn ghost" id="prev">‹</button><div class="d">'+esc(niceDate(day))+'</div><button class="btn ghost" id="next">›</button></div>'+
+    '<div style="margin-top:10px"><span class="key al '+p.key.c+'" style="display:inline-block">'+esc(p.key.t)+'</span></div>'+
+    '<h3 style="margin-top:14px">📘 Homework</h3><ul class="chk">'+(hw.join('')||'<li><span>No homework on the list for today'+(k.gradesAvailable?'':' (Skyward has no assignments for elementary school - check the take-home folder)')+'.</span></li>')+'</ul>'+
+    '<h3 style="margin-top:10px">🧹 Chores</h3><ul class="chk">'+p.chores.map(c=>li(day+'|'+k.name+'|chore|'+c,c)).join('')+'</ul>'+
+    '<p class="sub">Your paper chore chart still counts. Homework comes before bigger chores.</p>'+
+    (ev.length?'<h3 style="margin-top:10px">📅 Coming up</h3><ul class="chk">'+ev.map(e=>'<li><span>'+esc(e.text)+'<div class="sub">'+esc(niceDate(e.date))+'</div></span></li>').join('')+'</ul>':'')+
+    '</div>';
+  const al = alertsFor(k);
+  if(al.length) h += '<div class="card"><h3>Needs attention</h3><div class="alerts" style="margin-top:8px">'+al.map(x=>'<div class="al '+x.c+'">'+(x.c==='red'?'🔴':'🟠')+'<div>'+esc(x.t.replace(k.name+': ',''))+'<small>'+esc(x.s)+'</small></div></div>').join('')+'</div></div>';
+  if(k.gradesAvailable) h += '<div class="card"><h3>Grades</h3><table><tr><th>Class</th><th>Now</th><th>MP1</th><th>Semester</th></tr>'+
+    k.grades.map(g=>'<tr><td>'+esc(g.cls)+'</td><td><span class="'+gClass(g.current)+'">'+esc(g.current||'-')+'</span></td><td>'+esc(g.mp1||'-')+'</td><td>'+esc(g.s1||'-')+'</td></tr>').join('')+'</table>'+
+    (k.lowScores&&k.lowScores.length?'<details><summary>Low scores to redo or study ('+k.lowScores.length+')</summary><ul class="chk">'+k.lowScores.map(s=>'<li><span>'+esc(s.title)+' - <b>'+esc(s.score)+'</b><div class="sub">'+esc(s.cls)+' · '+esc(short(s.due))+'</div></span></li>').join('')+'</ul></details>':'')+
+    (k.notes?'<p class="sub">'+esc(k.notes)+'</p>':'')+'</div>';
+  else h += '<div class="card"><p class="sub">'+esc(k.notes||'')+'</p></div>';
+  if(k.missing.length){
+    const cur=k.missing.filter(m=>m.mp==='MP2'), old=k.missing.filter(m=>m.mp!=='MP2');
+    const rows = l => l.map(m=>'<li><span>'+esc(m.title)+'<div class="sub">'+esc(m.cls)+' · due '+esc(short(m.due))+'</div></span></li>').join('');
+    h += '<div class="card"><h3>All missing work ('+k.missing.length+')</h3>'+
+      (cur.length?'<details open><summary>This marking period ('+cur.length+')</summary><ul class="chk">'+rows(cur)+'</ul></details>':'')+
+      (old.length?'<details><summary>First marking period ('+old.length+') - ask the teacher what can still count</summary><ul class="chk">'+rows(old)+'</ul></details>':'')+'</div>';
+  }
+  return h;
+}
+function bind(){
+  document.querySelectorAll('[data-kid]').forEach(el=>el.onclick=()=>{ if(kidByName(el.dataset.kid)){ S.tab=el.dataset.kid; S.day=todayISO(); render(); scrollTo(0,0);} });
+  document.querySelectorAll('ul.chk input').forEach(c=>c.onchange=()=>{ setChk(c.dataset.id,c.checked); c.closest('li').classList.toggle('done',c.checked); if(c.checked) toast('Nice work ✔'); });
+  if($('prev')) $('prev').onclick=()=>{ S.day=addDays(S.day,-1); render(); };
+  if($('next')) $('next').onclick=()=>{ S.day=addDays(S.day,1); render(); };
+}
+
+/* Phone/computer alerts through Cyars Notify (only after the bell is turned on). */
+function scheduleAlerts(){
+  const go = () => {
+    if(!window.CyarsNotify) return;
+    const kids = S.data.kids||[]; const t=todayISO();
+    kids.forEach(k=>{
+      if(k.missing.length) CyarsNotify.schedule({id:'sc-miss-'+k.name+'-'+t, type:'unfinished', title:(S.role==='kid'?'You have ':k.name+' has ')+k.missing.length+' missing assignment'+(k.missing.length>1?'s':''), body:'Open School & Chores for today’s catch-up list.', at:t+'T15:45', url:location.href});
+      (k.upcoming||[]).filter(u=>u.due===addDays(t,1)).forEach(u=>CyarsNotify.schedule({id:'sc-due-'+k.name+'-'+u.due+u.title, type:'deadline', title:(S.role==='kid'?'':k.name+': ')+u.title+' is due tomorrow', body:u.cls, at:t+'T16:00', url:location.href}));
+      eventsFor(k.name,t,1).forEach(e=>CyarsNotify.schedule({id:'sc-ev-'+k.name+'-'+e.date, type:'appointment', title:(S.role==='kid'?'':k.name+': ')+e.text, body:niceDate(e.date), at:t+'T07:00', url:location.href}));
+    });
+  };
+  if(window.CyarsNotify) go(); else window.addEventListener('load',()=>setTimeout(go,500));
+}
+
+$('go').onclick = () => { $('err').textContent=''; const p=$('pin').value.trim(); if(p) open(p); };
+$('pin').addEventListener('keydown', e => { if(e.key==='Enter') $('go').click(); });
+$('out').onclick = () => { try{ localStorage.removeItem(LS.pin); localStorage.removeItem(LS.data); }catch(e){} location.reload(); };
+$('refresh').onclick = () => { const p=get(LS.pin); if(p){ toast('Getting the newest copy…'); open(p,true); } };
+
+let deferred=null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred=e; $('installBtn').classList.remove('hidden'); });
+$('installBtn').onclick = async () => { if(!deferred) return; deferred.prompt(); deferred=null; $('installBtn').classList.add('hidden'); };
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+
+const saved = get(LS.pin); if(saved) open(saved, true);
+</script>
+<script src="notify.js" data-app="School &amp; Chores" defer></script>
+</body>
+</html>
