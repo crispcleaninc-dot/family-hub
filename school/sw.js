@@ -1,7 +1,7 @@
 /* School & Chores - service worker. Keeps the app files on the device so it opens offline. */
 try { importScripts('notify-sw.js'); } catch (e) {} // Cyars Notify: alerts + taps
-var SHELL = 'sc-shell-v3';
-var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './config.js', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', '../samsung-guard.js'];
+var SHELL = 'sc-shell-v4';
+var FILES = ['./notify.js', './notify-sw.js', './', './index.html', './manifest.webmanifest', './config.js?v=4', './icon-192.png', './icon-512.png', './icon-maskable-512.png', './apple-touch-icon.png', '../samsung-guard.js'];
 
 self.addEventListener('install', function (e) {
   e.waitUntil(caches.open(SHELL).then(function (c) { return c.addAll(FILES); }).then(function () { return self.skipWaiting(); }));
