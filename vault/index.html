@@ -142,7 +142,7 @@ var SEED = [
   ['Family Grocery HQ','Family',''],
   ['Threefold Cord','Personal',''],
   ['Air & Earth','Personal',''],
-  ['Japanese learning app (Carey)','Family',''],
+  ['Japanese learning app (Carey)','Family','https://script.google.com/macros/s/AKfycbxnZ1eZ1x87y_JW6JpZE6UI9HKtM3yKEf8pPPYjr5KAQdxEehMa_I629s10AVB19R4MPw/exec'],
   ['Smart Home & Security Hub','Personal','https://crispcleaninc-dot.github.io/family-hub/smarthome/'],
   ['Private Correspondence Agent','Personal',''],
   ['Hybrid AI Cowork','Personal',''],
@@ -167,6 +167,20 @@ var SEED = [
   ['crispcleaninc@gmail.com','Google accounts','https://accounts.google.com/'],
   ['crispcleanmerchandisinginc@gmail.com','Google accounts','https://accounts.google.com/'],
   ['crispcareses (Google)','Google accounts','https://accounts.google.com/']
+];
+
+/* Apps added after the vault was first set up. Each is added once (blank PIN for Mom to type in);
+   nothing is ever removed or overwritten. PINs are never written in this file because it is public. */
+var ADD_ONCE = [
+  ['School & Chores (Mom)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['School & Chores (Caleb)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['School & Chores (Carey)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['School & Chores (Charles)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['School & Chores (Emma)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['School & Chores (Ezekiel)','Family','https://crispcleaninc-dot.github.io/family-hub/school/'],
+  ['Skyward Family Access (WLCSD)','Family','https://skyweb.wlcsd.org/Student/web/seplog01.w'],
+  ['Caleb\u2019s Language Lab','Family','https://crispcleaninc-dot.github.io/family-hub/languages/'],
+  ['Math Homework Coach','Family','https://crispcleaninc-dot.github.io/family-hub/math-coach/']
 ];
 
 /* ================= state ================= */
@@ -332,7 +346,7 @@ function submitPin(){
     if(!rec) { busy(false); showLock('setup'); return; }
     return open(rec, pin).then(function(r){
       KEY=r.key; SALT=r.salt; DATA=r.data; setLockState({n:0,until:0});
-      busy(false); enterApp(); fillSeedLinks();
+      busy(false); enterApp(); fillSeedLinks(); addNewApps();
     }, function(){
       busy(false); var s = recordFail(); pinBuf=''; drawDots();
       $('lockMsg').textContent = s.n>=5 ? '' : 'Wrong PIN. '+(5-s.n)+' tries before a wait.';
@@ -367,6 +381,18 @@ function newEntry(o){
 }
 // New app links added to SEED later are filled into an existing vault, only where that entry's link is blank.
 // Never overwrites anything the owner typed, never adds or removes entries.
+function addNewApps(){
+  if(!DATA || !DATA.entries) return;
+  DATA.addedOnce = DATA.addedOnce || [];
+  var added = 0;
+  ADD_ONCE.forEach(function(a){
+    if(DATA.addedOnce.indexOf(a[0])>-1) return;
+    DATA.addedOnce.push(a[0]);
+    if(DATA.entries.some(function(en){ return en.name===a[0]; })) return;
+    DATA.entries.push(newEntry({name:a[0], category:a[1], url:a[2]})); added++;
+  });
+  if(added){ save().then(function(){ render(); }).catch(function(){}); }
+}
 function fillSeedLinks(){
   if(!DATA || !DATA.entries) return;
   var changed = 0;
