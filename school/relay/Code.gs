@@ -38,6 +38,9 @@ function doPost(e) {
     }
     if (!role) { countFail_(); return json_({ ok: false, error: 'bad_pin' }); }
 
+    if (body.action === 'claimTask' || body.action === 'finishTask' || body.action === 'payTask' || body.action === 'releaseTask') {
+      return json_(changeTask_(body, role, kid));
+    }
     if (body.action === 'addHw' || body.action === 'doneHw' || body.action === 'delHw') {
       var who = role === 'kid' ? kid : String(body.kid || '');
       if (!who) return json_({ ok: false, error: 'no_kid' });
@@ -49,6 +52,7 @@ function doPost(e) {
     var data = JSON.parse(f.getBlob().getDataAsString());
     data.fileUpdated = f.getLastUpdated();
     data.added = readHw_();
+    data.taskClaims = readTasks_();
     if (role === 'kid') {
       data.added = data.added.filter(function (h) { return h.kid === kid; });
       (data.kids || []).forEach(function (c) { (c.attendance || []).forEach(function (a) { delete a.appt; }); delete c.appointments; });
@@ -89,6 +93,36 @@ function changeHw_(body, who, role) {
     list = list.filter(function (h) { return !(h.done && new Date(h.due) < cut); }).slice(-300);
     PropertiesService.getScriptProperties().setProperty('ADDED_HW', JSON.stringify(list));
     return { ok: true, added: role === 'kid' ? list.filter(function (h) { return h.kid === who; }) : list };
+  } finally { lock.releaseLock(); }
+}
+
+/* Extra-money tasks: the task list lives in the data file (extraTasks); who claimed, finished
+   and got paid is kept here. First child to claim a task gets it. Only Mom marks it paid. */
+function readTasks_() {
+  try { return JSON.parse(prop_('TASK_CLAIMS') || '{}'); } catch (x) { return {}; }
+}
+function changeTask_(body, role, kid) {
+  var lock = LockService.getScriptLock(); lock.waitLock(10000);
+  try {
+    var all = readTasks_(), id = String(body.id || '').slice(0, 40);
+    if (!id) return { ok: false, error: 'no_task' };
+    var c = all[id] || null;
+    if (body.action === 'claimTask') {
+      if (role !== 'kid') return { ok: false, error: 'kids_only' };
+      if (c && c.kid && c.kid !== kid) return { ok: false, error: 'taken', by: c.kid };
+      all[id] = { kid: kid, claimed: new Date().toISOString(), status: 'claimed' };
+    } else if (body.action === 'finishTask') {
+      if (!c || (role === 'kid' && c.kid !== kid)) return { ok: false, error: 'not_yours' };
+      c.status = 'finished'; c.finished = new Date().toISOString(); c.note = String(body.note || '').slice(0, 200);
+    } else if (body.action === 'payTask') {
+      if (role !== 'parent' || !c) return { ok: false, error: 'mom_only' };
+      c.status = 'paid'; c.paid = new Date().toISOString();
+    } else if (body.action === 'releaseTask') {
+      if (!c || (role === 'kid' && c.kid !== kid)) return { ok: false, error: 'not_yours' };
+      delete all[id];
+    }
+    PropertiesService.getScriptProperties().setProperty('TASK_CLAIMS', JSON.stringify(all));
+    return { ok: true, taskClaims: all };
   } finally { lock.releaseLock(); }
 }
 

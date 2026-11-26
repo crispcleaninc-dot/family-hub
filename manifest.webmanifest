@@ -1,0 +1,16 @@
+{
+  "name": "Our Family Hub",
+  "short_name": "Family Hub",
+  "description": "One app for the whole family: chores, appointments, School & Chores (homework, grades, attendance), Caleb's Language Lab, Math Coach and all our family apps.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1B2951",
+  "theme_color": "#1B2951",
+  "icons": [
+    { "src": "hub-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "hub-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "hub-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -6,7 +6,6 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#1B2951">
 <title>School &amp; Chores</title>
-<link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -57,6 +56,9 @@
   .apps a{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;margin-top:8px;color:var(--ink);text-decoration:none;background:var(--paper)}
   .apps a .ic{font-size:28px} .apps a.off{opacity:.55}
   .x{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;margin-left:auto}
+  .task{border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:10px;background:var(--paper)}
+  .task .top{display:flex;gap:10px;align-items:center} .task .top b{flex:1} .money{font-weight:900;color:var(--ok);font-size:18px}
+  .task ol{margin:8px 0 0 18px;padding:0} .task ol li{margin:4px 0} .task textarea{width:100%;border-radius:10px;border:2px solid var(--line);padding:8px;font:inherit;background:var(--card);color:var(--ink)}
   #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
   #toast.on{opacity:1}
 </style>
@@ -70,14 +72,15 @@
     <input id="pin" type="text" inputmode="numeric" autocomplete="off" name="sc-pin-nofill" placeholder="PIN" aria-label="PIN" style="-webkit-text-security:disc">
     <button class="btn block" id="go">Open</button>
     <div class="err" id="err"></div>
-    <button class="btn ghost block hidden" id="installBtn">⬇ Install app</button>
-    <p class="sub">iPhone: Share, then Add to Home Screen. Android: ⋮ then Install app. Computer: install icon in the address bar.</p>
+    <a class="btn ghost block" href="../" style="display:block;text-decoration:none;margin-top:14px">‹ Back to the Family Hub</a>
+    <p class="sub">Part of our Family Hub. No separate download needed.</p>
   </div>
 </section>
 
 <div id="app" class="hidden">
   <header><div class="wrap">
     <span style="font-size:24px">📚</span><div class="t">School &amp; Chores<div class="stamp" id="stamp"></div></div>
+    <a class="btn ghost" href="../" title="Family Hub" style="text-decoration:none">🏠</a>
     <button class="btn ghost" id="refresh" title="Get the newest copy">↻</button>
     <button class="btn ghost" id="out">Lock</button>
   </div></header>
@@ -122,6 +125,34 @@ async function hwChange(action, extra){
     S.data.added = r.added||[]; const c=JSON.parse(get(LS.data)||'{}'); if(c.data){ c.data.added=S.data.added; put(LS.data,JSON.stringify(c)); }
     render(); toast(action==='addHw'?'Homework added ✔':'Saved ✔');
   }catch(e){ toast('No connection — try again'); }
+}
+/* Extra money: Mom's task list (in the data file) + who claimed / finished / got paid (kept by the relay) */
+async function taskChange(action, id, extra){
+  const pin=get(LS.pin); if(!pin) return toast('Sign in again');
+  try{
+    const r = await relay(pin, action, Object.assign({id},extra||{}));
+    if(!r.ok) return toast({taken:'Someone already claimed it'+(r.by?' ('+r.by+')':''),kids_only:'Only kids can claim tasks',mom_only:'Only Mom can mark it paid',not_yours:'That task is not yours'}[r.error]||('Not saved ('+r.error+')'));
+    S.data.taskClaims=r.taskClaims||{}; const c=JSON.parse(get(LS.data)||'{}'); if(c.data){ c.data.taskClaims=S.data.taskClaims; put(LS.data,JSON.stringify(c)); }
+    render(); toast({claimTask:'It’s yours! Follow the steps 💪',finishTask:'Sent to Mom ✔',payTask:'Marked paid ✔',releaseTask:'Task let go'}[action]||'Saved');
+  }catch(e){ toast('No connection — try again'); }
+}
+function tasksCard(name){
+  const list=(S.data.extraTasks||[]).filter(t=>!name||(t.who||[]).includes(name)); if(!list.length) return '';
+  const cl=S.data.taskClaims||{}; const total=list.reduce((n,t)=>n+(+t.pay||0),0);
+  return '<div class="card"><h3>💵 Want to make extra money?</h3><p class="sub">'+esc(name?('Want to make extra money? Here '+(list.length===1?'is 1 task':'are '+list.length+' tasks')+' you can do to make $'+total+' today. Tap a task to preview the steps and what you need, then tap Claim it. First one to claim it gets it. Mom checks it and pays you.'):'Extra-money tasks for the kids · $'+total+' total. Mark each one paid when it’s done right.')+'</p>'+
+    list.map(t=>{ const c=cl[t.id]; const mine=c&&c.kid===S.kid; const st=!c?'open':c.status;
+      const badge=!c?'<span class="pill ok">Open</span>':st==='paid'?'<span class="pill ok">Paid · '+esc(c.kid)+'</span>':st==='finished'?'<span class="pill amber">Done, waiting on Mom · '+esc(c.kid)+'</span>':'<span class="pill amber">Claimed by '+esc(c.kid)+'</span>';
+      let act='';
+      if(S.role==='kid'){
+        if(!c) act='<button class="btn gold" data-claim="'+esc(t.id)+'">Claim it</button>';
+        else if(mine&&st==='claimed') act='<textarea id="note-'+esc(t.id)+'" rows="2" placeholder="What did you do? (optional)"></textarea><div style="display:flex;gap:8px;margin-top:6px"><button class="btn" data-finish="'+esc(t.id)+'">I finished</button><button class="btn ghost" data-release="'+esc(t.id)+'">Let it go</button></div>';
+      } else if(c&&st!=='paid'){
+        act=(c.note?'<p class="sub">'+esc(c.kid)+' wrote: “'+esc(c.note)+'”</p>':'')+'<div style="display:flex;gap:8px"><button class="btn" data-pay="'+esc(t.id)+'">Checked it · mark paid $'+esc(t.pay)+'</button><button class="btn ghost" data-release="'+esc(t.id)+'">Reopen</button></div>';
+      }
+      return '<div class="task"><div class="top"><b>'+esc(t.title)+'</b><span class="money">$'+esc(t.pay)+'</span></div><div>'+badge+(t.time?' <span class="sub">about '+esc(t.time)+'</span>':'')+'</div>'+
+        '<details'+(mine&&st==='claimed'?' open':'')+'><summary>Preview the steps and what you need</summary><p class="sub" style="margin:6px 0 2px">What you need:</p><ul style="margin:0 0 0 18px;padding:0">'+(t.needs||[]).map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>'+
+        '<p class="sub" style="margin:8px 0 2px">Step by step:</p><ol>'+(t.steps||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></details>'+(act?'<div style="margin-top:8px">'+act+'</div>':'')+'</div>';
+    }).join('')+'</div>';
 }
 function addedFor(name){ return (S.data.added||[]).filter(h=>h.kid===name); }
 async function open(pin, quiet){
@@ -186,6 +217,7 @@ function alertsFor(k){
   if(unex.filter(x=>!x.appt).length) a.push({c:'red',t:k.name+': '+unex.filter(x=>!x.appt).length+' unexcused absence'+(unex.filter(x=>!x.appt).length>1?'s':''),s:unex.filter(x=>!x.appt).map(x=>short(x.date)).join(', ')+' - send a note if you have a reason'});
   const tard=att.filter(x=>x.kind==='tardy').length; if(tard>=8) a.push({c:'amber',t:k.name+': '+tard+' tardies this year',s:'Most are first period - mornings are where the attendance notices come from'});
   addedFor(k.name).filter(h=>!h.done&&h.due<t).forEach(h=>a.push({c:'red',t:k.name+': '+h.title+' was due '+short(h.due),s:'Added homework - mark it done or turn it in'}));
+  Object.entries(S.data.taskClaims||{}).filter(([id,c])=>c.kid===k.name&&c.status==='finished'&&S.role==='parent').forEach(([id,c])=>{ const tk=(S.data.extraTasks||[]).find(x=>x.id===id); a.push({c:'amber',t:k.name+': finished an extra-money task - check it and pay $'+(tk?tk.pay:''),s:tk?tk.title:id}); });
   eventsFor(k.name,t,4).filter(e=>!e.info).forEach(e=>a.push({c:'amber',t:k.name+': '+e.text,s:niceDate(e.date)}));
   return a;
 }
@@ -210,7 +242,7 @@ function homeView(kids){
         low.map(g=>'<span class="pill red">'+esc(g.cls)+' '+esc(g.current)+'</span>').join('')+
         (k.gradesAvailable?'':'<span class="pill amber">No grades in Skyward</span>')+
         '<div class="sub" style="margin-top:6px">Today: '+esc(p.key.t)+'</div></div>';
-    }).join('')+'</div>'+appsCard(null);
+    }).join('')+'</div>'+tasksCard(null)+appsCard(null);
 }
 function appsCard(name){
   const list=(S.data.learningApps||[]).filter(a=>!name||(a.for||[]).includes(name));
@@ -251,6 +283,7 @@ function kidView(k){
     '<p class="sub">Your paper chore chart still counts. Homework comes before bigger chores.</p>'+
     (ev.length?'<h3 style="margin-top:10px">📅 Coming up</h3><ul class="chk">'+ev.map(e=>'<li><span>'+esc(e.text)+'<div class="sub">'+esc(niceDate(e.date))+'</div></span></li>').join('')+'</ul>':'')+
     '</div>';
+  h += '<!--TASKS-->';
   const al = alertsFor(k);
   if(al.length) h += '<div class="card"><h3>Needs attention</h3><div class="alerts" style="margin-top:8px">'+al.map(x=>'<div class="al '+x.c+'">'+(x.c==='red'?'🔴':'🟠')+'<div>'+esc(x.t.replace(k.name+': ',''))+'<small>'+esc(x.s)+'</small></div></div>').join('')+'</div></div>';
   const mine=addedFor(k.name).filter(x=>!x.done).sort((a,b)=>a.due<b.due?-1:1);
@@ -267,10 +300,14 @@ function kidView(k){
       (cur.length?'<details open><summary>This marking period ('+cur.length+')</summary><ul class="chk">'+rows(cur)+'</ul></details>':'')+
       (old.length?'<details><summary>First marking period ('+old.length+') - ask the teacher what can still count</summary><ul class="chk">'+rows(old)+'</ul></details>':'')+'</div>';
   }
-  h += attCard(k) + appsCard(k.name);
+  h = h.replace('<!--TASKS-->', tasksCard(k.name)) + attCard(k) + appsCard(k.name);
   return h;
 }
 function bind(){
+  document.querySelectorAll('[data-claim]').forEach(b=>b.onclick=()=>taskChange('claimTask',b.dataset.claim));
+  document.querySelectorAll('[data-finish]').forEach(b=>b.onclick=()=>taskChange('finishTask',b.dataset.finish,{note:($('note-'+b.dataset.finish)||{}).value||''}));
+  document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>taskChange('payTask',b.dataset.pay));
+  document.querySelectorAll('[data-release]').forEach(b=>b.onclick=()=>taskChange('releaseTask',b.dataset.release));
   if($('addHwBtn')) $('addHwBtn').onclick=()=>{ $('hwForm').classList.toggle('hidden'); if(!$('hwForm').classList.contains('hidden')) $('hwTitle').focus(); };
   if($('hwSave')) $('hwSave').onclick=()=>hwChange('addHw',{kid:S.tab,title:$('hwTitle').value,cls:$('hwCls').value,due:$('hwDue').value});
   document.querySelectorAll('[data-hw]').forEach(c=>c.onchange=()=>hwChange('doneHw',{kid:S.tab,id:c.dataset.hw,done:c.checked}));
@@ -301,8 +338,8 @@ $('out').onclick = () => { try{ localStorage.removeItem(LS.pin); localStorage.re
 $('refresh').onclick = () => { const p=get(LS.pin); if(p){ toast('Getting the newest copy…'); open(p,true); } };
 
 let deferred=null;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred=e; $('installBtn').classList.remove('hidden'); });
-$('installBtn').onclick = async () => { if(!deferred) return; deferred.prompt(); deferred=null; $('installBtn').classList.add('hidden'); };
+
+
 if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
 
 const saved = get(LS.pin); if(saved) open(saved, true);

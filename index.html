@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <title>Our Family Hub</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1B2951">
+<link rel="apple-touch-icon" href="hub-apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -365,10 +368,10 @@ const BUILT_IN_APPS = [
     how:'It lives inside the Caleb #56 app (tap My Missions). Private items unlock with the same admin PIN. Works offline.' },
   { name:'Caleb\u2019s Language Lab', icon:'🗣️', isNew:true, url:'https://crispcleaninc-dot.github.io/family-hub/languages/',
     desc:'French, Spanish and Portuguese for Caleb's 2028 trip to Portugal, Spain and Morocco: lessons, flashcards, quizzes, listening, speaking practice and a travel phrasebook. It says every phrase out loud.',
-    how:'Just tap Open. Install it (iPhone: Share, then Add to Home Screen) and it works offline. Speaking practice works best in Chrome.' },
+    how:'It opens right here in the Family Hub and works offline. Speaking practice works best in Chrome.' },
   { name:'School & Chores', icon:'📚', isNew:true, url:'https://crispcleaninc-dot.github.io/family-hub/school/',
     desc:'Your homework, missing work, grades and today\u2019s chores, updated from Skyward every day. On busy homework nights you get fewer chores.',
-    how:'Type the PIN Mom gives you. Each of you only sees your own page. Tap Install app (iPhone: Share, then Add to Home Screen).' },
+    how:'It opens right here in the Family Hub. Type the PIN Mom gives you. Each of you only sees your own page.' },
   { name:'Math Homework Coach', icon:'➗', isNew:true, url:'https://crispcleaninc-dot.github.io/family-hub/math-coach/',
     desc:'Long division and multiplication, one step at a time and read out loud. It tells you exactly what to write on your paper, answers your questions, and checks your homework answers.',
     how:'Open it once with Wi-Fi or data, then tap Install app (iPhone: Share, then Add to Home Screen). Works offline after that.' }
@@ -397,7 +400,8 @@ function renderApps(){
     const g = APP_GUIDE[normName(a.name)] || {};
     const desc = a.isNew ? a.desc : (g.desc || a.desc || '');
     const how = a.how || g.how || DEFAULT_HOW;
-    return '<a class="app" href="'+esc(a.url)+'" target="_blank" rel="noopener" aria-label="Open '+esc(a.name)+'">'+
+    const inside = /^https:\/\/crispcleaninc-dot\.github\.io\/family-hub\//.test(a.url||'');
+    return '<a class="app" href="'+esc(a.url)+'"'+(inside?'':' target="_blank" rel="noopener"')+' aria-label="Open '+esc(a.name)+'">'+
       (a.isNew?'<span class="new">NEW</span>':'')+
       '<span class="ic">'+esc(a.icon)+'</span><span class="body"><b>'+esc(a.name)+'</b><small>'+esc(desc)+'</small>'+
       '<span class="how"><b>How to get in:</b> '+esc(how)+'</span><span class="open">Open \u203a</span></span></a>';
@@ -426,6 +430,7 @@ $('file').addEventListener('change', async ev => {
   ev.target.value='';
 });
 
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('hub-sw.js').catch(function(){});
 state.token = read('fh_token');
 if(state.token){ load().catch(()=>{}); }
 </script>
