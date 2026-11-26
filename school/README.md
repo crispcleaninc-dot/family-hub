@@ -20,6 +20,14 @@ older ones. If a day is missed, the app shows a "this copy is X days old" warnin
 3. Run `testRelay` once and allow access.
 4. Deploy > New deployment > Web app > Execute as: Me > Anyone. Put the /exec link in `config.js`.
 
+## Also in the app
+- **Attendance** for each child (tardies, unexcused, left early, excused), with Mom's Google Calendar
+  appointments matched to the same day (parent view only). Unexcused days that match an appointment are
+  flagged red so the school can be asked to excuse them.
+- **Add homework**: Mom or a child types in homework (take-home folder, Google Classroom). Saved in the
+  relay's Script Properties (`ADDED_HW`), so it shows on every device and in the daily plan.
+- **Learning apps** per child (the `learningApps` list in the data file).
+
 ## Planning rules (in index.html)
 - Missing work is spread over the days, newest first: 4 a day when 20+ are missing, otherwise 2.
 - Homework due tomorrow, or 3+ catch-up items, = "Homework first": the 3 daily upkeep chores only.

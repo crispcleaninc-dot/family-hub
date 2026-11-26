@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0b3b6f">
+<title>Caleb's Language Lab</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700;9..144,800&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{--fr:#0b3b6f;--es:#b3261e;--acc:var(--fr);--gold:#C9A961;--paper:#f7f5f0;--card:#fff;--ink:#17171c;--muted:#666;--line:#e5e0d4;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2}
+  @media (prefers-color-scheme: dark){:root{--paper:#0d1220;--card:#171f35;--ink:#f3f0e8;--muted:#aaa;--line:#2a3456;--okbg:#123a24;--badbg:#3b1414}}
+  body.es{--acc:var(--es)}
+  *{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0} button{font:inherit;cursor:pointer} .hidden{display:none!important}
+  header{background:var(--acc);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:4}
+  header .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px}
+  header h1{font-size:20px;flex:1} .stat{font-size:13px;font-weight:900;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px}
+  .wrap{max-width:760px;margin:0 auto;padding:14px 16px 90px}
+  .switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .switch button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:12px;font-weight:900;font-size:16px}
+  .switch button.on{border-color:var(--acc);background:var(--acc);color:#fff}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+  .units{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .unit{border:1px solid var(--line);border-radius:18px;background:var(--card);padding:14px;text-align:left;color:var(--ink)}
+  .unit .ic{font-size:28px} .unit b{display:block;margin-top:4px} .bar{height:7px;border-radius:9px;background:var(--line);margin-top:8px;overflow:hidden} .bar i{display:block;height:100%;background:var(--acc)}
+  .sub{font-size:13px;color:var(--muted);font-weight:700}
+  .modes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0}
+  .modes button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:10px 4px;font-weight:900;font-size:14px}
+  .modes button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+  .flash{min-height:230px;display:grid;place-items:center;text-align:center;border-radius:22px;background:var(--acc);color:#fff;padding:22px;cursor:pointer;user-select:none}
+  .flash .big{font-family:Fraunces,serif;font-size:32px;line-height:1.15} .flash .small{opacity:.85;margin-top:10px;font-size:16px}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px} .btn{border:0;border-radius:14px;padding:12px 16px;font-weight:900;background:var(--acc);color:#fff;font-size:16px;flex:1}
+  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line)} .btn.ok{background:var(--ok)} .btn.gold{background:var(--gold);color:#111}
+  .opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:13px;margin-top:8px;font-weight:800;font-size:17px}
+  .opt.right{border-color:var(--ok);background:var(--okbg)} .opt.wrong{border-color:var(--bad);background:var(--badbg)}
+  .q{font-family:Fraunces,serif;font-size:24px;margin:6px 0 4px}
+  .say{font-size:15px;font-weight:800;padding:10px;border-radius:12px;margin-top:10px}
+  .say.ok{background:var(--okbg);color:var(--ok)} .say.bad{background:var(--badbg);color:var(--bad)}
+  input.search{width:100%;padding:12px 14px;border-radius:14px;border:2px solid var(--line);background:var(--paper);color:var(--ink);font-size:16px}
+  .row{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line)} .row .t{flex:1} .row b{display:block}
+  .spk{border:0;background:var(--acc);color:#fff;border-radius:12px;width:44px;height:44px;font-size:18px;flex:0 0 44px}
+  #toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#111;color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
+  #toast.on{opacity:1}
+</style>
+</head>
+<body>
+<header><div class="in"><span style="font-size:24px" id="flag">🇫🇷</span><h1>Caleb's Language Lab</h1><span class="stat" id="streak">🔥 0</span><span class="stat" id="xp">⭐ 0</span></div></header>
+<div class="wrap">
+  <div class="switch"><button id="lfr" class="on">🇫🇷 Français</button><button id="les">🇪🇸 Español</button></div>
+  <div id="home">
+    <div class="card"><h2 id="goalTitle">Today's goal</h2><p class="sub" id="goalTxt"></p>
+      <div class="bar"><i id="goalBar" style="width:0"></i></div>
+      <div class="btns"><button class="btn gold" id="review">▶ Daily review (10)</button><button class="btn ghost" id="install" hidden>⬇ Install app</button></div></div>
+    <h3 style="margin:14px 0 8px">Lessons</h3>
+    <div class="units" id="units"></div>
+    <div class="card"><h3>📖 Phrasebook</h3><p class="sub">Every phrase in the app. Tap 🔊 to hear it.</p>
+      <input class="search" id="q" placeholder="Search in English, French or Spanish"><div id="pb"></div></div>
+  </div>
+  <div id="lesson" class="hidden">
+    <button class="btn ghost" id="back" style="flex:none">‹ Lessons</button>
+    <h2 id="lt" style="margin-top:12px"></h2>
+    <div class="modes"><button data-m="learn" class="on">Learn</button><button data-m="quiz">Quiz</button><button data-m="listen">Listen</button><button data-m="speak">Speak</button></div>
+    <div id="stage"></div>
+  </div>
+</div>
+<div id="toast"></div>
+<script src="content.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1800);}
+const L={fr:{col:1,name:'French',voice:'fr-FR',flag:'🇫🇷'},es:{col:2,name:'Spanish',voice:'es-ES',flag:'🇪🇸'}};
+let lang=store.get('ll_lang','fr'), unit=null, mode='learn';
+let P=store.get('ll_prog',{fr:{},es:{}});            // P[lang][itemId] = box 0..5
+let S=store.get('ll_stats',{xp:0,streak:0,last:'',today:0,day:''});
+const today=()=>new Date().toISOString().slice(0,10);
+const idOf=(u,i)=>u.id+':'+i;
+function box(u,i){return (P[lang]||{})[idOf(u,i)]||0;}
+function setBox(u,i,b){P[lang]=P[lang]||{};P[lang][idOf(u,i)]=Math.max(0,Math.min(5,b));store.set('ll_prog',P);}
+function gain(n){
+  const t=today(); if(S.day!==t){ const y=new Date(Date.now()-864e5).toISOString().slice(0,10); S.streak = S.last===y ? S.streak+1 : (S.last===t?S.streak:1); S.day=t; S.today=0; }
+  S.last=t; S.xp+=n; S.today+=n; store.set('ll_stats',S); stats();
+}
+function stats(){ $('streak').textContent='🔥 '+(S.streak||0); $('xp').textContent='⭐ '+(S.xp||0);
+  const g=Math.min(100,Math.round((S.day===today()?S.today:0)/50*100)); $('goalBar').style.width=g+'%';
+  $('goalTxt').textContent=(S.day===today()?S.today:0)+' of 50 points today. Ten minutes a day adds up before the trip.'; }
+
+/* Speech: hear it, and say it back */
+let voices=[]; function loadVoices(){ try{voices=speechSynthesis.getVoices();}catch(e){} } loadVoices(); try{speechSynthesis.onvoiceschanged=loadVoices;}catch(e){}
+function speak(text,slow){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text.replace(/…/g,'')); u.lang=L[lang].voice;
+  const v=voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith(lang)); if(v) u.voice=v; u.rate=slow?0.65:0.9; speechSynthesis.speak(u);}catch(e){ toast('Sound is not available on this device'); } }
+const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’'`]/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
+function similar(a,b){ a=norm(a).split(' '); b=norm(b).split(' '); const set=new Set(b); const hit=a.filter(w=>set.has(w)).length; return hit/Math.max(a.length,b.length); }
+
+function setLang(l){ lang=l; store.set('ll_lang',l); document.body.classList.toggle('es',l==='es'); $('lfr').classList.toggle('on',l==='fr'); $('les').classList.toggle('on',l==='es'); $('flag').textContent=L[l].flag; renderHome(); if(unit) renderStage(); }
+function pct(u){ let s=0; u.items.forEach((_,i)=>s+=box(u,i)); return Math.round(s/(u.items.length*5)*100); }
+function renderHome(){
+  $('units').innerHTML=LL_UNITS.map(u=>'<button class="unit" data-u="'+u.id+'"><span class="ic">'+u.icon+'</span><b>'+esc(u.title)+'</b><span class="sub">'+u.items.length+' phrases · '+pct(u)+'%</span><div class="bar"><i style="width:'+pct(u)+'%"></i></div></button>').join('');
+  document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>openUnit(LL_UNITS.find(x=>x.id===b.dataset.u)));
+  phrasebook(); stats();
+}
+function phrasebook(){
+  const q=norm($('q').value); const c=L[lang].col; const rows=[];
+  LL_UNITS.forEach(u=>u.items.forEach(it=>{ if(!q||norm(it[0]).includes(q)||norm(it[c]).includes(q)) rows.push(it); }));
+  $('pb').innerHTML=rows.slice(0,q?60:12).map(it=>'<div class="row"><div class="t"><b>'+esc(it[c])+'</b><span class="sub">'+esc(it[0])+'</span></div><button class="spk" data-say="'+esc(it[c])+'">🔊</button></div>').join('')+(q?'':'<p class="sub">Type to search all '+LL_UNITS.reduce((n,u)=>n+u.items.length,0)+' phrases.</p>');
+  document.querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>speak(b.dataset.say));
+}
+function openUnit(u){ unit=u; mode='learn'; $('home').classList.add('hidden'); $('lesson').classList.remove('hidden'); $('lt').textContent=u.icon+' '+u.title; setMode('learn'); scrollTo(0,0); }
+function setMode(m){ mode=m; document.querySelectorAll('[data-m]').forEach(b=>b.classList.toggle('on',b.dataset.m===m)); idx=0; renderStage(); }
+let idx=0, flipped=false, queue=null;
+function items(){ return queue || unit.items.map((it,i)=>({u:unit,i,it})); }
+function pick(n,ex){ const all=[]; LL_UNITS.forEach(u=>u.items.forEach((it,i)=>all.push({u,i,it}))); const out=[]; while(out.length<n){ const x=all[Math.floor(Math.random()*all.length)]; if(x.it!==ex.it&&!out.some(o=>o.it===x.it)) out.push(x);} return out; }
+const shuffle=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(p=>p[1]);
+function nextCard(){ idx=(idx+1)%items().length; flipped=false; renderStage(); }
+function renderStage(){
+  const c=L[lang].col, list=items(), x=list[idx]; if(!x) return;
+  const st=$('stage');
+  if(mode==='learn'){
+    st.innerHTML='<p class="sub">Card '+(idx+1)+' of '+list.length+' · tap the card to flip</p><div class="flash" id="fc"><div><div class="big">'+esc(flipped?x.it[c]:x.it[0])+'</div><div class="small">'+(flipped?esc(x.it[0]):'Say it in '+L[lang].name+', then flip')+'</div></div></div>'+
+      '<div class="btns"><button class="btn ghost" id="hear">🔊 Hear it</button><button class="btn ghost" id="slow">🐢 Slow</button></div><div class="btns"><button class="btn ghost" id="again">Again</button><button class="btn ok" id="know">I know it ✔</button></div>';
+    $('fc').onclick=()=>{flipped=!flipped; renderStage(); if(flipped) speak(x.it[c]);};
+    $('hear').onclick=()=>speak(x.it[c]); $('slow').onclick=()=>speak(x.it[c],true);
+    $('again').onclick=()=>{setBox(x.u,x.i,box(x.u,x.i)-1); nextCard();};
+    $('know').onclick=()=>{setBox(x.u,x.i,box(x.u,x.i)+1); gain(2); nextCard();};
+  } else if(mode==='quiz'||mode==='listen'){
+    const toTarget = mode==='quiz' && Math.random()<.5;
+    const opts=shuffle([x].concat(pick(3,x)));
+    const prompt = mode==='listen' ? '<button class="btn" id="play" style="width:100%">🔊 Play the phrase</button>' : '<div class="q">'+esc(toTarget?x.it[0]:x.it[c])+'</div>';
+    st.innerHTML='<p class="sub">'+(mode==='listen'?'Listen, then pick what it means':(toTarget?'Pick the '+L[lang].name:'What does it mean?'))+' · '+(idx+1)+' of '+list.length+'</p>'+prompt+
+      opts.map((o,k)=>'<button class="opt" data-k="'+k+'">'+esc(toTarget?o.it[c]:o.it[0])+'</button>').join('');
+    if(mode==='listen'){ $('play').onclick=()=>speak(x.it[c]); setTimeout(()=>speak(x.it[c]),300); }
+    document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      const good=opts[+b.dataset.k]===x; b.classList.add(good?'right':'wrong');
+      document.querySelectorAll('.opt')[opts.indexOf(x)].classList.add('right');
+      setBox(x.u,x.i,box(x.u,x.i)+(good?1:-1)); if(good){gain(3);} speak(x.it[c]);
+      document.querySelectorAll('.opt').forEach(o=>o.onclick=null); setTimeout(nextCard, good?900:1800);
+    });
+  } else if(mode==='speak'){
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    st.innerHTML='<p class="sub">Say this in '+L[lang].name+' · '+(idx+1)+' of '+list.length+'</p><div class="q">'+esc(x.it[0])+'</div>'+
+      '<div class="btns"><button class="btn" id="mic">🎤 Tap and speak</button><button class="btn ghost" id="hint">Show me</button></div><div id="res"></div>'+
+      '<div class="btns"><button class="btn ghost" id="skip">Next ›</button></div>';
+    $('hint').onclick=()=>{ $('res').innerHTML='<div class="say ok">'+esc(x.it[c])+'</div>'; speak(x.it[c]); };
+    $('skip').onclick=nextCard;
+    $('mic').onclick=()=>{
+      if(!SR){ $('res').innerHTML='<div class="say bad">Speaking practice needs Chrome or Edge (or Safari on iPhone). Say it out loud, then tap Show me to check.</div>'; return; }
+      const r=new SR(); r.lang=L[lang].voice; r.maxAlternatives=3; $('mic').textContent='🎙 Listening…';
+      r.onresult=e=>{ let best=0,heard=''; for(const alt of e.results[0]){ const s=similar(alt.transcript,x.it[c]); if(s>=best){best=s;heard=alt.transcript;} }
+        const ok=best>=0.7; $('res').innerHTML='<div class="say '+(ok?'ok':'bad')+'">'+(ok?'✔ Nice! ':'Close - try again. ')+'I heard: “'+esc(heard)+'”<br>Target: '+esc(x.it[c])+'</div>';
+        if(ok){ setBox(x.u,x.i,box(x.u,x.i)+1); gain(5); } else speak(x.it[c],true); };
+      r.onerror=()=>{ $('res').innerHTML='<div class="say bad">I couldn’t hear you. Check that the microphone is allowed and try again.</div>'; };
+      r.onend=()=>{ if($('mic')) $('mic').textContent='🎤 Tap and speak'; };
+      try{ r.start(); }catch(e){}
+    };
+  }
+}
+/* Daily review: 10 phrases he knows least, across every lesson */
+$('review').onclick=()=>{
+  const all=[]; LL_UNITS.forEach(u=>u.items.forEach((it,i)=>all.push({u,i,it,b:box(u,i)})));
+  queue=shuffle(all).sort((a,b)=>a.b-b.b).slice(0,10); unit={id:'review',icon:'▶',title:'Daily review',items:queue.map(q=>q.it)};
+  $('home').classList.add('hidden'); $('lesson').classList.remove('hidden'); $('lt').textContent='▶ Daily review'; setMode('quiz');
+};
+$('back').onclick=()=>{ unit=null; queue=null; $('lesson').classList.add('hidden'); $('home').classList.remove('hidden'); renderHome(); };
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
+$('lfr').onclick=()=>setLang('fr'); $('les').onclick=()=>setLang('es');
+$('q').oninput=phrasebook;
+let deferred=null; window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('install').hidden=false;});
+$('install').onclick=()=>{ if(deferred){deferred.prompt();deferred=null;$('install').hidden=true;} };
+if('serviceWorker' in navigator&&location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(()=>{});
+setLang(lang);
+</script>
+<script src="notify.js" data-app="Language Lab" defer></script>
+</body>
+</html>

@@ -38,11 +38,20 @@ function doPost(e) {
     }
     if (!role) { countFail_(); return json_({ ok: false, error: 'bad_pin' }); }
 
+    if (body.action === 'addHw' || body.action === 'doneHw' || body.action === 'delHw') {
+      var who = role === 'kid' ? kid : String(body.kid || '');
+      if (!who) return json_({ ok: false, error: 'no_kid' });
+      return json_(changeHw_(body, who, role));
+    }
+
     var f = newest_();
     if (!f) return json_({ ok: false, error: 'no_data' });
     var data = JSON.parse(f.getBlob().getDataAsString());
     data.fileUpdated = f.getLastUpdated();
+    data.added = readHw_();
     if (role === 'kid') {
+      data.added = data.added.filter(function (h) { return h.kid === kid; });
+      (data.kids || []).forEach(function (c) { (c.attendance || []).forEach(function (a) { delete a.appt; }); delete c.appointments; });
       data.kids = (data.kids || []).filter(function (c) { return c.name === kid; });
       data.events = (data.events || []).filter(function (ev) { return (ev.who || []).indexOf(kid) > -1; });
       var ch = {}; if (data.chores && data.chores[kid]) ch[kid] = data.chores[kid]; data.chores = ch;
@@ -51,6 +60,36 @@ function doPost(e) {
   } catch (err) {
     return json_({ ok: false, error: 'server', detail: String(err) });
   }
+}
+
+/* Homework typed in by Mom or the kids (take-home folder, Google Classroom). Kept in Script Properties. */
+function readHw_() {
+  try { return JSON.parse(prop_('ADDED_HW') || '[]'); } catch (x) { return []; }
+}
+function changeHw_(body, who, role) {
+  var lock = LockService.getScriptLock(); lock.waitLock(10000);
+  try {
+    var list = readHw_();
+    if (body.action === 'addHw') {
+      var title = String(body.title || '').trim().slice(0, 120);
+      var due = String(body.due || '').slice(0, 10);
+      if (!title || !/^\d{4}-\d{2}-\d{2}$/.test(due)) return { ok: false, error: 'bad_item' };
+      list.push({ id: Utilities.getUuid().slice(0, 8), kid: who, title: title, cls: String(body.cls || '').slice(0, 60), due: due, by: role === 'kid' ? who : 'Mom', added: new Date().toISOString(), done: false });
+    } else {
+      var id = String(body.id || '');
+      list = list.filter(function (h) {
+        if (h.id !== id) return true;
+        if (role === 'kid' && h.kid !== who) return true;
+        if (body.action === 'delHw') return false;
+        h.done = !!body.done; return true;
+      });
+    }
+    // keep it small: drop finished items more than 14 days past due
+    var cut = new Date(); cut.setDate(cut.getDate() - 14);
+    list = list.filter(function (h) { return !(h.done && new Date(h.due) < cut); }).slice(-300);
+    PropertiesService.getScriptProperties().setProperty('ADDED_HW', JSON.stringify(list));
+    return { ok: true, added: role === 'kid' ? list.filter(function (h) { return h.kid === who; }) : list };
+  } finally { lock.releaseLock(); }
 }
 
 /* The daily sync adds a new copy each day; use the newest and trash older copies. */

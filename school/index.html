@@ -51,6 +51,12 @@
   .g{font-weight:900;border-radius:8px;padding:2px 8px} .gA{background:var(--ok-soft);color:var(--ok)} .gB{background:#e0f2fe;color:#0369a1} .gC{background:var(--amber-soft);color:var(--amber)} .gD,.gE{background:var(--red-soft);color:var(--red)}
   details summary{cursor:pointer;font-weight:900;margin:6px 0}
   .stale{background:var(--amber-soft);color:var(--amber);border-radius:12px;padding:8px 12px;font-weight:800;margin-top:10px}
+  .form{display:grid;gap:8px;margin-top:10px} .form input{font-size:16px;letter-spacing:0;text-align:left;padding:11px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .att{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .apps a{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:16px;margin-top:8px;color:var(--ink);text-decoration:none;background:var(--paper)}
+  .apps a .ic{font-size:28px} .apps a.off{opacity:.55}
+  .x{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;margin-left:auto}
   #toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-weight:800;opacity:0;transition:.2s;pointer-events:none}
   #toast.on{opacity:1}
 </style>
@@ -102,11 +108,22 @@ function short(iso){ return parse(iso).toLocaleDateString(undefined,{month:'nume
 function gClass(g){ const l=String(g||'').charAt(0).toUpperCase(); return 'ABCDE'.includes(l)&&l?'g g'+l:'g'; }
 function isLow(g){ return /^[DE]/i.test(String(g||'')); }
 
-async function relay(pin){
+async function relay(pin, action, extra){
   if(!window.SCHOOL_RELAY) throw new Error('not_set_up');
-  const r = await fetch(window.SCHOOL_RELAY,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'get',pin})});
+  const r = await fetch(window.SCHOOL_RELAY,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(Object.assign({action:action||'get',pin},extra||{}))});
   return r.json();
 }
+/* Homework typed in by Mom or the kids, saved through the relay so everyone sees it. */
+async function hwChange(action, extra){
+  const pin=get(LS.pin); if(!pin) return toast('Sign in again');
+  try{
+    const r = await relay(pin, action, extra);
+    if(!r.ok) return toast(r.error==='bad_item'?'Add a title and a due date':'Not saved ('+(r.error||'error')+')');
+    S.data.added = r.added||[]; const c=JSON.parse(get(LS.data)||'{}'); if(c.data){ c.data.added=S.data.added; put(LS.data,JSON.stringify(c)); }
+    render(); toast(action==='addHw'?'Homework added ✔':'Saved ✔');
+  }catch(e){ toast('No connection — try again'); }
+}
+function addedFor(name){ return (S.data.added||[]).filter(h=>h.kid===name); }
 async function open(pin, quiet){
   try{
     const r = await relay(pin);
@@ -142,7 +159,7 @@ function catchUpFor(k, day){
   const today = todayISO(); const offset = Math.max(0, Math.round((parse(day)-parse(today))/864e5));
   const n = catchUpPerDay(k); return list.slice(offset*n, offset*n+n);
 }
-function dueOn(k, day){ return (k.upcoming||[]).filter(u=>u.due===day); }
+function dueOn(k, day){ return (k.upcoming||[]).filter(u=>u.due===day).concat(addedFor(k.name).filter(h=>!h.done&&h.due===day).map(h=>({due:h.due,title:h.title,cls:h.cls||'Added by '+h.by,addedId:h.id}))); }
 function eventsFor(name, from, days){ return (S.data.events||[]).filter(e=> (e.who||[]).includes(name) && e.date>=from && e.date<=addDays(from,days)); }
 function dayPlan(k, day){
   const dow = parse(day).getDay(); const tomorrow = addDays(day,1);
@@ -164,6 +181,11 @@ function alertsFor(k){
   if(k.missing.length) a.push({c:'red',t:k.name+': '+k.missing.length+' missing assignment'+(k.missing.length>1?'s':''), s:cur?cur+' from this marking period - turn in before progress reports close':'All from the first marking period - ask the teacher what can still count'});
   (k.grades||[]).filter(g=>isLow(g.current)).forEach(g=>a.push({c:'red',t:k.name+': '+g.cls+' is at '+g.current, s:'Current marking period grade'}));
   dueOn(k,addDays(t,1)).concat(dueOn(k,t)).forEach(u=>a.push({c:'amber',t:k.name+': '+u.title+' due '+short(u.due),s:u.cls}));
+  const att=k.attendance||[]; const unex=att.filter(x=>x.kind==='unexcused');
+  unex.filter(x=>x.appt).forEach(x=>a.push({c:'red',t:k.name+': marked unexcused on '+short(x.date)+' - you had an appointment that day',s:x.appt+'. Call or email the attendance office to have it excused.'}));
+  if(unex.filter(x=>!x.appt).length) a.push({c:'red',t:k.name+': '+unex.filter(x=>!x.appt).length+' unexcused absence'+(unex.filter(x=>!x.appt).length>1?'s':''),s:unex.filter(x=>!x.appt).map(x=>short(x.date)).join(', ')+' - send a note if you have a reason'});
+  const tard=att.filter(x=>x.kind==='tardy').length; if(tard>=8) a.push({c:'amber',t:k.name+': '+tard+' tardies this year',s:'Most are first period - mornings are where the attendance notices come from'});
+  addedFor(k.name).filter(h=>!h.done&&h.due<t).forEach(h=>a.push({c:'red',t:k.name+': '+h.title+' was due '+short(h.due),s:'Added homework - mark it done or turn it in'}));
   eventsFor(k.name,t,4).filter(e=>!e.info).forEach(e=>a.push({c:'amber',t:k.name+': '+e.text,s:niceDate(e.date)}));
   return a;
 }
@@ -188,7 +210,26 @@ function homeView(kids){
         low.map(g=>'<span class="pill red">'+esc(g.cls)+' '+esc(g.current)+'</span>').join('')+
         (k.gradesAvailable?'':'<span class="pill amber">No grades in Skyward</span>')+
         '<div class="sub" style="margin-top:6px">Today: '+esc(p.key.t)+'</div></div>';
-    }).join('')+'</div>';
+    }).join('')+'</div>'+appsCard(null);
+}
+function appsCard(name){
+  const list=(S.data.learningApps||[]).filter(a=>!name||(a.for||[]).includes(name));
+  if(!list.length) return '';
+  return '<div class="card apps"><h3>🎓 Learning apps</h3>'+list.map(a=>a.url?
+    '<a href="'+esc(a.url)+'" target="_blank" rel="noopener"><span class="ic">'+esc(a.icon)+'</span><span><b>'+esc(a.name)+'</b><div class="sub">'+esc(a.desc)+(name?'':' · '+esc((a.for||[]).join(', ')))+'</div></span></a>':
+    '<a class="off"><span class="ic">'+esc(a.icon)+'</span><span><b>'+esc(a.name)+'</b><div class="sub">Link coming soon</div></span></a>').join('')+'</div>';
+}
+function attCard(k){
+  const att=k.attendance||[]; if(!att.length) return '';
+  const n=kind=>att.filter(x=>x.kind===kind).length;
+  const tag={unexcused:'red',tardy:'amber',early:'amber',excused:'ok'};
+  const label={unexcused:'Unexcused',tardy:'Tardy',early:'Left early',excused:'Excused'};
+  return '<div class="card"><h3>🏫 Attendance this year</h3><div class="att">'+
+    ['unexcused','tardy','early','excused'].map(x=>'<span class="pill '+tag[x]+'">'+n(x)+' '+label[x]+'</span>').join('')+'</div>'+
+    '<details'+(n('unexcused')?' open':'')+'><summary>Every day on record ('+att.length+')</summary><ul class="chk">'+att.map(x=>
+      '<li><span><span class="pill '+tag[x.kind]+'">'+esc(label[x.kind])+'</span> '+esc(niceDate(x.date))+
+      '<div class="sub">'+esc(x.code)+' · '+esc(x.cls)+(x.appt?' · 📅 Appointment: '+esc(x.appt):'')+'</div></span></li>').join('')+'</ul></details>'+
+    (S.role==='parent'&&S.data.attendanceNote?'<p class="sub">'+esc(S.data.attendanceNote)+'</p>':'')+'</div>';
 }
 function chk(id){ try{ return (JSON.parse(get(LS.chk)||'{}'))[id]; }catch(e){ return false; } }
 function setChk(id,v){ let o={}; try{ o=JSON.parse(get(LS.chk)||'{}'); }catch(e){} if(v) o[id]=1; else delete o[id]; put(LS.chk,JSON.stringify(o)); }
@@ -201,13 +242,19 @@ function kidView(k){
   const ev = eventsFor(k.name,day,6);
   let h = '<div class="card"><div class="daybar"><button class="btn ghost" id="prev">‹</button><div class="d">'+esc(niceDate(day))+'</div><button class="btn ghost" id="next">›</button></div>'+
     '<div style="margin-top:10px"><span class="key al '+p.key.c+'" style="display:inline-block">'+esc(p.key.t)+'</span></div>'+
-    '<h3 style="margin-top:14px">📘 Homework</h3><ul class="chk">'+(hw.join('')||'<li><span>No homework on the list for today'+(k.gradesAvailable?'':' (Skyward has no assignments for elementary school - check the take-home folder)')+'.</span></li>')+'</ul>'+
+    '<h3 style="margin-top:14px">📘 Homework</h3><ul class="chk">'+(hw.join('')||'<li><span>No homework on the list for today'+(k.gradesAvailable?'':' (Skyward has no assignments for elementary school - add them from the take-home folder)')+'.</span></li>')+'</ul>'+
+    '<button class="btn gold" id="addHwBtn" style="margin:4px 0 8px">＋ Add homework</button>'+
+    '<div class="form hidden" id="hwForm"><input id="hwTitle" placeholder="What is the homework? (e.g. Spelling list 12)" maxlength="120">'+
+    '<div class="row2"><input id="hwCls" placeholder="Class or subject" maxlength="60"><input id="hwDue" type="date" value="'+esc(addDays(todayISO(),1))+'" aria-label="Due date"></div>'+
+    '<button class="btn" id="hwSave">Save homework</button></div>'+
     '<h3 style="margin-top:10px">🧹 Chores</h3><ul class="chk">'+p.chores.map(c=>li(day+'|'+k.name+'|chore|'+c,c)).join('')+'</ul>'+
     '<p class="sub">Your paper chore chart still counts. Homework comes before bigger chores.</p>'+
     (ev.length?'<h3 style="margin-top:10px">📅 Coming up</h3><ul class="chk">'+ev.map(e=>'<li><span>'+esc(e.text)+'<div class="sub">'+esc(niceDate(e.date))+'</div></span></li>').join('')+'</ul>':'')+
     '</div>';
   const al = alertsFor(k);
   if(al.length) h += '<div class="card"><h3>Needs attention</h3><div class="alerts" style="margin-top:8px">'+al.map(x=>'<div class="al '+x.c+'">'+(x.c==='red'?'🔴':'🟠')+'<div>'+esc(x.t.replace(k.name+': ',''))+'<small>'+esc(x.s)+'</small></div></div>').join('')+'</div></div>';
+  const mine=addedFor(k.name).filter(x=>!x.done).sort((a,b)=>a.due<b.due?-1:1);
+  if(mine.length) h += '<div class="card"><h3>📝 Added homework</h3><ul class="chk">'+mine.map(x=>'<li><input type="checkbox" data-hw="'+esc(x.id)+'"><span>'+esc(x.title)+'<div class="sub">'+esc(x.cls||'')+' · due '+esc(niceDate(x.due))+' · added by '+esc(x.by)+'</div></span><button class="x" data-del="'+esc(x.id)+'" title="Remove">✕</button></li>').join('')+'</ul><p class="sub">Check it off when it is turned in.</p></div>';
   if(k.gradesAvailable) h += '<div class="card"><h3>Grades</h3><table><tr><th>Class</th><th>Now</th><th>MP1</th><th>Semester</th></tr>'+
     k.grades.map(g=>'<tr><td>'+esc(g.cls)+'</td><td><span class="'+gClass(g.current)+'">'+esc(g.current||'-')+'</span></td><td>'+esc(g.mp1||'-')+'</td><td>'+esc(g.s1||'-')+'</td></tr>').join('')+'</table>'+
     (k.lowScores&&k.lowScores.length?'<details><summary>Low scores to redo or study ('+k.lowScores.length+')</summary><ul class="chk">'+k.lowScores.map(s=>'<li><span>'+esc(s.title)+' - <b>'+esc(s.score)+'</b><div class="sub">'+esc(s.cls)+' · '+esc(short(s.due))+'</div></span></li>').join('')+'</ul></details>':'')+
@@ -220,11 +267,16 @@ function kidView(k){
       (cur.length?'<details open><summary>This marking period ('+cur.length+')</summary><ul class="chk">'+rows(cur)+'</ul></details>':'')+
       (old.length?'<details><summary>First marking period ('+old.length+') - ask the teacher what can still count</summary><ul class="chk">'+rows(old)+'</ul></details>':'')+'</div>';
   }
+  h += attCard(k) + appsCard(k.name);
   return h;
 }
 function bind(){
+  if($('addHwBtn')) $('addHwBtn').onclick=()=>{ $('hwForm').classList.toggle('hidden'); if(!$('hwForm').classList.contains('hidden')) $('hwTitle').focus(); };
+  if($('hwSave')) $('hwSave').onclick=()=>hwChange('addHw',{kid:S.tab,title:$('hwTitle').value,cls:$('hwCls').value,due:$('hwDue').value});
+  document.querySelectorAll('[data-hw]').forEach(c=>c.onchange=()=>hwChange('doneHw',{kid:S.tab,id:c.dataset.hw,done:c.checked}));
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>hwChange('delHw',{kid:S.tab,id:b.dataset.del}));
   document.querySelectorAll('[data-kid]').forEach(el=>el.onclick=()=>{ if(kidByName(el.dataset.kid)){ S.tab=el.dataset.kid; S.day=todayISO(); render(); scrollTo(0,0);} });
-  document.querySelectorAll('ul.chk input').forEach(c=>c.onchange=()=>{ setChk(c.dataset.id,c.checked); c.closest('li').classList.toggle('done',c.checked); if(c.checked) toast('Nice work ✔'); });
+  document.querySelectorAll('ul.chk input[data-id]').forEach(c=>c.onchange=()=>{ setChk(c.dataset.id,c.checked); c.closest('li').classList.toggle('done',c.checked); if(c.checked) toast('Nice work ✔'); });
   if($('prev')) $('prev').onclick=()=>{ S.day=addDays(S.day,-1); render(); };
   if($('next')) $('next').onclick=()=>{ S.day=addDays(S.day,1); render(); };
 }
