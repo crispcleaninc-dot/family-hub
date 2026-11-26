@@ -136,6 +136,7 @@ async function taskChange(action, id, extra){
     render(); toast({claimTask:'It’s yours! Follow the steps 💪',finishTask:'Sent to Mom ✔',payTask:'Marked paid ✔',releaseTask:'Task let go'}[action]||'Saved');
   }catch(e){ toast('No connection — try again'); }
 }
+function linkify(x){ return esc(x).replace(/(https:\/\/[^\s<]+)/g, u=>'<a href="'+u+'" target="_blank" rel="noopener">Open link</a>'); }
 function tasksCard(name){
   const list=(S.data.extraTasks||[]).filter(t=>!name||(t.who||[]).includes(name)); if(!list.length) return '';
   const cl=S.data.taskClaims||{}; const total=list.reduce((n,t)=>n+(+t.pay||0),0);
@@ -151,7 +152,7 @@ function tasksCard(name){
       }
       return '<div class="task"><div class="top"><b>'+esc(t.title)+'</b><span class="money">$'+esc(t.pay)+'</span></div><div>'+badge+(t.time?' <span class="sub">about '+esc(t.time)+'</span>':'')+'</div>'+
         '<details'+(mine&&st==='claimed'?' open':'')+'><summary>Preview the steps and what you need</summary><p class="sub" style="margin:6px 0 2px">What you need:</p><ul style="margin:0 0 0 18px;padding:0">'+(t.needs||[]).map(n=>'<li>'+esc(n)+'</li>').join('')+'</ul>'+
-        '<p class="sub" style="margin:8px 0 2px">Step by step:</p><ol>'+(t.steps||[]).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ol></details>'+(act?'<div style="margin-top:8px">'+act+'</div>':'')+'</div>';
+        '<p class="sub" style="margin:8px 0 2px">Step by step:</p><ol>'+(t.steps||[]).map(x=>'<li>'+linkify(x)+'</li>').join('')+'</ol></details>'+(act?'<div style="margin-top:8px">'+act+'</div>':'')+'</div>';
     }).join('')+'</div>';
 }
 function addedFor(name){ return (S.data.added||[]).filter(h=>h.kid===name); }
