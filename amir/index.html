@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no"/>
+<title>Amir's World 🌟</title>
+<meta name="theme-color" content="#29C6F6"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="Amir's World"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" href="icon-192.png"/>
+<link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+<script src="../samsung-guard.js"></script>
+<script src="config.js"></script>
+<script src="device.js"></script>
+
+<style>
+:root{
+  --sky:#29C6F6;--sun:#FFD93D;--grass:#6BCB77;--berry:#FF6B6B;
+  --grape:#A855F7;--peppa:#FF85A1;--dark:#1A1A2E;
+  --gold:#FFB800;--mint:#00D9A5;
+  --card-r:26px;--shadow:0 8px 28px rgba(0,0,0,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{min-height:100vh;overflow-x:hidden;}
+body{font-family:'Nunito','Comic Sans MS',cursive;background:linear-gradient(160deg,#29C6F6 0%,#6BCB77 100%);user-select:none;}
+
+.clouds{position:fixed;top:0;left:0;width:100%;pointer-events:none;z-index:0;}
+.cloud{position:absolute;background:white;border-radius:50px;opacity:.6;animation:drift linear infinite;}
+@keyframes drift{from{transform:translateX(-220px)}to{transform:translateX(110vw)}}
+
+#app{position:relative;z-index:1;max-width:460px;margin:0 auto;padding:10px;min-height:100vh;display:flex;flex-direction:column;}
+
+/* HEADER */
+header{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,.28);border-radius:18px;margin-bottom:10px;backdrop-filter:blur(8px);}
+.app-title{font-size:1.2rem;font-weight:900;color:white;text-shadow:2px 2px 0 rgba(0,0,0,.15);}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.star-bar{display:flex;gap:2px;}
+.star-icon{font-size:1.2rem;}
+.level-badge{background:var(--gold);color:#5a3c00;border-radius:20px;padding:3px 10px;font-size:.78rem;font-weight:900;}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;gap:12px;flex:1;}
+.screen.active{display:flex;}
+
+/* HOME */
+.home-top{display:flex;align-items:center;gap:14px;padding:10px 0 4px;}
+.amir-photo{width:86px;height:86px;border-radius:50%;border:5px solid white;box-shadow:0 4px 16px rgba(0,0,0,.25);object-fit:cover;cursor:pointer;animation:pb 2.5s ease-in-out infinite;flex-shrink:0;}
+@keyframes pb{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
+.home-greet h1{font-size:1.6rem;font-weight:900;color:white;text-shadow:2px 2px 0 rgba(0,0,0,.15);line-height:1.2;}
+.home-greet p{font-size:.82rem;color:rgba(255,255,255,.92);font-weight:700;margin-top:3px;}
+
+/* PROGRESS STRIP */
+.prog-strip{background:rgba(255,255,255,.9);border-radius:18px;padding:10px 14px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);}
+.prog-info{flex:1;}
+.prog-label{font-size:.75rem;font-weight:800;color:#888;margin-bottom:4px;}
+.prog-bar-wrap{background:#eee;border-radius:20px;height:10px;overflow:hidden;}
+.prog-bar{background:linear-gradient(90deg,var(--sky),var(--grape));height:10px;border-radius:20px;transition:width .6s ease;}
+.prog-nums{font-size:.72rem;font-weight:800;color:var(--grape);margin-top:3px;}
+.streak-badge{background:var(--berry);color:white;border-radius:12px;padding:4px 10px;font-size:.75rem;font-weight:900;text-align:center;flex-shrink:0;}
+
+/* DIOR BAR */
+.dior-bar{background:rgba(255,255,255,.92);border-radius:50px;padding:9px 16px;display:flex;align-items:center;gap:10px;box-shadow:var(--shadow);cursor:pointer;touch-action:manipulation;}
+.dior-bar:active{transform:scale(.97);}
+
+/* MENU */
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.menu-card{background:white;border-radius:var(--card-r);padding:16px 10px;text-align:center;cursor:pointer;box-shadow:var(--shadow);transition:transform .12s, box-shadow .12s;border:4px solid transparent;position:relative;touch-action:manipulation;}
+.menu-card *{pointer-events:none;}
+.menu-card:hover{transform:scale(1.04);box-shadow:0 12px 36px rgba(0,0,0,.22);}
+.menu-card:active{transform:scale(.91);box-shadow:0 3px 12px rgba(0,0,0,.18);}
+.menu-card .ci{font-size:2.4rem;display:block;margin-bottom:4px;}
+.menu-card .cl{font-size:.88rem;font-weight:800;color:var(--dark);}
+.menu-card .badge-done{position:absolute;top:6px;right:8px;font-size:.7rem;font-weight:900;background:var(--grass);color:white;border-radius:20px;padding:2px 6px;}
+.menu-card.words{border-color:var(--sky);}
+.menu-card.match{border-color:var(--sun);}
+.menu-card.abc{border-color:var(--grass);}
+.menu-card.colors{border-color:var(--berry);}
+.menu-card.shapes{border-color:var(--grape);}
+.menu-card.music{border-color:#FF9500;}
+.menu-card.peppa{border-color:var(--peppa);background:#FFF0F5;}
+.menu-card.videos{border-color:#FF0000;}
+.menu-card.camera{border-color:var(--mint);background:#F0FFFB;}
+
+/* BACK */
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.92);border:none;border-radius:40px;padding:8px 16px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit;color:var(--dark);box-shadow:0 3px 10px rgba(0,0,0,.15);width:fit-content;touch-action:manipulation;}
+.back-btn:active{transform:scale(.95);}
+.sec-title{font-size:1.3rem;font-weight:900;color:white;text-shadow:1px 2px 4px rgba(0,0,0,.2);text-align:center;}
+
+/* WORD STAGE */
+.word-stage{background:white;border-radius:var(--card-r);padding:24px 18px;text-align:center;box-shadow:var(--shadow);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;}
+.word-emoji{font-size:6rem;animation:pulse 2s ease-in-out infinite;cursor:pointer;touch-action:manipulation;}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+.word-label{font-size:2rem;font-weight:900;color:var(--dark);letter-spacing:2px;}
+.word-level-tag{font-size:.72rem;font-weight:800;background:var(--sky);color:white;border-radius:20px;padding:3px 10px;}
+
+/* VOICE LISTEN */
+.voice-ring{width:80px;height:80px;border-radius:50%;background:var(--berry);display:flex;align-items:center;justify-content:center;font-size:2rem;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.2);touch-action:manipulation;transition:transform .1s;}
+.voice-ring:active{transform:scale(.92);}
+.voice-ring.listening{animation:voicePulse .6s ease-in-out infinite;background:var(--grape);}
+@keyframes voicePulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(168,85,247,.4)}50%{transform:scale(1.1);box-shadow:0 0 0 18px rgba(168,85,247,0)}}
+.voice-hint{font-size:.8rem;font-weight:800;color:#888;text-align:center;}
+
+.say-btn{background:var(--sky);color:white;border:none;border-radius:50px;padding:11px 26px;font-size:1.1rem;font-weight:800;font-family:inherit;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.2);touch-action:manipulation;}
+.say-btn:active{transform:translateY(3px);}
+.nav-row{display:flex;gap:16px;}
+.arr-btn{background:var(--sun);border:none;border-radius:50%;width:54px;height:54px;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 0 rgba(0,0,0,.2);touch-action:manipulation;}
+.arr-btn:active{transform:scale(.9);}
+
+/* MATCH */
+.match-board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.mc{background:white;border-radius:15px;aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.9rem;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);border:4px solid transparent;position:relative;overflow:hidden;touch-action:manipulation;}
+.mc .cb{position:absolute;inset:0;background:linear-gradient(135deg,var(--sky),var(--grape));display:flex;align-items:center;justify-content:center;font-size:1.5rem;transition:opacity .25s;}
+.mc.rev .cb{opacity:0;pointer-events:none;}
+.mc.mat{border-color:var(--grass);background:#e8fdf0;animation:pop .35s ease;}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.16)}100%{transform:scale(1)}}
+.mc:active{transform:scale(.9);}
+.match-hdr{text-align:center;background:rgba(255,255,255,.82);border-radius:14px;padding:9px;font-size:1rem;font-weight:800;color:var(--dark);}
+
+/* ABC */
+.abc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.lt{background:white;border-radius:14px;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.12);touch-action:manipulation;}
+.lt:active{transform:scale(.87);}
+.lb{font-size:1.65rem;font-weight:900;}
+.lp{font-size:1.1rem;}
+
+/* COLORS */
+.cols-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.col-card{border-radius:var(--card-r);padding:24px 10px;text-align:center;cursor:pointer;box-shadow:var(--shadow);font-size:1.1rem;font-weight:900;color:white;text-shadow:1px 2px 4px rgba(0,0,0,.3);touch-action:manipulation;}
+.col-card:active{transform:scale(.92);}
+.col-card span{font-size:2rem;display:block;margin-bottom:5px;}
+
+/* SHAPES */
+.shp-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.shp-card{background:white;border-radius:var(--card-r);padding:16px 10px;text-align:center;cursor:pointer;box-shadow:var(--shadow);touch-action:manipulation;}
+.shp-card:active{transform:scale(.92);}
+.shp-name{font-size:.9rem;font-weight:900;color:var(--dark);}
+
+/* MUSIC */
+.mus-stage{background:white;border-radius:var(--card-r);padding:16px 14px;text-align:center;box-shadow:var(--shadow);flex:1;display:flex;flex-direction:column;align-items:center;gap:11px;}
+.mus-icon{font-size:3.4rem;animation:spin 3s linear infinite;display:block;}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.mus-title{font-size:1.15rem;font-weight:900;color:var(--dark);}
+.mus-btn{color:white;border:none;border-radius:50px;padding:12px 26px;font-size:1rem;font-weight:900;font-family:inherit;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.2);width:100%;max-width:260px;touch-action:manipulation;}
+.mus-btn:active{transform:translateY(3px);}
+
+/* PEPPA */
+.peppa-zone{background:linear-gradient(135deg,#FFB3C6,#FF85A1);border-radius:var(--card-r);padding:14px;box-shadow:var(--shadow);}
+.peppa-hdr{text-align:center;font-size:1.25rem;font-weight:900;color:white;text-shadow:1px 2px 4px rgba(0,0,0,.2);margin-bottom:11px;}
+.char-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:11px;}
+.char-bub{background:white;border-radius:50%;width:64px;height:64px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.15);border:3px solid #FF85A1;touch-action:manipulation;}
+.char-bub:active{transform:scale(.85);}
+.char-em{font-size:1.8rem;}
+.char-nm{font-size:.48rem;font-weight:800;color:var(--dark);margin-top:1px;}
+.peppa-game{background:white;border-radius:16px;padding:13px;}
+.pg-title{font-size:.95rem;font-weight:900;color:var(--dark);text-align:center;margin-bottom:9px;}
+.pg-q{font-size:.88rem;font-weight:800;color:#555;text-align:center;margin-bottom:8px;}
+.pg-choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.pg-choice{background:#FFF0F5;border:3px solid #FFB3C6;border-radius:13px;padding:14px 7px;text-align:center;cursor:pointer;font-size:1.9rem;touch-action:manipulation;}
+.pg-choice:active{transform:scale(.9);}
+.pg-choice.ok{border-color:var(--grass);background:#e8fdf0;animation:pop .35s ease;}
+.pg-choice.no{border-color:var(--berry);background:#fff0f0;animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pg-score{font-size:.85rem;font-weight:800;color:#FF85A1;text-align:center;margin-top:7px;}
+
+/* VIDEOS */
+.yt-stage{background:white;border-radius:var(--card-r);padding:14px 13px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:11px;}
+.yt-title{font-size:1.15rem;font-weight:900;color:var(--dark);text-align:center;}
+.char-picker{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;}
+.cp-btn{background:#f0f0f0;border:3px solid #ddd;border-radius:50px;padding:6px 12px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:inherit;color:var(--dark);touch-action:manipulation;}
+.cp-btn:active,.cp-btn.sel{background:var(--sky);border-color:var(--sky);color:white;}
+.yt-bar{display:flex;gap:7px;}
+.yt-input{flex:1;border:3px solid #ddd;border-radius:50px;padding:10px 14px;font-size:.9rem;font-family:inherit;font-weight:700;outline:none;color:var(--dark);}
+.yt-input:focus{border-color:var(--sky);}
+.yt-go{background:#FF0000;color:white;border:none;border-radius:50px;padding:10px 15px;font-size:.95rem;font-weight:900;cursor:pointer;font-family:inherit;touch-action:manipulation;}
+.yt-go:active{transform:scale(.93);}
+.yt-ql{font-size:.76rem;font-weight:800;color:#888;text-align:center;}
+.yt-qbtns{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;}
+.yt-q{background:linear-gradient(135deg,#FF0000,#CC0000);color:white;border:none;border-radius:50px;padding:8px 13px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:inherit;touch-action:manipulation;}
+.yt-q:active{transform:scale(.93);}
+
+/* CAMERA SCREEN */
+.cam-stage{background:white;border-radius:var(--card-r);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:14px;}
+.cam-title{font-size:1.2rem;font-weight:900;color:var(--dark);}
+#camPreview{width:100%;max-width:320px;border-radius:20px;background:#000;aspect-ratio:4/3;object-fit:cover;transform:scaleX(-1);}
+.cam-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.cam-btn{border:none;border-radius:50px;padding:12px 22px;font-size:1rem;font-weight:900;font-family:inherit;cursor:pointer;touch-action:manipulation;}
+.cam-btn:active{transform:scale(.93);}
+.cam-snap{background:var(--berry);color:white;}
+.cam-vid{background:var(--grape);color:white;}
+.cam-flip{background:var(--sky);color:white;}
+#camCanvas{display:none;}
+.cam-gallery{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;}
+.cam-thumb{width:80px;height:80px;border-radius:12px;object-fit:cover;border:3px solid var(--grape);cursor:pointer;}
+.cam-status{font-size:.85rem;font-weight:800;color:var(--grape);text-align:center;}
+.rec-indicator{display:none;align-items:center;gap:6px;font-size:.85rem;font-weight:800;color:var(--berry);}
+.rec-dot{width:10px;height:10px;background:var(--berry);border-radius:50%;animation:recBlink .8s ease-in-out infinite;}
+@keyframes recBlink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* MILESTONES SCREEN */
+.ms-grid{display:flex;flex-direction:column;gap:10px;}
+.ms-card{background:white;border-radius:18px;padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px;}
+.ms-icon{font-size:2.8rem;flex-shrink:0;}
+.ms-info{flex:1;}
+.ms-name{font-size:1rem;font-weight:900;color:var(--dark);}
+.ms-desc{font-size:.78rem;color:#888;font-weight:700;margin-top:2px;}
+.ms-prog{font-size:.75rem;font-weight:800;color:var(--grape);margin-top:4px;}
+.ms-lock{font-size:1.5rem;}
+.ms-earned{border:3px solid var(--gold);}
+.ms-earned .ms-lock{display:none;}
+
+/* AI LESSON SCREEN */
+.ai-stage{background:white;border-radius:var(--card-r);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;}
+.ai-title{font-size:1.15rem;font-weight:900;color:var(--dark);text-align:center;}
+.ai-theme-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+.ai-theme-btn{background:#f0f0f0;border:3px solid #ddd;border-radius:50px;padding:8px 14px;font-size:.88rem;font-weight:800;cursor:pointer;font-family:inherit;color:var(--dark);touch-action:manipulation;}
+.ai-theme-btn:active,.ai-theme-btn.sel{background:var(--grape);border-color:var(--grape);color:white;}
+.ai-generate-btn{background:linear-gradient(135deg,var(--grape),var(--sky));color:white;border:none;border-radius:50px;padding:14px 28px;font-size:1.1rem;font-weight:900;font-family:inherit;cursor:pointer;touch-action:manipulation;width:100%;}
+.ai-generate-btn:active{transform:scale(.97);}
+.ai-words-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.ai-word-card{background:#f8f0ff;border:3px solid var(--grape);border-radius:16px;padding:16px 10px;text-align:center;cursor:pointer;touch-action:manipulation;}
+.ai-word-card:active{transform:scale(.92);}
+.ai-word-card .awe{font-size:2.5rem;display:block;margin-bottom:5px;}
+.ai-word-card .awl{font-size:1rem;font-weight:900;color:var(--dark);}
+.ai-loading{text-align:center;padding:20px;font-size:1rem;font-weight:800;color:var(--grape);}
+.ai-spinner{font-size:2.5rem;animation:spin 1s linear infinite;display:block;margin:0 auto 8px;}
+
+/* CELEBRATE */
+#cel{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.55);z-index:999;opacity:0;pointer-events:none;transition:opacity .25s;}
+#cel.show{opacity:1;pointer-events:all;}
+.cel-box{background:white;border-radius:28px;padding:28px 22px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3);max-width:290px;width:90%;}
+.cel-em{font-size:4.5rem;display:block;animation:pb .6s ease infinite;}
+.cel-txt{font-size:1.6rem;font-weight:900;color:var(--dark);margin:8px 0 4px;}
+.cel-sub{font-size:.9rem;color:#555;margin-bottom:14px;}
+.cel-badge{background:var(--gold);color:#5a3c00;border-radius:20px;padding:5px 14px;font-size:.85rem;font-weight:900;display:inline-block;margin-bottom:12px;}
+.cel-close{background:var(--grass);color:white;border:none;border-radius:50px;padding:11px 26px;font-size:1rem;font-weight:800;font-family:inherit;cursor:pointer;touch-action:manipulation;}
+
+/* MILESTONE POPUP */
+#msPop{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:1000;opacity:0;pointer-events:none;transition:opacity .3s;}
+#msPop.show{opacity:1;pointer-events:all;}
+.ms-pop-box{background:white;border-radius:30px;padding:32px 24px;text-align:center;max-width:300px;width:90%;border:4px solid var(--gold);}
+.ms-pop-icon{font-size:5rem;display:block;animation:pb .7s ease-in-out infinite;}
+.ms-pop-title{font-size:1.8rem;font-weight:900;color:var(--dark);margin:10px 0 5px;}
+.ms-pop-name{font-size:1.1rem;font-weight:900;color:var(--gold);margin-bottom:8px;}
+.ms-pop-desc{font-size:.9rem;color:#555;margin-bottom:18px;}
+.ms-pop-close{background:var(--gold);color:#5a3c00;border:none;border-radius:50px;padding:12px 28px;font-size:1.05rem;font-weight:900;font-family:inherit;cursor:pointer;touch-action:manipulation;}
+
+.cp{position:fixed;width:12px;height:12px;border-radius:3px;animation:cf 1.5s ease-in forwards;z-index:1000;pointer-events:none;}
+@keyframes cf{0%{transform:translateY(-20px) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+
+/* ═══ API KEY MODAL ═══ */
+#keyModal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:9998;display:none;align-items:center;justify-content:center;}
+#keyModal.show{display:flex;}
+.key-box{background:white;border-radius:24px;padding:26px 20px;max-width:320px;width:92%;font-family:'Nunito','Comic Sans MS',cursive;}
+.key-box h2{font-size:1.25rem;font-weight:900;color:#1A1A2E;margin-bottom:6px;text-align:center;}
+.key-box p{font-size:.82rem;color:#555;font-weight:700;margin-bottom:14px;text-align:center;line-height:1.5;}
+.key-steps{background:#f8f0ff;border-radius:14px;padding:12px 14px;margin-bottom:14px;}
+.key-steps li{font-size:.78rem;font-weight:700;color:#555;margin-bottom:6px;line-height:1.4;}
+.key-steps a{color:#A855F7;font-weight:800;}
+.key-input{width:100%;border:3px solid #ddd;border-radius:14px;padding:11px 14px;font-size:.88rem;font-family:inherit;font-weight:700;outline:none;color:#1A1A2E;margin-bottom:6px;}
+.key-input:focus{border-color:#A855F7;}
+.key-status{font-size:.75rem;font-weight:800;text-align:center;margin-bottom:12px;min-height:18px;}
+.key-status.ok{color:#6BCB77;}
+.key-status.bad{color:#FF6B6B;}
+.key-row{display:flex;gap:8px;}
+.key-save{flex:1;background:#A855F7;color:white;border:none;border-radius:50px;padding:12px;font-size:1rem;font-weight:900;cursor:pointer;font-family:inherit;}
+.key-save:active{transform:scale(.96);}
+.key-cancel{background:#eee;color:#555;border:none;border-radius:50px;padding:12px 16px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit;}
+.key-cancel:active{transform:scale(.96);}
+/* gear icon in header */
+.gear-btn{background:rgba(255,255,255,.35);border:none;border-radius:50%;width:34px;height:34px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;touch-action:manipulation;}
+.gear-btn:active{transform:scale(.9);}
+.key-dot{width:9px;height:9px;border-radius:50%;background:#FF6B6B;display:inline-block;margin-left:4px;vertical-align:middle;}
+.key-dot.set{background:#6BCB77;}
+
+/* LIFE LESSONS */
+.lesson-card{border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);display:flex;align-items:center;gap:12px;cursor:pointer;touch-action:manipulation;transition:transform .12s;}
+.lesson-card:active{transform:scale(.97);}
+.lesson-card .l-icon{font-size:2.6rem;flex-shrink:0;}
+.lesson-card .l-body{flex:1;}
+.lesson-card .l-tag{font-size:.68rem;font-weight:900;border-radius:20px;padding:2px 8px;display:inline-block;margin-bottom:4px;}
+.lesson-card .l-text{font-size:.92rem;font-weight:800;color:#1A1A2E;line-height:1.35;}
+.lesson-card .l-sub{font-size:.74rem;font-weight:700;color:#666;margin-top:3px;}
+
+/* ═══ BUILD-A-BOOK / STORY TIME ═══ */
+.book-stage{background:white;border-radius:var(--card-r);padding:18px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;}
+.book-tabs{display:flex;gap:8px;}
+.book-tab{flex:1;padding:10px 6px;border:none;border-radius:14px;font-size:.88rem;font-weight:900;font-family:inherit;cursor:pointer;background:#f0f0f0;color:#555;touch-action:manipulation;}
+.book-tab.active{background:var(--grape);color:white;}
+.book-panel{display:none;flex-direction:column;gap:12px;}
+.book-panel.active{display:flex;}
+
+/* LIBRARY shelf */
+.book-shelf{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.book-card{border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.15);touch-action:manipulation;transition:transform .12s;}
+.book-card:active{transform:scale(.94);}
+.book-cover{width:100%;aspect-ratio:2/3;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center;position:relative;}
+.book-cover-emoji{font-size:3.4rem;margin-bottom:6px;display:block;}
+.book-cover-title{font-size:.82rem;font-weight:900;color:white;text-shadow:1px 2px 4px rgba(0,0,0,.4);line-height:1.3;}
+.book-cover-author{font-size:.65rem;font-weight:700;color:rgba(255,255,255,.85);margin-top:4px;}
+
+/* READER */
+.reader-wrap{position:relative;}
+.page-spread{background:white;border-radius:20px;min-height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:22px 18px;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.12);position:relative;overflow:hidden;}
+.page-scene{font-size:5rem;margin-bottom:10px;animation:pageFloat 3s ease-in-out infinite;}
+@keyframes pageFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.page-text{font-size:1.05rem;font-weight:800;color:#1A1A2E;line-height:1.55;max-width:320px;}
+.page-sub{font-size:.82rem;font-weight:700;color:#888;margin-top:8px;font-style:italic;}
+.page-num{font-size:.72rem;font-weight:800;color:#ccc;margin-top:10px;}
+.reader-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.rd-btn{background:var(--grape);color:white;border:none;border-radius:50px;padding:11px 20px;font-size:1rem;font-weight:900;font-family:inherit;cursor:pointer;touch-action:manipulation;}
+.rd-btn:active{transform:scale(.93);}
+.rd-btn.read{background:var(--sky);}
+.rd-btn.stop{background:var(--berry);}
+.rd-btn:disabled{background:#ddd;color:#aaa;}
+.page-progress{height:6px;background:#eee;border-radius:10px;overflow:hidden;flex:1;}
+.page-progress-fill{height:6px;background:linear-gradient(90deg,var(--grape),var(--sky));border-radius:10px;transition:width .4s;}
+
+/* BUILD YOUR BOOK */
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.topic-btn{background:#f8f0ff;border:3px solid var(--grape);border-radius:14px;padding:12px 8px;text-align:center;cursor:pointer;touch-action:manipulation;font-family:inherit;}
+.topic-btn:active,.topic-btn.sel{background:var(--grape);border-color:var(--grape);}
+.topic-btn:active *,.topic-btn.sel *{color:white!important;}
+.topic-btn .ti{font-size:2rem;display:block;margin-bottom:4px;}
+.topic-btn .tl{font-size:.8rem;font-weight:900;color:#1A1A2E;}
+.build-btn{background:linear-gradient(135deg,var(--grape),var(--sky));color:white;border:none;border-radius:50px;padding:14px;font-size:1.05rem;font-weight:900;font-family:inherit;cursor:pointer;touch-action:manipulation;width:100%;}
+.build-btn:active{transform:scale(.97);}
+.ai-thinking{text-align:center;padding:20px;font-size:.95rem;font-weight:800;color:var(--grape);}
+.think-spin{font-size:2.5rem;animation:spin 1s linear infinite;display:block;margin:0 auto 8px;}
+.aw-hide{display:none!important}
+</style>
+</head>
+<body>
+<div class="clouds" id="clouds"></div>
+
+<!-- MILESTONE POPUP -->
+<div id="msPop">
+  <div class="ms-pop-box">
+    <span class="ms-pop-icon" id="msPopIcon">🏆</span>
+    <div class="ms-pop-title">MILESTONE!</div>
+    <div class="ms-pop-name" id="msPopName">First Star!</div>
+    <div class="ms-pop-desc" id="msPopDesc">You learned your first word!</div>
+    <button class="ms-pop-close" onclick="closeMsPop()">Yay! Let's keep going! 🚀</button>
+  </div>
+</div>
+
+<!-- CELEBRATE -->
+<div id="cel">
+  <div class="cel-box">
+    <span class="cel-em" id="celEm">🎉</span>
+    <div class="cel-txt" id="celTxt">Yay Amir!</div>
+    <div class="cel-sub" id="celSub">Great job!</div>
+    <div class="cel-badge" id="celBadge" style="display:none"></div>
+    <button class="cel-close" onclick="closeCel()">Keep Going! 🚀</button>
+  </div>
+</div>
+
+
+<!-- API KEY MODAL -->
+<div id="keyModal">
+  <div class="key-box">
+    <h2>🔑 Add Your AI Key</h2>
+    <p>The AI Magic Lesson needs a Claude API key.<br>It's free to get and only you can see it.</p>
+    <ol class="key-steps">
+      <li>Go to <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a></li>
+      <li>Sign up or log in (free)</li>
+      <li>Click <strong>API Keys</strong> → <strong>Create Key</strong></li>
+      <li>Copy it and paste it below 👇</li>
+    </ol>
+    <input class="key-input" id="keyInput" type="password" placeholder="sk-ant-api03-..." autocomplete="off" oninput="clearKeyStatus()"/>
+    <div class="key-status" id="keyStatus"></div>
+    <div class="key-row">
+      <button class="key-save" onclick="saveKey()">✅ Save Key</button>
+      <button class="key-cancel" onclick="closeKeyModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <div class="app-title">🌟 Amir's World</div>
+    <div class="hdr-right">
+      <div class="level-badge" id="levelBadge">Level 1</div>
+      <div class="star-bar" id="starBar"></div>
+      <button class="gear-btn" id="gearBtn" onclick="openKeyModal()" title="AI Key Settings">⚙️<span class="key-dot" id="keyDot"></span></button>
+    </div>
+  </header>
+
+  <!-- HOME -->
+  <div class="screen active" id="screen-home">
+    <div class="home-top">
+      <img class="amir-photo" id="amirPhoto" data-default="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD93D'/%3E%3Cstop offset='1' stop-color='%23FF6B6B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23g)'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23FFD93D'/%3E%3Cstop offset='1' stop-color='%23FF6B6B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23g)'/%3E%3Ctext x='50' y='66' font-size='52' text-anchor='middle'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E" alt="Amir" onclick="photoTap()"/>
+      <div class="home-greet">
+        <h1>Hi Amir! 👑</h1>
+        <p id="homeSubtitle">You are the KING today!</p>
+      </div>
+    </div>
+
+    <!-- PROGRESS STRIP -->
+    <div class="prog-strip">
+      <div class="prog-info">
+        <div class="prog-label">WORDS LEARNED</div>
+        <div class="prog-bar-wrap"><div class="prog-bar" id="progBar" style="width:0%"></div></div>
+        <div class="prog-nums" id="progNums">0 / 20 words</div>
+      </div>
+      <div class="streak-badge" id="streakBadge">🔥 0 days</div>
+    </div>
+
+    <div class="dior-bar" onclick="diorHelp()">
+      <span style="font-size:1.7rem">👧🏾</span>
+      <div style="font-size:.88rem;font-weight:800;color:var(--dark);">Ask big sister Dior for help! 💛</div>
+    </div>
+
+    <!-- DAILY LIFE LESSONS -->
+    <div id="lessonCards"></div>
+
+    <div class="menu-grid">
+      <div class="menu-card words"  onclick="goTo('words')"><span class="ci">📚</span><div class="cl">Learn Words</div></div>
+      <div class="menu-card match"  onclick="goTo('match')"><span class="ci">🎴</span><div class="cl">Match It!</div></div>
+      <div class="menu-card abc"    onclick="goTo('abc')"><span class="ci">🔤</span><div class="cl">ABC</div></div>
+      <div class="menu-card colors" onclick="goTo('colors')"><span class="ci">🎨</span><div class="cl">Colors</div></div>
+      <div class="menu-card shapes" onclick="goTo('shapes')"><span class="ci">🔷</span><div class="cl">Shapes</div></div>
+      <div class="menu-card music"  onclick="goTo('music')"><span class="ci">🎵</span><div class="cl">Music Time</div></div>
+      <div class="menu-card peppa"  onclick="goTo('peppa')"><span class="ci">🐷</span><div class="cl">Peppa Pig!</div></div>
+      <div class="menu-card videos" onclick="goTo('videos')"><span class="ci">▶️</span><div class="cl">Watch Videos</div></div>
+      <div class="menu-card camera" onclick="goTo('camera')"><span class="ci">📸</span><div class="cl">Camera Fun!</div></div>
+      <div class="menu-card" style="border-color:var(--grape);background:#F8F0FF;" onclick="goTo('milestones')"><span class="ci">🏆</span><div class="cl">My Trophies</div></div>
+      <div class="menu-card" style="border-color:var(--mint);background:#F0FFFB;grid-column:span 2;" onclick="goTo('ailesson')"><span class="ci">🤖</span><div class="cl">AI Magic Lesson ✨</div></div>
+      <div class="menu-card" style="border-color:#FF85A1;background:#FFF0F8;grid-column:span 2;" onclick="goTo('books')"><span class="ci">📖</span><div class="cl">Story Time & Build-a-Book 📚</div></div>
+    </div>
+  </div>
+
+  <!-- WORDS -->
+  <div class="screen" id="screen-words">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">Learn Words!</div>
+    <div class="word-stage">
+      <div class="word-emoji" id="wEm" onclick="speakWord()">🍎</div>
+      <div class="word-label" id="wLbl">APPLE</div>
+      <div class="word-level-tag" id="wLvlTag">Level 1</div>
+      <button class="say-btn" onclick="speakWord()">🔊 Say It!</button>
+      <!-- VOICE RECOGNITION -->
+      <div class="voice-ring" id="voiceRing" onclick="toggleListen()">🎤</div>
+      <div class="voice-hint" id="voiceHint">Tap 🎤 and SAY the word!</div>
+      <div class="nav-row">
+        <button class="arr-btn" onclick="prevWord()">⬅</button>
+        <button class="arr-btn" onclick="nextWord()">➡</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MATCH -->
+  <div class="screen" id="screen-match">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="match-hdr" id="mHdr">Find the matches! 🎴</div>
+    <div class="match-board" id="mBoard"></div>
+    <button class="say-btn" style="background:var(--grass);align-self:center" onclick="resetMatch()">New Game 🔄</button>
+  </div>
+
+  <!-- ABC -->
+  <div class="screen" id="screen-abc">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">A B C!</div>
+    <div class="abc-grid" id="abcGrid"></div>
+  </div>
+
+  <!-- COLORS -->
+  <div class="screen" id="screen-colors">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">Colors! 🎨</div>
+    <div class="cols-grid" id="colsGrid"></div>
+  </div>
+
+  <!-- SHAPES -->
+  <div class="screen" id="screen-shapes">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">Shapes! 🔷</div>
+    <div class="shp-grid" id="shpGrid"></div>
+  </div>
+
+  <!-- MUSIC -->
+  <div class="screen" id="screen-music">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">Music Time! 🎵</div>
+    <div class="mus-stage">
+      <span class="mus-icon">🎵</span>
+      <div class="mus-title">Amir's Playlist! 🎶</div>
+      <button class="mus-btn" style="background:var(--grape)"  onclick="ytSearch('Big Bear Song kids official 2024')">🐻 Big Bear Song</button>
+      <button class="mus-btn" style="background:var(--berry)"  onclick="ytSearch('Gracie Corner ABC kids songs official')">🌟 Gracie's Corner</button>
+      <button class="mus-btn" style="background:var(--peppa)"  onclick="ytSearch('Peppa Pig theme song official')">🐷 Peppa Pig Song</button>
+      <button class="mus-btn" style="background:var(--sky)"    onclick="openYT('XqZsoesa55w')">🦈 Baby Shark</button>
+      <button class="mus-btn" style="background:var(--grass)"  onclick="ytSearch('If You Are Happy and You Know It kids song')">🌈 If You're Happy</button>
+      <button class="mus-btn" style="background:var(--sun);color:var(--dark)" onclick="ytSearch('ABC song kids Gracie Corner official')">🔤 ABC Song</button>
+    </div>
+  </div>
+
+  <!-- PEPPA -->
+  <div class="screen" id="screen-peppa">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">🐷 Peppa's World!</div>
+    <div class="peppa-zone">
+      <div class="peppa-hdr">Meet the Family!</div>
+      <div class="char-row" id="charRow"></div>
+      <div class="peppa-game">
+        <div class="pg-title">🎮 Who Is This? Tap the right one!</div>
+        <div class="pg-q" id="pgQ">Loading...</div>
+        <div class="pg-choices" id="pgChoices"></div>
+        <div class="pg-score" id="pgScore">Score: 0 ⭐</div>
+      </div>
+    </div>
+    <div style="background:white;border-radius:var(--card-r);padding:13px;box-shadow:var(--shadow);text-align:center;">
+      <div style="font-size:.95rem;font-weight:900;color:var(--dark);margin-bottom:10px">Watch Peppa! 🐷</div>
+      <button class="mus-btn" style="background:var(--peppa);margin-bottom:7px" onclick="ytSearch('Peppa Pig best moments full episode official')">🐷 Peppa's Best Moments</button>
+      <button class="mus-btn" style="background:#FF6B6B" onclick="ytSearch('Peppa Pig full episodes compilation official')">🌈 Peppa Full Episodes</button>
+    </div>
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="screen" id="screen-videos">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">▶️ Watch Videos!</div>
+    <div class="yt-stage">
+      <div class="yt-title">What does Amir want to watch? 🎬</div>
+      <div>
+        <div class="yt-ql" style="margin-bottom:5px">Tap a friend 👇</div>
+        <div class="char-picker" id="charPicker"></div>
+      </div>
+      <div class="yt-bar">
+        <input class="yt-input" id="ytInput" type="text" placeholder="Search videos..."/>
+        <button class="yt-go" onclick="doSearch()">▶</button>
+      </div>
+      <div>
+        <div class="yt-ql" style="margin-bottom:5px">Quick play 🚀</div>
+        <div class="yt-qbtns">
+          <button class="yt-q" onclick="ytSearch('Big Bear Song kids official 2024')">🐻 Big Bear</button>
+          <button class="yt-q" onclick="ytSearch('Gracie Corner ABC kids songs official')">🌟 Gracie's</button>
+          <button class="yt-q" onclick="ytSearch('Peppa Pig theme song official')">🐷 Peppa</button>
+          <button class="yt-q" onclick="openYT('XqZsoesa55w')">🦈 Baby Shark</button>
+          <button class="yt-q" onclick="ytSearch('Bluey full episode')">🐶 Bluey</button>
+          <button class="yt-q" onclick="ytSearch('Cocomelon nursery rhymes')">🎵 CoComelon</button>
+          <button class="yt-q" onclick="ytSearch('Paw Patrol full episode')">🐾 Paw Patrol</button>
+          <button class="yt-q" onclick="ytSearch('Ms Rachel songs for littles')">👩‍🏫 Ms. Rachel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMERA -->
+  <div class="screen" id="screen-camera">
+    <button class="back-btn" onclick="stopCam(); goHome()">⬅ Home</button>
+    <div class="sec-title">📸 Amir's Camera!</div>
+    <div class="cam-stage">
+      <div class="cam-title">Say cheese! 🧀</div>
+      <video id="camPreview" autoplay playsinline muted style="display:none"></video>
+      <canvas id="camCanvas"></canvas>
+      <!-- FALLBACK shown when GAS blocks camera -->
+      <div id="camFallback" style="display:none;flex-direction:column;align-items:center;gap:14px;background:#f8f0ff;border-radius:20px;padding:24px 16px;text-align:center;width:100%;max-width:320px;">
+        <div style="font-size:3rem">📷</div>
+        <div id="camFallbackMsg" style="font-size:.9rem;font-weight:800;color:#555;line-height:1.4;"></div>
+        <div style="font-size:.8rem;font-weight:700;color:#888;line-height:1.5;">The camera works best in a real browser tab!<br>Tap below to open Amir's World in Chrome or Safari, then use the camera from there. 📱</div>
+        <a id="camOpenBtn" href="#" target="_blank" rel="noopener noreferrer"
+           style="display:block;background:#A855F7;color:white;border-radius:50px;padding:14px 24px;font-size:1rem;font-weight:900;text-decoration:none;width:100%;">
+          📱 Open in Browser for Camera
+        </a>
+        <div style="font-size:.75rem;color:#aaa;font-weight:700;">Or use the buttons below to continue without a camera</div>
+      </div>
+      <div class="rec-indicator" id="recIndicator"><span class="rec-dot"></span> Recording...</div>
+      <div class="cam-status" id="camStatus">Loading camera...</div>
+      <div class="cam-row">
+        <button class="cam-btn cam-snap" onclick="takePhoto()">📸 Photo!</button>
+        <button class="cam-btn cam-vid"  id="vidBtn" onclick="toggleVideo()">🎥 Record</button>
+        <button class="cam-btn cam-flip" onclick="flipCam()">🔄 Flip</button>
+      </div>
+      <div class="cam-gallery" id="camGallery"></div>
+    </div>
+  </div>
+
+  <!-- MILESTONES -->
+  <div class="screen" id="screen-milestones">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">🏆 Amir's Trophies!</div>
+    <div class="ms-grid" id="msGrid"></div>
+  </div>
+
+  <!-- AI LESSON -->
+  <div class="screen" id="screen-ailesson">
+    <button class="back-btn" onclick="goHome()">⬅ Home</button>
+    <div class="sec-title">🤖 AI Magic Lesson!</div>
+    <div class="ai-stage">
+      <div class="ai-title">What should Amir learn today? ✨</div>
+      <div class="ai-theme-row" id="aiThemeRow"></div>
+      <button class="ai-generate-btn" onclick="generateAILesson()">✨ Make My Lesson!</button>
+      <div id="aiResult"></div>
+    </div>
+  </div>
+
+
+  <!-- STORY TIME / BUILD-A-BOOK -->
+  <div class="screen" id="screen-books">
+    <button class="back-btn" onclick="stopReading();goHome()">⬅ Home</button>
+    <div class="sec-title">📖 Story Time!</div>
+    <div class="book-stage">
+      <div class="book-tabs">
+        <button class="book-tab active" onclick="switchBookTab('library')">📚 Library</button>
+        <button class="book-tab"        onclick="switchBookTab('build')">✨ Build a Book</button>
+      </div>
+
+      <!-- LIBRARY PANEL -->
+      <div class="book-panel active" id="bp-library">
+        <div style="font-size:.8rem;font-weight:800;color:#888;text-align:center;">Tap a book to read it! 🌙</div>
+        <div class="book-shelf" id="bookShelf"></div>
+      </div>
+
+      <!-- BUILD PANEL -->
+      <div class="book-panel" id="bp-build">
+        <div style="font-size:.88rem;font-weight:900;color:var(--dark);text-align:center;">What should Amir's book be about? 🤔</div>
+        <div class="topic-grid" id="topicGrid"></div>
+        <button class="build-btn" onclick="buildBook()">✨ Make My Book!</button>
+        <div id="buildResult"></div>
+      </div>
+    </div>
+
+    <!-- READER (hidden until book selected) -->
+    <div id="readerWrap" style="display:none;flex-direction:column;gap:12px;">
+      <div style="font-size:1rem;font-weight:900;color:white;text-align:center;" id="readerTitle">Story Time</div>
+      <div class="reader-wrap">
+        <div class="page-spread" id="pageSpread">
+          <div class="page-scene" id="pageScene">📖</div>
+          <div class="page-text"  id="pageText">Loading...</div>
+          <div class="page-sub"   id="pageSub"></div>
+          <div class="page-num"   id="pageNum"></div>
+        </div>
+      </div>
+      <div class="reader-nav">
+        <button class="rd-btn" id="rdPrev" onclick="prevPage()">⬅</button>
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;">
+          <div class="page-progress"><div class="page-progress-fill" id="pgFill" style="width:0%"></div></div>
+          <button class="rd-btn read" id="rdRead" onclick="readPageAloud()">🔊 Read to Me</button>
+        </div>
+        <button class="rd-btn" id="rdNext" onclick="nextPage()">➡</button>
+      </div>
+      <button class="rd-btn stop" onclick="closeReader()">✕ Close Book</button>
+    </div>
+  </div>
+
+</div><!-- #app -->
+
+<script>
+// ═══════════════════════════════════════════════
+//  DATA
+// ═══════════════════════════════════════════════
+const WORDS = [
+  {e:"🍎",w:"APPLE",  lvl:1},{e:"🐶",w:"DOG",    lvl:1},{e:"🐱",w:"CAT",    lvl:1},{e:"🐻",w:"BEAR",   lvl:1},
+  {e:"🍌",w:"BANANA", lvl:1},{e:"🌈",w:"RAINBOW", lvl:2},{e:"⭐",w:"STAR",   lvl:2},{e:"🎈",w:"BALLOON",lvl:2},
+  {e:"🚗",w:"CAR",    lvl:2},{e:"🏠",w:"HOUSE",   lvl:2},{e:"🌸",w:"FLOWER", lvl:2},{e:"🦁",w:"LION",   lvl:3},
+  {e:"🐘",w:"ELEPHANT",lvl:3},{e:"🦆",w:"DUCK",   lvl:2},{e:"🍕",w:"PIZZA",  lvl:2},{e:"🎂",w:"CAKE",   lvl:1},
+  {e:"👶",w:"BABY",   lvl:1},{e:"🌙",w:"MOON",    lvl:2},{e:"☀️",w:"SUN",    lvl:1},{e:"🐸",w:"FROG",   lvl:2},
+];
+const ABC=[
+  {l:"A",e:"🍎"},{l:"B",e:"🐻"},{l:"C",e:"🐱"},{l:"D",e:"🐶"},
+  {l:"E",e:"🐘"},{l:"F",e:"🐟"},{l:"G",e:"🦒"},{l:"H",e:"🏠"},
+  {l:"I",e:"🍦"},{l:"J",e:"🃏"},{l:"K",e:"🦘"},{l:"L",e:"🦁"},
+  {l:"M",e:"🌙"},{l:"N",e:"🎵"},{l:"O",e:"🍊"},{l:"P",e:"🐷"},
+  {l:"Q",e:"👑"},{l:"R",e:"🌈"},{l:"S",e:"⭐"},{l:"T",e:"🌳"},
+  {l:"U",e:"☂️"},{l:"V",e:"🎻"},{l:"W",e:"🌊"},{l:"X",e:"🎁"},
+  {l:"Y",e:"🪀"},{l:"Z",e:"🦓"},
+];
+const COLORS=[
+  {n:"RED",h:"#FF4444",e:"🍎"},{n:"BLUE",h:"#3399FF",e:"🌊"},
+  {n:"GREEN",h:"#44BB44",e:"🌿"},{n:"YELLOW",h:"#FFD700",e:"🌟"},
+  {n:"ORANGE",h:"#FF8C00",e:"🍊"},{n:"PURPLE",h:"#9933FF",e:"🍇"},
+  {n:"PINK",h:"#FF69B4",e:"🌸"},{n:"WHITE",h:"#AABBCC",e:"☁️"},
+];
+const SHAPES=[
+  {n:"CIRCLE",  s:"<circle cx='50' cy='50' r='40' fill='#FF6B6B'/>"},
+  {n:"SQUARE",  s:"<rect x='10' y='10' width='80' height='80' rx='6' fill='#FFD93D'/>"},
+  {n:"TRIANGLE",s:"<polygon points='50,8 92,92 8,92' fill='#6BCB77'/>"},
+  {n:"STAR",    s:"<polygon points='50,5 61,35 95,35 68,57 79,91 50,70 21,91 32,57 5,35 39,35' fill='#A855F7'/>"},
+  {n:"HEART",   s:"<path d='M50 80 C50 80 10 55 10 30 C10 15 25 8 37 15 C44 19 50 27 50 27 C50 27 56 19 63 15 C75 8 90 15 90 30 C90 55 50 80 50 80Z' fill='#FF6B6B'/>"},
+  {n:"DIAMOND", s:"<polygon points='50,5 95,50 50,95 5,50' fill='#29C6F6'/>"},
+];
+const PEPPA_CHARS=[
+  {n:"Peppa",  e:"🐷",c:"#FF85A1",s:"Peppa Pig!"},
+  {n:"George", e:"🐹",c:"#5B9BD5",s:"George!"},
+  {n:"Mummy",  e:"🐽",c:"#FF9BB5",s:"Mummy Pig!"},
+  {n:"Daddy",  e:"🐗",c:"#B57DA5",s:"Daddy Pig!"},
+  {n:"Suzy",   e:"🐑",c:"#FFD700",s:"Suzy Sheep!"},
+  {n:"Zoe",    e:"🦓",c:"#98D8C8",s:"Zoe Zebra!"},
+  {n:"Rebecca",e:"🐰",c:"#FFB347",s:"Rebecca Rabbit!"},
+  {n:"Danny",  e:"🐕",c:"#DEB887",s:"Danny Dog!"},
+];
+const CP=[
+  {l:"🐷 Peppa",  q:"Peppa Pig full episode for kids"},
+  {l:"🐶 Bluey",  q:"Bluey full episode"},
+  {l:"🐻 Big Bear",q:"Big Bear Song for kids"},
+  {l:"🌟 Gracie", q:"Gracie Corner learning songs"},
+  {l:"🎵 CoCo",   q:"Cocomelon nursery rhymes"},
+  {l:"🐾 Paw",    q:"Paw Patrol full episode"},
+  {l:"👩‍🏫 Ms R",  q:"Ms Rachel songs for littles"},
+  {l:"🦕 Dino",   q:"dinosaur songs for toddlers"},
+];
+const DIOR=[
+  "Dior says: Amir, tap the picture to hear the word!",
+  "Dior says: Good job little brother! Keep going!",
+  "Dior says: Amir, say the word out loud! Try it!",
+  "Dior says: Pick the card that matches, Amir!",
+  "Dior says: You are doing so good! Dior is proud of you!",
+  "Dior says: Tap the letter to hear it, Amir!",
+  "Dior says: What color is that? Tell Dior!",
+  "Dior says: Yay! You got it right! Dior loves you!",
+  "Dior says: Try again Amir, you got this!",
+  "Dior says: Amir is SO smart! Look at you go!",
+  "Dior says: Big sister is watching — you are doing amazing!",
+];
+const AI_THEMES=[
+  {l:"🐾 Animals",t:"animals"},
+  {l:"🍎 Food",   t:"food"},
+  {l:"🚗 Vehicles",t:"vehicles"},
+  {l:"🌈 Colors", t:"colors"},
+  {l:"🏠 Home",   t:"home objects"},
+  {l:"🌿 Nature", t:"nature"},
+  {l:"🐷 Peppa",  t:"Peppa Pig characters and things"},
+  {l:"👨‍👩‍👧 Family",t:"family members"},
+];
+
+// Milestones definition
+const MILESTONES = [
+  {id:"first_word",   icon:"⭐", name:"First Star!",     desc:"Learn your very first word",     target:1,  type:"words"},
+  {id:"five_words",   icon:"🌟", name:"Word Explorer",   desc:"Learn 5 words",                  target:5,  type:"words"},
+  {id:"ten_words",    icon:"🏅", name:"Word Champion",   desc:"Learn 10 words",                 target:10, type:"words"},
+  {id:"all_words",    icon:"🏆", name:"Word MASTER!",    desc:"Learn all 20 words",             target:20, type:"words"},
+  {id:"first_match",  icon:"🎴", name:"Match Maker",     desc:"Complete your first match game", target:1,  type:"matches"},
+  {id:"peppa_pro",    icon:"🐷", name:"Peppa Pro",       desc:"Score 5 in Peppa quiz",          target:5,  type:"peppa"},
+  {id:"first_photo",  icon:"📸", name:"Say Cheese!",     desc:"Take your first photo",          target:1,  type:"photos"},
+  {id:"ai_lesson",    icon:"🤖", name:"AI Explorer",     desc:"Complete an AI lesson",          target:1,  type:"ai"},
+  {id:"three_days",   icon:"🔥", name:"On Fire!",        desc:"Play 3 days in a row",           target:3,  type:"streak"},
+  {id:"level_two",    icon:"🚀", name:"Level Up!",       desc:"Reach Level 2",                  target:2,  type:"level"},
+];
+
+// CEL messages
+const CEL=[
+  {e:"🎉",t:"Yay Amir!",      s:"You did it! Amazing!"},
+  {e:"⭐",t:"Super Star!",     s:"You are SO smart!"},
+  {e:"🎊",t:"Woohoo!",         s:"Great job, buddy!"},
+  {e:"🏆",t:"You Win!",        s:"That was perfect!"},
+  {e:"🌟",t:"Brilliant!",      s:"Amir is the best!"},
+  {e:"🐷",t:"Peppa loves it!", s:"Even Peppa is cheering!"},
+  {e:"👑",t:"King Amir!",      s:"The crown is yours!"},
+];
+
+// ═══════════════════════════════════════════════
+//  STATE — persisted to localStorage
+// ═══════════════════════════════════════════════
+let P = {}; // progress object
+function loadProgress(){
+  try {
+    const raw = localStorage.getItem("amir_world_v2");
+    P = raw ? JSON.parse(raw) : {};
+  } catch(e){ P={}; }
+  P.wordsLearned = P.wordsLearned || [];
+  P.stars        = P.stars        || 0;
+  P.totalStars   = P.totalStars   || 0;
+  P.level        = P.level        || 1;
+  P.matches      = P.matches      || 0;
+  P.peppaScore   = P.peppaScore   || 0;
+  P.photos       = P.photos       || 0;
+  P.aiLessons    = P.aiLessons    || 0;
+  P.sessions     = P.sessions     || 0;
+  P.lastSession  = P.lastSession  || null;
+  P.streak       = P.streak       || 0;
+  P.earned       = P.earned       || [];
+  P.currentWordIdx = P.currentWordIdx || 0;
+}
+function saveProgress(){
+  try{ localStorage.setItem("amir_world_v2", JSON.stringify(P)); }catch(e){}
+}
+
+// ═══════════════════════════════════════════════
+//  LEVEL LOGIC — adaptive
+// ═══════════════════════════════════════════════
+function getCurrentLevel(){
+  const n = P.wordsLearned.length;
+  if(n >= 15) return 3;
+  if(n >= 7)  return 2;
+  return 1;
+}
+function getWordsForLevel(){
+  const lvl = getCurrentLevel();
+  return WORDS.filter(w => w.lvl <= lvl);
+}
+
+// ═══════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════
+let wIdx=0, mFirst=null, mLock=false, mMat=0, mTotal=0;
+let pScore=0, pCorrect=null;
+let listening=false, recognition=null;
+let camStream=null, mediaRec=null, recChunks=[], facingUser=true, isRecording=false;
+let aiTheme="animals";
+
+window.addEventListener("load",()=>{
+  // Preload voices (Chrome lazy-loads them asynchronously)
+  if(window.speechSynthesis){
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+  }
+  // On first ANY touch/click — force voice unlock (iOS/Android require a gesture)
+  document.addEventListener("touchstart", unlockAudio, {once:true});
+  document.addEventListener("click", unlockAudio, {once:true});
+  function unlockAudio(){
+    if(window.speechSynthesis){
+      const u=new SpeechSynthesisUtterance("");
+      u.volume=0;
+      window.speechSynthesis.speak(u);
+    }
+    // Also unlock AudioContext
+    try{
+      const ac=new(window.AudioContext||window.webkitAudioContext)();
+      const buf=ac.createBuffer(1,1,22050);
+      const src=ac.createBufferSource();
+      src.buffer=buf; src.connect(ac.destination); src.start(0);
+      setTimeout(()=>ac.close(),100);
+    }catch(e){}
+  }
+  loadProgress();
+  updateStreak();
+  buildClouds(); buildABC(); buildColors(); buildShapes();
+  buildStarBar(); buildPeppaChars(); buildPeppaGame(); buildCharPicker();
+  buildMilestones(); buildAIThemes(); buildLessonCards();
+  renderHomeProgress();
+  wIdx = P.currentWordIdx || 0;
+  setTimeout(()=>speak("Hi Amir! Welcome back! Let's learn something fun!",0.85,1.2),700);
+});
+
+// ═══════════════════════════════════════════════
+//  NAV
+// ═══════════════════════════════════════════════
+function goTo(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("screen-"+id).classList.add("active");
+  if(id==="words"){ resetMatch(); renderWord(); }
+  if(id==="match"){ resetMatch(); }
+  if(id==="peppa"){ pScore=P.peppaScore||0; buildPeppaGame(); }
+  if(id==="camera"){ startCam(); }
+  if(id==="books"){ initBooks(); }
+  if(id==="milestones"){ buildMilestones(); }
+}
+function goHome(){
+  stopCam(); stopListening();
+  document.querySelectorAll(".screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById("screen-home").classList.add("active");
+  renderHomeProgress();
+}
+
+// ═══════════════════════════════════════════════
+//  PROGRESS / STARS
+// ═══════════════════════════════════════════════
+function buildStarBar(){
+  const bar=document.getElementById("starBar");
+  bar.innerHTML="";
+  for(let i=0;i<5;i++){
+    const s=document.createElement("span");
+    s.className="star-icon";
+    s.textContent=i<P.stars?"⭐":"☆";
+    bar.appendChild(s);
+  }
+}
+function addStar(n=1){
+  P.stars=Math.min(5,P.stars+n);
+  P.totalStars=(P.totalStars||0)+n;
+  buildStarBar(); saveProgress();
+}
+function renderHomeProgress(){
+  const lvl = getCurrentLevel();
+  P.level = lvl;
+  document.getElementById("levelBadge").textContent="Level "+lvl;
+  const pct = Math.round((P.wordsLearned.length/WORDS.length)*100);
+  document.getElementById("progBar").style.width=pct+"%";
+  document.getElementById("progNums").textContent=P.wordsLearned.length+" / "+WORDS.length+" words";
+  document.getElementById("streakBadge").textContent="🔥 "+P.streak+" days";
+  const subs=[
+    "You are the KING today! 👑",
+    "Keep learning, Amir! 💪",
+    "Dior is cheering for you! 💛",
+    "Every word is a superpower! ⚡",
+  ];
+  document.getElementById("homeSubtitle").textContent=subs[P.wordsLearned.length % subs.length];
+}
+function updateStreak(){
+  const today = new Date().toDateString();
+  if(P.lastSession === today) return;
+  const yesterday = new Date(Date.now()-86400000).toDateString();
+  if(P.lastSession === yesterday){
+    P.streak = (P.streak||0)+1;
+  } else if(P.lastSession !== today){
+    P.streak = 1;
+  }
+  P.lastSession = today;
+  P.sessions = (P.sessions||0)+1;
+  saveProgress();
+}
+function recordWordLearned(word){
+  if(!P.wordsLearned.includes(word)){
+    P.wordsLearned.push(word);
+    addStar(1);
+    saveProgress();
+    checkMilestones();
+    renderHomeProgress();
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  MILESTONES
+// ═══════════════════════════════════════════════
+function checkMilestones(){
+  MILESTONES.forEach(ms=>{
+    if(P.earned.includes(ms.id)) return;
+    let val=0;
+    if(ms.type==="words")   val=P.wordsLearned.length;
+    if(ms.type==="matches") val=P.matches;
+    if(ms.type==="peppa")   val=P.peppaScore;
+    if(ms.type==="photos")  val=P.photos;
+    if(ms.type==="ai")      val=P.aiLessons;
+    if(ms.type==="streak")  val=P.streak;
+    if(ms.type==="level")   val=P.level;
+    if(val>=ms.target){
+      P.earned.push(ms.id);
+      saveProgress();
+      setTimeout(()=>showMilestone(ms),600);
+    }
+  });
+}
+function showMilestone(ms){
+  document.getElementById("msPopIcon").textContent=ms.icon;
+  document.getElementById("msPopName").textContent=ms.name;
+  document.getElementById("msPopDesc").textContent=ms.desc;
+  document.getElementById("msPop").classList.add("show");
+  confetti();
+  speak("Milestone unlocked! "+ms.name+"! "+ms.desc,0.85,1.25);
+}
+function closeMsPop(){ document.getElementById("msPop").classList.remove("show"); }
+function buildMilestones(){
+  const g=document.getElementById("msGrid");
+  g.innerHTML="";
+  MILESTONES.forEach(ms=>{
+    let val=0;
+    if(ms.type==="words")   val=P.wordsLearned.length;
+    if(ms.type==="matches") val=P.matches;
+    if(ms.type==="peppa")   val=P.peppaScore;
+    if(ms.type==="photos")  val=P.photos;
+    if(ms.type==="ai")      val=P.aiLessons;
+    if(ms.type==="streak")  val=P.streak;
+    if(ms.type==="level")   val=P.level;
+    const earned=P.earned.includes(ms.id);
+    const d=document.createElement("div");
+    d.className="ms-card"+(earned?" ms-earned":"");
+    d.innerHTML=`
+      <span class="ms-icon">${earned?ms.icon:"🔒"}</span>
+      <div class="ms-info">
+        <div class="ms-name">${ms.name}</div>
+        <div class="ms-desc">${ms.desc}</div>
+        <div class="ms-prog">${earned?"✅ Earned!":"Progress: "+val+" / "+ms.target}</div>
+      </div>`;
+    g.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  CELEBRATE
+// ═══════════════════════════════════════════════
+function celebrate(msg,badge){
+  const m=msg||CEL[Math.floor(Math.random()*CEL.length)];
+  document.getElementById("celEm").textContent=m.e;
+  document.getElementById("celTxt").textContent=m.t;
+  document.getElementById("celSub").textContent=m.s;
+  const bd=document.getElementById("celBadge");
+  if(badge){bd.textContent=badge;bd.style.display="inline-block";}
+  else bd.style.display="none";
+  document.getElementById("cel").classList.add("show");
+  confetti(); addStar(1); chime();
+  speak(m.t+". "+m.s,0.9,1.25);
+  P.stars=Math.max(0,P.stars-3); // reset partial so bar stays meaningful
+  buildStarBar();
+}
+function closeCel(){ document.getElementById("cel").classList.remove("show"); }
+function confetti(){
+  const cols=["#FF85A1","#FFD93D","#6BCB77","#29C6F6","#A855F7","#FF9500","#FFB800"];
+  for(let i=0;i<44;i++){
+    const c=document.createElement("div");
+    c.className="cp";
+    c.style.left=Math.random()*100+"vw";
+    c.style.top="-20px";
+    c.style.background=cols[Math.floor(Math.random()*cols.length)];
+    c.style.animationDelay=Math.random()*0.8+"s";
+    c.style.transform="rotate("+(Math.random()*360)+"deg)";
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),2400);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  AUDIO
+// ═══════════════════════════════════════════════
+function speak(txt,rate=0.72,pitch=1.65){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  // Chrome bug: speechSynthesis can pause silently — keep it alive
+  if(window._ttsKeepAlive) clearInterval(window._ttsKeepAlive);
+  window._ttsKeepAlive=setInterval(()=>{
+    if(!window.speechSynthesis.speaking){clearInterval(window._ttsKeepAlive);return;}
+    window.speechSynthesis.pause();
+    window.speechSynthesis.resume();
+  },5000);
+  const u=new SpeechSynthesisUtterance(txt);
+  u.rate=rate; u.pitch=pitch; u.volume=1;
+  u.onend=()=>clearInterval(window._ttsKeepAlive);
+  u.onerror=()=>clearInterval(window._ttsKeepAlive);
+  // Prefer a child/female voice — pick best available
+  const voices=window.speechSynthesis.getVoices();
+  const kidVoice=voices.find(v=>/samantha|karen|moira|tessa|victoria|zira|hazel|susan|fiona|nicky|junior|kid/i.test(v.name))
+    || voices.find(v=>v.lang.startsWith('en') && /female/i.test(v.name))
+    || voices.find(v=>v.lang.startsWith('en'));
+  if(kidVoice) u.voice=kidVoice;
+  window.speechSynthesis.speak(u);
+}
+
+// Sound out a word letter-by-letter then say the whole word
+// Uses onend chaining so each letter plays only after the previous finishes
+function soundOut(word){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const voices=window.speechSynthesis.getVoices();
+  const kv=voices.find(v=>/samantha|karen|moira|tessa|victoria|zira|hazel|susan|fiona|nicky|junior|kid/i.test(v.name))
+    ||voices.find(v=>v.lang.startsWith('en') && /female/i.test(v.name))
+    ||voices.find(v=>v.lang.startsWith('en'));
+  function mkU(txt,rate,pitch){
+    const u=new SpeechSynthesisUtterance(txt);
+    u.rate=rate||0.75; u.pitch=pitch||1.7; u.volume=1;
+    if(kv) u.voice=kv;
+    return u;
+  }
+  // Queue: letters first, then pause word, then full word
+  const letters=[...word.toUpperCase()];
+  const queue=letters.map(l=>mkU(l,0.75,1.75));
+  // Silence gap via a space utterance
+  const gap=mkU('  ',0.1,1);
+  queue.push(gap);
+  // Full word slower and clear
+  queue.push(mkU(word,0.62,1.6));
+  // Chain via onend
+  function playNext(i){
+    if(i>=queue.length)return;
+    queue[i].onend=()=>playNext(i+1);
+    window.speechSynthesis.speak(queue[i]);
+  }
+  playNext(0);
+}
+function chime(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    [523,659,784,1047].forEach((f,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=f;o.type="sine";
+      const t=ctx.currentTime+i*0.15;
+      g.gain.setValueAtTime(0.4,t);
+      g.gain.exponentialRampToValueAtTime(0.001,t+0.4);
+      o.start(t);o.stop(t+0.4);
+    });
+  }catch(e){}
+}
+function tap(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=880;o.type="sine";
+    g.gain.setValueAtTime(0.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.14);
+    o.start();o.stop(ctx.currentTime+0.14);
+  }catch(e){}
+}
+function boop(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=220;o.type="sine";
+    g.gain.setValueAtTime(0.3,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.28);
+    o.start();o.stop(ctx.currentTime+0.28);
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════════════
+//  HOME
+// ═══════════════════════════════════════════════
+function photoTap(){
+  tap();
+  speak("That is Amir! The king!",0.85,1.3);
+  const p=document.getElementById("amirPhoto");
+  p.style.transform="scale(1.3) rotate(5deg)";
+  setTimeout(()=>p.style.transform="",400);
+}
+function diorHelp(){
+  tap();
+  speak(DIOR[Math.floor(Math.random()*DIOR.length)],0.85,1.1);
+}
+
+// ═══════════════════════════════════════════════
+//  WORDS — ADAPTIVE
+// ═══════════════════════════════════════════════
+function renderWord(){
+  const pool=getWordsForLevel();
+  if(wIdx>=pool.length) wIdx=0;
+  const w=pool[wIdx];
+  document.getElementById("wEm").textContent=w.e;
+  document.getElementById("wLbl").textContent=w.w;
+  document.getElementById("wLvlTag").textContent="Level "+w.lvl;
+  P.currentWordIdx=wIdx; saveProgress();
+  // Brief pause then sound out letter by letter for toddler
+  setTimeout(()=>soundOut(w.w), 300);
+}
+function speakWord(){
+  tap();
+  const pool=getWordsForLevel();
+  soundOut(pool[wIdx].w);
+  const e=document.getElementById("wEm");
+  e.style.transform="scale(1.3) rotate(-5deg)";
+  setTimeout(()=>{e.style.transform="scale(1.3) rotate(5deg)";
+    setTimeout(()=>e.style.transform="",200);},200);
+}
+function nextWord(){
+  tap(); stopListening();
+  const pool=getWordsForLevel();
+  wIdx=(wIdx+1)%pool.length;
+  renderWord();
+  recordWordLearned(pool[wIdx].w);
+  if(wIdx%5===0 && wIdx>0) celebrate();
+}
+function prevWord(){
+  tap(); stopListening();
+  const pool=getWordsForLevel();
+  wIdx=(wIdx-1+pool.length)%pool.length;
+  renderWord();
+}
+
+// ═══════════════════════════════════════════════
+//  VOICE RECOGNITION
+// ═══════════════════════════════════════════════
+function toggleListen(){
+  if(listening) stopListening(); else startListening();
+}
+function startListening(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){
+    speak("Voice listening is not available on this device.",0.85,1.1);
+    return;
+  }
+  recognition=new SR();
+  recognition.lang="en-US";
+  recognition.interimResults=false;
+  recognition.maxAlternatives=5;
+  recognition.onstart=()=>{
+    listening=true;
+    document.getElementById("voiceRing").classList.add("listening");
+    document.getElementById("voiceHint").textContent="Listening... say the word!";
+  };
+  recognition.onresult=(ev)=>{
+    const pool=getWordsForLevel();
+    const target=pool[wIdx].w.toLowerCase();
+    let heard=false;
+    for(let i=0;i<ev.results[0].length;i++){
+      const said=ev.results[0][i].transcript.toLowerCase().trim();
+      if(said.includes(target)||target.includes(said)||levenshtein(said,target)<=2){
+        heard=true; break;
+      }
+    }
+    if(heard){
+      stopListening();
+      celebrate({e:"🎤",t:"Amir said it!",s:"You said "+pool[wIdx].w+"! Amazing!"},"🎤 Voice Star!");
+      recordWordLearned(pool[wIdx].w);
+    } else {
+      document.getElementById("voiceHint").textContent="Try again! Say: "+pool[wIdx].w;
+      speak("Try again! Say "+pool[wIdx].w,0.85,1.1);
+    }
+  };
+  recognition.onerror=()=>stopListening();
+  recognition.onend=()=>{listening=false;document.getElementById("voiceRing").classList.remove("listening");};
+  recognition.start();
+}
+function stopListening(){
+  if(recognition){try{recognition.stop();}catch(e){}}
+  listening=false;
+  const r=document.getElementById("voiceRing");
+  if(r){r.classList.remove("listening");}
+  const h=document.getElementById("voiceHint");
+  if(h){h.textContent="Tap 🎤 and SAY the word!";}
+}
+function levenshtein(a,b){
+  const m=a.length,n=b.length,dp=[];
+  for(let i=0;i<=m;i++){dp[i]=[i];for(let j=1;j<=n;j++)dp[i][j]=0;}
+  for(let j=0;j<=n;j++)dp[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+
+// ═══════════════════════════════════════════════
+//  MATCH
+// ═══════════════════════════════════════════════
+function resetMatch(){
+  mFirst=null;mLock=false;mMat=0;
+  const pool=getWordsForLevel().slice(0,8);
+  const pairs=[...pool,...pool].sort(()=>Math.random()-0.5);
+  mTotal=pool.length;
+  document.getElementById("mHdr").textContent="Find the matches! 🎴";
+  const board=document.getElementById("mBoard");
+  board.innerHTML="";
+  pairs.forEach(w=>{
+    const c=document.createElement("div");
+    c.className="mc";c.dataset.e=w.e;c.dataset.w=w.w;
+    c.innerHTML='<div class="cb">⭐</div><span style="font-size:1.8rem">'+w.e+'</span>';
+    c.addEventListener("click",()=>flip(c));
+    board.appendChild(c);
+  });
+}
+function flip(c){
+  if(mLock||c.classList.contains("mat")||c.classList.contains("rev"))return;
+  tap();c.classList.add("rev");soundOut(c.dataset.w);
+  if(!mFirst){mFirst=c;return;}
+  mLock=true;const s=c;
+  if(mFirst.dataset.e===s.dataset.e){
+    mFirst.classList.add("mat");s.classList.add("mat");mMat++;
+    mFirst=null;mLock=false;
+    recordWordLearned(c.dataset.w);
+    if(mMat===mTotal){
+      P.matches=(P.matches||0)+1;saveProgress();checkMilestones();
+      setTimeout(()=>celebrate({e:"🎊",t:"All Matched!",s:"Amir is SO smart! 🌟"}),400);
+    } else document.getElementById("mHdr").textContent="✅ "+mMat+" matched! Keep going!";
+  } else {
+    setTimeout(()=>{mFirst.classList.remove("rev");s.classList.remove("rev");mFirst=null;mLock=false;},850);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  ABC / COLORS / SHAPES
+// ═══════════════════════════════════════════════
+function buildABC(){
+  const g=document.getElementById("abcGrid");
+  const cols=["#FF6B6B","#FFD93D","#6BCB77","#29C6F6","#A855F7","#FF9500"];
+  ABC.forEach((it,i)=>{
+    const t=document.createElement("div");t.className="lt";
+    t.style.borderBottom="4px solid "+cols[i%cols.length];
+    t.innerHTML='<span class="lb" style="color:'+cols[i%cols.length]+'">'+it.l+'</span><span class="lp">'+it.e+"</span>";
+    t.addEventListener("click",()=>{
+  tap();
+  // Say letter name, then its phonics sound, then the example word
+  const phonics={A:"ah",B:"buh",C:"cuh",D:"duh",E:"eh",F:"fuh",G:"guh",H:"huh",I:"ih",J:"juh",K:"kuh",L:"luh",M:"muh",N:"nuh",O:"oh",P:"puh",Q:"kwuh",R:"ruh",S:"suh",T:"tuh",U:"uh",V:"vuh",W:"wuh",X:"ks",Y:"yuh",Z:"zuh"};
+  const words={A:"apple",B:"bear",C:"cat",D:"dog",E:"elephant",F:"fish",G:"giraffe",H:"house",I:"ice cream",J:"jump",K:"kangaroo",L:"lion",M:"moon",N:"night",O:"orange",P:"Peppa",Q:"queen",R:"rainbow",S:"star",T:"tree",U:"umbrella",V:"violin",W:"water",X:"xylophone",Y:"yoyo",Z:"zebra"};
+  speak(it.l+". "+it.l+" says "+(phonics[it.l]||it.l.toLowerCase())+". Like in "+( words[it.l]||""  )+"!", 0.68, 1.65);
+  t.style.transform="scale(.87)";setTimeout(()=>t.style.transform="",200);
+});
+    g.appendChild(t);
+  });
+}
+function buildColors(){
+  const g=document.getElementById("colsGrid");
+  COLORS.forEach(c=>{
+    const d=document.createElement("div");d.className="col-card";d.style.background=c.h;
+    d.innerHTML="<span>"+c.e+"</span>"+c.n;
+    d.addEventListener("click",()=>{tap();speak(c.n,0.8,1.2);d.style.transform="scale(.92)";setTimeout(()=>d.style.transform="",200);});
+    g.appendChild(d);
+  });
+}
+function buildShapes(){
+  const g=document.getElementById("shpGrid");
+  SHAPES.forEach(sh=>{
+    const d=document.createElement("div");d.className="shp-card";
+    d.innerHTML='<svg width="76" height="86" viewBox="0 0 100 100" style="display:block;margin:0 auto 6px">'+sh.s+"</svg><div class='shp-name'>"+sh.n+"</div>";
+    d.addEventListener("click",()=>{tap();speak(sh.n,0.8,1.2);d.style.transform="scale(.92)";setTimeout(()=>d.style.transform="",200);});
+    g.appendChild(d);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  PEPPA
+// ═══════════════════════════════════════════════
+function buildPeppaChars(){
+  const row=document.getElementById("charRow");
+  PEPPA_CHARS.forEach(ch=>{
+    const b=document.createElement("div");b.className="char-bub";b.style.borderColor=ch.c;
+    b.innerHTML='<span class="char-em">'+ch.e+'</span><span class="char-nm">'+ch.n+"</span>";
+    b.addEventListener("click",()=>{tap();speak(ch.s,0.85,1.3);b.style.transform="scale(.85)";setTimeout(()=>b.style.transform="",200);});
+    row.appendChild(b);
+  });
+}
+function buildPeppaGame(){
+  const all=[...PEPPA_CHARS].sort(()=>Math.random()-0.5);
+  pCorrect=all[0];
+  const choices=[pCorrect,...PEPPA_CHARS.filter(c=>c.n!==pCorrect.n).sort(()=>Math.random()-0.5).slice(0,3)].sort(()=>Math.random()-0.5);
+  document.getElementById("pgQ").textContent="Who is "+pCorrect.n+"?";
+  speak("Who is "+pCorrect.s,0.85,1.2);
+  const area=document.getElementById("pgChoices");area.innerHTML="";delete area.dataset.answered;
+  choices.forEach(ch=>{
+    const b=document.createElement("div");b.className="pg-choice";
+    b.innerHTML='<div style="font-size:2rem">'+ch.e+'</div><div style="font-size:.72rem;font-weight:800;color:#555;margin-top:2px">'+ch.n+"</div>";
+    b.addEventListener("click",()=>{
+      if(area.dataset.answered)return;
+      if(ch.n===pCorrect.n){
+        b.classList.add("ok");area.dataset.answered="1";
+        pScore++;P.peppaScore=pScore;saveProgress();checkMilestones();
+        document.getElementById("pgScore").textContent="Score: "+pScore+" ⭐";
+        speak("Yes! "+ch.s+" You got it!",0.85,1.3);chime();
+        if(pScore%3===0) setTimeout(()=>celebrate({e:"🐷",t:"Peppa says WOW!",s:"Amir knows all the friends!"}),300);
+        setTimeout(()=>buildPeppaGame(),1400);
+      } else {
+        b.classList.add("no");boop();speak("Try again!",0.9,1.1);
+        setTimeout(()=>b.classList.remove("no"),600);
+      }
+    });
+    area.appendChild(b);
+  });
+  document.getElementById("pgScore").textContent="Score: "+pScore+" ⭐";
+}
+
+// ═══════════════════════════════════════════════
+//  YOUTUBE
+// ═══════════════════════════════════════════════
+function openLink(url){
+  // In GAS iframe, window.open is silently blocked.
+  // Always show the tap overlay — it's a real <a> the user taps directly.
+  showLinkOverlay(url);
+}
+function showLinkOverlay(url){
+  const old=document.getElementById("linkOverlay");
+  if(old) old.remove();
+  const ov=document.createElement("div");
+  ov.id="linkOverlay";
+  ov.style.cssText="position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;display:flex;align-items:center;justify-content:center;font-family:'Nunito','Comic Sans MS',cursive;";
+  const box=document.createElement("div");
+  box.style.cssText="background:white;border-radius:26px;padding:30px 22px;text-align:center;max-width:300px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,.4);";
+
+  const em=document.createElement("div");
+  em.style.cssText="font-size:3.5rem;margin-bottom:8px;"; em.textContent="📺";
+
+  const ttl=document.createElement("div");
+  ttl.style.cssText="font-size:1.2rem;font-weight:900;color:#1A1A2E;margin-bottom:5px;";
+  ttl.textContent="Ready to watch!";
+
+  const sub=document.createElement("div");
+  sub.style.cssText="font-size:.78rem;color:#888;font-weight:700;margin-bottom:18px;";
+  sub.textContent="Tap the big red button to open YouTube 👇";
+
+  const lnk=document.createElement("a");
+  lnk.href=url; lnk.target="_blank"; lnk.rel="noopener noreferrer";
+  lnk.style.cssText="display:block;background:#FF0000;color:white;border-radius:18px;padding:20px;font-size:1.4rem;font-weight:900;text-decoration:none;margin-bottom:12px;";
+  lnk.textContent="▶  Open YouTube";
+  lnk.addEventListener("click",()=>setTimeout(()=>ov.remove(),400));
+
+  const cpy=document.createElement("button");
+  cpy.style.cssText="background:#f0f0f0;color:#555;border:none;border-radius:50px;padding:10px 20px;font-size:.85rem;font-weight:800;cursor:pointer;font-family:inherit;margin-bottom:10px;width:100%;";
+  cpy.textContent="📋 Copy link (for desktop)";
+  cpy.addEventListener("click",()=>{
+    navigator.clipboard.writeText(url).then(()=>{cpy.textContent="✅ Link copied! Paste in browser.";}).catch(()=>{cpy.textContent=url.slice(0,40)+"...";});
+  });
+
+  const cls=document.createElement("button");
+  cls.style.cssText="background:none;color:#aaa;border:none;font-size:.85rem;font-weight:800;cursor:pointer;font-family:inherit;padding:6px;";
+  cls.textContent="✕ Close";
+  cls.addEventListener("click",()=>ov.remove());
+
+  box.appendChild(em); box.appendChild(ttl); box.appendChild(sub);
+  box.appendChild(lnk); box.appendChild(cpy); box.appendChild(cls);
+  ov.appendChild(box);
+  ov.addEventListener("click",(e)=>{if(e.target===ov)ov.remove();});
+  document.body.appendChild(ov);
+  speak("Tap the red button to watch!",0.72,1.6);
+}
+function openYT(id){
+  tap();speak("Lets watch!",0.72,1.6);
+  openLink("https://www.youtube.com/watch?v="+id);
+}
+function ytSearch(q){
+  tap();speak("Lets find that!",0.72,1.6);
+  openLink("https://www.youtube.com/results?search_query="+encodeURIComponent(q));
+}
+function doSearch(){
+  const v=document.getElementById("ytInput").value.trim();
+  if(!v){speak("What do you want to watch?",0.85,1.2);return;}
+  ytSearch(v);
+}
+function buildCharPicker(){
+  const p=document.getElementById("charPicker");
+  CP.forEach(cp=>{
+    const b=document.createElement("button");b.className="cp-btn";b.textContent=cp.l;
+    b.addEventListener("click",()=>{p.querySelectorAll(".cp-btn").forEach(x=>x.classList.remove("sel"));b.classList.add("sel");document.getElementById("ytInput").value=cp.q;speak(cp.l.replace(/[^\w\s]/gi,"").trim(),0.85,1.2);});
+    p.appendChild(b);
+  });
+}
+
+// ═══════════════════════════════════════════════
+//  CAMERA
+// ═══════════════════════════════════════════════
+async function startCam(){
+  const statusEl = document.getElementById("camStatus");
+  const previewEl = document.getElementById("camPreview");
+
+  // Check if camera API exists at all
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    showCamFallback("Camera needs the real browser. Tap below to open!");
+    return;
+  }
+
+  // Stop any existing stream first
+  if(camStream){ camStream.getTracks().forEach(t=>t.stop()); camStream=null; }
+
+  // Try requested facing mode, then fall back to the other
+  const modes = facingUser ? ["user","environment"] : ["environment","user"];
+  let lastErr = null;
+
+  for(const mode of modes){
+    try{
+      camStream = await navigator.mediaDevices.getUserMedia({
+        video:{ facingMode:mode, width:{ideal:640}, height:{ideal:480} },
+        audio:true
+      });
+      previewEl.srcObject = camStream;
+      previewEl.style.display = "block";
+      document.getElementById("camFallback").style.display="none";
+      statusEl.textContent = "Say cheese! Tap 📸 to snap! 🧀";
+      speak("Say cheese Amir! Smile for the camera!",0.72,1.6);
+      return; // success
+    }catch(e){ lastErr = e; }
+  }
+
+  // All attempts failed — show helpful fallback
+  const msg = lastErr && lastErr.name==="NotAllowedError"
+    ? "Camera permission denied. Please allow camera access in your browser settings, then try again."
+    : lastErr && lastErr.name==="NotFoundError"
+    ? "No camera found on this device."
+    : "Camera blocked in this window.";
+  showCamFallback(msg);
+}
+
+function showCamFallback(msg){
+  document.getElementById("camPreview").style.display="none";
+  const fb = document.getElementById("camFallback");
+  fb.style.display="flex";
+  document.getElementById("camFallbackMsg").textContent = msg;
+  // Build open-in-browser URL (current page URL)
+  const url = window.location.href;
+  document.getElementById("camOpenBtn").href = url;
+  speak("The camera needs the real browser. Tap the button to open it!",0.72,1.5);
+}
+function stopCam(){
+  if(camStream){camStream.getTracks().forEach(t=>t.stop());camStream=null;}
+  if(isRecording){stopVideo();}
+}
+function flipCam(){facingUser=!facingUser;startCam();}
+function takePhoto(){
+  if(!camStream){speak("No camera found!",0.85,1.1);return;}
+  tap();
+  const vid=document.getElementById("camPreview");
+  const can=document.getElementById("camCanvas");
+  can.width=vid.videoWidth||320;can.height=vid.videoHeight||240;
+  const ctx=can.getContext("2d");
+  ctx.save();ctx.scale(-1,1);ctx.drawImage(vid,-can.width,0);ctx.restore();
+  const url=can.toDataURL("image/jpeg",0.85);
+  addThumb(url,"photo");
+  celebrate({e:"📸",t:"Say Cheese!",s:"Amir took a photo! So cute!"},"📸 Photo Star!");
+  P.photos=(P.photos||0)+1;saveProgress();checkMilestones();
+}
+function toggleVideo(){
+  if(isRecording) stopVideo(); else startVideo();
+}
+function startVideo(){
+  if(!camStream||!window.MediaRecorder){speak("Recording not available.",0.85,1.1);return;}
+  recChunks=[];
+  mediaRec=new MediaRecorder(camStream);
+  mediaRec.ondataavailable=e=>{if(e.data.size>0)recChunks.push(e.data);};
+  mediaRec.onstop=()=>{
+    const blob=new Blob(recChunks,{type:"video/webm"});
+    const url=URL.createObjectURL(blob);
+    addThumb(url,"video");
+    celebrate({e:"🎥",t:"Great video!",s:"Amir is a movie star!"},"🎥 Video Star!");
+  };
+  mediaRec.start();isRecording=true;
+  document.getElementById("vidBtn").textContent="⏹ Stop";
+  document.getElementById("recIndicator").style.display="flex";
+  document.getElementById("camStatus").textContent="Recording... tap Stop when done!";
+  speak("Recording! Say something Amir!",0.85,1.2);
+}
+function stopVideo(){
+  if(mediaRec&&isRecording){mediaRec.stop();}
+  isRecording=false;
+  document.getElementById("vidBtn").textContent="🎥 Record";
+  document.getElementById("recIndicator").style.display="none";
+  document.getElementById("camStatus").textContent="Video saved! Tap 📸 for a photo!";
+}
+function addThumb(url,type){
+  const g=document.getElementById("camGallery");
+  if(type==="video"){
+    const v=document.createElement("video");
+    v.src=url;v.className="cam-thumb";v.controls=true;
+    g.prepend(v);
+  } else {
+    const i=document.createElement("img");
+    i.src=url;i.className="cam-thumb";
+    i.onclick=()=>window.open(url,"_blank");
+    g.prepend(i);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  AI LESSON GENERATOR
+// ═══════════════════════════════════════════════
+function buildAIThemes(){
+  const row=document.getElementById("aiThemeRow");
+  AI_THEMES.forEach(th=>{
+    const b=document.createElement("button");b.className="ai-theme-btn";b.textContent=th.l;
+    if(th.t===aiTheme)b.classList.add("sel");
+    b.addEventListener("click",()=>{
+      row.querySelectorAll(".ai-theme-btn").forEach(x=>x.classList.remove("sel"));
+      b.classList.add("sel");aiTheme=th.t;tap();
+    });
+    row.appendChild(b);
+  });
+}
+async function generateAILesson(){
+  const res=document.getElementById("aiResult");
+  res.innerHTML='<div class="ai-loading"><span class="ai-spinner">🤖</span>Making your lesson, Amir!</div>';
+  speak("Making a special lesson just for Amir! One moment!",0.85,1.2);
+  const lvl=getCurrentLevel();
+  const prompt=`You are a cheerful teacher for Amir, a 2-year-old toddler learning words. 
+Generate exactly 6 age-appropriate words about "${aiTheme}" for a Level ${lvl} toddler.
+Each word must be SHORT (1-2 syllables ideally), very familiar to a 2-year-old, and have a matching emoji.
+Respond ONLY with a JSON array, no markdown, no explanation. Format:
+[{"emoji":"🐶","word":"DOG"},{"emoji":"🐱","word":"CAT"},...]
+6 items total.`;
+  try{
+    const resp=await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-haiku-5-5",
+        max_tokens:300,
+        messages:[{role:"user",content:prompt}]
+      })
+    });
+    const data=await resp.json();
+    const txt=data.content?.[0]?.text||"[]";
+    let words;
+    try{words=JSON.parse(txt.replace(/```json|```/g,"").trim());}catch(e){words=[];}
+    if(!words||!words.length){res.innerHTML='<div class="ai-loading">Could not generate lesson. Try again!</div>';return;}
+    renderAIWords(words);
+    P.aiLessons=(P.aiLessons||0)+1;saveProgress();checkMilestones();
+  } catch(e){
+    res.innerHTML='<div class="ai-loading">AI is thinking... check your connection and try again! 🤖</div>';
+  }
+}
+function renderAIWords(words){
+  const res=document.getElementById("aiResult");
+  const grid=document.createElement("div");grid.className="ai-words-grid";
+  words.forEach(w=>{
+    const c=document.createElement("div");c.className="ai-word-card";
+    c.innerHTML='<span class="awe">'+w.emoji+'</span><div class="awl">'+w.word+"</div>";
+    c.addEventListener("click",()=>{tap();soundOut(w.word);c.style.transform="scale(.92)";setTimeout(()=>c.style.transform="",200);recordWordLearned(w.word);});
+    grid.appendChild(c);
+  });
+  res.innerHTML="";
+  const title=document.createElement("div");title.style.cssText="font-size:.9rem;font-weight:800;color:var(--grape);text-align:center;margin-bottom:8px;";title.textContent="✨ Tap each word to learn it!";
+  res.appendChild(title);res.appendChild(grid);
+  speak("Here are your new words! Tap each one to learn it!",0.85,1.2);
+}
+
+// ═══════════════════════════════════════════════
+//  CLOUDS
+// ═══════════════════════════════════════════════
+// ── HOVER SOUNDS (desktop mouse) ──────────────────
+document.addEventListener("mouseover",(e)=>{
+  const el=e.target.closest(".menu-card,.back-btn,.say-btn,.arr-btn,.mus-btn,.char-bub,.pg-choice,.lt,.col-card,.shp-card,.cp-btn,.yt-q,.cam-btn,.ai-theme-btn,.ai-generate-btn,.voice-ring,.dior-bar");
+  if(el && el!==window._lastHover){
+    window._lastHover=el;
+    hoverBeep();
+  }
+});
+function hoverBeep(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.frequency.value=1046;o.type="sine";
+    g.gain.setValueAtTime(0.08,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.08);
+    o.start();o.stop(ctx.currentTime+0.08);
+  }catch(e){}
+}
+
+function buildClouds(){
+  const c=document.getElementById("clouds");
+  for(let i=0;i<5;i++){
+    const d=document.createElement("div");d.className="cloud";
+    const w=80+Math.random()*80;
+    d.style.cssText="width:"+w+"px;height:"+(w*.5)+"px;top:"+(5+Math.random()*25)+"%;left:-220px;animation-duration:"+(18+Math.random()*20)+"s;animation-delay:"+(-Math.random()*30)+"s;";
+    c.appendChild(d);
+  }
+}
+
+// ═══════════════════════════════════════════════
+//  API KEY MANAGEMENT
+// ═══════════════════════════════════════════════
+function getKey(){ return localStorage.getItem('amir_claude_key')||''; }
+
+function openKeyModal(){
+  tap();
+  const existing = getKey();
+  document.getElementById('keyInput').value = existing ? '••••••••••••••••' : '';
+  document.getElementById('keyStatus').textContent = existing ? '✅ Key already saved — paste a new one to update' : '';
+  document.getElementById('keyStatus').className = existing ? 'key-status ok' : 'key-status';
+  document.getElementById('keyModal').classList.add('show');
+}
+function closeKeyModal(){ document.getElementById('keyModal').classList.remove('show'); }
+function clearKeyStatus(){ document.getElementById('keyStatus').textContent=''; document.getElementById('keyStatus').className='key-status'; }
+
+function saveKey(){
+  const raw = document.getElementById('keyInput').value.trim();
+  // If they didn't change the masked placeholder, keep existing key
+  if(raw === '••••••••••••••••'){
+    closeKeyModal();
+    return;
+  }
+  if(!raw.startsWith('sk-ant-')){
+    document.getElementById('keyStatus').textContent = '❌ Key should start with sk-ant-  Check and try again!';
+    document.getElementById('keyStatus').className = 'key-status bad';
+    speak('That key does not look right. It should start with s k ant.',0.72,1.5);
+    return;
+  }
+  localStorage.setItem('amir_claude_key', raw);
+  updateKeyDot();
+  document.getElementById('keyStatus').textContent = '✅ Key saved! AI lessons are ready!';
+  document.getElementById('keyStatus').className = 'key-status ok';
+  speak('Great! Your key is saved. AI lessons are ready for Amir!',0.72,1.5);
+  setTimeout(()=>closeKeyModal(), 1800);
+}
+
+function updateKeyDot(){
+  const dot = document.getElementById('keyDot');
+  if(dot) dot.className = getKey() ? 'key-dot set' : 'key-dot';
+}
+
+// Patch generateAILesson to use saved key
+const _origGenerate = generateAILesson;
+generateAILesson = async function(){
+  const key = getKey();
+  if(!key){
+    speak('You need to add your A I key first. Tap the gear button!',0.72,1.5);
+    openKeyModal();
+    return;
+  }
+  const res = document.getElementById('aiResult');
+  res.innerHTML = '<div class="ai-loading"><span class="ai-spinner">🤖</span>Making your lesson, Amir!</div>';
+  speak('Making a special lesson just for Amir! One moment!',0.85,1.2);
+  const lvl = getCurrentLevel();
+  const prompt = `You are a cheerful teacher for Amir, a 2-year-old toddler learning words.
+Generate exactly 6 age-appropriate words about "${aiTheme}" for a Level ${lvl} toddler.
+Each word must be SHORT (1-2 syllables ideally), very familiar to a 2-year-old, and have a matching emoji.
+Respond ONLY with a JSON array, no markdown, no explanation. Format:
+[{"emoji":"🐶","word":"DOG"},{"emoji":"🐱","word":"CAT"},...]
+6 items total.`;
+  try{
+    const resp = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key': key,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body: JSON.stringify({
+        model:'claude-haiku-5-5',
+        max_tokens:300,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    if(resp.status===401){
+      res.innerHTML='<div class="ai-loading">❌ Invalid key. Tap ⚙️ and check your key!</div>';
+      speak('That key did not work. Tap the gear button to fix it.',0.72,1.5);
+      openKeyModal();
+      return;
+    }
+    const data = await resp.json();
+    const txt = data.content?.[0]?.text || '[]';
+    let words;
+    try{ words = JSON.parse(txt.replace(/```json|```/g,'').trim()); }catch(e){ words=[]; }
+    if(!words||!words.length){ res.innerHTML='<div class="ai-loading">Could not make lesson. Try again!</div>'; return; }
+    renderAIWords(words);
+    P.aiLessons=(P.aiLessons||0)+1; saveProgress(); checkMilestones();
+  }catch(e){
+    res.innerHTML='<div class="ai-loading">Check your connection and try again! 🤖</div>';
+  }
+};
+
+// Run on load
+window.addEventListener('load', ()=>{ setTimeout(updateKeyDot, 500); }, true);
+
+
+// ═══════════════════════════════════════════════
+//  DAILY LIFE LESSONS
+// ═══════════════════════════════════════════════
+const LESSONS = [
+  // Safety
+  {icon:"👟",tag:"Safety",color:"#FF6B6B",bg:"#FFF0F0",text:"Don't step on cracks in the sidewalk!",sub:"Walk around them — watch your feet!"},
+  {icon:"🚗",tag:"Safety",color:"#FF6B6B",bg:"#FFF0F0",text:"Always hold a grown-up's hand by the street!",sub:"Cars are big and fast — stay close!"},
+  {icon:"🔌",tag:"Safety",color:"#FF6B6B",bg:"#FFF0F0",text:"Don't touch outlets or wires!",sub:"Those are for grown-ups only!"},
+  {icon:"🌡️",tag:"Safety",color:"#FF6B6B",bg:"#FFF0F0",text:"Don't touch the stove — it's HOT!",sub:"Tell a grown-up if you're hungry!"},
+  {icon:"✂️",tag:"Safety",color:"#FF6B6B",bg:"#FFF0F0",text:"Scissors and knives are for grown-ups!",sub:"Ask for help if you need to cut something!"},
+  // Health
+  {icon:"🙋",tag:"Health",color:"#29C6F6",bg:"#F0FAFF",text:"Wash your hands before you eat!",sub:"Soap + water = bye bye germs!"},
+  {icon:"🦷",tag:"Health",color:"#29C6F6",bg:"#F0FAFF",text:"Brush your teeth every morning and night!",sub:"Strong teeth = big smiles! 😁"},
+  {icon:"💰",tag:"Health",color:"#29C6F6",bg:"#F0FAFF",text:"Don't put money in your mouth — yucky!",sub:"Money is dirty! Give it to Mommy instead!"},
+  {icon:"🍬",tag:"Health",color:"#29C6F6",bg:"#F0FAFF",text:"Don't eat things you find on the floor!",sub:"If it falls down, it's trash now! Throw it away!"},
+  {icon:"💊",tag:"Health",color:"#29C6F6",bg:"#F0FAFF",text:"Only Mommy or Daddy gives you medicine!",sub:"Don't touch medicine bottles — ever!"},
+  // Manners
+  {icon:"🙏",tag:"Manners",color:"#A855F7",bg:"#F8F0FF",text:"Say PLEASE when you want something!",sub:"Please is magic — it makes people happy!"},
+  {icon:"😊",tag:"Manners",color:"#A855F7",bg:"#F8F0FF",text:"Say THANK YOU when someone helps you!",sub:"Thank you shows you care!"},
+  {icon:"🤝",tag:"Manners",color:"#A855F7",bg:"#F8F0FF",text:"Share your toys with friends!",sub:"Sharing makes everyone smile!"},
+  {icon:"🤫",tag:"Manners",color:"#A855F7",bg:"#F8F0FF",text:"Use your inside voice indoors!",sub:"Loud voices are for outside play!"},
+  {icon:"👂",tag:"Manners",color:"#A855F7",bg:"#F8F0FF",text:"Listen when a grown-up is talking!",sub:"Good listeners learn so much!"},
+  // Love
+  {icon:"💛",tag:"Love",color:"#FFB800",bg:"#FFFBE0",text:"Tell Mommy and Dior that you love them!",sub:"Love is the biggest feeling ever!"},
+  {icon:"🤗",tag:"Love",color:"#FFB800",bg:"#FFFBE0",text:"Hugs make everyone feel better!",sub:"Give Mommy a hug today!"},
+  {icon:"😢",tag:"Love",color:"#FFB800",bg:"#FFFBE0",text:"It's okay to cry when you're sad!",sub:"Tell a grown-up how you feel!"},
+  // Smart
+  {icon:"📚",tag:"Smart",color:"#6BCB77",bg:"#F0FFF4",text:"Books are your best friends!",sub:"Reading makes your brain grow BIG!"},
+  {icon:"❓",tag:"Smart",color:"#6BCB77",bg:"#F0FFF4",text:"It's great to ask questions!",sub:"Questions help you learn everything!"},
+];
+
+function getTodayLessons(){
+  // Pick 2 lessons based on today's date — changes every day
+  const day = Math.floor(Date.now() / (1000*60*60*12)); // changes every 12 hrs
+  const i1 = day % LESSONS.length;
+  const i2 = (day + Math.floor(LESSONS.length/2)) % LESSONS.length;
+  return [LESSONS[i1], LESSONS[i2]];
+}
+
+function buildLessonCards(){
+  const container = document.getElementById("lessonCards");
+  if(!container) return;
+  container.innerHTML = "";
+
+  const label = document.createElement("div");
+  label.style.cssText="font-size:.78rem;font-weight:900;color:rgba(255,255,255,.85);text-align:center;margin-bottom:6px;letter-spacing:.5px;";
+  label.textContent = "⭐ TODAY'S LESSONS FOR AMIR";
+  container.appendChild(label);
+
+  getTodayLessons().forEach(l=>{
+    const card = document.createElement("div");
+    card.className = "lesson-card";
+    card.style.background = l.bg;
+    card.style.border = "3px solid "+l.color+"44";
+
+    const icon = document.createElement("span");
+    icon.className="l-icon"; icon.textContent=l.icon;
+
+    const body = document.createElement("div");
+    body.className="l-body";
+
+    const tag = document.createElement("span");
+    tag.className="l-tag";
+    tag.style.background=l.color;
+    tag.style.color="white";
+    tag.textContent=l.tag;
+
+    const txt = document.createElement("div");
+    txt.className="l-text"; txt.textContent=l.text;
+
+    const sub = document.createElement("div");
+    sub.className="l-sub"; sub.textContent=l.sub;
+
+    body.appendChild(tag); body.appendChild(txt); body.appendChild(sub);
+    card.appendChild(icon); card.appendChild(body);
+
+    // Tap = speak the lesson out loud
+    card.addEventListener("click",()=>{
+      tap();
+      speak(l.text+" "+l.sub, 0.72, 1.55);
+      card.style.transform="scale(.97)";
+      setTimeout(()=>card.style.transform="",200);
+    });
+
+    container.appendChild(card);
+  });
+}
+
+
+// ═══════════════════════════════════════════════
+//  STORY TIME & BUILD-A-BOOK
+// ═══════════════════════════════════════════════
+
+// ── BUILT-IN BOOK: Mommy Is Human Too — Book 1 ──
+const BUILTIN_BOOKS = [
+  {
+    id:"mihт1",
+    title:"Mommy Is Human Too",
+    subtitle:"Book 1",
+    author:"By Ciarne Cyars",
+    emoji:"💛",
+    bg:"linear-gradient(135deg,#FF85A1,#A855F7)",
+    pages:[
+      {scene:"💛",text:"Mommy sometimes feels tired,\njust like me and you.\nShe works so hard each day —\nMommy is human too!",sub:""},
+      {scene:"😴",text:"Some mornings Mommy's sleepy\nbefore the day begins.\nShe needs her rest and quiet\nbefore the day begins.",sub:"And that's okay!"},
+      {scene:"😤",text:"Sometimes Mommy gets frustrated,\nthings don't go her way.\nBut she breathes in deep\nand tries again that day.",sub:""},
+      {scene:"💪",text:"Mommy has big feelings\njust like Jojo and Pip.\nShe feels happy, sad, and silly —\neverything in between!",sub:""},
+      {scene:"🐕",text:"Biscuit licks Mommy's hand\nwhen she feels low.\nEven pets can tell\nwhen someone needs some love to show.",sub:""},
+      {scene:"🤗",text:"Baby Bee needs cuddles,\nJojo needs a hug.\nMommy gives her love out\nlike a great big warm snug.",sub:""},
+      {scene:"🌙",text:"At night when all is quiet\nand the stars begin to glow,\nMommy thanks the Most High\nfor the love she gets to show.",sub:""},
+      {scene:"💛",text:"So when you see Mommy tired,\ngive her love back true.\nBecause she loves you so much —\nand Mommy is human too!",sub:"❤️ The End ❤️"},
+    ]
+  },
+  {
+    id:"moon1",
+    title:"The Moon Came Back",
+    subtitle:"A Mommy Is Human Too Story",
+    author:"By Ciarne Cyars",
+    emoji:"🌙",
+    bg:"linear-gradient(135deg,#1A1A2E,#A855F7)",
+    pages:[
+      {scene:"🌙",text:"Every night the moon comes back,\nhigh up in the sky.\nA reminder from the Most High —\nHe has never said goodbye.",sub:""},
+      {scene:"🌈",text:"Jojo saw a rainbow once\nin a sprinkler's mist.\nA tiny glimpse of wonder —\ntoo beautiful to miss.",sub:""},
+      {scene:"⭐",text:"Pip pointed at a firefly\nblinking in the dark.\n'Look Jojo!' he whispered —\na light inside the park.",sub:""},
+      {scene:"🌺",text:"Baby Bee smelled a flower,\nscrunched up her little nose.\nGlimpses are everywhere, Mommy said,\nwherever your heart goes.",sub:""},
+      {scene:"🐕",text:"Biscuit wagged his tail so fast\nwhen he heard his name.\nEven little things like that —\nGod's love is in each frame.",sub:""},
+      {scene:"🌙",text:"'The moon came back,' said Mommy,\n'just like it always will.\nGod keeps His promises to us —\nHis love is with us still.'",sub:"Genesis 9:13"},
+      {scene:"💛",text:"So collect your little glimpses,\neach wonderful and true.\nBecause every single one of them\nis God saying 'I love you!'",sub:"❤️ The End ❤️"},
+    ]
+  }
+];
+
+// ── BOOK TOPICS for Build-a-Book ──
+const BOOK_TOPICS = [
+  {icon:"🐾",label:"Animals"},
+  {icon:"🌟",label:"Friendship"},
+  {icon:"🙏",label:"Saying Please"},
+  {icon:"💛",label:"Family Love"},
+  {icon:"🦷",label:"Brushing Teeth"},
+  {icon:"🌈",label:"Colors"},
+  {icon:"😴",label:"Bedtime"},
+  {icon:"🍎",label:"Healthy Food"},
+];
+let selectedTopic = "Animals";
+let currentBook = null;  // array of page objects
+let currentPage = 0;
+let readingUtterance = null;
+
+// ── INIT ──
+function initBooks(){
+  buildShelf();
+  buildTopicGrid();
+}
+
+function switchBookTab(tab){
+  document.querySelectorAll(".book-tab").forEach((t,i)=>{
+    t.classList.toggle("active", (i===0&&tab==="library")||(i===1&&tab==="build"));
+  });
+  document.getElementById("bp-library").classList.toggle("active", tab==="library");
+  document.getElementById("bp-build").classList.toggle("active", tab==="build");
+}
+
+// ── LIBRARY ──
+function buildShelf(){
+  const shelf = document.getElementById("bookShelf");
+  shelf.innerHTML = "";
+  BUILTIN_BOOKS.forEach(bk=>{
+    const card = document.createElement("div");
+    card.className = "book-card";
+    card.innerHTML = `<div class="book-cover" style="background:${bk.bg}">
+      <span class="book-cover-emoji">${bk.emoji}</span>
+      <div class="book-cover-title">${bk.title}</div>
+      <div class="book-cover-author">${bk.subtitle}</div>
+      <div class="book-cover-author" style="margin-top:2px;font-size:.6rem;">${bk.author}</div>
+    </div>`;
+    card.addEventListener("click",()=>{
+      tap();
+      openBook(bk.pages, bk.title);
+    });
+    shelf.appendChild(card);
+  });
+}
+
+// ── TOPIC GRID ──
+function buildTopicGrid(){
+  const grid = document.getElementById("topicGrid");
+  grid.innerHTML = "";
+  BOOK_TOPICS.forEach(tp=>{
+    const btn = document.createElement("div");
+    btn.className = "topic-btn" + (tp.label===selectedTopic?" sel":"");
+    btn.innerHTML = `<span class="ti">${tp.icon}</span><span class="tl">${tp.label}</span>`;
+    btn.addEventListener("click",()=>{
+      selectedTopic = tp.label;
+      grid.querySelectorAll(".topic-btn").forEach(b=>b.classList.remove("sel"));
+      btn.classList.add("sel");
+      tap();
+    });
+    grid.appendChild(btn);
+  });
+}
+
+// ── BUILD WITH AI ──
+async function buildBook(){
+  const key = getKey();
+  if(!key){ speak("Add your A I key first! Tap the gear button!",0.72,1.5); openKeyModal(); return; }
+  const res = document.getElementById("buildResult");
+  res.innerHTML = `<div class="ai-thinking"><span class="think-spin">✨</span>Writing Amir's book about ${selectedTopic}...</div>`;
+  speak("Writing a special book just for Amir! One moment!",0.72,1.4);
+
+  const prompt = `You are a gentle, warm children's book author writing for Amir, a 2-year-old toddler.
+Write a SHORT illustrated children's book about "${selectedTopic}" for a 2-year-old.
+Rules:
+- Exactly 6 pages (not counting cover)
+- Each page: 2 short rhyming lines (8 words or fewer each), very simple words a 2-year-old knows
+- Each page gets 1 emoji that represents the scene (the "illustration")
+- Last page ends with "The End ❤️" as the sub field
+- Warm, loving, positive tone — like a bedtime story
+- NO scary content, NO complex words
+
+Respond ONLY with valid JSON, no markdown fences:
+{
+  "title": "Book title here",
+  "pages": [
+    {"scene":"🐶","text":"Line one here,\nLine two here.","sub":""},
+    ...
+  ]
+}`;
+
+  try{
+    const resp = await fetch("https://api.anthropic.com/v1/messages",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "x-api-key":key,
+        "anthropic-version":"2023-06-01",
+        "anthropic-dangerous-direct-browser-access":"true"
+      },
+      body:JSON.stringify({model:"claude-haiku-5-5",max_tokens:800,messages:[{role:"user",content:prompt}]})
+    });
+    if(resp.status===401){ res.innerHTML="<div class='ai-thinking'>❌ Invalid key. Tap ⚙️ to fix it!</div>"; openKeyModal(); return; }
+    const data = await resp.json();
+    let txt = data.content?.[0]?.text || "{}";
+    txt = txt.replace(/```json|```/g,"").trim();
+    let book;
+    try{ book = JSON.parse(txt); }catch(e){ res.innerHTML="<div class='ai-thinking'>Couldn't build book. Try again!</div>"; return; }
+    if(!book.pages||!book.pages.length){ res.innerHTML="<div class='ai-thinking'>Something went wrong. Try again!</div>"; return; }
+    res.innerHTML = `<div style="text-align:center;padding:10px;font-size:.9rem;font-weight:900;color:var(--grape);">✅ "${book.title}" is ready!</div>`;
+    speak("Amir's book is ready! Let me read it to you!",0.72,1.5);
+    setTimeout(()=>{ res.innerHTML=""; openBook(book.pages, book.title); },800);
+  }catch(e){
+    res.innerHTML="<div class='ai-thinking'>Check your connection and try again! ✨</div>";
+  }
+}
+
+// ── OPEN & READ ──
+function openBook(pages, title){
+  currentBook = pages;
+  currentPage = 0;
+  document.getElementById("readerTitle").textContent = "📖 " + title;
+  document.getElementById("readerWrap").style.display="flex";
+  document.getElementById("screen-books").querySelector(".book-stage").style.display="none";
+  renderPage();
+  speak("Let me read this book to Amir!",0.72,1.5);
+  setTimeout(()=>readPageAloud(), 900);
+}
+
+function closeReader(){
+  stopReading();
+  document.getElementById("readerWrap").style.display="none";
+  document.getElementById("screen-books").querySelector(".book-stage").style.display="flex";
+}
+
+function renderPage(){
+  if(!currentBook) return;
+  const pg = currentBook[currentPage];
+  document.getElementById("pageScene").textContent = pg.scene || "📖";
+  document.getElementById("pageText").textContent  = pg.text  || "";
+  document.getElementById("pageSub").textContent   = pg.sub   || "";
+  document.getElementById("pageNum").textContent   = "Page "+(currentPage+1)+" of "+currentBook.length;
+  const pct = Math.round(((currentPage+1)/currentBook.length)*100);
+  document.getElementById("pgFill").style.width = pct+"%";
+  document.getElementById("rdPrev").disabled = currentPage===0;
+  document.getElementById("rdNext").disabled = currentPage===currentBook.length-1;
+  // Animate scene emoji
+  const sc = document.getElementById("pageScene");
+  sc.style.transform="scale(0)";
+  setTimeout(()=>sc.style.transform="",200);
+}
+
+function prevPage(){ stopReading(); if(currentPage>0){currentPage--;renderPage();} }
+function nextPage(){ stopReading(); if(currentBook&&currentPage<currentBook.length-1){currentPage++;renderPage();setTimeout(()=>readPageAloud(),400);} }
+
+function stopReading(){
+  if(window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function readPageAloud(){
+  if(!currentBook) return;
+  const pg = currentBook[currentPage];
+  const fullText = pg.text.replace(/\n/g," ") + (pg.sub && pg.sub!=="❤️ The End ❤️" ? ". "+pg.sub : "");
+  stopReading();
+
+  // Find the warmest, friendliest voice — prefer female/child
+  const voices = window.speechSynthesis.getVoices();
+  const preferred = voices.find(v=>/samantha|karen|victoria|moira|tessa|zira/i.test(v.name))
+    || voices.find(v=>v.lang.startsWith("en") && /female/i.test(v.name))
+    || voices.find(v=>v.lang.startsWith("en-US"))
+    || voices.find(v=>v.lang.startsWith("en"));
+
+  const u = new SpeechSynthesisUtterance(fullText);
+  u.rate  = 0.70;   // slow and warm — bedtime story pace
+  u.pitch = 1.45;   // gentle and friendly, not squeaky
+  u.volume = 1;
+  if(preferred) u.voice = preferred;
+
+  // Auto-advance to next page when done reading
+  u.onend = ()=>{
+    if(currentBook && currentPage < currentBook.length-1){
+      setTimeout(()=>{ currentPage++; renderPage(); setTimeout(()=>readPageAloud(),500); },1200);
+    } else if(currentBook && currentPage === currentBook.length-1){
+      setTimeout(()=>speak("The end! Sweet dreams Amir! I love you!",0.65,1.4),800);
+    }
+  };
+  window.speechSynthesis.speak(u);
+}
+
+</script>
+
+<!-- ═══════ AMIR'S WORLD — UPGRADE v3 (Oct 26 2026). ADDITIVE: nothing above is changed or removed. ═══════
+     • Progress now also saves to Mom's Google account (it used to live only on one phone/tablet).
+     • 30 more first words (family, body, toys, animals, everyday things).
+     • New games for 2-year-old milestones: Find It! (point to the picture), Count With Me (1–10),
+       Animal Sounds, and Where Is Your Nose? (body parts).
+     • Grown-ups' page: CDC 2-year milestone checklist + "words Amir says" tracker, and a 10-minute daily plan. -->
+<style>
+.ap-screen{padding-bottom:40px}
+.ap-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.ap-pick{background:#fff;border-radius:24px;box-shadow:var(--shadow);font-size:3.6rem;padding:18px 0;text-align:center;cursor:pointer;border:5px solid transparent;touch-action:manipulation;transition:transform .12s}
+.ap-pick:active{transform:scale(.92)}
+.ap-pick.good{border-color:var(--grass);background:#EFFFF2}
+.ap-pick.oops{border-color:var(--berry);animation:apShake .35s}
+@keyframes apShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.ap-ask{background:#fff;border-radius:24px;padding:16px;text-align:center;font-weight:900;font-size:1.5rem;color:var(--dark);box-shadow:var(--shadow)}
+.ap-ask small{display:block;font-size:.85rem;color:#888;font-weight:700;margin-top:4px}
+.ap-big{display:block;width:100%;border:none;border-radius:20px;padding:16px;font-size:1.15rem;font-weight:900;color:#fff;background:var(--grape);margin-top:10px;cursor:pointer}
+.ap-count{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:16px 0;min-height:150px}
+.ap-count span{font-size:3rem;cursor:pointer;transition:transform .15s;touch-action:manipulation}
+.ap-count span.on{transform:scale(1.25);filter:drop-shadow(0 0 8px gold)}
+.ap-num{font-size:5rem;font-weight:900;text-align:center;color:var(--grape);line-height:1}
+.ap-card{background:#fff;border-radius:20px;padding:14px 16px;box-shadow:var(--shadow);margin-bottom:12px}
+.ap-card h3{margin:0 0 6px;font-size:1.05rem;color:var(--dark)}
+.ap-row{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-top:1px dashed #eee;font-size:.92rem;font-weight:700;color:#333}
+.ap-row:first-of-type{border-top:0}
+.ap-row input{width:22px;height:22px;flex:none;accent-color:var(--grape);margin-top:1px}
+.ap-chips{display:flex;flex-wrap:wrap;gap:6px}
+.ap-chip{padding:7px 12px;border-radius:999px;border:2px solid #ddd;background:#fff;font-weight:800;font-size:.85rem;cursor:pointer}
+.ap-chip.on{background:var(--grass);border-color:var(--grass);color:#fff}
+.ap-note{font-size:.8rem;color:#777;font-weight:600;line-height:1.4}
+.ap-sync{font-size:.72rem;color:#999;text-align:center;margin-top:6px;font-weight:700}
+</style>
+
+<div class="screen ap-screen" id="screen-findit">
+  <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  <div class="sec-title">Find It! 👆</div>
+  <div class="ap-ask" id="apFindAsk">Where is the dog?<small>Tap the picture!</small></div>
+  <div class="ap-grid3" id="apFindGrid"></div>
+  <button class="ap-big" style="background:var(--sky)" onclick="apFindSay()">🔊 Say it again</button>
+  <button class="ap-big" onclick="apFindNew()">➡ Next one</button>
+</div>
+
+<div class="screen ap-screen" id="screen-count">
+  <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  <div class="sec-title">Count With Me! 🔢</div>
+  <div class="ap-num" id="apCountNum">0</div>
+  <div class="ap-count" id="apCountBox"></div>
+  <button class="ap-big" onclick="apCountNew()">➡ New things to count</button>
+</div>
+
+<div class="screen ap-screen" id="screen-sounds">
+  <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  <div class="sec-title">Animal Sounds! 🐮</div>
+  <div class="ap-note" style="text-align:center;margin-bottom:6px">Tap an animal. Then make the sound together!</div>
+  <div class="ap-grid3" id="apSoundGrid"></div>
+</div>
+
+<div class="screen ap-screen" id="screen-body">
+  <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  <div class="sec-title">Where Is Your…? 👃</div>
+  <div class="ap-ask" id="apBodyAsk">Where is your nose?<small>Touch yours, then tap the picture!</small></div>
+  <div class="ap-grid3" id="apBodyGrid"></div>
+  <button class="ap-big" onclick="apBodyNew()">➡ Next one</button>
+</div>
+
+<div class="screen ap-screen" id="screen-grownups">
+  <button class="back-btn" onclick="goHome()">⬅ Home</button>
+  <div class="sec-title">For Grown-Ups 💛</div>
+  <div class="ap-card">
+    <h3>Today's 10 minutes with Amir</h3>
+    <div id="apPlan"></div>
+  </div>
+  <div class="ap-card">
+    <h3>Words Amir SAYS out loud</h3>
+    <div class="ap-note" style="margin-bottom:8px">Tap each word you hear him say by himself. Around age 2, many children say about 50 words; by 2½ many put two words together ("more milk").</div>
+    <div class="ap-chips" id="apSaid"></div>
+    <div class="ap-note" style="margin-top:8px"><b id="apSaidN">0</b> words heard so far · two-word phrases: <span id="apPhr"></span></div>
+    <div style="display:flex;gap:8px;margin-top:8px"><input type="text" id="apPhrIn" placeholder='Add a phrase he said, like "more juice"' style="flex:1;padding:10px;border-radius:12px;border:2px solid #ddd;font-weight:700"><button class="ap-chip" onclick="apAddPhrase()">Add</button></div>
+  </div>
+  <div class="ap-card">
+    <h3>2-year milestones (CDC "Learn the Signs. Act Early.")</h3>
+    <div id="apMiles"></div>
+    <div class="ap-note" style="margin-top:6px">Every child grows at their own pace. If you're unsure about anything here, bring this list to his next check-up — <a href="https://www.cdc.gov/ncbddd/actearly/milestones/milestones-2yr.html" target="_blank" rel="noopener">see the full CDC list ↗</a></div>
+  </div>
+  <div class="ap-card" id="awDevice">
+    <h3>This device 📲</h3>
+    <div class="ap-note" id="awStatus" style="margin-bottom:8px"></div>
+    <button class="ap-chip aw-hide" id="awInstall" style="background:#FFD93D;border-color:#FFB800">⬇ Install Amir&#8217;s World</button>
+    <div class="ap-note" style="margin-top:8px"><b>iPhone/iPad (Safari):</b> tap Share, then &#8220;Add to Home Screen&#8221;.<br><b>Android (Chrome):</b> tap &#8942;, then &#8220;Install app&#8221;.<br><b>Computer (Chrome/Edge):</b> click the install icon in the address bar.</div>
+    <h3 style="margin-top:12px">Amir&#8217;s photo</h3>
+    <div class="ap-note" style="margin-bottom:8px">His photo stays on this device only. It is not put online.</div>
+    <label class="ap-chip" style="display:inline-block;cursor:pointer">📷 Add or change photo<input type="file" accept="image/*" id="awPhotoFile" style="display:none"></label>
+    <button class="ap-chip" id="awPhotoRemove">Remove photo</button>
+  </div>
+  <div class="ap-sync" id="apSync"></div>
+</div>
+
+<script>
+(function(){
+  /* ---------- 30 more first words (same format as WORDS) ---------- */
+  var MORE = [
+    {e:"👩🏾",w:"MAMA",lvl:1},{e:"👨🏾",w:"DADA",lvl:1},{e:"👵🏾",w:"GRANDMA",lvl:2},{e:"🍼",w:"BOTTLE",lvl:1},
+    {e:"🥛",w:"MILK",lvl:1},{e:"💧",w:"WATER",lvl:1},{e:"🧃",w:"JUICE",lvl:1},{e:"🍪",w:"COOKIE",lvl:1},
+    {e:"⚽",w:"BALL",lvl:1},{e:"🚌",w:"BUS",lvl:1},{e:"👟",w:"SHOES",lvl:1},{e:"🛏️",w:"BED",lvl:1},
+    {e:"🛁",w:"BATH",lvl:1},{e:"📖",w:"BOOK",lvl:1},{e:"🐟",w:"FISH",lvl:1},{e:"🐦",w:"BIRD",lvl:1},
+    {e:"🐮",w:"COW",lvl:2},{e:"🐷",w:"PIG",lvl:1},{e:"🐴",w:"HORSE",lvl:2},{e:"🐵",w:"MONKEY",lvl:2},
+    {e:"🚂",w:"TRAIN",lvl:2},{e:"✈️",w:"AIRPLANE",lvl:3},{e:"🍓",w:"STRAWBERRY",lvl:3},{e:"🥚",w:"EGG",lvl:2},
+    {e:"🧸",w:"TEDDY",lvl:2},{e:"🎩",w:"HAT",lvl:2},{e:"👕",w:"SHIRT",lvl:2},{e:"🦒",w:"GIRAFFE",lvl:3},
+    {e:"🐢",w:"TURTLE",lvl:3},{e:"🦋",w:"BUTTERFLY",lvl:3}
+  ];
+  MORE.forEach(function(x){ if (!WORDS.some(function(w){ return w.w === x.w; })) WORDS.push(x); });
+
+  function say(t){ try { speak(t, 0.8, 1.35); } catch(e){} }
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function win(){ try { chime(); } catch(e){} try { addStar(1); } catch(e){} P.apWins = (P.apWins || 0) + 1; try { saveProgress(); } catch(e){} }
+
+  /* ---------- Find It! ---------- */
+  var F = { target: null };
+  window.apFindNew = function(){
+    var pool = shuffle(getWordsForLevel()).slice(0, 3);
+    F.target = pool[Math.floor(Math.random() * 3)];
+    document.getElementById('apFindAsk').innerHTML = 'Where is the ' + F.target.w.toLowerCase() + '?<small>Tap the picture!</small>';
+    var g = document.getElementById('apFindGrid'); g.innerHTML = '';
+    pool.forEach(function(w){
+      var d = document.createElement('div'); d.className = 'ap-pick'; d.textContent = w.e;
+      d.onclick = function(){
+        if (w.w === F.target.w){ d.classList.add('good'); win(); say('Yes! That is the ' + w.w.toLowerCase() + '! Great job Amir!'); try { recordWordLearned(w.w); } catch(e){} setTimeout(apFindNew, 1800); }
+        else { d.classList.remove('oops'); void d.offsetWidth; d.classList.add('oops'); try { boop(); } catch(e){} say('That is the ' + w.w.toLowerCase() + '. Where is the ' + F.target.w.toLowerCase() + '?'); }
+      };
+      g.appendChild(d);
+    });
+    apFindSay();
+  };
+  window.apFindSay = function(){ if (F.target) say('Where is the ' + F.target.w.toLowerCase() + '?'); };
+
+  /* ---------- Count With Me ---------- */
+  var C = { n: 0 };
+  var THINGS = ['🍎','⭐','🐶','🎈','🚗','🍌','🦆','🌸','⚽','🍪'];
+  window.apCountNew = function(){
+    var max = Math.min(10, 3 + (P.apCount || 0));
+    var n = 1 + Math.floor(Math.random() * max), e = THINGS[Math.floor(Math.random() * THINGS.length)];
+    C.n = 0; document.getElementById('apCountNum').textContent = '0';
+    var box = document.getElementById('apCountBox'); box.innerHTML = '';
+    for (var i = 0; i < n; i++){
+      var s = document.createElement('span'); s.textContent = e;
+      s.onclick = function(){
+        if (this.classList.contains('on')) return;
+        this.classList.add('on'); C.n++; document.getElementById('apCountNum').textContent = C.n; say(String(C.n));
+        if (C.n === n){ P.apCount = (P.apCount || 0) + 1; win(); setTimeout(function(){ say(n + '! You counted ' + n + '! Yay Amir!'); }, 700); }
+      };
+      box.appendChild(s);
+    }
+    say("Let's count together! Tap each one.");
+  };
+
+  /* ---------- Animal Sounds ---------- */
+  var SOUNDS = [['🐶','dog','woof woof'],['🐱','cat','meow'],['🐮','cow','moo'],['🐷','pig','oink oink'],['🦆','duck','quack quack'],['🐑','sheep','baa'],['🐴','horse','neigh'],['🦁','lion','roar'],['🐸','frog','ribbit'],['🐔','chicken','cluck cluck'],['🐝','bee','buzz'],['🐍','snake','hiss']];
+  function buildSounds(){
+    var g = document.getElementById('apSoundGrid'); if (!g || g.children.length) return;
+    SOUNDS.forEach(function(a){
+      var d = document.createElement('div'); d.className = 'ap-pick'; d.textContent = a[0];
+      d.onclick = function(){ try { tap(); } catch(e){} say('The ' + a[1] + ' says ' + a[2] + '! ' + a[2] + '!'); P.apSounds = (P.apSounds || 0) + 1; if (P.apSounds % 5 === 0) win(); };
+      g.appendChild(d);
+    });
+  }
+
+  /* ---------- Body parts ---------- */
+  var BODY = [['👃','nose'],['👀','eyes'],['👂','ears'],['👄','mouth'],['✋','hand'],['🦶','feet'],['🦷','teeth'],['💇🏾','hair'],['🦵','legs']];
+  var B = { t: null };
+  window.apBodyNew = function(){
+    var pool = shuffle(BODY).slice(0, 3); B.t = pool[Math.floor(Math.random() * 3)];
+    document.getElementById('apBodyAsk').innerHTML = 'Where is your ' + B.t[1] + '?<small>Touch yours, then tap the picture!</small>';
+    var g = document.getElementById('apBodyGrid'); g.innerHTML = '';
+    pool.forEach(function(p){
+      var d = document.createElement('div'); d.className = 'ap-pick'; d.textContent = p[0];
+      d.onclick = function(){
+        if (p === B.t){ d.classList.add('good'); win(); say('Yes! Good job Amir! You found your ' + p[1] + '!'); setTimeout(apBodyNew, 1800); }
+        else { d.classList.remove('oops'); void d.offsetWidth; d.classList.add('oops'); try { boop(); } catch(e){} say('That is your ' + p[1] + '. Where is your ' + B.t[1] + '?'); }
+      };
+      g.appendChild(d);
+    });
+    say('Where is your ' + B.t[1] + '?');
+  };
+
+  /* ---------- Grown-ups page ---------- */
+  var MILES = [
+    ['talk','Says at least two words together, like "more milk"'],
+    ['point','Points to things in a book when you ask, like "Where is the bear?"'],
+    ['body2','Points to at least two body parts when you ask'],
+    ['gesture','Uses more gestures than waving and pointing, like blowing a kiss or nodding yes'],
+    ['notice','Notices when others are hurt or upset, like pausing or looking sad'],
+    ['look','Looks at your face to see how to react in a new situation'],
+    ['spoon','Eats with a spoon'],
+    ['kick','Kicks a ball'],
+    ['run','Runs'],
+    ['stairs','Walks (not climbs) up a few stairs with or without help'],
+    ['switch','Tries to use switches, knobs, or buttons on a toy'],
+    ['two','Plays with more than one toy at the same time'],
+    ['hands','Holds something in one hand while using the other hand']
+  ];
+  var DAILY = [
+    ['Find It! — 3 rounds','findit'],['Learn Words — say 5 words together','words'],['Count With Me — 1 round','count'],
+    ['Story Time — read one book and point to pictures','books'],['Music Time — one song with dancing','music'],
+    ['Where is your…? — 3 body parts','body'],['Animal Sounds — make 5 sounds together','sounds']
+  ];
+  function grown(){
+    P.parent = P.parent || { said: [], phrases: [], miles: {}, plan: {} };
+    var g = P.parent, today = new Date().toDateString();
+    if (g.planDay !== today){ g.planDay = today; g.plan = {}; }
+    var d = new Date().getDay(), picks = [DAILY[d % DAILY.length], DAILY[(d + 2) % DAILY.length], DAILY[(d + 4) % DAILY.length]];
+    document.getElementById('apPlan').innerHTML = picks.map(function(p, i){
+      return '<label class="ap-row"><input type="checkbox" ' + (g.plan[i] ? 'checked' : '') + ' onchange="apPlanTick(' + i + ',this.checked)"><span>' + p[0] + ' <a href="#" onclick="goTo(\'' + p[1] + '\');return false">Open ↗</a></span></label>';
+    }).join('') + '<div class="ap-note">Short and happy beats long. Stop while he still wants more!</div>';
+    var words = WORDS.map(function(w){ return w.w; });
+    document.getElementById('apSaid').innerHTML = words.map(function(w){ var on = g.said.indexOf(w) !== -1; return '<button class="ap-chip' + (on ? ' on' : '') + '" onclick="apSaidTap(\'' + w + '\',this)">' + w.charAt(0) + w.slice(1).toLowerCase() + '</button>'; }).join('');
+    document.getElementById('apSaidN').textContent = g.said.length;
+    document.getElementById('apPhr').textContent = g.phrases.length ? g.phrases.map(function(p){ return '"' + p + '"'; }).join(', ') : 'none yet';
+    document.getElementById('apMiles').innerHTML = MILES.map(function(m){
+      return '<label class="ap-row"><input type="checkbox" ' + (g.miles[m[0]] ? 'checked' : '') + ' onchange="apMileTick(\'' + m[0] + '\',this.checked)"><span>' + m[1] + '</span></label>';
+    }).join('');
+  }
+  window.apPlanTick = function(i, v){ P.parent.plan[i] = v; saveProgress(); if (v) { try { chime(); } catch(e){} } };
+  window.apMileTick = function(k, v){ P.parent.miles[k] = v; saveProgress(); };
+  window.apSaidTap = function(w, el){ var a = P.parent.said, i = a.indexOf(w); if (i === -1){ a.push(w); el.classList.add('on'); } else { a.splice(i, 1); el.classList.remove('on'); } document.getElementById('apSaidN').textContent = a.length; saveProgress(); };
+  window.apAddPhrase = function(){ var inp = document.getElementById('apPhrIn'), v = (inp.value || '').trim().slice(0, 60); if (!v) return; P.parent.phrases.push(v); inp.value = ''; saveProgress(); grown(); };
+
+  /* ---------- Cloud backup to Mom's Google account ---------- */
+  var cloud = (typeof google !== 'undefined' && google.script && google.script.run) ? google.script.run : null, pushT = null;
+  function syncNote(t){ var el = document.getElementById('apSync'); if (el) el.textContent = t; }
+  var _save = saveProgress;
+  saveProgress = function(){
+    var r = _save.apply(this, arguments);
+    if (cloud){ clearTimeout(pushT); pushT = setTimeout(function(){ cloud.withSuccessHandler(function(){ syncNote('✓ Saved to Mom’s Google account'); }).withFailureHandler(function(){ syncNote('Saved on this device (cloud backup will retry)'); }).saveProgress(JSON.parse(JSON.stringify(P))); }, 1500); }
+    return r;
+  };
+  function mergeFromCloud(c){
+    if (!c || typeof c !== 'object') return;
+    if (!P || !P.wordsLearned) { try { loadProgress(); } catch(e){} }   // make sure this device's progress is loaded first, so nothing is lost
+    var union = function(a, b){ var o = (a || []).slice(); (b || []).forEach(function(x){ if (o.indexOf(x) === -1) o.push(x); }); return o; };
+    P.wordsLearned = union(P.wordsLearned, c.wordsLearned);
+    P.earned = union(P.earned, c.earned);
+    ['totalStars','matches','peppaScore','photos','aiLessons','sessions','streak','apWins','apCount','apSounds'].forEach(function(k){ P[k] = Math.max(Number(P[k]) || 0, Number(c[k]) || 0); });
+    if (c.parent){
+      P.parent = P.parent || { said: [], phrases: [], miles: {}, plan: {} };
+      P.parent.said = union(P.parent.said, c.parent.said); P.parent.phrases = union(P.parent.phrases, c.parent.phrases);
+      Object.keys(c.parent.miles || {}).forEach(function(k){ if (c.parent.miles[k]) P.parent.miles[k] = true; });
+    }
+    try { _save(); renderHomeProgress(); buildStarBar(); checkMilestones(); } catch(e){}
+  }
+  if (cloud) cloud.withSuccessHandler(mergeFromCloud).withFailureHandler(function(){}).loadProgress();
+
+  /* ---------- hook navigation (original goTo runs first) ---------- */
+  var _goTo = goTo;
+  goTo = function(id){
+    var r = _goTo.apply(this, arguments);
+    if (id === 'findit') apFindNew();
+    if (id === 'count') apCountNew();
+    if (id === 'sounds') buildSounds();
+    if (id === 'body') apBodyNew();
+    if (id === 'grownups') grown();
+    return r;
+  };
+
+  /* ---------- new tiles on the home menu ---------- */
+  var grid = document.querySelector('#screen-home .menu-grid');
+  if (grid && !document.getElementById('apTiles')){
+    var mark = document.createElement('span'); mark.id = 'apTiles'; mark.style.display = 'none'; grid.appendChild(mark);
+    [['findit','👆','Find It!','#FFF7E0','var(--sun)'],['count','🔢','Count With Me','#EAF8FF','var(--sky)'],['sounds','🐮','Animal Sounds','#EFFFF2','var(--grass)'],['body','👃','Where Is Your…?','#FFF0F0','var(--berry)']].forEach(function(t){
+      var d = document.createElement('div'); d.className = 'menu-card'; d.style.cssText = 'border-color:' + t[4] + ';background:' + t[3];
+      d.innerHTML = '<span class="ci">' + t[1] + '</span><div class="cl">' + t[2] + '</div>';
+      d.onclick = function(){ goTo(t[0]); };
+      grid.insertBefore(d, grid.firstChild);
+    });
+    var gu = document.createElement('div'); gu.className = 'menu-card'; gu.style.cssText = 'border-color:#FFB800;background:#FFFBEA;grid-column:span 2';
+    gu.innerHTML = '<span class="ci">💛</span><div class="cl">For Grown-Ups: milestones + today’s 10 minutes</div>';
+    gu.onclick = function(){ goTo('grownups'); };
+    grid.appendChild(gu);
+  }
+  // Move the new screens next to the existing ones so they behave the same
+  var home = document.getElementById('screen-home');
+  ['findit','count','sounds','body','grownups'].forEach(function(id){ var s = document.getElementById('screen-' + id); if (s && home && s.parentNode !== home.parentNode) home.parentNode.appendChild(s); });
+  try { renderHomeProgress(); } catch(e){}
+})();
+</script>
+<script src="notify.js" data-app="Amir's World" defer></script>
+</body>
+</html>
