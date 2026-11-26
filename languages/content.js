@@ -51,3 +51,40 @@ window.LL_UNITS = [
   ['What do you like to do?','Qu’est-ce que tu aimes faire ?','¿Qué te gusta hacer?'],['Me too','Moi aussi','Yo también'],['That’s cool','C’est cool','Qué chévere'],['Of course','Bien sûr','Claro'],
   ['Let’s go eat','On va manger','Vamos a comer'],['Can we take a picture?','On peut prendre une photo ?','¿Podemos tomar una foto?'],['Have a good day','Bonne journée','Que tengas un buen día'],['God bless you','Que Dieu te bénisse','Que Dios te bendiga']]}
 ];
+
+/* Portuguese (Portugal) - same order as each lesson above. Added for the 2028 trip (Porto, Lisbon, Sintra, Évora). */
+window.LL_PT = {
+ greet:['Olá','Boa noite','Adeus','Até breve','Por favor','Obrigado','De nada','Com licença','Desculpe','Sim','Não','Como está?','Estou bem, obrigado','Chamo-me Caleb','Muito prazer'],
+ me:['Tenho quinze anos','Sou americano','Moro no Michigan','Sou estudante','Jogo futebol americano','Lanço o peso e o disco','Tenho quatro irmãos','Gosto de música','Não percebo','Pode repetir, por favor?','Fale devagar, por favor','Falo um pouco de português'],
+ num:['um','dois','três','quatro','cinco','seis','sete','oito','nove','dez','quinze','vinte','trinta','cinquenta e seis','cem'],
+ travel:['Onde é a casa de banho?','Onde é a estação de comboios?','o aeroporto','o meu passaporte','um bilhete','à esquerda','à direita','sempre em frente','É longe?','o autocarro','o metro','Estou perdido','A que horas parte?'],
+ food:['Tenho fome','Tenho sede','água','pão','frango','arroz','fruta','Queria…','A ementa, por favor','A conta, por favor','Está delicioso','Sou alérgico a…','o pequeno-almoço'],
+ shop:['Quanto custa?','É muito caro','o dinheiro','a loja','Aceitam cartão?','em dinheiro','Só estou a ver','um tamanho maior','um presente para a minha mãe','aberto','fechado'],
+ sport:['a equipa','o treinador','o jogo','o treino','Jogo na linha defensiva','Ganhámos!','Perdemos','Vamos!','o campo','correr','lançar','forte','cansado','o ginásio'],
+ school:['o professor','a sala de aula','os trabalhos de casa','um teste','um livro','um lápis','Posso ir à casa de banho?','Tenho uma pergunta','Como se diz … em português?','O que quer dizer …?','Já acabei','a química'],
+ family:['a minha mãe','o meu pai','o meu irmão','a minha irmã','a minha avó','o meu amigo','a minha família de acolhimento','as crianças','gémeos','as pessoas'],
+ time:['segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado','domingo','hoje','amanhã','ontem','Que horas são?','de manhã','esta noite'],
+ help:['Socorro!','Preciso de ajuda','Chame a polícia','Preciso de um médico','o hospital','Dói-me aqui','Perdi o meu telemóvel','Posso usar o seu telemóvel?','Onde está o meu grupo?','Ligue ao meu professor, por favor'],
+ chat:['Como te chamas?','De onde és?','Quantos anos tens?','O que gostas de fazer?','Eu também','Que fixe','Claro','Vamos comer','Podemos tirar uma foto?','Tem um bom dia','Deus te abençoe']
+};
+window.LL_UNITS.forEach(function (u) { var p = window.LL_PT[u.id] || []; u.items.forEach(function (it, i) { it[3] = p[i] || it[0]; }); });
+
+/* The 2028 school trip: Epic Iberia & Moorish Adventures (Passports Educational Travel, group leader Mrs. Nancy Kattoula). */
+window.LL_TRIP = {
+ title:'Epic Iberia & Moorish Adventures', start:'2028-03-23', end:'2028-04-03',
+ days:[
+  {d:'Days 1–2', place:'Porto, Portugal', lang:'pt', what:'Arrive, walking tour, the old market, Douro River cruise of the six bridges.'},
+  {d:'Day 3', place:'Porto → Lisbon', lang:'pt', what:'Porto Cathedral, Clérigos Tower, Palácio da Bolsa, then the trip to Lisbon.'},
+  {d:'Day 4', place:'Lisbon & Sintra', lang:'pt', what:'St. George’s Castle, Alfama, Belém Tower, Pastéis de Belém bakery, Quinta da Regaleira palace.'},
+  {d:'Day 5', place:'Évora → Seville, Spain', lang:'es', what:'Évora walking tour and Chapel of the Bones, then the Setas (Metropol Parasol) rooftop in Seville.'},
+  {d:'Day 6', place:'Seville', lang:'es', what:'Plaza de España, the Cathedral and Giralda, Royal Alcázar, flamenco lesson.'},
+  {d:'Day 7', place:'Córdoba → Granada', lang:'es', what:'The Mezquita, the Jewish Quarter, Calleja de las Flores.'},
+  {d:'Day 8', place:'Granada', lang:'es', what:'The Alhambra and Generalife gardens, sunset at San Nicolás lookout.'},
+  {d:'Day 9', place:'Costa del Sol', lang:'es', what:'Free time and a catamaran cruise (weather permitting).'},
+  {d:'Day 10', place:'Tangier, Morocco', lang:'fr', what:'Ferry from Tarifa, Grand Souk, the Kasbah, camel ride on Achakkar beach. French is widely spoken here.'},
+  {d:'Day 11', place:'Gibraltar → Costa del Sol', lang:'es', what:'Ferry back to Tarifa, time in Gibraltar (English is spoken there).'},
+  {d:'Day 12', place:'Málaga → home', lang:'es', what:'Fly home to Detroit.'}
+ ],
+ darija:[['Salam alaykum','Hello (peace be upon you)'],['Shukran','Thank you'],['La, shukran','No, thank you (useful in the souk)'],['Afak','Please'],['Bslama','Goodbye']],
+ notes:['Passport needed early: passport details are due on the Passports site by August 2027 because of the Morocco day.','Spanish class this year and next year is required to stay on the trip.','Group leader: Mrs. Nancy Kattoula (Walled Lake Central). Tour ID NKATTOULA2028.']
+};

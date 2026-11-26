@@ -13,14 +13,16 @@
 <style>
   :root{--fr:#0b3b6f;--es:#b3261e;--acc:var(--fr);--gold:#C9A961;--paper:#f7f5f0;--card:#fff;--ink:#17171c;--muted:#666;--line:#e5e0d4;--ok:#15803d;--okbg:#dcfce7;--bad:#b91c1c;--badbg:#fee2e2}
   @media (prefers-color-scheme: dark){:root{--paper:#0d1220;--card:#171f35;--ink:#f3f0e8;--muted:#aaa;--line:#2a3456;--okbg:#123a24;--badbg:#3b1414}}
-  body.es{--acc:var(--es)}
+  body.es{--acc:var(--es)} body.pt{--acc:#0f6b3a}
+  .trip li{list-style:none;border-left:4px solid var(--line);padding:6px 0 10px 12px;margin-left:4px} .chip{display:inline-block;border:0;border-radius:99px;padding:3px 10px;font-weight:900;font-size:12px;color:#fff;margin:4px 6px 0 0} .chip.fr{background:var(--fr)} .chip.es{background:var(--es)} .chip.pt{background:#0f6b3a}
+  .trip ul{padding:0;margin:8px 0}
   *{box-sizing:border-box} html,body{margin:0;background:var(--paper);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
   h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:0} button{font:inherit;cursor:pointer} .hidden{display:none!important}
   header{background:var(--acc);color:#fff;padding:14px 16px;position:sticky;top:0;z-index:4}
   header .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:10px}
   header h1{font-size:20px;flex:1} .stat{font-size:13px;font-weight:900;background:rgba(255,255,255,.18);padding:4px 10px;border-radius:99px}
   .wrap{max-width:760px;margin:0 auto;padding:14px 16px 90px}
-  .switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+  .switch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:12px}
   .switch button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:12px;font-weight:900;font-size:16px}
   .switch button.on{border-color:var(--acc);background:var(--acc);color:#fff}
   .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 8px 24px rgba(0,0,0,.06)}
@@ -50,8 +52,9 @@
 <body>
 <header><div class="in"><span style="font-size:24px" id="flag">🇫🇷</span><h1>Caleb's Language Lab</h1><span class="stat" id="streak">🔥 0</span><span class="stat" id="xp">⭐ 0</span></div></header>
 <div class="wrap">
-  <div class="switch"><button id="lfr" class="on">🇫🇷 Français</button><button id="les">🇪🇸 Español</button></div>
+  <div class="switch"><button id="lfr" class="on">🇫🇷 Français</button><button id="les">🇪🇸 Español</button><button id="lpt">🇵🇹 Português</button></div>
   <div id="home">
+    <div class="card trip" id="trip"></div>
     <div class="card"><h2 id="goalTitle">Today's goal</h2><p class="sub" id="goalTxt"></p>
       <div class="bar"><i id="goalBar" style="width:0"></i></div>
       <div class="btns"><button class="btn gold" id="review">▶ Daily review (10)</button><button class="btn ghost" id="install" hidden>⬇ Install app</button></div></div>
@@ -74,9 +77,9 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 function toast(t){const e=$('toast');e.textContent=t;e.classList.add('on');setTimeout(()=>e.classList.remove('on'),1800);}
-const L={fr:{col:1,name:'French',voice:'fr-FR',flag:'🇫🇷'},es:{col:2,name:'Spanish',voice:'es-ES',flag:'🇪🇸'}};
+const L={fr:{col:1,name:'French',voice:'fr-FR',flag:'🇫🇷'},es:{col:2,name:'Spanish',voice:'es-ES',flag:'🇪🇸'},pt:{col:3,name:'Portuguese',voice:'pt-PT',flag:'🇵🇹'}};
 let lang=store.get('ll_lang','fr'), unit=null, mode='learn';
-let P=store.get('ll_prog',{fr:{},es:{}});            // P[lang][itemId] = box 0..5
+let P=store.get('ll_prog',{fr:{},es:{},pt:{}});            // P[lang][itemId] = box 0..5
 let S=store.get('ll_stats',{xp:0,streak:0,last:'',today:0,day:''});
 const today=()=>new Date().toISOString().slice(0,10);
 const idOf=(u,i)=>u.id+':'+i;
@@ -97,12 +100,28 @@ function speak(text,slow){ try{ speechSynthesis.cancel(); const u=new SpeechSynt
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[’'`]/g,' ').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 function similar(a,b){ a=norm(a).split(' '); b=norm(b).split(' '); const set=new Set(b); const hit=a.filter(w=>set.has(w)).length; return hit/Math.max(a.length,b.length); }
 
-function setLang(l){ lang=l; store.set('ll_lang',l); document.body.classList.toggle('es',l==='es'); $('lfr').classList.toggle('on',l==='fr'); $('les').classList.toggle('on',l==='es'); $('flag').textContent=L[l].flag; renderHome(); if(unit) renderStage(); }
+function setLang(l){ lang=l; store.set('ll_lang',l); document.body.classList.toggle('es',l==='es'); document.body.classList.toggle('pt',l==='pt'); $('lfr').classList.toggle('on',l==='fr'); $('les').classList.toggle('on',l==='es'); $('lpt').classList.toggle('on',l==='pt'); $('flag').textContent=L[l].flag; renderHome(); if(unit) renderStage(); }
 function pct(u){ let s=0; u.items.forEach((_,i)=>s+=box(u,i)); return Math.round(s/(u.items.length*5)*100); }
 function renderHome(){
   $('units').innerHTML=LL_UNITS.map(u=>'<button class="unit" data-u="'+u.id+'"><span class="ic">'+u.icon+'</span><b>'+esc(u.title)+'</b><span class="sub">'+u.items.length+' phrases · '+pct(u)+'%</span><div class="bar"><i style="width:'+pct(u)+'%"></i></div></button>').join('');
   document.querySelectorAll('[data-u]').forEach(b=>b.onclick=()=>openUnit(LL_UNITS.find(x=>x.id===b.dataset.u)));
-  phrasebook(); stats();
+  phrasebook(); stats(); renderTrip();
+}
+/* The 2028 trip: countdown, each stop, which language to use there, and the phrases to know */
+function renderTrip(){
+  const T=window.LL_TRIP; if(!T){ $('trip').classList.add('hidden'); return; }
+  const days=Math.ceil((new Date(T.start+'T12:00')-new Date())/864e5);
+  const U=id=>LL_UNITS.find(u=>u.id===id);
+  const key=[[U('greet'),0],[U('greet'),5],[U('travel'),0],[U('shop'),0],[U('help'),8]];
+  const name={fr:'French',es:'Spanish',pt:'Portuguese'};
+  $('trip').innerHTML='<h2>✈️ '+esc(T.title)+'</h2><p class="sub">March 23 – April 3, 2028 · Portugal, Spain and Morocco'+(days>0?' · <b>'+days+' days to go</b>':'')+'</p>'+
+    '<details><summary class="sub" style="cursor:pointer;font-weight:900">See every stop and what to say there</summary><ul>'+T.days.map(d=>
+      '<li><b>'+esc(d.d)+': '+esc(d.place)+'</b><div class="sub">'+esc(d.what)+'</div><button class="chip '+d.lang+'" data-lang="'+d.lang+'">Speak '+name[d.lang]+' here</button>'+
+      '<div class="sub" style="margin-top:4px">'+key.map(k=>'<span data-say2="'+esc(k[0].items[k[1]][L[d.lang].col])+'" data-l="'+d.lang+'" style="cursor:pointer">🔊 '+esc(k[0].items[k[1]][L[d.lang].col])+'</span>').join(' · ')+'</div></li>').join('')+
+    '</ul><p class="sub"><b>Morocco (Arabic courtesy words):</b> '+T.darija.map(x=>esc(x[0])+' = '+esc(x[1])).join('; ')+'</p>'+
+    T.notes.map(n=>'<p class="sub">• '+esc(n)+'</p>').join('')+'</details>';
+  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>{ setLang(b.dataset.lang); toast(name[b.dataset.lang]+' is on'); });
+  document.querySelectorAll('[data-say2]').forEach(b=>b.onclick=()=>{ const keep=lang; lang=b.dataset.l; speak(b.dataset.say2); lang=keep; });
 }
 function phrasebook(){
   const q=norm($('q').value); const c=L[lang].col; const rows=[];
@@ -167,7 +186,7 @@ $('review').onclick=()=>{
 };
 $('back').onclick=()=>{ unit=null; queue=null; $('lesson').classList.add('hidden'); $('home').classList.remove('hidden'); renderHome(); };
 document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>setMode(b.dataset.m));
-$('lfr').onclick=()=>setLang('fr'); $('les').onclick=()=>setLang('es');
+$('lfr').onclick=()=>setLang('fr'); $('les').onclick=()=>setLang('es'); $('lpt').onclick=()=>setLang('pt');
 $('q').oninput=phrasebook;
 let deferred=null; window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('install').hidden=false;});
 $('install').onclick=()=>{ if(deferred){deferred.prompt();deferred=null;$('install').hidden=true;} };
