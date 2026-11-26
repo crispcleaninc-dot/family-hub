@@ -10,9 +10,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
-      - run: sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
-      - run: mkdir -p out; K=${{ matrix.k }} python3 gen/gen.py > out/${{ matrix.k }}.txt 2>&1 || true
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg; printf 'torch==2.4.1\ntorchaudio==2.4.1\n' > c.txt && pip install -q torch==2.4.1 torchaudio==2.4.1 --index-url https://download.pytorch.org/whl/cpu && pip install -q -c c.txt f5-tts
+      - run: mkdir -p out; touch out/.keep; K=${{ matrix.k }} python3 gen/gen.py > out/${{ matrix.k }}.txt 2>&1 || true
       - if: always()
         run: |
           git config user.name "hv"; git config user.email "noreply@anthropic.com"
-          git checkout --orphan hv-out-${{ matrix.k }} && git rm -rq --cached . && git add -f out && git commit -qm o && git push -f origin hv-out-${{ matrix.k }}
+          git checkout --orphan hv-out-${{ matrix.k }} && git rm -rq --cached . && mkdir -p out && touch out/.keep && git add -f out && git commit -qm o && git push -f origin hv-out-${{ matrix.k }}
