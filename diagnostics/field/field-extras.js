@@ -20,6 +20,15 @@
     '.fx-reg{font-size:13px;line-height:1.5;max-height:220px;overflow:auto;margin-top:6px}.fx-reg div{border-bottom:1px solid var(--line);padding:4px 0}' +
     '.fx-small{font-size:12px;color:var(--dim)}';
   document.head.appendChild(css);
+  /* Crispus Diagnostics look (Nov 27, 2026): same deep-teal family as the Diagnostics home and Maintenance apps. Colors only — no layout or feature changes. */
+  var theme = document.createElement('style');
+  theme.textContent = ':root{--bg:#0d2129;--panel:#123240;--panel2:#18404f;--line:#285466;--ink:#F1F5F6;--dim:#9DB4BD;--ok:#4FC28B;--warn:#F2A541;--wire:#F2A541}' +
+    'body{background:linear-gradient(180deg,#0f3d4c 0,#0d2129 220px) fixed,#0d2129}' +
+    '.wrap>header{background:#0f3d4c;margin:-14px -14px 10px;padding:16px 16px 14px;border-bottom:3px solid #C9A961}' +
+    '.wrap>header .brand{color:#BFE3EE;letter-spacing:.12em}.wrap>header h1{color:#fff}' +
+    'nav button{border-radius:12px}nav button.on{background:#1a6b80;color:#fff;border-color:#C9A961}' +
+    '.panel{border-radius:14px}button.save{border-radius:12px}';
+  document.head.appendChild(theme);
 
   /* ---------- 1) connection card ---------- */
   var conn = document.createElement('div'); conn.className = 'fx-card'; conn.id = 'fx-conn';

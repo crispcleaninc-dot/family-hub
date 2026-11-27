@@ -150,6 +150,8 @@ h3{font-size:.98rem;margin:12px 0 4px}
       <div class="chips" id="nEntry"></div>
       <label>Priority</label>
       <div class="chips" id="nPri"></div>
+      <label>From HappyCo (optional)</label>
+      <div class="inrow"><input id="nHc" placeholder="Paste the HappyCo call link" autocomplete="off"><button class="btn ghost sm" id="nPaste" style="flex:none">📋 Paste</button></div>
       <label>Short note (what the resident or office said)</label>
       <div class="inrow"><textarea id="nNote" placeholder="Talk or type"></textarea><button class="mic" data-mic="nNote">🎤</button></div>
       <details style="margin-top:8px"><summary class="meta">More (optional): dates, due day</summary>
@@ -589,7 +591,7 @@ function makeOrder(p){
     pri:p.pri||t.pri, status:'open', created:now(), since:p.since||'', due:p.due||'', note:p.note||'',
     steps:t.steps.map(function(s){return {g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''};}),
     log:[{at:now(),x:'Work order created'+(p.note?': '+p.note:'')}], parts:[], photos:[], time:[], archived:false};
-  o.prof=p.prof||active||''; o.entry=p.entry||'';
+  o.prof=p.prof||active||''; o.entry=p.entry||''; o.hc=p.hc||'';
   if(p.unit) db.key[o.code]=p.unit;
   if(p.cust) db.cust[o.code]=p.cust;
   db.orders.unshift(o); save(); return o;
@@ -641,7 +643,7 @@ function renderList(){
 var nf={cat:'',tpl:'',pri:''};
 function renderNew(){
   nf={cat:'',tpl:'',pri:''};
-  ['nUnit','nNote','nSince','nDue','cName','cPhone','cEmail','cEquip'].forEach(function(i){ $(i).value=''; });
+  ['nHc','nUnit','nNote','nSince','nDue','cName','cPhone','cEmail','cEquip'].forEach(function(i){ $(i).value=''; });
   var P=prof(), isCust=P&&P.kind==='customer';
   $('nCust').classList.toggle('hidden',!isCust);
   $('nIntro').textContent=isCust?'Customer details stay in your private Key on this phone. Anything you share shows the work-order code only.':'Only the unit goes in. No resident names or phone numbers. The unit is kept in your private Key; anything you share shows the work-order code only.';
@@ -672,10 +674,14 @@ function doSave(go){
   var tpl=nf.tpl || (nf.cat ? (Object.keys(TPL).filter(function(k){return TPL[k].cat===nf.cat;})[0]) : 'other_custom');
   if(!$('nUnit').value.trim() && !confirm('No unit or location entered. Save anyway?')) return;
   var P=prof(), cu=(P&&P.kind==='customer')?{name:$('cName').value.trim(),phone:$('cPhone').value.trim(),email:$('cEmail').value.trim(),equip:$('cEquip').value.trim()}:null;
-  var o=makeOrder({unit:$('nUnit').value.trim(),cust:cu,tpl:tpl,pri:nf.pri,entry:nf.entry||'',note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
+  var o=makeOrder({hc:$('nHc').value.trim(),unit:$('nUnit').value.trim(),cust:cu,tpl:tpl,pri:nf.pri,entry:nf.entry||'',note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
   toast('Saved '+o.code);
   if(go){ o.status='prog'; o.log.push({at:now(),x:'Started'}); save(); openOrder(o.id); } else show('orders');
 }
+$('nPaste').onclick=function(){ if(!navigator.clipboard||!navigator.clipboard.readText){ toast('Long-press the box and tap Paste'); $('nHc').focus(); return; }
+  navigator.clipboard.readText().then(function(t){ t=(t||'').trim(); if(!t){ toast('Nothing copied'); return; }
+    var m=t.match(/https?:\/\/\S*happyco\S*/i); if(m){ $('nHc').value=m[0]; var rest=t.replace(m[0],'').trim(); if(rest && !$('nNote').value) $('nNote').value=rest; }
+    else if(!$('nNote').value) $('nNote').value=t; else $('nNote').value+=' '+t; toast('Pasted'); }).catch(function(){ toast('Long-press the box and tap Paste'); $('nHc').focus(); }); };
 $('nSave').onclick=function(){ doSave(true); };
 $('nSaveOnly').onclick=function(){ doSave(false); };
 
@@ -695,6 +701,7 @@ function renderDetail(){
      '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span>'+(o.since?'Problem since '+fmtD(o.since)+' · ':'')+(o.due?'Due '+fmtD(o.due):'')+'</div>'+
      (unlocked&&db.cust[o.code]&&db.cust[o.code].name?'<div class="meta">👤 '+esc([db.cust[o.code].name,db.cust[o.code].phone,db.cust[o.code].email].filter(Boolean).join(' · '))+(db.cust[o.code].equip?'<br>⚙️ '+esc(db.cust[o.code].equip):'')+'</div>':'')+
      (o.entry?'<div class="meta" style="font-weight:700;color:var(--ink)">'+ENTRY[o.entry]+'</div>':'')+
+     '<div style="margin:6px 0">'+(o.hc?'<a class="btn ghost sm" style="text-decoration:none" href="'+esc(o.hc)+'" target="_blank" rel="noopener">Open in HappyCo ↗</a> ':'')+'<button class="btn ghost sm" id="dHc">🔗 '+(o.hc?'Change':'Add')+' HappyCo link</button> <button class="btn ghost sm" id="dEntry">🚪 Entry</button></div>'+
      (o.note?'<div class="stnote">'+esc(o.note)+'</div>':'')+
      (o.closed&&o.status==='done'?'<div class="tipbox" style="background:#ddf3e5;border-color:#9fd8b3">✅ <b>Closed '+fmt(o.closed.at)+'</b> — '+esc(o.closed.outcome)+(o.closed.note?'<br>'+esc(o.closed.note):'')+'</div>':'')+
      (o.status!=='done'?'<div style="display:flex;gap:8px;margin:8px 0"><button class="btn good" id="dClose" style="flex:1">✅ Close work order</button><button class="btn warn" id="dNeed" style="flex:1">🧰 I need stuff to finish</button></div>':'')+
@@ -755,6 +762,8 @@ function bindDetail(o){
   $('dAddStep').onclick=function(){ var t=prompt('New step'); if(!t||!t.trim()) return; o.steps.push({g:'My steps',t:t.trim(),h:'',v:'',st:'',at:'',n:''}); o.log.push({at:now(),x:'Added step: '+t.trim()}); save(); renderDetail(); };
   $('dNoteAdd').onclick=function(){ var v=$('dNote').value.trim(); if(!v) return; o.log.push({at:now(),x:v}); save(); renderDetail(); toast('Note saved'); };
   $('v-detail').querySelectorAll('[data-got]').forEach(function(cb){ cb.onchange=function(){ var x=o.parts[+cb.dataset.got]; x.got=cb.checked?now():''; o.log.push({at:now(),x:(cb.checked?'Got: ':'Still need: ')+x.x}); if(o.status==='wait' && o.parts.every(function(y){return y.got;})){ o.status='prog'; o.log.push({at:now(),x:'All parts in hand — back in progress'}); toast('All parts in hand'); } save(); renderDetail(); }; });
+  $('dEntry').onclick=function(){ var ks=[''].concat(Object.keys(ENTRY)); var i=ks.indexOf(o.entry||''); o.entry=ks[(i+1)%ks.length]; o.log.push({at:now(),x:'Entry: '+(o.entry?ENTRY[o.entry]:'not set')}); save(); renderDetail(); toast(o.entry?ENTRY[o.entry]:'Entry not set'); };
+  $('dHc').onclick=function(){ var u=prompt('Paste the HappyCo call link for '+o.code, o.hc||''); if(u===null) return; u=u.trim(); if(u && !/^https:\/\/[^\s]*happyco\.com\//i.test(u)){ toast('That doesn’t look like a HappyCo link'); return; } o.hc=u; o.log.push({at:now(),x:u?'HappyCo link saved':'HappyCo link removed'}); save(); renderDetail(); };
   if($('dClose')) $('dClose').onclick=function(){ closeSheet(o); };
   if($('dNeed')) $('dNeed').onclick=function(){ needSheet(o); };
   $('dPartAdd').onclick=function(){ var v=$('dPart').value.trim(); if(!v) return; o.parts.push({x:v,at:now()}); o.log.push({at:now(),x:'Part needed: '+v}); if(o.status!=='done') o.status='wait'; save(); renderDetail(); };
@@ -769,7 +778,7 @@ function bindDetail(o){
 function closeSheet(o){
   var left=o.steps.filter(function(s){return !s.st;}).length;
   var h='<div class="sheet" id="cSheet"><div class="in"><h2>✅ Close '+o.code+'</h2><div class="meta">'+esc(o.title)+(left?' · '+left+' step'+(left>1?'s':'')+' not checked':'')+'</div>'+
-    '<label>How did it end?</label><div class="chips" id="cOut"><button class="chip on" data-o="Fixed">Fixed</button><button class="chip" data-o="Fixed — follow-up needed">Fixed, follow-up needed</button><button class="chip" data-o="Could not fix — sent to vendor / supervisor">Couldn’t fix — sent on</button><button class="chip" data-o="Nothing wrong found">Nothing wrong found</button></div>'+
+    '<label>How did it end?</label><div class="chips" id="cOut"><button class="chip on" data-o="Fixed">Fixed</button><button class="chip" data-o="Fixed — follow-up needed">Fixed, follow-up needed</button><button class="chip" data-o="Could not fix — sent to vendor / supervisor">Couldn’t fix — sent on</button><button class="chip" data-o="Nothing wrong found">Nothing wrong found</button><button class="chip" data-o="Moved to routine maintenance">Moved to routine maintenance</button></div>'+
     '<label>Closing notes (what you did)</label><div class="inrow"><textarea id="cNote" placeholder="Talk or type"></textarea><button class="mic" data-mic="cNote">🎤</button></div>'+
     '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn good" id="cGo" style="flex:2">Close work order</button><button class="btn ghost" id="cNo" style="flex:1">Cancel</button></div></div></div>';
   document.body.insertAdjacentHTML('beforeend',h); bindMics($('cSheet'));
@@ -778,7 +787,8 @@ function closeSheet(o){
   $('cGo').onclick=function(){ var n=$('cNote').value.trim(); var r=runningSince(o); if(r) o.time[o.time.length-1].end=now();
     o.status='done'; o.closed={at:now(),outcome:out,note:n}; o.log.push({at:now(),x:'CLOSED — '+out+(n?': '+n:'')});
     if(/follow-up/.test(out)){ var no=makeOrder({prof:o.prof,unit:db.key[o.code]||'',tpl:o.tpl,pri:'R',entry:o.entry,note:'Follow-up from '+o.code+(n?': '+n:'')}); o.log.push({at:now(),x:'Follow-up '+no.code+' created'}); }
-    save(); $('cSheet').remove(); toast('Closed '+o.code); renderDetail(); };
+    save(); $('cSheet').remove(); toast('Closed '+o.code); renderDetail();
+    if(o.hc && confirm('Closed here. Open HappyCo now to close it there too ('+out+')?')) window.open(o.hc,'_blank'); };
 }
 function needSheet(o){
   var sug=needsFor(o), have={}; (o.parts||[]).forEach(function(x){ have[x.x]=1; });
@@ -913,7 +923,7 @@ window.addEventListener('hashchange',function(){ if(/(profile|add)=/.test(locati
   try{
     var list=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
     var doneKey='pmg_imp_'+m[1].slice(0,40); if(localStorage.getItem(doneKey)){ toast('Already added'); }
-    else { var skipped=0; list=list.filter(function(p){ var dup=db.orders.some(function(o){ return (db.key[o.code]||'')===(p.u||'') && (o.note||'')===(p.n||''); }); if(dup) skipped++; return !dup; }); list.forEach(function(p){ makeOrder({entry:p.e||'',prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'+(skipped?' ('+skipped+' already here)':'')); }
+    else { var skipped=0; list=list.filter(function(p){ var dup=db.orders.some(function(o){ return (db.key[o.code]||'')===(p.u||'') && (o.note||'')===(p.n||''); }); if(dup) skipped++; return !dup; }); list.forEach(function(p){ makeOrder({hc:p.h||'',entry:p.e||'',prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'+(skipped?' ('+skipped+' already here)':'')); }
   }catch(e){ toast('Couldn’t read that link'); }
   history.replaceState(null,'',location.pathname);
 })();
