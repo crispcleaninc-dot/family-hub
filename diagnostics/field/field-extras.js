@@ -91,11 +91,19 @@
       var r = orig.apply(this, arguments);
       if (cid.trim()) { var L = []; try { L = JSON.parse(get(REG) || '[]'); } catch (e) {}
         L.push({ at: new Date().toISOString(), mod: NAMES[mod] || mod, cid: cid, client: ($('jb-client') || {}).value || '', eq: ($('jb-eqid') || {}).value || '', tech: ($('jb-tech') || {}).value || '' });
-        put(REG, JSON.stringify(L.slice(-300))); drawReg(); }
+        put(REG, JSON.stringify(L.slice(-300))); drawReg();
+        if (window.MFD_LAST_REPORT) showReportBar(window.MFD_LAST_REPORT); }
       return r;
     };
   }
   drawReg();
+  function showReportBar(id) {
+    var b = $('fx-repbar'); if (!b) { b = document.createElement('div'); b.id = 'fx-repbar'; b.style.cssText = 'position:fixed;left:10px;right:10px;bottom:12px;z-index:50;background:#1B2951;color:#fff;border:1px solid #C9A961;border-radius:12px;padding:12px;display:flex;gap:10px;align-items:center;font-size:14px;box-shadow:0 4px 16px #0006'; document.body.appendChild(b); }
+    b.innerHTML = '<span style="flex:1">📄 Service report ready</span><a href="report.html?id=' + encodeURIComponent(id) + '" style="background:#C9A961;color:#1B2951;font-weight:700;border-radius:8px;padding:8px 12px;text-decoration:none">Open report</a><button style="background:none;border:0;color:#fff;font-size:18px" onclick="this.parentNode.remove()">×</button>';
+  }
+  var rl = document.createElement('div'); rl.className = 'fx-card';
+  rl.innerHTML = '<h4>Service reports</h4><div class="fx-small">Every saved reading makes an easy-to-read report anyone can follow — print it, save it as a PDF, or share it.</div><div class="fx-row"><a class="fx-btn" style="text-decoration:none" href="report.html">Open reports</a></div>';
+  JB.appendChild(rl);
 
   /* ---------- 5) nav link + install/offline ---------- */
   var nav = document.querySelector('nav');

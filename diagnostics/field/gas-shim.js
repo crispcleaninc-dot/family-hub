@@ -28,6 +28,12 @@
     FNS.forEach(function (fn) {
       r[fn] = function () {
         var args = Array.prototype.slice.call(arguments);
+        if (fn === 'submitReading' && args[0]) { try {
+          var n = new Date(), pad = function (x) { return ('0' + x).slice(-2); };
+          var rid = 'SR-' + String(n.getFullYear()).slice(2) + pad(n.getMonth() + 1) + pad(n.getDate()) + '-' + pad(n.getHours()) + pad(n.getMinutes()) + pad(n.getSeconds());
+          var rs = JSON.parse(get('mfd_reports_v1') || '[]'); rs.push({ id: rid, at: n.toISOString(), d: args[0] });
+          put('mfd_reports_v1', JSON.stringify(rs.slice(-200))); window.MFD_LAST_REPORT = rid; args[0].reportId = rid;
+        } catch (e) {} }
         call(fn, args).then(function (res) { ok && ok(res); }).catch(function (err) {
           var why = err && err.message;
           if (fn === 'submitReading' && (why === 'NO_RELAY' || why === 'OFFLINE' || /fetch|network|Failed/i.test(why || ''))) {
