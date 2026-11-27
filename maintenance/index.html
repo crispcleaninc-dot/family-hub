@@ -355,6 +355,7 @@ var TPL={
    ['','Report to supervisor','','']
   ]},
  plumb_toilet:{cat:'plumb',n:'Toilet running / clogged / leaking',pri:'U',
+  tip:'Town Court: the toilet snake is in the mechanical room behind the office.',
   steps:[
    ['','Shut the supply valve if it is overflowing','',''],
    ['','Clogged: flange plunger, then closet auger','','how to use toilet auger'],
@@ -459,6 +460,7 @@ var TPL={
    ['','Report to supervisor','','']
   ]},
  plumb_drain_cap:{cat:'plumb',n:'Sink drain cover / stopper missing',pri:'R',
+  tip:'Town Court: labeled stoppers are in the main supply in the maintenance room downstairs in the garage (one stainless, one plastic).',
   steps:[
    ['','Check the type: pop-up stopper (rod in back) or push / grid cover','','bathroom sink pop up stopper types'],
    ['','Get a matching one from stock or a vacant unit (note which unit)','',''],
@@ -466,21 +468,21 @@ var TPL={
    ['','Test: closes and holds water, opens and drains','',''],
    ['','Report to supervisor','','']
   ]},
- plumb_slow_drain:{cat:'plumb',n:'Bathroom sink draining slowly / clogged',pri:'R',ver:2,
-  tip:'Town Court way (from Greg): there is no snake in the shop. Put a small bucket under the sink, pull the P-trap apart, pull the pop-up stopper out, clear the hair, and put it all back.',
-  safety:'Gloves on. If any chemical drain cleaner was already used, warn — the water in the trap can burn skin and eyes. Do not mix drain cleaners.',
-  parts:['Small bucket + rags','Gloves','Channel-lock pliers','Slip-joint washers (if old ones are cracked)','Replacement pop-up stopper','Pivot rod nut / gasket'],
+ plumb_slow_drain:{cat:'plumb',n:'Bathroom sink draining slowly / clogged',pri:'R',ver:3,
+  tip:'Town Court way (from Greg): start from ABOVE — push the stopper up, unscrew its top cap, and pull the hair out with a straightened paper clip with a small hook on the end (paper clips are at Kristina’s desk). Greg says that is the easiest. Only if it is still slow: bucket under the sink, pull the P-trap and the pop-up assembly, clear the hair, reinstall. There is no small sink snake in the shop.',
+  safety:'Gloves on. If any chemical drain cleaner was already used, warn — the water can burn skin and eyes. Do not mix drain cleaners.',
+  parts:['Paper clip (Kristina’s desk)','Gloves','Small bucket + rags','Channel-lock pliers','Slip-joint washers (if old ones are cracked)','Replacement pop-up stopper'],
   steps:[
-   ['Get ready','Ask: was any drain cleaner poured in?','If yes: gloves and eye protection before opening the trap.',''],
-   ['Get ready','Clear out the cabinet and put a small bucket under the P-trap','The U-shaped pipe under the sink is the P-trap. Rags on the cabinet floor.',''],
-   ['P-trap','Loosen both slip nuts and pull the P-trap apart (water goes in the bucket)','Turn by hand; use channel-locks only if stuck. Keep the washers.','how to remove p trap bathroom sink'],
-   ['P-trap','Clean the hair and gunk out of the trap and the pipe ends','',''],
-   ['Pop-up','Loosen the pivot rod nut on the back of the drain and pull the rod out','The small nut on the back of the drain pipe, behind the sink.','how to remove bathroom sink pop up stopper'],
-   ['Pop-up','Lift the pop-up stopper out and remove the hair from it and the drain','',''],
-   ['Put back','Put the stopper back, slide the pivot rod through the hole in it, tighten the nut','Check the stopper goes up and down with the lift rod.','how to adjust bathroom sink pop up stopper'],
-   ['Put back','Put the P-trap back: washers in place, slip nuts hand-tight plus a quarter turn','',''],
-   ['Test','Run water 1 minute: drains fast, no drips at the slip nuts or pivot nut','Wipe the joints with a dry paper towel and check for wet spots.',''],
-   ['Finish','Empty the bucket, wipe the sink and cabinet, report to Greg','Tap Share update or Close work order.','']
+   ['Get ready','Ask: was any drain cleaner poured in?','If yes: gloves and eye protection.',''],
+   ['Get ready','Get a paper clip from Kristina’s desk; straighten it and bend a small hook on the end','',''],
+   ['From above (easiest)','Push the stopper up and unscrew the top cap of the stopper','Turn the cap counter-clockwise by hand.','how to unscrew bathroom sink stopper cap'],
+   ['From above (easiest)','Fish the hair out of the drain with the paper-clip hook','Pull up slowly; wipe it on a paper towel and go again until nothing comes up.','how to clean bathroom sink drain hair paper clip'],
+   ['From above (easiest)','Screw the cap back on; run water 1 minute — does it drain fast?','If yes, skip to Finish.',''],
+   ['If still slow','Small bucket under the P-trap; loosen both slip nuts and pull the trap apart','Hand first; channel-locks only if stuck. Keep the washers.','how to remove p trap bathroom sink'],
+   ['If still slow','Loosen the pivot rod nut, pull the pop-up assembly out, clear the hair','',''],
+   ['If still slow','Put the pop-up and pivot rod back; put the P-trap back (washers in, hand-tight + quarter turn)','','how to adjust bathroom sink pop up stopper'],
+   ['If still slow','Run water 1 minute; dry paper towel on the joints — no drips','',''],
+   ['Finish','Wipe the sink and cabinet; report to Greg','Tap Share update or Close work order.','']
   ]},
  tub_stopper:{cat:'plumb',n:'Bathtub stopper won’t plug / loose (toe-touch)',pri:'R',
   tip:'A toe-touch (push-pull) stopper screws onto a post in the drain. If pressing it with your heel does not hold water, it is usually loose, missing its post, or the seal is worn.',
@@ -495,20 +497,20 @@ var TPL={
    ['','Fill a few inches of water and test it holds 5 minutes, then drains','',''],
    ['','Report','Tap Share update.','']
   ]},
- door_sticks:{cat:'door',n:'Door sticks / won’t close without forcing',pri:'R',
-  tip:'Try the easy fixes first: most sticking doors are loose hinge screws, not a door that needs shaving. Only plane (shave) it once the hinges are tight and you have marked exactly where it rubs.',
-  parts:['3" hinge screws','Wood plane / power planer','Sandpaper','Primer + paint for the cut edge','Shims (cardboard / hinge shims)','Pencil / chalk'],
+ door_sticks:{cat:'door',n:'Door sticks / won’t close without forcing',pri:'R',ver:2,
+  tip:'Bathroom doors often swell from moisture and rub the frame at opposite corners (top on one side, bottom on the other) — that usually means the door is sagging on its hinges, so tighten hinges first. Send Greg photos and ask before shaving or taking the door off.',
+  parts:['Screwdriver','3" hinge screws','Shims (cardboard / hinge shims)','Wood plane / power planer','Sandpaper','Primer + paint for the cut edge','Pencil / chalk'],
   steps:[
-   ['Find it','Close it slowly and find where it rubs (top corner, latch side, bottom)','Look for shiny worn paint, or run a piece of paper around the gap.','how to fix a door that sticks'],
-   ['Easy fix','Tighten all hinge screws (door and frame side)','',''],
+   ['Find it','Close it slowly and mark where it rubs (top corner, latch side, bottom)','Shiny worn paint shows the spot. Note if it rubs at opposite corners.','how to fix a door that sticks'],
+   ['Find it','Take photos of the rub spots and the hinges; send them to Greg','Ask: tighten hinges, shim, take the door off, or shave?',''],
+   ['Easy fix','Tighten all hinge screws (door side and frame side) with the screwdriver','',''],
    ['Easy fix','Top hinge: swap one short screw for a 3" screw into the stud','Pulls the door up and away from the latch side.','fix sagging door 3 inch hinge screw'],
-   ['Easy fix','Still rubs? Shim a hinge or adjust the strike plate','Shim behind the bottom hinge to move the top over, or the reverse.','how to shim a door hinge'],
-   ['Easy fix','Check if it closes now without forcing','If yes, skip to the last steps.',''],
-   ['Shave it (if needed)','Mark the rub line in pencil with the door closed','',''],
-   ['Shave it (if needed)','Take the door off (pop hinge pins), plane to the line — small passes','Plane toward the center on the top/bottom edges so the corners don’t split.','how to plane a door that sticks'],
-   ['Shave it (if needed)','Sand, then prime/paint the bare edge (bathroom humidity swells raw wood)','',''],
-   ['Shave it (if needed)','Rehang, check even gap (about the thickness of a nickel) and latch','',''],
-   ['Finish','Door opens and closes and latches without forcing; report','Tap Share update.','']
+   ['Easy fix','Still rubs? Shim a hinge or adjust the strike plate','','how to shim a door hinge'],
+   ['Easy fix','Check if it closes now without forcing','If yes, skip to Finish.',''],
+   ['Shave it (only if Greg OKs)','Mark the rub line, take the door off (pop hinge pins), plane to the line in small passes','','how to plane a door that sticks'],
+   ['Shave it (only if Greg OKs)','Sand, then prime/paint the bare edge so it doesn’t swell again','',''],
+   ['Shave it (only if Greg OKs)','Rehang; check even gap and that it latches','',''],
+   ['Finish','Door opens, closes and latches without forcing; report to Greg','Tap Share update.','']
   ]},
  other_custom:{cat:'other',n:'Something else (I’ll add steps)',pri:'R',steps:[['','Look at the problem and write what you see','',''],['','Report to supervisor','','']]}
 };
