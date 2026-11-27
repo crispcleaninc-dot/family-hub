@@ -38,10 +38,10 @@ a.tile .go{margin-left:auto;font-size:1.4rem;color:var(--brand2);flex:none}
     <div><b>Property Maintenance &amp; Grounds</b><span>Work orders, move-in walks, step-by-step how-tos with videos, private unit key. Works offline.</span><div id="woBadge"></div></div>
     <div class="go">›</div>
   </a>
-  <a class="tile" href="https://script.google.com/macros/s/AKfycbzBWIuIsucJrBlV1hsCdGiOp0H1HgubTgi5QOMl5fiKH_lCeh2vK_ag-iGvpxwlICXO/exec" target="_blank" rel="noopener">
+  <a class="tile" href="field/">
     <div class="ic">❄️</div>
-    <div><b>Refrigeration &amp; HVAC diagnostics</b><span>Refrigeration, AC, heat pump, furnace, boiler, wiring, EPA rules, gauge readings and logs to Drive. Needs internet.</span></div>
-    <div class="go">↗</div>
+    <div><b>Refrigeration &amp; HVAC diagnostics</b><span>Refrigeration, AC, heat pump, furnace, boiler, wiring, EPA rules, gauge readings, text-intake clients and the Mundo log. Works offline.</span><div id="dxBadge"></div></div>
+    <div class="go">›</div>
   </a>
   <button class="btn hidden" id="installBtn">⬇ Install Crispus Diagnostics</button>
   <div class="note" id="iosNote">iPhone: tap Share, then Add to Home Screen. Android / computer: tap Install when it shows.</div>
@@ -52,6 +52,7 @@ a.tile .go{margin-left:auto;font-size:1.4rem;color:var(--brand2);flex:none}
   var open=d.orders.filter(function(o){return !o.archived && o.status!=='done';}), e=open.filter(function(o){return o.pri==='E';}).length;
   document.getElementById('woBadge').innerHTML='<span class="badge">'+open.length+' open</span> '+(e?'<span class="badge e">'+e+' emergency</span>':'');
 }catch(x){} })();
+(function(){ try{ var q=JSON.parse(localStorage.getItem('mfd_outbox_v1')||'[]').length, r=localStorage.getItem('mfd_relay_url'); if(q||!r) document.getElementById('dxBadge').innerHTML=(q?'<span class="badge e">'+q+' reading'+(q>1?'s':'')+' waiting to send</span> ':'')+(!r?'<span class="badge">Mundo log not connected</span>':''); }catch(x){} })();
 if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
 var dp=null; window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); dp=e; document.getElementById('installBtn').classList.remove('hidden'); });
 document.getElementById('installBtn').onclick=function(){ if(dp){ dp.prompt(); dp=null; this.classList.add('hidden'); } };

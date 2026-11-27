@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mundo Field Diagnostics</title>
+<meta name="theme-color" content="#171B20">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Field Dx">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="config.js"></script>
+<script src="gas-shim.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#171B20; --panel:#1F252C; --panel2:#242B33; --line:#313A44;
+    --low:#4FB3E8; --high:#E8604F; --flame:#F2913D; --cold:#7FD8C9; --wire:#E5B34E;
+    --ok:#58BE7C; --bad:#E8604F; --warn:#E5B34E; --ink:#ECEAE3; --dim:#8A94A0;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:'Barlow Semi Condensed',sans-serif; font-size:16px;}
+  .wrap{max-width:540px; margin:0 auto; padding:14px 14px 60px;}
+  header{padding:4px 2px 10px;}
+  .brand{font-size:12px; letter-spacing:.18em; color:var(--dim); text-transform:uppercase;}
+  h1{margin:2px 0 0; font-size:25px; font-weight:700;}
+
+  nav{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:8px 0 12px;}
+  nav button{padding:10px 4px; border-radius:10px; border:1px solid var(--line);
+    background:var(--panel); color:var(--dim); font-family:inherit; font-size:13px;
+    font-weight:700; cursor:pointer; line-height:1.2;}
+  nav button.on{color:var(--ink); background:var(--panel2);}
+  nav button[data-v="rf"].on{border-color:var(--cold);}
+  nav button[data-v="ac"].on{border-color:var(--low);}
+  nav button[data-v="fn"].on{border-color:var(--flame);}
+  nav button[data-v="ts"].on{border-color:var(--wire);}
+  .view{display:none;} .view.on{display:block;}
+
+  .panel{background:var(--panel); border:1px solid var(--line); border-radius:12px; margin:10px 0; overflow:hidden;}
+  .panel.low{border-left:4px solid var(--low);} .panel.high{border-left:4px solid var(--high);}
+  .panel.air{border-left:4px solid var(--dim);} .panel.water{border-left:4px solid var(--cold);}
+  .ptitle{display:flex; gap:8px; padding:12px 14px 4px; font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;}
+  .panel.low .ptitle{color:var(--low);} .panel.high .ptitle{color:var(--high);}
+  .panel.air .ptitle{color:var(--dim);} .panel.water .ptitle{color:var(--cold);}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:10px 14px 14px;}
+  .field{display:flex; flex-direction:column; gap:4px;}
+  .field label{font-size:12.5px; color:var(--dim); font-weight:600;}
+  .field input{background:var(--panel2); border:1px solid var(--line); border-radius:8px;
+    color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:600;
+    padding:10px; width:100%; outline:none;}
+  .unit{color:var(--dim); font-size:11px; font-weight:400;}
+
+  .chiprow{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0;}
+  .refchip{flex:1; min-width:66px; text-align:center; padding:9px 4px; border-radius:9px;
+    border:1px solid var(--line); background:var(--panel); color:var(--dim);
+    font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px; cursor:pointer;}
+  .refchip.on{background:var(--panel2); color:var(--ink); border-color:var(--ok);}
+  .eqrow{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:6px 0;}
+  .eq{border:1px solid var(--line); border-radius:11px; background:var(--panel); padding:11px 10px; cursor:pointer;}
+  .eq b{display:block; font-size:15px;}
+  .eq span{font-size:11.5px; color:var(--dim);}
+  .eq.on{border-color:var(--cold); background:var(--panel2);}
+  .eq.on b{color:var(--cold);}
+
+  .hintbox{font-size:13px; color:var(--dim); background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:10px 12px; margin:8px 0 4px; line-height:1.5;}
+  .hintbox b{color:var(--ink);}
+  .a2l{display:none; border-left:4px solid var(--warn); background:#2A2415; border-radius:0 10px 10px 0;
+    padding:9px 12px; margin:8px 0; font-size:13.5px; line-height:1.45; color:#D8CFC0;}
+
+  button.run{width:100%; margin:12px 0 4px; padding:15px; border:none; border-radius:12px;
+    background:var(--ok); color:#0F1712; font-family:inherit; font-size:18px; font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase; cursor:pointer;}
+
+  .results{display:none;}
+  .satline{display:flex; justify-content:space-between; gap:8px; padding:10px 14px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--dim); border-bottom:1px solid var(--line);}
+  .satline b{color:var(--ink);}
+  .strip{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; padding:12px 14px 4px;}
+  .strip.five{grid-template-columns:repeat(5,1fr);}
+  .chip{border-radius:9px; padding:8px 4px 7px; text-align:center; background:var(--panel2); border:1px solid var(--line);}
+  .chip .nm{font-size:10.5px; letter-spacing:.04em; color:var(--dim); text-transform:uppercase; font-weight:700;}
+  .chip .val{font-family:'IBM Plex Mono',monospace; font-size:16px; font-weight:600; margin:2px 0;}
+  .chip .st{font-size:11px; font-weight:700;}
+  .chip.LOW{border-color:var(--low);} .chip.LOW .st{color:var(--low);}
+  .chip.HIGH{border-color:var(--high);} .chip.HIGH .st{color:var(--high);}
+  .chip.NORM{border-color:var(--ok);} .chip.NORM .st{color:var(--ok);}
+  .targets{padding:2px 14px 12px; font-size:12px; color:var(--dim);}
+  .fault{margin:10px 14px; border:1px solid var(--line); border-radius:10px; padding:12px;}
+  .fault.top{border-color:var(--warn); background:#242017;}
+  .fault h3{margin:0 0 4px; font-size:17px;}
+  .fault .score{float:right; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--warn);}
+  .fault p{margin:4px 0 0; font-size:14px; color:#C6CDD4; line-height:1.45;}
+  .fault ul{margin:6px 0 0 18px; padding:0; font-size:14px; color:#C6CDD4; line-height:1.5;}
+  .epaline{margin:6px 14px 12px; font-size:12.5px; color:var(--ok); line-height:1.45;}
+
+  .cats{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:4px 0;}
+  .cat{border:1px solid var(--line); border-radius:11px; background:var(--panel); padding:12px 8px; text-align:center; cursor:pointer;}
+  .cat .pct{font-family:'IBM Plex Mono',monospace; font-size:19px; font-weight:600;}
+  .cat .lb{font-size:11.5px; color:var(--dim); margin-top:2px; line-height:1.3;}
+  .cat.on{border-color:var(--flame); background:var(--panel2);}
+  .cat.on .pct{color:var(--flame);}
+  .step{border:1px solid var(--line); border-radius:12px; background:var(--panel); margin:8px 0; padding:12px 14px; display:none;}
+  .step.active{display:block; border-color:var(--flame);}
+  .step.passed{display:block; opacity:.55; border-color:var(--ok);}
+  .step .num{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--flame); font-weight:600;}
+  .step h3{margin:3px 0 4px; font-size:17px;}
+  .step .hint{font-size:13.5px; color:var(--dim); line-height:1.45;}
+  .btns{display:flex; gap:8px; margin-top:10px;}
+  .btns button{flex:1; padding:12px; border:none; border-radius:9px; font-family:inherit;
+    font-size:15px; font-weight:700; cursor:pointer; text-transform:uppercase;}
+  .yes{background:var(--ok); color:#0F1712;} .no{background:var(--bad); color:#1B0F0D;}
+  .passed .btns{display:none;}
+  .passed h3::after{content:" ✓"; color:var(--ok);}
+  #fdiag{display:none; border:1px solid var(--warn); background:#2A2415; border-radius:12px; padding:14px; margin:10px 0;}
+  #fdiag h3{margin:0 0 4px; font-size:18px; color:var(--warn);}
+  #fdiag p{margin:4px 0 0; font-size:14.5px; color:#D8CFC0; line-height:1.5;}
+  #fdiag ul{margin:8px 0 0 18px; padding:0; font-size:14.5px; color:#D8CFC0; line-height:1.55;}
+  #fdone{display:none; border:1px solid var(--ok); background:#16241B; border-radius:12px; padding:14px; margin:10px 0; font-size:15px; line-height:1.5;}
+  button.reset{width:100%; margin:8px 0 0; padding:12px; border:1px solid var(--line); border-radius:10px;
+    background:var(--panel); color:var(--dim); font-family:inherit; font-size:14px; font-weight:700;
+    text-transform:uppercase; cursor:pointer; display:none;}
+  .rule{border-left:4px solid var(--flame); background:var(--panel); border-radius:0 10px 10px 0;
+    padding:10px 12px; margin:12px 0 0; font-size:14px; line-height:1.5;}
+  .rule b{color:var(--flame);}
+
+  h2.sec{font-size:14px; letter-spacing:.12em; text-transform:uppercase; margin:16px 2px 6px; color:var(--wire);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; background:var(--panel); border-radius:10px; overflow:hidden;}
+  th{padding:8px; text-align:left; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); border-bottom:1px solid var(--line);}
+  td{padding:8px; border-bottom:1px solid var(--line); color:#D8CFD4; line-height:1.4; vertical-align:top;}
+  td:first-child{font-family:'IBM Plex Mono',monospace; color:var(--ink); white-space:nowrap;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin:8px 0; font-size:14px; line-height:1.55; color:#C6CDD4;}
+  .card b{color:var(--ink);}
+  details{margin:12px 2px;}
+  summary{cursor:pointer; font-weight:700; letter-spacing:.1em; font-size:13px; text-transform:uppercase; color:var(--dim); padding:8px 0;}
+  details ul{margin:6px 0 0 18px; font-size:14px; color:#C6CDD4; line-height:1.55;}
+  .diag{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px; margin:8px 0;}
+  .diag svg{width:100%; height:auto; display:block;}
+  .diag text{font-family:'IBM Plex Mono',monospace; font-size:11px; fill:var(--ink);}
+  .diag .lbl{fill:var(--dim); font-size:10px;}
+  .diag .lv{stroke:var(--wire); stroke-width:2; fill:none;}
+  .diag .cv{stroke:var(--low); stroke-width:1.5; stroke-dasharray:5 4; fill:none;}
+  .diag .cmp{stroke:#8A94A0; stroke-width:1.5; fill:none;}
+  .dcap{font-size:13px; color:#C6CDD4; line-height:1.5; margin:6px 2px 10px;}
+  .dcap b{color:var(--ink);}
+  .wterm{font-family:'IBM Plex Mono',monospace; color:var(--wire);}
+  .panel.job{border-left:4px solid var(--ok);}
+  label.ck{display:flex; gap:9px; align-items:flex-start; font-size:14px; color:#C6CDD4; line-height:1.45; margin:7px 0;}
+  label.ck input{width:19px; height:19px; accent-color:var(--ok); margin-top:1px; flex:none;}
+  label.ck input:checked+span{color:var(--ok); text-decoration:line-through; text-decoration-color:#3a5a45;}
+  .savep{padding:10px 14px 14px; border-top:1px solid var(--line);}
+  .field select,.savep select{background:var(--panel2); border:1px solid var(--line); border-radius:8px;
+    color:var(--ink); font-family:inherit; font-size:15px; padding:10px; width:100%;}
+  .savep select{margin-bottom:8px;}
+  .savep textarea{width:100%; background:var(--panel2); border:1px solid var(--line); border-radius:8px;
+    color:var(--ink); font-family:inherit; font-size:14px; padding:9px; min-height:56px;}
+  button.save{width:100%; margin-top:8px; padding:13px; border:none; border-radius:10px;
+    background:var(--low); color:#0F1712; font-family:inherit; font-size:16px; font-weight:700;
+    text-transform:uppercase; letter-spacing:.05em; cursor:pointer;}
+  .note{font-size:12px; color:var(--dim); line-height:1.5; margin:14px 2px 0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">Mundo Environmental Services</div>
+    <h1>Field Diagnostics</h1>
+  </header>
+
+  <nav>
+    <button data-v="jb" class="on" onclick="show('jb',this)">Job<br>Info</button>
+    <button data-v="rf" onclick="show('rf',this)">Refrig.</button>
+    <button data-v="ac" onclick="show('ac',this)">AC</button>
+    <button data-v="fn" onclick="show('fn',this)">Furnace</button>
+    <button data-v="ts" onclick="show('ts',this)">Wiring</button>
+  </nav>
+
+  <!-- ============ JOB INFO · START PAGE ============ -->
+  <div id="v-jb" class="view on">
+    <div class="hintbox" style="display:block"><b>Start every call here.</b> Customer info and nameplate attach to every reading you save. Then pick your area up top: Refrigeration, AC, Furnace, or Wiring.</div>
+    <div class="panel job">
+      <div class="ptitle" style="color:var(--ok)">Customer · Service Call</div>
+      <div class="grid">
+        <div class="field"><label>Company / Client ID</label><input id="jb-cid" type="text"></div>
+        <div class="field"><label>Client name</label><input id="jb-client" type="text"></div>
+        <div class="field"><label>Client email</label><input id="jb-email" type="email"></div>
+        <div class="field"><label>Location</label><input id="jb-loc" type="text"></div>
+        <div class="field"><label>Equipment ID / tag</label><input id="jb-eqid" type="text"></div>
+        <div class="field"><label>Technician</label><input id="jb-tech" type="text"></div>
+      </div>
+    </div>
+    <div class="panel job">
+      <div class="ptitle" style="color:var(--ok)">Equipment Nameplate</div>
+      <div class="grid">
+        <div class="field"><label>Make / model</label><input id="np-make" type="text"></div>
+        <div class="field"><label>Serial #</label><input id="np-serial" type="text"></div>
+        <div class="field"><label>Refrigerant <span class="unit">nameplate</span></label><input id="np-ref" type="text"></div>
+        <div class="field"><label>Factory charge <span class="unit">oz / lb</span></label><input id="np-charge" type="text"></div>
+        <div class="field"><label>Volts <span class="unit">nameplate</span></label><input id="np-volts" type="text"></div>
+        <div class="field"><label>RLA <span class="unit">A</span></label><input id="np-rla" type="number" inputmode="decimal"></div>
+        <div class="field"><label>LRA <span class="unit">A</span></label><input id="np-lra" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Fan FLA <span class="unit">A</span></label><input id="np-fla" type="number" inputmode="decimal"></div>
+        <div class="field"><label>MCA <span class="unit">A</span></label><input id="np-mca" type="text"></div>
+        <div class="field"><label>Max fuse / breaker <span class="unit">A</span></label><input id="np-ocp" type="text"></div>
+        <div class="field"><label>Gas input <span class="unit">BTU · furnace</span></label><input id="np-btu" type="text"></div>
+        <div class="field"><label>Temp rise range <span class="unit">°F · furnace</span></label><input id="np-rise" type="text"></div>
+      </div>
+    </div>
+    <div class="panel" style="border-left:4px solid var(--wire)">
+      <div class="ptitle" style="color:var(--wire)">End of day · send to Mundo</div>
+      <div class="grid" style="grid-template-columns:1fr">
+        <div class="field"><label>Mundo / office email — where today's readings go</label>
+          <input id="eod-email" type="email" placeholder="office@…"></div>
+      </div>
+      <div class="savep" style="border-top:none; padding-top:0">
+        <button class="save" style="background:var(--wire)" onclick="runBatch()">Log readings &amp; send to Mundo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REFRIGERATION MODULE ============ -->
+  <div id="v-rf" class="view">
+    <div class="hintbox npline" style="display:block"></div>
+    <div class="eqrow" id="eqrow"></div>
+    <div class="hintbox" id="eqhint">Pick the equipment — it sets the benchmarks the readings get graded against.</div>
+    <div class="chiprow">
+      <button class="refchip on" id="rf-mode-g" onclick="rfMode('g')">Gauge diagnosis</button>
+      <button class="refchip" id="rf-mode-q" onclick="rfMode('q')">Quick check · no gauges</button>
+    </div>
+    <div id="rf-quick" style="display:none">
+      <div class="panel">
+        <div class="ptitle" style="color:var(--cold)">Quick check — before gauges</div>
+        <div style="padding:4px 14px 8px" id="rf-qlist"></div>
+        <div class="savep">
+          <select id="rfq-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+          <textarea id="rfq-notes" placeholder="What you found…"></textarea>
+          <button class="save" onclick="saveReading('rfq')">Save quick check → Mundo log</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="rf-gauge">
+      <div class="chiprow" id="rfrefrow"></div>
+      <div class="a2l" id="rfa2l"><b>A2L refrigerant:</b> mildly flammable — no open flame or spark sources at the work area, use A2L-rated recovery equipment, ventilate before brazing.</div>
+
+      <div class="panel air">
+        <div class="ptitle">System components</div>
+        <div class="grid">
+          <div class="field"><label>Metering device</label><select id="rf-meter"><option>TXV</option><option>Cap tube</option><option>Fixed orifice / piston</option><option>EEV</option></select></div>
+          <div class="field"><label>Compressor</label><select id="rf-comp"><option>Hermetic recip</option><option>Scroll</option><option>Semi-hermetic</option><option>Rotary</option></select></div>
+          <div class="field"><label>Condenser</label><select id="rf-cond"><option>Air-cooled · standard</option><option>Air-cooled · high-eff</option><option>Water-cooled</option></select></div>
+          <div class="field"><label>Defrost type</label><select id="rf-defrost"><option>Off-cycle</option><option>Electric</option><option>Hot gas</option></select></div>
+        </div>
+      </div>
+
+      <div class="panel low">
+        <div class="ptitle">Low side · Blue gauge</div>
+        <div class="grid">
+          <div class="field"><label>Suction pressure <span class="unit">psig</span></label>
+            <input id="rf-suct" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Suction line temp <span class="unit">°F</span></label>
+            <input id="rf-slt" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="panel high">
+        <div class="ptitle">High side · Red gauge</div>
+        <div class="grid">
+          <div class="field"><label>Head pressure <span class="unit">psig</span></label>
+            <input id="rf-head" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Liquid line temp <span class="unit">°F</span></label>
+            <input id="rf-llt" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="panel air">
+        <div class="ptitle" id="rf-airtitle">Air side</div>
+        <div class="grid">
+          <div class="field"><label id="rf-lbl-ent">Evap entering air <span class="unit">°F</span></label>
+            <input id="rf-ent" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Evap exiting air <span class="unit">°F · optional</span></label>
+            <input id="rf-exit" type="number" inputmode="decimal"></div>
+          <div class="field"><label id="rf-lbl-amb">Ambient at condenser <span class="unit">°F</span></label>
+            <input id="rf-amb" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="panel high">
+        <div class="ptitle">Electrical · vs nameplate</div>
+        <div class="grid">
+          <div class="field"><label>Measured volts <span class="unit">V · optional</span></label><input id="rf-volts" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Compressor amps <span class="unit">A · optional</span></label><input id="rf-amps" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <button class="run" onclick="runRF()">Run diagnosis</button>
+
+      <div id="rf-results" class="panel results">
+        <div class="satline" id="rf-satline"></div>
+        <div class="strip five" id="rf-strip"></div>
+        <div class="targets" id="rf-targets"></div>
+        <div id="rf-faults"></div>
+        <div class="epaline" id="rf-epa"></div>
+        <div class="savep">
+          <select id="rf-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+          <button class="save" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line)" onclick="logTimed('rf')">+ Log to timed series (5 / 15 min readings)</button>
+          <div class="dcap" id="rf-series"></div>
+          <textarea id="rf-notes" placeholder="Repair notes / parts used…"></textarea>
+          <button class="save" onclick="saveReading('rf')">Save reading → Mundo log</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chiller / tower sub-form -->
+    <div id="rf-water" style="display:none">
+      <div class="panel water">
+        <div class="ptitle">Chiller · evaporator (water side)</div>
+        <div class="grid">
+          <div class="field"><label>Chilled water leaving <span class="unit">°F</span></label>
+            <input id="ch-lwt" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Suction pressure <span class="unit">psig</span></label>
+            <input id="ch-suct" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="panel high">
+        <div class="ptitle">Chiller · condenser (water side)</div>
+        <div class="grid">
+          <div class="field"><label>Cond water leaving <span class="unit">°F</span></label>
+            <input id="ch-cwl" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Head pressure <span class="unit">psig</span></label>
+            <input id="ch-head" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="panel water">
+        <div class="ptitle">Cooling tower</div>
+        <div class="grid">
+          <div class="field"><label>Water to tower (in) <span class="unit">°F</span></label>
+            <input id="tw-in" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Water off tower (out) <span class="unit">°F</span></label>
+            <input id="tw-out" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Outdoor wet bulb <span class="unit">°F · optional</span></label>
+            <input id="tw-wb" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <div class="chiprow" id="chrefrow"></div>
+      <div class="panel high">
+        <div class="ptitle">Electrical · vs nameplate</div>
+        <div class="grid">
+          <div class="field"><label>Measured volts <span class="unit">V · optional</span></label><input id="ch-volts" type="number" inputmode="decimal"></div>
+          <div class="field"><label>Compressor amps <span class="unit">A · optional</span></label><input id="ch-amps" type="number" inputmode="decimal"></div>
+        </div>
+      </div>
+      <button class="run" onclick="runCH()">Run diagnosis</button>
+      <div id="ch-results" class="panel results">
+        <div class="satline" id="ch-satline"></div>
+        <div class="strip" id="ch-strip"></div>
+        <div class="targets">Targets: Evap approach 2–6° · Cond approach 2–6° · Tower range 8–12° · Tower approach 5–10°</div>
+        <div id="ch-faults"></div>
+        <div class="epaline">EPA: chillers are Type III territory when low-pressure — leak checks under vacuum; purge unit runtime is your leak indicator. Recover before opening, always.</div>
+        <div class="savep">
+          <select id="ch-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+          <textarea id="ch-notes" placeholder="Repair notes / parts used…"></textarea>
+          <button class="save" onclick="saveReading('ch')">Save reading → Mundo log</button>
+        </div>
+      </div>
+    </div>
+
+    <details>
+      <summary>EPA rules that apply on the call</summary>
+      <ul>
+        <li><b>Never vent.</b> Opening the circuit = certified recovery, every time.</li>
+        <li><b>Leaks get repaired,</b> not topped off — commercial refrigeration above the leak-rate threshold requires repair, and repeat top-offs on the same unit are the red flag.</li>
+        <li><b>Mixed/contaminated charge:</b> recover to a separate cylinder for reclamation — never into your clean cylinder. Never mix mineral and POE oil.</li>
+        <li><b>A2L systems (R-32, R-454B, R-448A/449A blends):</b> A2L-rated recovery machine, no ignition sources, ventilate.</li>
+        <li><b>Retrofits:</b> R-404A → R-448A/R-449A · R-22 → R-407C/R-422B/R-438A. Oil check, seals, data-plate update — "drop-in" still means all three.</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- ============ AC MODULE ============ -->
+  <div id="v-ac" class="view">
+    <div class="hintbox npline" style="display:block"></div>
+    <div class="hintbox">Four-benchmark method — <b>TD 35° / ΔT 20° / SH 10° / SC 10°</b>. Also covers heat pumps in cooling mode. For heat pump <b>heating</b> mode, use the Refrigeration tab → Heat Pump (Heating).</div>
+    <div class="chiprow">
+      <button class="refchip on" id="ac-mode-g" onclick="acMode('g')">Gauge diagnosis</button>
+      <button class="refchip" id="ac-mode-q" onclick="acMode('q')">Quick check · no gauges</button>
+    </div>
+    <div id="ac-quick" style="display:none">
+      <div class="panel">
+        <div class="ptitle" style="color:var(--low)">Quick check — before gauges</div>
+        <div style="padding:4px 14px 8px" id="ac-qlist"></div>
+        <div class="savep">
+          <select id="acq-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+          <textarea id="acq-notes" placeholder="What you found…"></textarea>
+          <button class="save" onclick="saveReading('acq')">Save quick check → Mundo log</button>
+        </div>
+      </div>
+    </div>
+    <div id="ac-gauge">
+    <div class="chiprow" id="refrow"></div>
+    <div class="a2l" id="aca2l"><b>A2L refrigerant:</b> mildly flammable — no ignition sources, A2L-rated recovery, ventilate.</div>
+
+    <div class="panel air">
+      <div class="ptitle">System components</div>
+      <div class="grid">
+        <div class="field"><label>Metering device</label><select id="ac-meter"><option>TXV</option><option>Fixed orifice / piston</option><option>Cap tube</option><option>EEV</option></select></div>
+        <div class="field"><label>Compressor</label><select id="ac-comp"><option>Scroll</option><option>Hermetic recip</option><option>Rotary</option></select></div>
+      </div>
+    </div>
+
+    <div class="panel low">
+      <div class="ptitle">Low side · Blue gauge</div>
+      <div class="grid">
+        <div class="field"><label>Suction pressure <span class="unit">psig</span></label>
+          <input id="suct" type="number" inputmode="decimal" placeholder="118"></div>
+        <div class="field"><label>Suction line temp <span class="unit">°F</span></label>
+          <input id="slt" type="number" inputmode="decimal" placeholder="50"></div>
+      </div>
+    </div>
+    <div class="panel high">
+      <div class="ptitle">High side · Red gauge</div>
+      <div class="grid">
+        <div class="field"><label>Head pressure <span class="unit">psig</span></label>
+          <input id="head" type="number" inputmode="decimal" placeholder="365"></div>
+        <div class="field"><label>Liquid line temp <span class="unit">°F</span></label>
+          <input id="llt" type="number" inputmode="decimal" placeholder="100"></div>
+      </div>
+    </div>
+    <div class="panel air">
+      <div class="ptitle">Air side</div>
+      <div class="grid">
+        <div class="field"><label>Return air <span class="unit">°F</span></label>
+          <input id="ra" type="number" inputmode="decimal" placeholder="75"></div>
+        <div class="field"><label>Supply air <span class="unit">°F</span></label>
+          <input id="sa" type="number" inputmode="decimal" placeholder="55"></div>
+        <div class="field"><label>Outdoor ambient <span class="unit">°F</span></label>
+          <input id="oa" type="number" inputmode="decimal" placeholder="90"></div>
+      </div>
+    </div>
+    <div class="panel high">
+      <div class="ptitle">Electrical · vs nameplate</div>
+      <div class="grid">
+        <div class="field"><label>Measured volts <span class="unit">V · optional</span></label><input id="ac-volts" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Compressor amps <span class="unit">A · optional</span></label><input id="ac-amps" type="number" inputmode="decimal"></div>
+      </div>
+    </div>
+    <button class="run" onclick="runAC()">Run diagnosis</button>
+
+    <div id="results" class="panel results">
+      <div class="satline" id="satline"></div>
+      <div class="strip five" id="strip"></div>
+      <div class="targets" id="ac-targets">Targets: SH 5–15° · SC 5–15° · Evap TD 30–40° · ΔT 16–24° · Cond split 15–30°</div>
+      <div id="faults"></div>
+      <div class="savep">
+        <select id="ac-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+        <button class="save" style="background:var(--panel2);color:var(--ink);border:1px solid var(--line)" onclick="logTimed('ac')">+ Log to timed series (5 / 15 min readings)</button>
+        <div class="dcap" id="ac-series"></div>
+        <textarea id="ac-notes" placeholder="Repair notes / parts used…"></textarea>
+        <button class="save" onclick="saveReading('ac')">Save reading → Mundo log</button>
+      </div>
+    </div>
+
+    <details>
+      <summary>Fast tells — before you hook up gauges</summary>
+      <ul>
+        <li><b>Feel the suction line</b> at the condenser. Cold &amp; sweating = refrigerant moving. Warm = low charge or no flow.</li>
+        <li><b>Ice on the evap coil</b> = low charge <i>or</i> low airflow. Thaw with fan, then find the cause.</li>
+        <li><b>Check the filter first</b> on any low-airflow / frozen-coil call.</li>
+        <li><b>Discharge the run cap</b> before touching it.</li>
+      </ul>
+    </details>
+    </div><!-- /ac-gauge -->
+  </div>
+
+  <!-- ============ FURNACE MODULE ============ -->
+  <div id="v-fn" class="view">
+    <div class="hintbox npline" style="display:block"></div>
+    <div class="hintbox" style="display:block">AC coil mounted on this furnace? Diagnose the cooling side in the <b>AC tab</b> — and identify the metering device there (TXV vs fixed orifice / piston), since it decides how that coil charges.</div>
+    <div class="cats">
+      <div class="cat" data-c="70"><div class="pct">70%</div><div class="lb">Standing pilot · natural draft</div></div>
+      <div class="cat" data-c="80"><div class="pct">80%</div><div class="lb">HSI · induced draft · metal vent</div></div>
+      <div class="cat" data-c="90"><div class="pct">90%+</div><div class="lb">HSI · condensing · PVC + drain</div></div>
+    </div>
+    <div class="hintbox" id="idhint" style="display:none"></div>
+    <div id="seq"></div>
+    <div id="fdiag"></div>
+    <div id="fdone"></div>
+    <button class="reset" id="freset" onclick="startFn(fcat)">Start over</button>
+    <div class="panel" id="fn-save" style="display:none">
+      <div class="ptitle" style="color:var(--flame)">Measurements · vs nameplate</div>
+      <div class="grid">
+        <div class="field"><label>Return air <span class="unit">°F</span></label><input id="fn-return" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Supply air <span class="unit">°F</span></label><input id="fn-supply" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Blower amps <span class="unit">A</span></label><input id="fn-amps" type="number" inputmode="decimal"></div>
+      </div>
+      <div class="savep" style="border-top:none">
+        <select id="fn-stage"><option>Initial diagnosis</option><option>Repair in progress</option><option>Post-repair verification</option><option>Follow-up check</option><option>Final sign-off</option></select>
+          <textarea id="fn-notes" placeholder="Repair notes / parts used…"></textarea>
+        <button class="save" onclick="saveReading('fn')">Save reading → Mundo log</button>
+      </div>
+    </div>
+
+    <div class="rule"><b>The golden rule:</b> combustion air first, then heat, then fuel. The blower is always the <b>last</b> component to shut off (~2 min off-delay).</div>
+
+    <details>
+      <summary>Field ID — which furnace am I looking at?</summary>
+      <ul>
+        <li>White PVC vent + condensate drain hose → <b>90%+</b></li>
+        <li>Induced draft motor, metal/B-vent, no drain → <b>80%</b></li>
+        <li>Open draft diverter hood, standing pilot, no inducer → <b>70%</b></li>
+        <li>Yellow energy tag reads the AFUE; secondary heat exchanger = 90%+ only</li>
+        <li>Intermittent spark: module sparks the pilot each call, sense circuit proves before the main valve — pilot faults like standing pilot, control faults like HSI</li>
+      </ul>
+    </details>
+    <details>
+      <summary>2-stage furnaces (high fire vs low fire)</summary>
+      <ul>
+        <li>2-stage stat (W1 + W2 wired): big call for heat → Stage 2 immediately</li>
+        <li>Single-stage stat / no W2 wire: stages on <b>time delay</b> — Stage 2 when Stage 1 can't keep up</li>
+        <li>W1 = low fire, slower fans, ~½ gas · W2 = high fire, faster fans, normal gas</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Key safety numbers</summary>
+      <ul>
+        <li>Max CO in flue gas: <b>400 PPM</b> · living space: <b>9 PPM</b></li>
+        <li>Blower on-delay ~30 sec · off-delay ~2 min (time-based)</li>
+        <li>Limit normally CLOSED · pressure switch OPEN at rest</li>
+        <li>90% exhaust pitch: ¼"/ft minimum, back toward the furnace</li>
+      </ul>
+    </details>
+  </div>
+
+  <!-- ============ T-STAT WIRING ============ -->
+  <div id="v-ts" class="view">
+    <h2 class="sec">What are you wiring today?</h2>
+    <div class="eqrow" id="wsrow"></div>
+    <div class="card" id="wsout">Pick the system — you'll get the exact terminals, wire colors, jumper rule, and the gotcha for that hookup.</div>
+
+    <h2 class="sec">Terminal designations</h2>
+    <table>
+      <tr><th>Term</th><th>Function</th></tr>
+      <tr><td>R</td><td>Power (red, 24V hot)</td></tr>
+      <tr><td>RC</td><td>Power, cooling side (air handler). Furnace + AC: RH &amp; RC jumped. Boiler + air handler: cut the jumper</td></tr>
+      <tr><td>RH</td><td>Power, heating side (boiler)</td></tr>
+      <tr><td>C</td><td>Common — constant 24V return for digital stats. If missing: run new wire, add-a-wire kit, or sacrifice "G"</td></tr>
+      <tr><td>W</td><td>Heat call. W/E = emergency/aux heat (heat pump only); with 2 heat wires it acts as W1</td></tr>
+      <tr><td>W1</td><td>First-stage heat — low fire, slower fans, ~½ gas</td></tr>
+      <tr><td>W2</td><td>Second-stage heat — high fire, faster fans, normal gas</td></tr>
+      <tr><td>Y</td><td>Cooling call (blue or yellow). With 2 cooling wires it acts as Y1</td></tr>
+      <tr><td>Y1</td><td>Stage 1 cooling — slower fans, slower compressor (~70%)</td></tr>
+      <tr><td>Y2</td><td>Stage 2 cooling — faster fans &amp; compressor. Needs a 2-stage furnace or air handler</td></tr>
+      <tr><td>G</td><td>Blower (green). Fan switch: AUTO = follows Y · ON = powered by R</td></tr>
+    </table>
+    <div class="card"><b>Older furnaces:</b> Y can't control the blower alone → G runs a <b>high</b> speed.<br><b>Newer (ECM) furnaces:</b> Y controls the fan → G runs a <b>low</b> speed.</div>
+    <div class="card"><b>Stages change</b> on time delay or temperature demand — a single-stage stat still runs a 2-stage furnace; it just stages on timing instead of W2.</div>
+
+    <h2 class="sec">Component wiring diagrams</h2>
+
+    <details open>
+      <summary>Condensing unit — contactor · capacitor · compressor</summary>
+      <div class="diag"><svg viewBox="0 0 340 240">
+        <text x="10" y="14" class="lbl">SOLID = LINE VOLTAGE · DASHED = 24V CONTROL</text>
+        <line class="lv" x1="10" y1="42" x2="78" y2="42"/><text x="10" y="36">L1</text>
+        <line class="lv" x1="10" y1="76" x2="78" y2="76"/><text x="10" y="70">L2</text>
+        <rect class="cmp" x="78" y="26" width="62" height="64" rx="4"/>
+        <text x="86" y="54">CONT-</text><text x="86" y="68">ACTOR</text>
+        <rect class="cmp" x="88" y="104" width="42" height="16" rx="3"/>
+        <line class="cv" x1="10" y1="108" x2="88" y2="108"/><text x="10" y="102" class="lbl">Y + C</text>
+        <text x="136" y="116" class="lbl">24V COIL</text>
+        <line class="lv" x1="140" y1="42" x2="252" y2="42"/><text x="148" y="36" class="lbl">T1</text>
+        <line class="lv" x1="140" y1="76" x2="224" y2="76"/><text x="148" y="70" class="lbl">T2</text>
+        <line class="lv" x1="205" y1="76" x2="205" y2="156"/>
+        <circle class="cmp" cx="262" cy="74" r="34"/>
+        <text x="244" y="70">COMP</text>
+        <text x="258" y="52">C</text><text x="232" y="84">R</text><text x="284" y="84">S</text>
+        <rect class="cmp" x="180" y="156" width="122" height="32" rx="4"/>
+        <text x="190" y="176">C · FAN · HERM</text>
+        <text x="182" y="204" class="lbl">DUAL RUN CAPACITOR</text>
+        <line class="lv" x1="293" y1="156" x2="293" y2="106"/>
+        <line class="lv" x1="150" y1="42" x2="150" y2="212"/>
+        <circle class="cmp" cx="150" cy="222" r="16"/>
+        <line class="lv" x1="240" y1="188" x2="240" y2="222"/><line class="lv" x1="240" y1="222" x2="166" y2="222"/>
+        <text x="106" y="226" class="lbl">FAN</text>
+      </svg></div>
+      <div class="dcap"><b>Reading it:</b> Y + C from the stat energize the 24V coil; the contactor pulls in and sends L1/L2 to the load side. T1 feeds compressor <b>C</b> (and the fan). T2 feeds compressor <b>R</b> and the cap's <b>C</b> terminal; <b>HERM</b> feeds <b>S</b> through the capacitor, <b>FAN</b> feeds the condenser fan. No cooling but contactor clicks = load side. No click = coil, Y wire, or stat. <b>Discharge the cap before touching anything.</b></div>
+    </details>
+
+    <details>
+      <summary>Fan center / blower relay</summary>
+      <div class="diag"><svg viewBox="0 0 340 150">
+        <line class="lv" x1="10" y1="48" x2="80" y2="48"/><text x="10" y="42">L1</text>
+        <rect class="cmp" x="80" y="30" width="84" height="42" rx="4"/>
+        <text x="88" y="49">XFMR 120V</text><text x="88" y="64" class="lbl">→ 24V R · C</text>
+        <line class="cv" x1="164" y1="48" x2="212" y2="48"/><text x="216" y="52" class="lbl">to stat</text>
+        <rect class="cmp" x="80" y="96" width="76" height="24" rx="3"/><text x="86" y="112">FRC COIL</text>
+        <line class="cv" x1="10" y1="108" x2="80" y2="108"/><text x="10" y="102" class="lbl">G + C</text>
+        <line class="lv" x1="156" y1="108" x2="248" y2="108"/><text x="162" y="102" class="lbl">NO closes</text>
+        <circle class="cmp" cx="278" cy="108" r="24"/><text x="258" y="112">BLOWER</text>
+      </svg></div>
+      <div class="dcap"><b>How it works:</b> G energizes the fan relay coil (FRC); the NO contact sends line voltage to the blower. Older furnaces — G contact feeds the <b>HIGH</b> speed tap (Y can't run the blower alone). ECM furnaces — Y runs the fan itself, so G feeds a <b>LOW</b> speed. The heat path bypasses this relay entirely: fan/limit switch (70%) or IFC delay (80/90) picks the heat speed.</div>
+    </details>
+
+    <details>
+      <summary>Control transformer — 120V → 24V</summary>
+      <div class="diag"><svg viewBox="0 0 340 140">
+        <line class="lv" x1="10" y1="50" x2="110" y2="50"/><text x="10" y="44">L1 (hot)</text>
+        <line class="lv" x1="10" y1="86" x2="110" y2="86"/><text x="10" y="80">N</text>
+        <rect class="cmp" x="110" y="34" width="90" height="66" rx="5"/>
+        <text x="128" y="60">XFMR</text><text x="120" y="78" class="lbl">40 VA typ.</text>
+        <line class="cv" x1="200" y1="50" x2="300" y2="50"/><text x="212" y="44" class="lbl">R · 24V hot</text>
+        <line class="cv" x1="200" y1="86" x2="300" y2="86"/><text x="212" y="102" class="lbl">C · common</text>
+        <text x="110" y="126" class="lbl">3A / 5A fuse protects the secondary</text>
+      </svg></div>
+      <div class="dcap"><b>Testing it:</b> 120V across the primary and nothing across the secondary = failed transformer. Before replacing, find <b>why</b> — a shorted low-voltage circuit (chafed stat wire, shorted contactor coil) kills the new one too. Pull the low-voltage loads, replace, reconnect one at a time. Match the VA rating. Every 24V control in this app — stat, gas valve, contactor coil, relays — lives off this one component.</div>
+    </details>
+
+    <details>
+      <summary>Defrost timer — commercial refrigeration</summary>
+      <div class="diag"><svg viewBox="0 0 340 200">
+        <rect class="cmp" x="104" y="22" width="136" height="76" rx="6"/>
+        <text x="122" y="42">DEFROST TIMER</text>
+        <text x="114" y="66">1</text><text x="148" y="66">N</text><text x="182" y="66">2</text><text x="216" y="66">4</text>
+        <text x="114" y="88" class="lbl">3 = X term.</text>
+        <line class="lv" x1="10" y1="62" x2="108" y2="62"/><text x="10" y="56">L1</text>
+        <line class="lv" x1="150" y1="70" x2="150" y2="126"/><text x="138" y="140" class="lbl">N</text>
+        <line class="lv" x1="185" y1="70" x2="185" y2="118"/>
+        <rect class="cmp" x="152" y="118" width="72" height="24" rx="3"/><text x="158" y="134">HEATERS</text>
+        <line class="lv" x1="219" y1="70" x2="219" y2="160"/>
+        <rect class="cmp" x="182" y="160" width="112" height="24" rx="3"/><text x="188" y="176">COMP / REFRIG</text>
+      </svg></div>
+      <div class="dcap"><b>How it works:</b> timer motor (1 → N) runs continuously. In RUN, the switch arm connects 1 → 4 and the refrigeration circuit runs. On the clock trip, the arm swaps to 1 → 2: compressor off, defrost heaters on. Terminal 3 (X) is the shortcut home — the defrost <b>termination thermostat</b> snaps the timer back to RUN as soon as the coil is clear, before the full time window. <b>Diagnosing:</b> iced coil = check initiation (timer motor turning?), heaters (ohm them), termination stat, and the drain heater. Stuck in defrost = welded contacts or failed termination.</div>
+    </details>
+
+    <details>
+      <summary>Pump-down circuit</summary>
+      <div class="diag"><svg viewBox="0 0 340 130">
+        <line class="cv" x1="10" y1="36" x2="76" y2="36"/><text x="10" y="30" class="lbl">Box t-stat</text>
+        <rect class="cmp" x="76" y="24" width="86" height="24" rx="3"/><text x="82" y="40">LLS COIL</text>
+        <text x="168" y="40" class="lbl">liquid line solenoid</text>
+        <line class="lv" x1="10" y1="94" x2="60" y2="94"/><text x="10" y="88">L1</text>
+        <rect class="cmp" x="60" y="82" width="52" height="24" rx="3"/><text x="70" y="98">LPS</text>
+        <line class="lv" x1="112" y1="94" x2="164" y2="94"/>
+        <rect class="cmp" x="164" y="82" width="132" height="24" rx="3"/><text x="170" y="98">COMP CONTACTOR</text>
+      </svg></div>
+      <div class="dcap"><b>The sequence:</b> box temp satisfied → t-stat opens → LLS closes → compressor keeps running, pumping the low side into the receiver → suction pressure falls → <b>LPS opens → compressor stops.</b> On a call: t-stat closes → LLS opens → pressure rises → LPS closes → compressor starts. The t-stat never touches the compressor — the LPS is the operating control. Short-cycling at the LPS = leaking LLS or a compressor valve letting pressure creep back.</div>
+    </details>
+
+    <h2 class="sec">Compressor terminal ID · ohm test</h2>
+    <div class="panel">
+      <div class="grid">
+        <div class="field"><label>Pins 1–2 <span class="unit">Ω</span></label><input id="oh12" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Pins 2–3 <span class="unit">Ω</span></label><input id="oh23" type="number" inputmode="decimal"></div>
+        <div class="field"><label>Pins 1–3 <span class="unit">Ω</span></label><input id="oh13" type="number" inputmode="decimal"></div>
+      </div>
+    </div>
+    <button class="run" onclick="runOhm()">Identify C · S · R</button>
+    <div class="card" id="ohmout" style="display:none"></div>
+    <div class="dcap">Power off, capacitor discharged, wires pulled. Highest pair = Start + Run, so the pin left out is Common; C–S (start winding) reads higher than C–R (run winding), and C–S + C–R should ≈ S–R. Any pair at 0Ω = shorted winding. Open to shell = grounded. Everything open = tripped internal overload — let it cool an hour and retest before condemning.</div>
+  </div>
+
+  <p class="note">Mundo Environmental Services field diagnostics. P/T values are chart approximations — verify final charging against the manufacturer chart. Blend refrigerants (448A/449A/454B) have glide; use manufacturer dew/bubble for precise SH/SC.</p>
+</div>
+
+<script>
+/* ---------- NAV ---------- */
+function show(v,btn){
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on');
+  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));
+  btn.classList.add('on');
+  window.scrollTo({top:0});
+  npSync();
+}
+function grade(v,lo,hi){return v<lo?'LOW':(v>hi?'HIGH':'NORM');}
+
+/* ---------- SAVE / LOG / BATCH ---------- */
+const LAST={};
+const SERIES={rf:[],ac:[]};
+function logTimed(m){
+  if(!LAST[m]){alert('Run a diagnosis first, then log it to the series.');return;}
+  const t=new Date();
+  SERIES[m].push('['+t.getHours()+':'+('0'+t.getMinutes()).slice(-2)+'] '+LAST[m]);
+  document.getElementById(m+'-series').innerHTML='<b>Timed series ('+SERIES[m].length+' readings):</b><br>'+SERIES[m].join('<br>');
+}
+function rfMode(m){
+  document.getElementById('rf-mode-g').classList.toggle('on',m==='g');
+  document.getElementById('rf-mode-q').classList.toggle('on',m==='q');
+  document.getElementById('rf-quick').style.display=m==='q'?'block':'none';
+  if(m==='q'){document.getElementById('rf-gauge').style.display='none';document.getElementById('rf-water').style.display='none';}
+  else applyEq();
+}
+function acMode(m){
+  document.getElementById('ac-mode-g').classList.toggle('on',m==='g');
+  document.getElementById('ac-mode-q').classList.toggle('on',m==='q');
+  document.getElementById('ac-quick').style.display=m==='q'?'block':'none';
+  document.getElementById('ac-gauge').style.display=m==='q'?'none':'block';
+}
+const QUICK_RF=["Suction line at the condensing unit — cold and sweating?","Condenser coil clean (degrease near cook lines)","All condenser + evap fan motors running","Ice on the evaporator coil? (freezer: suspect defrost)","Door gaskets sealing — dollar-bill test","Product loading not blocking the airflow path","Drain line and pan clear","Compressor noise / short-cycling","Box temp vs setpoint recorded","Defrost clock time + pins set correctly"];
+const QUICK_AC=["Air filter checked / replaced","Thermostat set + calling correctly","Breaker and disconnect on","Suction line cold and sweating at the condenser","Condenser coil clean","Outdoor fan running","Indoor blower running","Ice on the line set or coil?","Supply registers noticeably cooler than returns","Capacitor visually bulged? (power off + discharged first)"];
+function ck(t){return '<label class="ck"><input type="checkbox"><span>'+t+'</span></label>';}
+function val(id){const el=document.getElementById(id); return el?el.value.trim():'';}
+function checksIn(id){
+  return Array.from(document.querySelectorAll('#'+id+' label.ck')).map(l=>
+    (l.querySelector('input').checked?'[x] ':'[ ] ')+l.textContent.trim().replace(/\s+/g,' ')).join('\n');
+}
+function npSync(){
+  const t=nameplate_();
+  document.querySelectorAll('.npline').forEach(el=>{
+    el.innerHTML = t ? '<b>Nameplate:</b> '+t+' <span style="color:var(--dim)">(edit on Job Info)</span>'
+                     : '<b>Nameplate empty</b> — enter RLA, volts, and charge on the Job Info tab so readings compare against it.';
+  });
+}
+function nameplate_(){
+  const f=[['Make/Model','np-make'],['Serial','np-serial'],['Refrig','np-ref'],['Charge','np-charge'],['Volts','np-volts'],['RLA','np-rla'],['LRA','np-lra'],['Fan FLA','np-fla'],['MCA','np-mca'],['Max OCP','np-ocp'],['Gas BTU','np-btu'],['Temp rise','np-rise']];
+  return f.map(x=>val(x[1])?x[0]+': '+val(x[1]):'').filter(Boolean).join(' · ');
+}
+function saveReading(mod){
+  const jb={companyId:val('jb-cid'),client:val('jb-client'),clientEmail:val('jb-email'),location:val('jb-loc'),equipId:val('jb-eqid'),tech:val('jb-tech')};
+  if(!jb.companyId){alert('Enter the Company / Client ID on the Job Info tab first — that keys the tracker sheet.');return;}
+  let d=Object.assign({module:mod,nameplate:nameplate_()},jb);
+  if(mod==='rf'){
+    d.sheet=EQ[eq].n; d.category=EQ[eq].n+' · '+rfref;
+    d.category+=' · '+val('rf-meter')+' · '+val('rf-comp')+' · '+val('rf-cond')+' · defrost: '+val('rf-defrost');
+    d.stage=val('rf-stage');
+    d.readings='Suct '+val('rf-suct')+' psig / SLT '+val('rf-slt')+'° / Head '+val('rf-head')+' psig / LLT '+val('rf-llt')+'° / Ent '+val('rf-ent')+'° / Exit '+val('rf-exit')+'° / Amb '+val('rf-amb')+'° / '+val('rf-volts')+'V / '+val('rf-amps')+'A';
+    d.results=(SERIES.rf.length?('SERIES: '+SERIES.rf.join(' | ')+' || FINAL: '):'')+(LAST.rf||'');
+    d.checklist=checksIn('rf-faults'); d.notes=val('rf-notes');
+  } else if(mod==='rfq'){
+    d.sheet=EQ[eq].n; d.category=EQ[eq].n+' · Quick check (no gauges)';
+    d.readings='Quick visual/touch inspection'; d.results='';
+    d.stage=val('rfq-stage'); d.checklist=checksIn('rf-qlist'); d.notes=val('rfq-notes');
+  } else if(mod==='acq'){
+    d.sheet='Residential AC'; d.category='Residential AC · Quick check (no gauges)';
+    d.readings='Quick visual/touch inspection'; d.results='';
+    d.stage=val('acq-stage'); d.checklist=checksIn('ac-qlist'); d.notes=val('acq-notes');
+  } else if(mod==='ch'){
+    d.sheet='Chiller-Tower'; d.category='Chiller/Tower · '+chref;
+    d.stage=val('ch-stage');
+    d.readings='CHW lvg '+val('ch-lwt')+'° / Suct '+val('ch-suct')+' psig / CW lvg '+val('ch-cwl')+'° / Head '+val('ch-head')+' psig / Twr in '+val('tw-in')+'° / out '+val('tw-out')+'° / WB '+val('tw-wb')+'° / '+val('ch-volts')+'V / '+val('ch-amps')+'A';
+    d.results=LAST.ch||''; d.checklist=checksIn('ch-faults'); d.notes=val('ch-notes');
+  } else if(mod==='ac'){
+    d.sheet='Residential AC'; d.category='Residential AC · '+ref;
+    d.category+=' · '+val('ac-meter')+' · '+val('ac-comp');
+    d.stage=val('ac-stage');
+    d.readings='Suct '+val('suct')+' psig / SLT '+val('slt')+'° / Head '+val('head')+' psig / LLT '+val('llt')+'° / RA '+val('ra')+'° / SA '+val('sa')+'° / OA '+val('oa')+'° / '+val('ac-volts')+'V / '+val('ac-amps')+'A';
+    d.results=(SERIES.ac.length?('SERIES: '+SERIES.ac.join(' | ')+' || FINAL: '):'')+(LAST.ac||'');
+    d.checklist=checksIn('faults'); d.notes=val('ac-notes');
+  } else if(mod==='fn'){
+    if(!fcat){alert('Pick the furnace type and run the sequence first.');return;}
+    d.sheet='Furnace '+fcat+'%'; d.category='Furnace '+fcat+'% ('+(fcat==='70'?'standing pilot':'HSI')+')';
+    d.stage=val('fn-stage');
+    const fnr=parseFloat(val('fn-return')), fns=parseFloat(val('fn-supply')), fna=parseFloat(val('fn-amps'));
+    let fnm=''; if(!isNaN(fnr)&&!isNaN(fns)){fnm=' / Temp rise '+(fns-fnr).toFixed(0)+'°'+(val('np-rise')?' (nameplate '+val('np-rise')+')':'');}
+    if(!isNaN(fna)){fnm+=' / Blower '+fna+'A'+(val('np-fla')?' (FLA '+val('np-fla')+')':'');}
+    d.readings='Sequence progress: step '+Math.min(fidx+1,fsteps.length)+' of '+fsteps.length+fnm;
+    d.results=LAST.fn||''; d.checklist=checksIn('fdiag'); d.notes=val('fn-notes');
+  }
+  if(typeof google!=='undefined' && google.script){
+    google.script.run
+      .withSuccessHandler(function(r){alert('Saved ✓ '+r);})
+      .withFailureHandler(function(e){alert('Save failed: '+e.message);})
+      .submitReading(d);
+  } else {
+    alert('Preview mode — saving goes live once deployed through Apps Script.\n\nCaptured: '+d.sheet+' · '+d.category);
+  }
+}
+function runBatch(){
+  const em=val('eod-email');
+  if(!em){alert('Enter the email address for the batch.');return;}
+  if(typeof google!=='undefined' && google.script){
+    google.script.run
+      .withSuccessHandler(function(r){alert(r);})
+      .withFailureHandler(function(e){alert('Batch failed: '+e.message);})
+      .batchDailyEmail(em);
+  } else {
+    alert('Preview mode — deploy through Apps Script to enable sending to Mundo.');
+  }
+}
+function satFromTable(t,psig){
+  if(psig<=t[0][1]) return t[0][0];
+  for(let i=1;i<t.length;i++){
+    if(psig<=t[i][1]){const [t0,p0]=t[i-1],[t1,p1]=t[i]; return t0+(t1-t0)*(psig-p0)/(p1-p0);}
+  }
+  return t[t.length-1][0];
+}
+
+/* ---------- P/T TABLES (chart approximations, °F ↔ psig) ---------- */
+const PT = {
+  "R-404A":[[-40,4.5],[-30,10],[-20,16],[-10,24],[0,34],[10,46],[20,60],[30,76],[40,95],[50,117],[60,142],[70,170],[80,202],[90,238],[100,278],[110,323],[120,373]],
+  "R-448A":[[-40,3.8],[-30,8.6],[-20,14.4],[-10,21.6],[0,30.4],[10,41],[20,53.6],[30,68.5],[40,86],[50,106],[60,129],[70,155],[80,185],[90,219],[100,257],[110,300],[120,348]],
+  "R-449A":[[-40,3.6],[-30,8.4],[-20,14.2],[-10,21.3],[0,30],[10,40.6],[20,53.2],[30,68],[40,85.4],[50,105],[60,128],[70,154],[80,184],[90,218],[100,256],[110,298],[120,346]],
+  "R-507": [[-40,5.6],[-30,11.2],[-20,18],[-10,26.2],[0,36.5],[10,48.8],[20,63.3],[30,80.2],[40,99.8],[50,122],[60,148],[70,177],[80,209],[90,246],[100,287],[110,332],[120,382]],
+  "R-134a":[[-10,1.8],[0,6.5],[10,11.9],[20,18.4],[30,26.1],[40,35],[50,45.4],[60,57.4],[70,71.1],[80,86.7],[90,104],[100,124],[110,146],[120,171],[130,199]],
+  "R-410A":[[-40,11],[-30,17],[-20,26],[-10,36],[0,48],[10,62],[20,78],[30,99],[40,118],[50,142],[60,170],[70,201],[80,235],[90,274],[100,317],[110,365],[120,418],[130,475],[140,540]],
+  "R-22":  [[-40,0.6],[-30,4.9],[-20,10.2],[-10,16.6],[0,24],[10,33],[20,43],[30,55],[40,69],[50,84],[60,102],[70,121],[80,144],[90,168],[100,196],[110,226],[120,260],[130,297]],
+  "R-32":  [[0,52],[10,67],[20,84],[30,103],[40,125],[50,150],[60,177],[70,209],[80,245],[90,284],[100,329],[110,378],[120,432],[130,493]],
+  "R-454B":[[0,43],[10,56],[20,71],[30,89],[40,109],[50,131],[60,157],[70,186],[80,219],[90,256],[100,297],[110,343],[120,394],[130,450]]
+};
+const A2L=["R-32","R-454B","R-448A","R-449A"];
+
+/* ---------- FAULT MATRIX ---------- */
+const MATRIX=[
+ {name:"Low charge / leak", pat:{suct:'LOW',head:'LOW',sh:'HIGH',sc:'LOW',split:'LOW'},
+  why:"Starved evap and condenser — not enough refrigerant in the system.",
+  check:["Verify with SC + SH together before adding gas","EPA: leak-search and repair before topping off — repeat top-offs are the violation pattern","Weigh in charge if recovering"]},
+ {name:"Overcharge", pat:{suct:'HIGH',head:'HIGH',sh:'LOW',sc:'HIGH',split:'LOW'},
+  why:"Liquid backing into the condenser — high subcooling is the giveaway.",
+  check:["Confirm condenser is clean first (dirty coil mimics high head)","EPA: recover excess to a certified cylinder — never vent","Recheck SC after 15 min"]},
+ {name:"Restriction after condenser / plugged metering device", pat:{suct:'LOW',head:'*',sh:'HIGH',sc:'*',split:'LOW'},
+  why:"Refrigerant held back from the evaporator — starved coil with the condenser doing little work. On TEVs check the valve and screen; on cap tubes, the tube or drier.",
+  check:["Feel for a temp drop across the filter-drier — a restriction shows as a cold spot or frost line","TEV: check bulb mount, insulation, and inlet screen","High SC = stacked in condenser; normal SC with huge SH can be a plugged TEV/drier"]},
+ {name:"Inefficient compressor ★", pat:{suct:'HIGH',head:'LOW',sh:'LOW',sc:'*',split:'LOW'},
+  why:"The oddball — only fault with high suction AND low head. Needles converge; compressor runs but isn't pumping.",
+  check:["Compression ratio collapsing toward 1–2:1","Check valves/scroll — amp draw often below RLA","Confirm it's not an internal bypass"]},
+ {name:"Dirty / blocked condenser", pat:{suct:'*',head:'HIGH',sh:'NORM',sc:'HIGH',split:'HIGH'},
+  why:"Heat can't leave — high split is the tell.",
+  check:["Clean the coil, check fan motor and blade","Recheck split after cleaning","On boxes near cooking lines, grease film needs degreaser, not just a rinse"]},
+ {name:"Low evaporator airflow / iced coil", pat:{suct:'LOW',head:'LOW',sh:'LOW',sc:'NORM',split:'LOW'},
+  why:"Coil isn't getting air — low load. On freezers, suspect defrost failure first.",
+  check:["FRZ","Evap fan motors and blades — one dead fan on a multi-fan coil is easy to miss","Product loading blocking airflow? Check case/box loading against the airflow path"]}
+];
+const FRZ_CHECK="Freezer: check the defrost system — timer/board initiation, defrost heaters (ohm them), termination stat, drain heater. Iced coil = defrost failed until proven otherwise.";
+
+/* ---------- EQUIPMENT PROFILES ---------- */
+const EQ={
+ "wic":{n:"Walk-in Cooler", s:"box ~35° · TEV or EPR", td:[7,13], sh:[4,14], sc:[4,14], split:[15,30],
+   ent:"Evap entering air (box return)", amb:"Ambient at condenser", frz:false,
+   hint:"<b>Walk-in cooler.</b> TD target ~10°. Log entering air near the evap return, not at the door."},
+ "wif":{n:"Walk-in Freezer", s:"box ~−10° · TEV", td:[7,13], sh:[4,14], sc:[4,14], split:[15,30],
+   ent:"Evap entering air (box return)", amb:"Ambient at condenser", frz:true,
+   hint:"<b>Walk-in freezer.</b> TD target ~10°. Iced coil = check defrost before anything else. Take readings mid-cycle, not right after defrost."},
+ "ric":{n:"Reach-in Cooler", s:"cap tube common", td:[12,22], sh:[5,20], sc:[2,12], split:[15,30],
+   ent:"Evap entering air", amb:"Ambient at condenser", frz:false,
+   hint:"<b>Reach-in cooler.</b> Cap tube: superheat is your charge indicator and subcooling naturally runs low — don't chase SC."},
+ "rif":{n:"Reach-in Freezer", s:"cap tube common", td:[12,22], sh:[5,20], sc:[2,12], split:[15,30],
+   ent:"Evap entering air", amb:"Ambient at condenser", frz:true,
+   hint:"<b>Reach-in freezer.</b> Cap tube rules apply (SH = charge, SC runs low) plus defrost checks on any iced coil."},
+ "ice":{n:"Ice Machine", s:"batch cycle", td:[10,30], sh:[3,15], sc:[3,15], split:[15,30],
+   ent:"Air entering condenser side", amb:"Ambient at machine", frz:false,
+   hint:"<b>Ice machine.</b> Suction pulls down through the batch — take readings mid-freeze cycle. Wide TD band on purpose; trust SH/SC direction over TD here. Harvest problems are usually hot-gas valve or water-side, not charge."},
+ "hp":{n:"Heat Pump (Heating)", s:"winter mode", td:[15,30], sh:[4,15], sc:[4,15], split:[20,40],
+   ent:"OUTDOOR ambient (at outdoor coil)", amb:"INDOOR return air", frz:false,
+   hint:"<b>Heat pump, heating mode.</b> The coils swap jobs: outdoor coil is the evaporator, indoor coil is the condenser. Enter OUTDOOR ambient as the evap air, INDOOR return as the condenser-side air. Frosted outdoor coil that never clears = defrost (reversing valve, board, sensor)."},
+ "ch":{n:"Chiller / Tower", s:"water-side math", water:true,
+   hint:"<b>Chiller & cooling tower.</b> Water-side approach temps do the diagnosing: evap approach = chilled water leaving − sat suction; cond approach = sat cond − cond water leaving; tower range = in − out; tower approach = out − wet bulb."}
+};
+let eq="wic";
+const eqrow=document.getElementById('eqrow');
+Object.keys(EQ).forEach(k=>{
+  const d=document.createElement('div');
+  d.className='eq'+(k===eq?' on':'');
+  d.innerHTML='<b>'+EQ[k].n+'</b><span>'+EQ[k].s+'</span>';
+  d.onclick=()=>{eq=k; document.querySelectorAll('.eq').forEach(x=>x.classList.remove('on')); d.classList.add('on'); applyEq();};
+  eqrow.appendChild(d);
+});
+function applyEq(){
+  const e=EQ[eq];
+  document.getElementById('eqhint').innerHTML=e.hint;
+  document.getElementById('rf-gauge').style.display = e.water?'none':'block';
+  document.getElementById('rf-water').style.display = e.water?'block':'none';
+  if(!e.water){
+    document.getElementById('rf-lbl-ent').innerHTML=e.ent+' <span class="unit">°F</span>';
+    document.getElementById('rf-lbl-amb').innerHTML=e.amb+' <span class="unit">°F</span>';
+  }
+}
+applyEq();
+
+/* refrigerant chips for refrigeration + chiller */
+let rfref="R-404A", chref="R-134a";
+function buildChips(rowId, list, getSet){
+  const row=document.getElementById(rowId);
+  list.forEach(r=>{
+    const b=document.createElement('button');
+    b.className='refchip'+(r===getSet()?' on':''); b.textContent=r;
+    b.onclick=()=>{getSet(r); row.querySelectorAll('.refchip').forEach(x=>x.classList.remove('on')); b.classList.add('on'); a2lCheck();};
+    row.appendChild(b);
+  });
+}
+buildChips('rfrefrow',["R-404A","R-448A","R-449A","R-507","R-134a","R-22","R-410A"],v=>v?(rfref=v):rfref);
+buildChips('chrefrow',["R-134a","R-410A","R-22","R-404A"],v=>v?(chref=v):chref);
+function a2lCheck(){
+  document.getElementById('rfa2l').style.display = A2L.includes(rfref)?'block':'none';
+}
+
+function runRF(){
+  const e=EQ[eq];
+  const v=id=>parseFloat(document.getElementById(id).value);
+  const suct=v('rf-suct'),head=v('rf-head'),slt=v('rf-slt'),llt=v('rf-llt'),ent=v('rf-ent'),amb=v('rf-amb');
+  const ex=v('rf-exit');
+  if([suct,head,slt,llt,ent,amb].some(isNaN)){alert('Fill in the six required readings.');return;}
+  const t=PT[rfref];
+  const sst=satFromTable(t,suct), sct=satFromTable(t,head);
+  const sh=slt-sst, sc=sct-llt, td=ent-sst, split=sct-amb;
+  const gTD=grade(td,e.td[0],e.td[1]);
+  const g={
+    suct: gTD==='HIGH'?'LOW':(gTD==='LOW'?'HIGH':'NORM'),
+    head: grade(split,e.split[0],e.split[1]),
+    sh: grade(sh,e.sh[0],e.sh[1]), sc: grade(sc,e.sc[0],e.sc[1]),
+    split: grade(split,e.split[0],e.split[1])
+  };
+  const scored=MATRIX.map(f=>{
+    let s=0,n=0;
+    for(const k in f.pat){if(f.pat[k]==='*')continue; n++; if(f.pat[k]===g[k])s++;}
+    return {...f,score:s,n};
+  }).sort((a,b)=>b.score/b.n-a.score/a.n);
+  document.getElementById('rf-results').style.display='block';
+  let sat=rfref+' · Sat suct <b>'+sst.toFixed(0)+'°</b> · Sat cond <b>'+sct.toFixed(0)+'°</b>';
+  if(!isNaN(ex)) sat+=' · Air Δ <b>'+(ent-ex).toFixed(0)+'°</b>';
+  document.getElementById('rf-satline').innerHTML=sat;
+  const chips=[['SH',sh,g.sh],['SC',sc,g.sc],['Evap TD',td,gTD],['Split',split,g.split],['Head',head,'NORM']];
+  document.getElementById('rf-strip').innerHTML=[['SH',sh,g.sh],['SC',sc,g.sc],['Evap TD',td,gTD],['Split',split,g.split]].map(c=>
+    '<div class="chip '+c[2]+'"><div class="nm">'+c[0]+'</div><div class="val">'+(+c[1]).toFixed(0)+'°</div><div class="st">'+c[2]+'</div></div>').join('')
+    +'<div class="chip"><div class="nm">Head</div><div class="val">'+head.toFixed(0)+'</div><div class="st" style="color:var(--dim)">psig</div></div>';
+  document.getElementById('rf-targets').textContent=
+    'Targets ('+e.n+'): SH '+e.sh[0]+'–'+e.sh[1]+'° · SC '+e.sc[0]+'–'+e.sc[1]+'° · TD '+e.td[0]+'–'+e.td[1]+'° · Split '+e.split[0]+'–'+e.split[1]+'° · Charge by '+((val('rf-meter').indexOf('TXV')>-1||val('rf-meter').indexOf('EEV')>-1)?'SUBCOOLING (TXV holds SH even when low)':'SUPERHEAT (SC runs naturally low)');
+  const allNorm=[g.sh,g.sc,gTD,g.split].every(x=>x==='NORM');
+  const rfa=parseFloat(document.getElementById('rf-amps').value), rfv=parseFloat(document.getElementById('rf-volts').value), rfrla=parseFloat(document.getElementById('np-rla').value);
+  let rfel=''; if(!isNaN(rfa)){rfel=' / '+(isNaN(rfv)?'':rfv.toFixed(0)+'V ')+rfa+'A'+(isNaN(rfrla)?'':(rfa>rfrla?' ⚠ OVER RLA '+rfrla:' ✓ under RLA '+rfrla));}
+  LAST.rf='SH '+sh.toFixed(0)+'° ('+g.sh+') / SC '+sc.toFixed(0)+'° ('+g.sc+') / TD '+td.toFixed(0)+'° ('+gTD+') / Split '+split.toFixed(0)+'° ('+g.split+')'+rfel+' — '+(allNorm?'WITHIN BENCHMARKS':'Top match: '+scored[0].name);
+  document.getElementById('rf-faults').innerHTML = allNorm
+    ? '<div class="fault top"><h3>System within benchmarks</h3><p>Numbers in range for a '+e.n.toLowerCase()+'. If the complaint persists: door gaskets, product load, defrost schedule, controls/setpoints — not the sealed system.</p></div>'
+    : scored.slice(0,3).map((f,i)=>{
+        const items=f.check.map(c=> c==="FRZ" ? (e.frz? ck('<b>'+FRZ_CHECK+'</b>') : ck('Check the air filter / coil face first — most common miss')) : ck(c)).join('');
+        return '<div class="fault'+(i===0?' top':'')+'"><span class="score">'+f.score+'/'+f.n+' match</span><h3>'+f.name+'</h3><p>'+f.why+'</p>'+items+'</div>';
+      }).join('');
+  document.getElementById('rf-epa').textContent = A2L.includes(rfref)
+    ? 'EPA/§608: recovery required before opening the circuit — A2L-rated machine for '+rfref+', no ignition sources, ventilate.'
+    : 'EPA/§608: recovery required before opening the circuit; leaks get found and repaired, not topped off.';
+  document.getElementById('rf-results').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- CHILLER / TOWER ---------- */
+function runCH(){
+  const v=id=>parseFloat(document.getElementById(id).value);
+  const lwt=v('ch-lwt'),suct=v('ch-suct'),cwl=v('ch-cwl'),head=v('ch-head'),ti=v('tw-in'),to=v('tw-out'),wb=v('tw-wb');
+  if([lwt,suct,cwl,head,ti,to].some(isNaN)){alert('Fill in the six required readings (wet bulb optional).');return;}
+  const t=PT[chref];
+  const sst=satFromTable(t,suct), sct=satFromTable(t,head);
+  const evAp=lwt-sst, cdAp=sct-cwl, rng=ti-to;
+  const gEv=grade(evAp,2,6), gCd=grade(cdAp,2,6), gRn=grade(rng,8,12);
+  let ap=null,gAp='NORM';
+  if(!isNaN(wb)){ap=to-wb; gAp=grade(ap,5,10);}
+  document.getElementById('ch-results').style.display='block';
+  document.getElementById('ch-satline').innerHTML=chref+' · Sat suct <b>'+sst.toFixed(0)+'°</b> · Sat cond <b>'+sct.toFixed(0)+'°</b>';
+  const chips=[['Evap appr.',evAp,gEv],['Cond appr.',cdAp,gCd],['Twr range',rng,gRn]];
+  if(ap!==null) chips.push(['Twr appr.',ap,gAp]);
+  document.getElementById('ch-strip').innerHTML=chips.map(c=>
+    '<div class="chip '+c[2]+'"><div class="nm">'+c[0]+'</div><div class="val">'+(+c[1]).toFixed(1)+'°</div><div class="st">'+c[2]+'</div></div>').join('');
+  const f=[];
+  if(gEv==='HIGH') f.push({t:"High evaporator approach",w:"Heat isn't moving from water to refrigerant.",c:["Fouled/scaled evaporator tubes — brush or chemically clean","Low refrigerant charge (check SC/level)","Low chilled-water flow — pumps, strainers, valves"]});
+  if(gCd==='HIGH') f.push({t:"High condenser approach",w:"Heat isn't leaving the refrigerant into the condenser water.",c:["Scaled condenser tubes — the classic; punch/brush the tubes","Non-condensables in the system (check purge unit runtime on low-pressure machines)","Low condenser water flow"]});
+  if(gRn==='LOW') f.push({t:"Low tower range",w:"Water isn't picking up much heat — low load or flow problem.",c:["Verify chiller load before blaming the tower","Check condenser water flow rate"]});
+  if(ap!==null&&gAp==='HIGH') f.push({t:"High tower approach",w:"Tower can't get water close to wet bulb — tower-side performance.",c:["Fill condition — scale, algae, collapsed fill","Fan operation, belt, blade pitch","Water distribution — clogged nozzles, uneven basin flow","Verify water treatment program"]});
+  const cha=parseFloat(document.getElementById('ch-amps').value), chv=parseFloat(document.getElementById('ch-volts').value), chrla=parseFloat(document.getElementById('np-rla').value);
+  let chel=''; if(!isNaN(cha)){chel=' / '+(isNaN(chv)?'':chv.toFixed(0)+'V ')+cha+'A'+(isNaN(chrla)?'':(cha>chrla?' ⚠ OVER RLA '+chrla:' ✓ under RLA '+chrla));}
+  LAST.ch='Evap appr '+evAp.toFixed(1)+'° ('+gEv+') / Cond appr '+cdAp.toFixed(1)+'° ('+gCd+') / Range '+rng.toFixed(1)+'° ('+gRn+')'+(ap!==null?' / Twr appr '+ap.toFixed(1)+'° ('+gAp+')':'')+chel+' — '+(f.length===0?'APPROACHES IN RANGE':f.map(x=>x.t).join('; '));
+  document.getElementById('ch-faults').innerHTML = f.length===0
+    ? '<div class="fault top"><h3>Approaches in range</h3><p>Heat transfer surfaces and tower are doing their jobs. If capacity complaints persist, look at load, setpoints, staging, and water treatment history.</p></div>'
+    : f.map((x,i)=>'<div class="fault'+(i===0?' top':'')+'"><h3>'+x.t+'</h3><p>'+x.w+'</p>'+x.c.map(c=>ck(c)).join('')+'</div>').join('');
+  document.getElementById('ch-results').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- AC MODULE ---------- */
+let ref="R-410A";
+const row=document.getElementById('refrow');
+["R-410A","R-22","R-32","R-454B","R-404A","R-448A","R-449A","R-507","R-134a"].forEach(r=>{
+  const b=document.createElement('button');
+  b.className='refchip'+(r===ref?' on':''); b.textContent=r;
+  b.onclick=()=>{ref=r; row.querySelectorAll('.refchip').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+    document.getElementById('aca2l').style.display=A2L.includes(ref)?'block':'none';};
+  row.appendChild(b);
+});
+document.getElementById('rf-qlist').innerHTML=QUICK_RF.map(ck).join('');
+document.getElementById('ac-qlist').innerHTML=QUICK_AC.map(ck).join('');
+function runAC(){
+  const v=id=>parseFloat(document.getElementById(id).value);
+  const suct=v('suct'),head=v('head'),slt=v('slt'),llt=v('llt'),ra=v('ra'),sa=v('sa'),oa=v('oa');
+  if([suct,head,slt,llt,ra,sa,oa].some(isNaN)){alert('Fill in all seven readings.');return;}
+  const t=PT[ref];
+  const sst=satFromTable(t,suct), sct=satFromTable(t,head);
+  const sh=slt-sst, sc=sct-llt, td=ra-sst, dt=ra-sa, split=sct-oa;
+  const gTD=grade(td,30,40), gDT=grade(dt,16,24);
+  const g={suct:gTD==='HIGH'?'LOW':(gTD==='LOW'?'HIGH':'NORM'), head:grade(split,15,30),
+    sh:grade(sh,5,15), sc:grade(sc,5,15), split:grade(split,15,30)};
+  const scored=MATRIX.map(f=>{
+    let s=0,n=0;
+    for(const k in f.pat){if(f.pat[k]==='*')continue; n++; if(f.pat[k]===g[k])s++;}
+    return {...f,score:s,n};
+  }).sort((a,b)=>b.score/b.n-a.score/a.n);
+  document.getElementById('results').style.display='block';
+  document.getElementById('satline').innerHTML=
+    ref+' · Sat suction <b>'+sst.toFixed(0)+'°</b> · Sat cond <b>'+sct.toFixed(0)+'°</b> · ΔT <b>'+dt.toFixed(0)+'° ('+gDT+')</b>';
+  document.getElementById('ac-targets').textContent='Targets: SH 5–15° · SC 5–15° · Evap TD 30–40° · ΔT 16–24° · Cond split 15–30° · Charge by '+((val('ac-meter').indexOf('TXV')>-1||val('ac-meter').indexOf('EEV')>-1)?'SUBCOOLING (TXV holds SH even when low)':'SUPERHEAT (SC runs naturally low)');
+  document.getElementById('strip').innerHTML=[['SH',sh,g.sh],['SC',sc,g.sc],['Evap TD',td,gTD],['Split',split,g.split],['ΔT',dt,gDT]].map(c=>
+    '<div class="chip '+c[2]+'"><div class="nm">'+c[0]+'</div><div class="val">'+(+c[1]).toFixed(0)+'°</div><div class="st">'+c[2]+'</div></div>').join('');
+  const allNorm=[g.sh,g.sc,gTD,g.split].every(x=>x==='NORM');
+  const aca=parseFloat(document.getElementById('ac-amps').value), acv=parseFloat(document.getElementById('ac-volts').value), acrla=parseFloat(document.getElementById('np-rla').value);
+  let acel=''; if(!isNaN(aca)){acel=' / '+(isNaN(acv)?'':acv.toFixed(0)+'V ')+aca+'A'+(isNaN(acrla)?'':(aca>acrla?' ⚠ OVER RLA '+acrla:' ✓ under RLA '+acrla));}
+  LAST.ac='SH '+sh.toFixed(0)+'° ('+g.sh+') / SC '+sc.toFixed(0)+'° ('+g.sc+') / TD '+td.toFixed(0)+'° ('+gTD+') / Split '+split.toFixed(0)+'° ('+g.split+') / ΔT '+dt.toFixed(0)+'° ('+gDT+')'+acel+' — '+(allNorm?'WITHIN BENCHMARKS':'Top match: '+scored[0].name);
+  document.getElementById('faults').innerHTML = allNorm
+    ? '<div class="fault top"><h3>System within benchmarks</h3><p>All four benchmarks in range. If a complaint persists: airflow distribution, thermostat, or load — not the sealed system.</p></div>'
+    : scored.slice(0,3).map((f,i)=>{
+        const items=f.check.map(c=> c==="FRZ" ? ck('Check the air filter first — most common miss') : ck(c)).join('');
+        return '<div class="fault'+(i===0?' top':'')+'"><span class="score">'+f.score+'/'+f.n+' match</span><h3>'+f.name+'</h3><p>'+f.why+'</p>'+items+'</div>';
+      }).join('');
+  document.getElementById('results').scrollIntoView({behavior:'smooth'});
+}
+
+/* ---------- WIRING CONFIGURATOR ---------- */
+const WS={
+ "f":{n:"Gas Furnace Only",s:"heat + fan",
+   t:[["R","red — 24V power"],["W","white — heat call"],["G","green — fan"],["C","blue/common — needed for digital stats"]],
+   j:"Single transformer — factory RH-RC jumper stays in.",
+   c:"No C at the wall? Run new wire, add-a-wire kit, or sacrifice G (you lose manual fan)."},
+ "fa":{n:"Furnace + AC",s:"most common",
+   t:[["R","red — 24V power"],["W","white — heat"],["Y","yellow/blue — cooling, out to the contactor"],["G","green — fan"],["C","common"]],
+   j:"RH & RC JUMPED — the furnace transformer powers both sides.",
+   c:"Y lands on the furnace board AND runs out to the condenser contactor coil with C."},
+ "hp":{n:"Heat Pump",s:"O/B + aux heat",
+   t:[["R","24V power"],["Y","compressor — runs in BOTH heat and cool"],["O/B","reversing valve: O = energize in cooling (most brands) · B = energize in heating (Rheem/Ruud)"],["G","fan"],["W/E","aux/emergency heat strips — heat-pump only"],["C","common"]],
+   j:"Set the stat to HEAT PUMP mode — Y is the compressor in both directions; O/B picks which.",
+   c:"Wrong O/B setting = system heats when it should cool. W/E is aux heat only on heat pumps."},
+ "b":{n:"Boiler Only",s:"TT terminals",
+   t:[["RH","power, heating side"],["W","heat call → boiler TT terminals"]],
+   j:"No G — hydronic has no blower at the stat.",
+   c:"Boiler TT terminals just want a dry closure across RH and W."},
+ "ba":{n:"Boiler + Air Handler AC",s:"two transformers",
+   t:[["RH + W","→ boiler (heating transformer)"],["RC + Y + G","→ air handler (cooling transformer)"],["C","take it from the air handler side for digital stats"]],
+   j:"CUT the RH-RC jumper — two transformers must stay separate.",
+   c:"Jumper left in = two transformers tied together — blown fuses or a cooked transformer."},
+ "2s":{n:"2-Stage Furnace + 2-Stage AC",s:"W1/W2 · Y1/Y2",
+   t:[["R","24V power"],["W1","low fire — slower fans, ~½ gas"],["W2","high fire — faster fans, normal gas"],["Y1","stage 1 cool — ~70% compressor/fans"],["Y2","stage 2 cool — full speed"],["G","fan"],["C","common"]],
+   j:"RH & RC jumped (single transformer). 2-stage cooling requires a 2-stage furnace or air handler.",
+   c:"No W2/Y2 wire pulled? Equipment still stages — on time delay instead of demand."}
+};
+const wsrow=document.getElementById('wsrow');
+Object.keys(WS).forEach(k=>{
+  const d=document.createElement('div');
+  d.className='eq';
+  d.innerHTML='<b>'+WS[k].n+'</b><span>'+WS[k].s+'</span>';
+  d.onclick=()=>{
+    wsrow.querySelectorAll('.eq').forEach(x=>x.classList.remove('on')); d.classList.add('on');
+    const w=WS[k];
+    document.getElementById('wsout').innerHTML='<b>'+w.n+'</b><br>'+
+      w.t.map(x=>'<span class="wterm">'+x[0]+'</span> — '+x[1]).join('<br>')+
+      '<br><br><b>Jumper rule:</b> '+w.j+'<br><b>Watch for:</b> '+w.c;
+  };
+  wsrow.appendChild(d);
+});
+
+/* ---------- COMPRESSOR OHM TOOL ---------- */
+function runOhm(){
+  const r12=parseFloat(document.getElementById('oh12').value),
+        r23=parseFloat(document.getElementById('oh23').value),
+        r13=parseFloat(document.getElementById('oh13').value);
+  const out=document.getElementById('ohmout');
+  if([r12,r23,r13].some(isNaN)){alert('Enter all three pair readings.');return;}
+  out.style.display='block';
+  if(r12<=0||r23<=0||r13<=0){
+    out.innerHTML='<b>Shorted winding.</b> A 0Ω pair means turn-to-turn short — verify your leads and zero the meter, then condemn the compressor if it repeats.';
+    return;
+  }
+  const pairs=[{p:'1–2',v:r12,pins:[1,2]},{p:'2–3',v:r23,pins:[2,3]},{p:'1–3',v:r13,pins:[1,3]}];
+  pairs.sort((a,b)=>b.v-a.v);
+  const sr=pairs[0];
+  const cpin=[1,2,3].find(p=>!sr.pins.includes(p));
+  const others=pairs.slice(1);
+  const cs=others[0].v>=others[1].v?others[0]:others[1];
+  const cr=others[0].v>=others[1].v?others[1]:others[0];
+  const spin=cs.pins.find(p=>p!==cpin), rpin=cr.pins.find(p=>p!==cpin);
+  const sum=cs.v+cr.v, err=Math.abs(sum-sr.v)/sr.v*100;
+  out.innerHTML='<b>Common = pin '+cpin+'</b> · Start = pin '+spin+' ('+cs.v+'Ω) · Run = pin '+rpin+' ('+cr.v+'Ω)'+
+    '<br>Check: C–S + C–R = '+sum.toFixed(1)+'Ω vs S–R = '+sr.v+'Ω → '+
+    (err<=15?'✓ windings consistent':'⚠ off by '+err.toFixed(0)+'% — recheck the readings or suspect winding damage')+
+    '<br>Now check each pin to shell ground — any continuity to ground = grounded compressor.';
+}
+
+/* ---------- FURNACE MODULE ---------- */
+const S_HSI=[
+ {t:"Thermostat calls for heat", h:"R and W close at the stat.",
+  d:{t:"No call reaching the furnace",c:["Check 24V across R–C at the IFC (transformer + fuse)","Jump R to W at the furnace — if it fires, fault is the stat or wire","Check the 3A/5A board fuse — if it blows again, find the short"]}},
+ {t:"IFC safety check passes", h:"Limit CLOSED, pressure switch OPEN at rest. Any LED code flashing?",
+  d:{t:"Safety string open or stuck",c:["Limit OPEN before start = prior overheat — check filter, blower, duct before resetting","Pressure switch stuck CLOSED at rest = replace switch or clear tubing","Read the LED flash code against the door legend"]}},
+ {t:"Induced draft motor starts", h:"Inducer spins first — oxygen before heat.",
+  d:{t:"Inducer doesn't start",c:["24V to the inducer relay coil? Yes + no closure = bad relay","Line voltage at the motor with relay closed = failed IDM or capacitor","Spin the wheel by hand (power off) — seized bearings are common"]}},
+ {t:"Pressure switch closes", h:"IDM vacuum pulls the switch closed.",
+  d:{t:"Pressure switch won't close",c:["Pull the tubing — cracked, kinked, or waterlogged?","Blocked flue/vent or intake — nests and debris","Weak inducer can't pull vacuum — check wheel and motor","COND90"]}},
+ {t:"HSI glows orange", h:"After prepurge, the hot surface igniter heats.",
+  d:{t:"No glow",c:["Ohm the HSI — open (∞Ω) = cracked; replace, never touch the element bare-handed","No voltage to the HSI = board relay failure","Typical HSI reads ~40–90Ω cold"]}},
+ {t:"Gas valve energizes, burners light", h:"Oxygen and heat established — now fuel. Flame carries across all crossovers.",
+  d:{t:"No gas / partial light-off",c:["24V at the valve during trial? No = board; yes = valve coil","Confirm inlet gas pressure and manual valve on","Partial light = dirty burners or crossover slots — pull and brush"]}},
+ {t:"Flame proves, HSI shuts off", h:"Flame sensor rectifies AC to DC microamps — IFC confirms flame.",
+  d:{t:"Lights, then drops out in seconds",c:["Clean the flame sensor with light abrasive — the #1 field fix","Check sensor wiring and furnace ground — rectification needs a good ground","Measure microamps in series: most boards want 1–6 µA"]}},
+ {t:"Blower starts after ~30 sec delay", h:"Time-based on-delay lets the heat exchanger warm up.",
+  d:{t:"Burners run but no air",c:["PSC: run capacitor and blower relay","ECM: check module — motor and module replace together under warranty","Don't let it cycle on limit — fix before it cracks the H/E"]}}
+];
+const S_SP=[
+ {t:"Door/interlock switch closed", h:"Blower door on — line power reaches the furnace.",
+  d:{t:"Dead furnace",c:["Blower door seated? Interlock switch is step 1 of the sequence","Check line voltage at the junction box and the service switch"]}},
+ {t:"Transformer energized (24V out)", h:"Primary energizes, then secondary — 24V control power.",
+  d:{t:"No 24V",c:["120V at primary but nothing at secondary = failed transformer","Check for a shorted low-voltage circuit that took out the transformer"]}},
+ {t:"Thermostat closes, safety check passes", h:"T-stat calls; limit, vent switch, and roll-out all closed.",
+  d:{t:"Call not passing through",c:["Jump R to W — fires? Stat or wire","Roll-out tripped = flames leaving the burner box — find out WHY before resetting","Vent switch open = spillage at the diverter — check the flue"]}},
+ {t:"Pilot lit and holding", h:"Standing pilot proved by thermocouple.",
+  d:{t:"Pilot out or won't hold",c:["Relight per the label; drops when you release = test thermocouple (~25–30 mV closed circuit)","Clean the pilot orifice — a lazy yellow pilot won't heat the thermocouple","Draft at the diverter can blow the pilot out"]}},
+ {t:"Gas valve energizes, pilot lights burners", h:"Main valve opens; flame carries across all burners.",
+  d:{t:"Pilot good, no main flame",c:["24V at the valve? No = control circuit; yes = valve","Partial light-off = dirty burners/crossovers"]}},
+ {t:"H/E warms, fan switch closes, blower starts", h:"Temperature-based fan switch — bimetal in the plenum, not a timer.",
+  d:{t:"Burners run, blower never starts",c:["Check fan-limit dial settings (fan-on / fan-off / limit)","Line voltage through the fan side to the motor? Test motor + capacitor","If limit trips before fan-on, airflow or dial setting is wrong"]}}
+];
+const COND90="90% only: pull and flush the condensate trap, check the drain line, and verify PVC pitch — ¼\" per foot back toward the furnace. A plugged trap floods the switch tubing.";
+const FHINTS={
+ "70":"<b>Standing pilot, natural draft.</b> Door switch → transformer → t-stat → safety check → gas valve → pilot lights burners → H/E warms → fan switch → blower. Shutdown: valve off → H/E cools → fan switch opens → blower off (last).",
+ "80":"<b>HSI, induced draft, non-condensing.</b> IDF starts → pressure switch closes → ignitor warms → gas valve → ignitor lights gas → blower. Metal vent, single H/E, no drain.",
+ "90":"<b>HSI, condensing.</b> Same sequence as 80% plus secondary heat exchanger, PVC venting, and a condensate trap/drain — the extra failure points live there."
+};
+let fcat=null, fsteps=[], fidx=0;
+document.querySelectorAll('.cat').forEach(el=>{
+  el.onclick=()=>{
+    document.querySelectorAll('.cat').forEach(x=>x.classList.remove('on'));
+    el.classList.add('on'); startFn(el.dataset.c);
+  };
+});
+function startFn(c){
+  fcat=c; fidx=0;
+  fsteps=(c==="70")?S_SP:S_HSI;
+  const h=document.getElementById('idhint'); h.innerHTML=FHINTS[c]; h.style.display='block';
+  document.getElementById('fdiag').style.display='none';
+  document.getElementById('fdone').style.display='none';
+  document.getElementById('fn-save').style.display='none';
+  document.getElementById('freset').style.display='none';
+  renderFn();
+}
+function renderFn(){
+  document.getElementById('seq').innerHTML=fsteps.map((s,i)=>{
+    const cls=i<fidx?'step passed':(i===fidx?'step active':'step');
+    return '<div class="'+cls+'"><div class="num">STEP '+(i+1)+' / '+fsteps.length+'</div><h3>'+s.t+'</h3>'+
+      '<div class="hint">'+s.h+'</div>'+
+      '<div class="btns"><button class="yes" onclick="fyes()">Yes — next</button><button class="no" onclick="fno()">No — stops here</button></div></div>';
+  }).join('');
+}
+function fyes(){
+  fidx++;
+  if(fidx>=fsteps.length){
+    renderFn();
+    const d=document.getElementById('fdone');
+    d.style.display='block';
+    d.innerHTML='<b>Full sequence completes.</b> If the complaint persists: short-cycling on limit (airflow), duct distribution, stat location, gas pressure under load. On shutdown, the blower is last off (~2 min).';
+    LAST.fn='Full sequence completes — all '+fsteps.length+' steps passed';
+    document.getElementById('fn-save').style.display='block';
+    document.getElementById('freset').style.display='block';
+    d.scrollIntoView({behavior:'smooth'});
+  } else renderFn();
+}
+function fno(){
+  const s=fsteps[fidx], d=document.getElementById('fdiag');
+  const items=s.d.c.map(c=> c==="COND90" ? (fcat==="90"? ck('<b>'+COND90+'</b>') : '') : ck(c)).join('');
+  d.innerHTML='<h3>Failure point: '+s.d.t+'</h3><p>The sequence broke at step '+(fidx+1)+' — everything upstream checked good, so work this list before touching anything downstream.</p>'+items;
+  d.style.display='block';
+  LAST.fn='Failed at step '+(fidx+1)+' of '+fsteps.length+': '+s.t+' → '+s.d.t;
+  document.getElementById('fn-save').style.display='block';
+  document.getElementById('freset').style.display='block';
+  d.scrollIntoView({behavior:'smooth'});
+}
+rfMode('q'); acMode('q'); npSync();
+</script>
+
+<!-- ============================================================
+     TEXT-INTAKE CLIENT LOADER (Oct 12, 2026) - added at the end, nothing above changed.
+     Adds a "Load client from text intake" card to the top of the Job Info page.
+     ============================================================ -->
+<style>
+#ti-card{border:1px solid var(--line,#2a3a55);border-radius:10px;padding:12px;margin:0 0 12px;background:var(--panel,#13203a)}
+#ti-card .ti-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+#ti-card input,#ti-card select{flex:1 1 160px;min-width:0;padding:8px;border-radius:6px;border:1px solid var(--line,#2a3a55);background:transparent;color:inherit}
+#ti-card button{padding:8px 12px;border-radius:6px;border:1px solid var(--ok,#3ecf8e);background:transparent;color:var(--ok,#3ecf8e);font-weight:600}
+#ti-info{display:none;margin-top:10px;font-size:14px;line-height:1.45}
+#ti-info b{color:var(--ok,#3ecf8e)}
+#ti-info .ti-urgent{color:var(--bad,#ff6b6b);font-weight:700}
+</style>
+<script>
+(function(){
+  var PIN_KEY='mundo_field_pin', CLIENTS=[], CUR=null;
+  function getPin(){ try{return localStorage.getItem(PIN_KEY)||'';}catch(e){return '';} }
+  function setPin(p){ try{localStorage.setItem(PIN_KEY,p);}catch(e){} }
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function put(id,val){ var el=document.getElementById(id); if(!el||!val) return; el.value=val; el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true})); }
+  function msg(t){ var m=document.getElementById('ti-msg'); if(m) m.textContent=t; }
+  function build(){
+    var host=document.getElementById('v-jb'); if(!host||document.getElementById('ti-card')) return;
+    var card=document.createElement('div'); card.id='ti-card';
+    card.innerHTML='<div class="ptitle" style="color:var(--ok)">Load client from text intake</div>'+
+      '<div style="font-size:13px;opacity:.8">Clients who texted or emailed the HVAC line. Pick one to fill in this page.</div>'+
+      '<div class="ti-row"><input id="ti-pin" type="password" inputmode="numeric" placeholder="Field PIN"><button type="button" id="ti-refresh">Load list</button></div>'+
+      '<div class="ti-row"><select id="ti-pick"><option value="">- choose a client -</option></select><button type="button" id="ti-use">Use client</button></div>'+
+      '<div id="ti-msg" style="font-size:13px;margin-top:6px"></div><div id="ti-info"></div>';
+    host.insertBefore(card, host.firstChild);
+    document.getElementById('ti-pin').value=getPin();
+    document.getElementById('ti-refresh').onclick=load;
+    document.getElementById('ti-use').onclick=useClient;
+    if(getPin()) load();
+  }
+  function load(){
+    var pin=document.getElementById('ti-pin').value.trim(); if(!pin){msg('Enter the field PIN.');return;}
+    msg('Loading...');
+    google.script.run.withSuccessHandler(function(r){
+      if(!r||!r.ok){msg((r&&r.error)||'Could not load.');return;}
+      setPin(pin); CLIENTS=r.clients||[];
+      var sel=document.getElementById('ti-pick');
+      sel.innerHTML='<option value="">- choose a client ('+CLIENTS.length+') -</option>'+CLIENTS.map(function(c,i){
+        var flag=(c.Urgency==='TODAY'||c.VulnerableOccupant==='YES')?'! ':'';
+        return '<option value="'+i+'">'+esc(flag+(c.Name||c.Contact)+' - '+(c.City||c.Address||'')+' - '+(c.SystemType||'')+' ('+String(c.Updated||'').slice(0,10)+')')+'</option>';}).join('');
+      msg(CLIENTS.length?'Pick a client.':'No text-intake clients yet.');
+    }).withFailureHandler(function(e){msg('Error: '+(e&&e.message||e));}).listIntakeClients(pin);
+  }
+  function useClient(){
+    var i=document.getElementById('ti-pick').value; if(i===''){msg('Choose a client first.');return;}
+    var c=CLIENTS[+i]; CUR=c;
+    put('jb-cid',c.ProfileId); put('jb-client',c.Name);
+    if(String(c.Contact).indexOf('@')>-1) put('jb-email',c.Contact);
+    put('jb-loc',[c.Address,c.City].filter(String).join(', '));
+    put('np-make',c.MakeModel);
+    if(typeof npSync==='function'){try{npSync();}catch(e){}}
+    var phone=String(c.Contact).indexOf('@')>-1?'':c.Contact;
+    var urgent=(c.Urgency==='TODAY'||c.VulnerableOccupant==='YES');
+    var info=document.getElementById('ti-info');
+    info.innerHTML=(urgent?'<div class="ti-urgent">PRIORITY'+(c.VulnerableOccupant==='YES'?' - elderly/disabled/vulnerable occupant':'')+'</div>':'')+
+      (phone?'<div><b>Phone:</b> <a href="tel:'+esc(phone)+'">'+esc(phone)+'</a></div>':'')+
+      '<div><b>Property:</b> '+esc(c.PropertyType)+' &middot; <b>System:</b> '+esc(c.SystemType)+(c.Fuel?' ('+esc(c.Fuel)+')':'')+(c.EquipmentAge?' &middot; <b>Age:</b> '+esc(c.EquipmentAge):'')+'</div>'+
+      '<div><b>Problem:</b> '+esc(c.Symptoms)+(c.Started?' &middot; <b>Started:</b> '+esc(c.Started):'')+'</div>'+
+      (c.ErrorCodes?'<div><b>Codes:</b> '+esc(c.ErrorCodes)+'</div>':'')+
+      (c.AlreadyTried?'<div><b>Already tried:</b> '+esc(c.AlreadyTried)+'</div>':'')+
+      '<div><b>Phone diagnosis (likely):</b> '+esc(c.LikelyCauses)+'</div>'+
+      (c.NextQuestions?'<div><b>Still to check:</b> '+esc(c.NextQuestions)+'</div>':'')+
+      (c.PhoneQuote?'<div><b>Quoted by phone:</b> '+esc(c.PhoneQuote)+'</div>':'')+
+      '<div><b>Intent:</b> '+esc(c.IntentLevel)+' &middot; <b>Mundo Sense offered:</b> '+esc(c.MundoSenseOffered)+(c.CredentialsFollowUp==='YES'?' &middot; <b>Asked about license/insurance - confirm</b>':'')+'</div>'+
+      '<div style="opacity:.8"><b>Last:</b> '+esc(c.LastSummary)+'</div>'+
+      '<div class="ti-row"><button type="button" id="ti-onsite">Mark on site</button><button type="button" id="ti-done">Mark job complete</button></div>';
+    info.style.display='block';
+    document.getElementById('ti-onsite').onclick=function(){mark('ON SITE');};
+    document.getElementById('ti-done').onclick=function(){mark('COMPLETE');};
+    msg('Loaded '+(c.Name||c.ProfileId)+'. Readings you save will carry Client ID '+c.ProfileId+'.');
+  }
+  function mark(st){
+    if(!CUR) return; var pin=document.getElementById('ti-pin').value.trim();
+    var tech=(document.getElementById('jb-tech')||{}).value||'';
+    google.script.run.withSuccessHandler(function(r){msg(r);}).withFailureHandler(function(e){msg('Error: '+(e&&e.message||e));}).markIntakeOnSite(pin,CUR.ProfileId,tech,st);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build); else build();
+})();
+</script>
+<!-- ===================== END TEXT-INTAKE CLIENT LOADER ===================== -->
+
+<script src="field-extras.js"></script>
+</body>
+</html>

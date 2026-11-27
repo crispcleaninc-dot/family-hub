@@ -1,0 +1,17 @@
+{
+  "name": "Mundo Field Diagnostics",
+  "short_name": "Field Dx",
+  "description": "Refrigeration, AC, furnace and wiring diagnostics with EPA rules, nameplate, repair checklists and the Mundo log.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#171B20",
+  "theme_color": "#171B20",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
