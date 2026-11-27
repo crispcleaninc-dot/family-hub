@@ -94,6 +94,10 @@ h3{font-size:.98rem;margin:12px 0 4px}
 .seg .chip{white-space:nowrap;flex:none}
 .timer{font-variant-numeric:tabular-nums;font-weight:700}
 .big{font-size:1.25rem;font-weight:800;letter-spacing:.02em}
+.who{cursor:pointer;text-decoration:underline dotted}
+#v-login .pf{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px;font:inherit;cursor:pointer}
+#v-login .pf .ic{font-size:2rem}#v-login .pf b{display:block}
+.custbox{background:var(--soft);border-radius:12px;padding:4px 10px 10px;margin-top:8px}
 .foot{font-size:.75rem;color:var(--muted);text-align:center;margin:18px 0}
 </style>
 </head>
@@ -101,13 +105,20 @@ h3{font-size:.98rem;margin:12px 0 4px}
 <header>
   <div class="row">
     <a href="../diagnostics/" class="hbtn" style="text-decoration:none" title="All diagnostic tools">‹</a>
-    <h1>Property Maintenance &amp; Grounds<small>Crispus Diagnostics · Crisp Cares Environmental Services</small></h1>
+    <h1>Property Maintenance &amp; Grounds<small><span id="whoLine" class="who">Crispus Diagnostics · Crisp Cares Environmental Services</span></small></h1>
     <button class="hbtn" id="keyBtn" title="Unit key">🔒 Key</button>
     <button class="hbtn hidden" id="installBtn">⬇ Install</button>
   </div>
 </header>
 
 <main>
+  <!-- SIGN IN -->
+  <section id="v-login" class="hidden">
+    <div class="card"><h2>Sign in to a workplace</h2><div class="meta">Each workplace fills in its own details for you (company, property, your name and title, supervisor, due day). Its work orders stay separate.</div></div>
+    <div id="pfList"></div>
+    <div class="card hidden" id="pfPinBox"><label>PIN</label><div class="inrow"><input id="pfPin" type="password" inputmode="numeric" placeholder="PIN"><button class="btn" id="pfGo" style="flex:none">Sign in</button></div></div>
+  </section>
+
   <!-- ORDERS -->
   <section id="v-orders">
     <button class="btn warn block" id="quickNew" style="margin-bottom:10px;font-size:1.1rem">＋ New work order</button>
@@ -119,9 +130,18 @@ h3{font-size:.98rem;margin:12px 0 4px}
   <section id="v-new" class="hidden">
     <div class="card">
       <h2>New work order</h2>
-      <div class="meta">Only the unit goes in. No resident names or phone numbers. The unit is kept in your private Key; anything you share shows the work-order code only.</div>
-      <label>Unit / location</label>
+      <div class="meta" id="nIntro">Only the unit goes in. No resident names or phone numbers. The unit is kept in your private Key; anything you share shows the work-order code only.</div>
+      <div class="tipbox hidden" id="nAuto"></div>
+      <label id="nUnitLbl">Unit / location</label>
       <div class="inrow"><input id="nUnit" placeholder="e.g. 2044, Bldg C hall, pool gate" autocomplete="off"><button class="mic" data-mic="nUnit">🎤</button></div>
+      <div class="chips" id="nRecent"></div>
+      <div class="custbox hidden" id="nCust">
+        <label>Customer name</label><input id="cName" autocomplete="off">
+        <label>Phone</label><input id="cPhone" type="tel" autocomplete="off">
+        <label>Email</label><input id="cEmail" type="email" autocomplete="off">
+        <label>Equipment (make / model / serial)</label><input id="cEquip" autocomplete="off">
+        <div class="meta" style="margin-top:6px">Customer details go in your private Key with the unit/address. Shared updates show the code only.</div>
+      </div>
       <label>Type of work</label>
       <div class="chips" id="nCat"></div>
       <label>What's wrong (tap one)</label>
@@ -160,6 +180,13 @@ h3{font-size:.98rem;margin:12px 0 4px}
       <h2>Unit Key (private)</h2>
       <div class="meta">The Key matches each work-order code to its unit. It stays on this device only. Set a PIN so units stay hidden until you unlock.</div>
       <div id="keyArea" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h2>Workplaces (sign-in)</h2>
+      <div class="meta">Each workplace fills in its details automatically on new work orders and reports.</div>
+      <div id="pfAdmin" style="margin-top:8px"></div>
+      <button class="btn ghost sm" id="pfAdd" style="margin-top:8px">＋ Add a workplace</button>
+      <button class="btn ghost sm" id="pfSwitch" style="margin-top:8px">⇄ Switch workplace</button>
     </div>
     <div class="card">
       <h2>Technician</h2>
@@ -446,7 +473,8 @@ var db=loadDB();
 function loadDB(){
   var d=null; try{ d=JSON.parse(localStorage.getItem(LS)||'null'); }catch(e){}
   d=d||{};
-  d.orders=d.orders||[]; d.key=d.key||{}; d.pins=d.pins||{}; d.seq=d.seq||{}; d.tech=d.tech||''; d.sup=d.sup||''; d.pin=d.pin||''; d.ver=1;
+  d.orders=d.orders||[]; d.key=d.key||{}; d.pins=d.pins||{}; d.seq=d.seq||{}; d.tech=d.tech||''; d.sup=d.sup||''; d.pin=d.pin||''; d.profiles=d.profiles||[]; d.cust=d.cust||{}; d.ver=2;
+  if(!d.profiles.length) d.profiles.push({id:'own',name:'My own customers',kind:'customer',company:'Crisp Cares Environmental Services',site:'',addr:'',tech:d.tech||'',role:'Technician',sup:'',empId:'',pri:'',dueToday:false,shareUnit:false,needPin:false});
   return d;
 }
 function save(){
@@ -466,6 +494,41 @@ function newCode(){
   var d=new Date(); var k=('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
   db.seq[k]=(db.seq[k]||0)+1; return 'WO-'+k+'-'+('0'+db.seq[k]).slice(-2);
 }
+var PF_FIELDS=[['name','Workplace name (what you tap to sign in)'],['company','Company / employer'],['site','Property / site'],['addr','Property address (for reports)'],['tech','Your name on reports'],['role','Your title'],['sup','Supervisor'],['empId','Employee / company ID']];
+var active=null;
+function prof(){ for(var i=0;i<db.profiles.length;i++) if(db.profiles[i].id===active) return db.profiles[i]; return null; }
+function inProf(o){ return !o.prof || !active || o.prof===active; }
+function today(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+function signIn(id){ active=id; sessionStorage.setItem('pmg_prof',id); localStorage.setItem('pmg_last_prof',id); var p=prof();
+  $('whoLine').textContent=p ? (p.kind==='property'?'🏢 ':'👤 ')+p.name+(p.tech?' · '+p.tech:'') : 'Crispus Diagnostics';
+  if(p && p.tech) db.tech=p.tech; if(p && p.sup) db.sup=p.sup; save(); show('orders'); }
+function renderLogin(){
+  var last=localStorage.getItem('pmg_last_prof');
+  $('pfList').innerHTML=db.profiles.map(function(p){ var n=db.orders.filter(function(o){return o.prof===p.id && !o.archived && o.status!=='done';}).length;
+    return '<button class="pf" data-p="'+p.id+'"><span class="ic">'+(p.kind==='property'?'🏢':'👤')+'</span><span><b>'+esc(p.name)+(p.id===last?' <span class="meta">(last used)</span>':'')+'</b><span class="meta">'+esc([p.company,p.site].filter(Boolean).join(' · '))+(n?' · '+n+' open':'')+'</span></span></button>'; }).join('');
+  $('pfList').querySelectorAll('.pf').forEach(function(b){ b.onclick=function(){ var p=null; db.profiles.forEach(function(x){ if(x.id===b.dataset.p) p=x; });
+    if(p.needPin && db.pin && !unlocked){ $('pfPinBox').classList.remove('hidden'); $('pfPin').value=''; $('pfPin').focus(); $('pfGo').onclick=function(){ if(hash($('pfPin').value)===db.pin){ unlocked=true; sessionStorage.setItem('pmg_unl','1'); signIn(p.id); } else toast('Wrong PIN'); }; return; }
+    signIn(p.id); }; });
+}
+function editProfile(p){
+  var isNew=!p; p=p||{id:'p'+Date.now(),kind:'property',pri:'',dueToday:true,shareUnit:false,needPin:true};
+  var h='<div class="sheet" id="pfSheet"><div class="in"><h2>'+(isNew?'Add a workplace':'Edit workplace')+'</h2>'+
+    '<label>Type</label><div class="chips" id="pfKind"><button class="chip" data-k="property">🏢 Property I work for (units)</button><button class="chip" data-k="customer">👤 My own customers</button></div>'+
+    PF_FIELDS.map(function(f){ return '<label>'+f[1]+'</label><input id="pf_'+f[0]+'" value="'+esc(p[f[0]]||'')+'">'; }).join('')+
+    '<label>Default priority</label><div class="chips" id="pfPri"><button class="chip" data-p="">Pick each time</button><button class="chip" data-p="E">Emergency</button><button class="chip" data-p="U">Urgent</button><button class="chip" data-p="R">Routine</button></div>'+
+    '<label style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="pf_dueToday" style="width:auto"'+(p.dueToday?' checked':'')+'> New work orders are due today</label>'+
+    '<label style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="pf_shareUnit" style="width:auto"'+(p.shareUnit?' checked':'')+'> Include unit when I share with my supervisor</label>'+
+    '<label style="display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="pf_needPin" style="width:auto"'+(p.needPin?' checked':'')+'> Ask for my PIN to sign in (set the PIN under Unit Key)</label>'+
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn" id="pfSave" style="flex:2">Save</button><button class="btn ghost" id="pfCancel" style="flex:1">Cancel</button></div></div></div>';
+  document.body.insertAdjacentHTML('beforeend',h);
+  var kind=p.kind, pri=p.pri||''; function mk(){ mark('pfKind','k',kind); mark('pfPri','p',pri); } mk();
+  $('pfKind').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ kind=b.dataset.k; mk(); }; });
+  $('pfPri').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ pri=b.dataset.p; mk(); }; });
+  $('pfCancel').onclick=function(){ $('pfSheet').remove(); };
+  $('pfSave').onclick=function(){ PF_FIELDS.forEach(function(f){ p[f[0]]=$('pf_'+f[0]).value.trim(); }); if(!p.name){ toast('Give it a name'); return; }
+    p.kind=kind; p.pri=pri; p.dueToday=$('pf_dueToday').checked; p.shareUnit=$('pf_shareUnit').checked; p.needPin=$('pf_needPin').checked;
+    if(isNew) db.profiles.push(p); save(); $('pfSheet').remove(); toast('Workplace saved'); renderMore(); };
+}
 function unitOf(o){ var u=db.key[o.code]; return u ? (unlocked ? u : '🔒 unit hidden') : '—'; }
 
 function makeOrder(p){
@@ -474,16 +537,18 @@ function makeOrder(p){
     pri:p.pri||t.pri, status:'open', created:now(), since:p.since||'', due:p.due||'', note:p.note||'',
     steps:t.steps.map(function(s){return {g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''};}),
     log:[{at:now(),x:'Work order created'+(p.note?': '+p.note:'')}], parts:[], photos:[], time:[], archived:false};
+  o.prof=p.prof||active||'';
   if(p.unit) db.key[o.code]=p.unit;
+  if(p.cust) db.cust[o.code]=p.cust;
   db.orders.unshift(o); save(); return o;
 }
 
 /* ============ VIEWS ============ */
 var cur='orders', filter='active';
 function show(v){
-  cur=v; ['orders','new','detail','howto','more'].forEach(function(x){ $('v-'+x).classList.toggle('hidden',x!==v); });
+  cur=v; ['login','orders','new','detail','howto','more'].forEach(function(x){ $('v-'+x).classList.toggle('hidden',x!==v); });
   document.querySelectorAll('nav.tabs button').forEach(function(b){ b.classList.toggle('on',b.dataset.v===v || (v==='detail'&&b.dataset.v==='orders')); });
-  if(v==='orders') renderList(); if(v==='new') renderNew(); if(v==='howto') renderHow(); if(v==='more') renderMore();
+  if(v==='orders') renderList(); if(v==='new') renderNew(); if(v==='howto') renderHow(); if(v==='more') renderMore(); if(v==='login') renderLogin();
   window.scrollTo(0,0);
 }
 document.querySelectorAll('nav.tabs button').forEach(function(b){ b.onclick=function(){ show(b.dataset.v); }; });
@@ -496,6 +561,7 @@ function renderList(){
   $('filt').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ filter=b.dataset.f; renderList(); }; });
   var today=new Date().toISOString().slice(0,10);
   var L=db.orders.filter(function(o){
+    if(!inProf(o)) return false;
     if(filter==='arch') return o.archived; if(o.archived && filter!=='all') return false;
     if(filter==='active') return o.status!=='done'; if(filter==='done') return o.status==='done';
     if(filter==='E') return o.pri==='E' && o.status!=='done'; if(filter==='today') return o.due && o.due<=today && o.status!=='done';
@@ -517,12 +583,23 @@ function renderList(){
 var nf={cat:'',tpl:'',pri:''};
 function renderNew(){
   nf={cat:'',tpl:'',pri:''};
-  ['nUnit','nNote','nSince','nDue'].forEach(function(i){ $(i).value=''; });
+  ['nUnit','nNote','nSince','nDue','cName','cPhone','cEmail','cEquip'].forEach(function(i){ $(i).value=''; });
+  var P=prof(), isCust=P&&P.kind==='customer';
+  $('nCust').classList.toggle('hidden',!isCust);
+  $('nIntro').textContent=isCust?'Customer details stay in your private Key on this phone. Anything you share shows the work-order code only.':'Only the unit goes in. No resident names or phone numbers. The unit is kept in your private Key; anything you share shows the work-order code only.';
+  $('nUnitLbl').textContent=isCust?'Service address':'Unit / location';
+  $('nUnit').placeholder=isCust?'Street, city':'e.g. 2044, Bldg C hall, pool gate';
+  if(P){ $('nAuto').classList.remove('hidden'); $('nAuto').innerHTML='✅ Filled in for you: <b>'+esc([P.company,P.site].filter(Boolean).join(' · ')||P.name)+'</b>'+(P.tech?' · '+esc(P.tech)+(P.role?' ('+esc(P.role)+')':''):'')+(P.sup?' · reports to '+esc(P.sup):'')+(P.empId?' · ID '+esc(P.empId):'')+(P.dueToday?' · due today':''); if(P.dueToday) $('nDue').value=today(); }
+  else $('nAuto').classList.add('hidden');
+  var seen={}, rec=[]; db.orders.forEach(function(o){ var u=db.key[o.code]; if(u && inProf(o) && !seen[u] && rec.length<8){ seen[u]=1; rec.push(u); } });
+  $('nRecent').innerHTML=(unlocked&&rec.length)?rec.map(function(u){return '<button class="chip" data-u="'+esc(u)+'">'+esc(u)+'</button>';}).join(''):'';
+  $('nRecent').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ $('nUnit').value=b.dataset.u; var c=null; db.orders.forEach(function(o){ if(!c && db.key[o.code]===b.dataset.u && db.cust[o.code]) c=db.cust[o.code]; }); if(c && isCust){ $('cName').value=c.name||''; $('cPhone').value=c.phone||''; $('cEmail').value=c.email||''; $('cEquip').value=c.equip||''; } }; });
   $('nCat').innerHTML=CATS.map(function(c){return '<button class="chip" data-c="'+c.id+'">'+c.ic+' '+c.n+'</button>';}).join('');
   $('nCat').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.cat=b.dataset.c; nf.tpl=''; mark('nCat','c',nf.cat); drawTpl(); }; });
   $('nPri').innerHTML=['E','U','R'].map(function(k){return '<button class="chip pri-'+k+'" data-p="'+k+'">'+PRI[k]+'</button>';}).join('');
   $('nPri').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.pri=b.dataset.p; mark('nPri','p',nf.pri); }; });
   drawTpl();
+  if(P && P.pri){ nf.pri=P.pri; mark('nPri','p',nf.pri); }
 }
 function mark(box,attr,val){ $(box).querySelectorAll('button').forEach(function(b){ b.classList.toggle('on',b.dataset[attr]===val); }); }
 function drawTpl(){
@@ -534,7 +611,8 @@ function drawTpl(){
 function doSave(go){
   var tpl=nf.tpl || (nf.cat ? (Object.keys(TPL).filter(function(k){return TPL[k].cat===nf.cat;})[0]) : 'other_custom');
   if(!$('nUnit').value.trim() && !confirm('No unit or location entered. Save anyway?')) return;
-  var o=makeOrder({unit:$('nUnit').value.trim(),tpl:tpl,pri:nf.pri,note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
+  var P=prof(), cu=(P&&P.kind==='customer')?{name:$('cName').value.trim(),phone:$('cPhone').value.trim(),email:$('cEmail').value.trim(),equip:$('cEquip').value.trim()}:null;
+  var o=makeOrder({unit:$('nUnit').value.trim(),cust:cu,tpl:tpl,pri:nf.pri,note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
   toast('Saved '+o.code);
   if(go){ o.status='prog'; o.log.push({at:now(),x:'Started'}); save(); openOrder(o.id); } else show('orders');
 }
@@ -555,6 +633,7 @@ function renderDetail(){
   h+='<div class="card" style="margin-top:8px"><div class="meta">'+o.code+' · '+c.ic+' '+c.n+' · opened '+fmt(o.created)+'</div>'+
      '<div class="big">'+esc(unitOf(o))+' <button class="btn ghost sm" id="dUnit">✎ Unit</button></div><div style="font-weight:700">'+esc(o.title)+'</div>'+
      '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span>'+(o.since?'Problem since '+fmtD(o.since)+' · ':'')+(o.due?'Due '+fmtD(o.due):'')+'</div>'+
+     (unlocked&&db.cust[o.code]&&db.cust[o.code].name?'<div class="meta">👤 '+esc([db.cust[o.code].name,db.cust[o.code].phone,db.cust[o.code].email].filter(Boolean).join(' · '))+(db.cust[o.code].equip?'<br>⚙️ '+esc(db.cust[o.code].equip):'')+'</div>':'')+
      (o.note?'<div class="stnote">'+esc(o.note)+'</div>':'')+
      '<div class="chips" id="dStat">'+Object.keys(STAT).map(function(k){return '<button class="chip'+(o.status===k?' on':'')+'" data-s="'+k+'">'+STAT[k]+'</button>';}).join('')+'</div>'+
      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
@@ -615,6 +694,7 @@ function bindDetail(o){
   $('dPartAdd').onclick=function(){ var v=$('dPart').value.trim(); if(!v) return; o.parts.push({x:v,at:now()}); o.log.push({at:now(),x:'Part needed: '+v}); if(o.status!=='done') o.status='wait'; save(); renderDetail(); };
   $('dPhoto').onchange=function(e){ var f=e.target.files[0]; if(!f) return; shrink(f,function(d){ o.photos.push({d:d,at:now()}); o.log.push({at:now(),x:'Photo added'}); if(!save()) o.photos.pop(); renderDetail(); }); };
   $('v-detail').querySelectorAll('img[data-ph]').forEach(function(im){ im.onclick=function(){ var w=window.open(); if(w) w.document.write('<img src="'+im.src+'" style="max-width:100%">'); }; });
+  (function(){ var P=null; db.profiles.forEach(function(x){ if(x.id===o.prof) P=x; }); if(P&&P.shareUnit) $('dIncUnit').checked=true; })();
   $('dShare').onclick=function(){ var txt=summary(o,$('dIncUnit').checked); if(navigator.share) navigator.share({text:txt}).catch(function(){}); else copy(txt); };
   $('dCopy').onclick=function(){ copy(summary(o,$('dIncUnit').checked)); };
   $('dArch').onclick=function(){ o.archived=!o.archived; o.log.push({at:now(),x:o.archived?'Archived':'Un-archived'}); save(); toast(o.archived?'Archived (still saved — see Archived)':'Back in your list'); renderDetail(); };
@@ -632,7 +712,8 @@ function guessTpl(t){ t=t.toLowerCase();
   if(/door|lock|window|key|blind|closet/.test(t)) return 'door_lock';
   return 'other_custom'; }
 function summary(o,inc){
-  var lines=[(inc&&db.key[o.code]?'Unit '+db.key[o.code]+' · ':'')+o.code+' · '+o.title, 'Priority: '+PRI[o.pri]+' · Status: '+STAT[o.status]];
+  var P=null; db.profiles.forEach(function(x){ if(x.id===o.prof) P=x; });
+  var lines=[(P&&(P.site||P.company)?(P.site||P.company)+' — ':'')+(inc&&db.key[o.code]?'Unit '+db.key[o.code]+' · ':'')+o.code+' · '+o.title, 'Priority: '+PRI[o.pri]+' · Status: '+STAT[o.status]];
   var done=o.steps.filter(function(s){return s.st==='ok';}), fail=o.steps.filter(function(s){return s.st==='fail';}), left=o.steps.filter(function(s){return !s.st;});
   if(done.length) lines.push('Done ('+done.length+'): '+done.map(function(s){return s.t;}).join('; '));
   if(fail.length) lines.push('NEEDS WORK: '+fail.map(function(s){return s.t+(s.n?' ('+s.n+')':'');}).join('; '));
@@ -641,7 +722,7 @@ function summary(o,inc){
   var notes=o.log.filter(function(l){ return !/^(✓|Status:|Clock|Photo added|Started|Work order created)/.test(l.x); }).slice(-3);
   if(notes.length) lines.push('Notes: '+notes.map(function(l){return l.x;}).join(' | '));
   if(totalMin(o)) lines.push('Time on job: '+totalMin(o)+' min');
-  if(db.tech) lines.push('— '+db.tech);
+  var tn=(P&&P.tech)||db.tech; if(tn) lines.push('— '+tn+(P&&P.role?', '+P.role:'')+(P&&P.empId?' (ID '+P.empId+')':''));
   return lines.join('\n');
 }
 function copy(t){ if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){toast('Copied');},function(){prompt('Copy this:',t);}); else prompt('Copy this:',t); }
@@ -663,6 +744,8 @@ $('hSearch').oninput=renderHow;
 
 /* ---- key & more ---- */
 function renderMore(){
+  $('pfAdmin').innerHTML=db.profiles.map(function(p){ return '<div style="display:flex;gap:8px;align-items:center;margin:6px 0"><span style="flex:1">'+(p.kind==='property'?'🏢 ':'👤 ')+'<b>'+esc(p.name)+'</b>'+(p.id===active?' <span class="pill s-done">signed in</span>':'')+'<br><span class="meta">'+esc([p.company,p.site,p.tech].filter(Boolean).join(' · '))+'</span></span><button class="btn ghost sm" data-pe="'+p.id+'">✎ Edit</button></div>'; }).join('');
+  $('pfAdmin').querySelectorAll('[data-pe]').forEach(function(b){ b.onclick=function(){ db.profiles.forEach(function(p){ if(p.id===b.dataset.pe) editProfile(p); }); }; });
   $('techName').value=db.tech; $('supName').value=db.sup;
   var a=$('keyArea');
   if(db.pin && !unlocked){ a.innerHTML='<div class="inrow"><input id="kPin" type="password" inputmode="numeric" placeholder="PIN"><button class="btn" id="kUn" style="flex:none">Unlock</button></div>'; $('kUn').onclick=tryUnlock; return; }
@@ -677,6 +760,9 @@ function setPin(){ var p=prompt('New PIN (4+ digits)'); if(!p) return; if(!/^\d{
 function tryUnlock(){ var v=$('kPin').value; if(hash(v)===db.pin){ unlocked=true; sessionStorage.setItem('pmg_unl','1'); toast('Unlocked'); renderMore(); } else toast('Wrong PIN'); }
 function hash(s){ var h=5381; s='pmg:'+s; for(var i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return 'h'+(h>>>0).toString(36); }
 $('keyBtn').onclick=function(){ show('more'); };
+$('pfAdd').onclick=function(){ editProfile(null); };
+$('pfSwitch').onclick=function(){ sessionStorage.removeItem('pmg_prof'); active=null; show('login'); };
+$('whoLine').onclick=function(){ show('login'); };
 $('techName').onchange=function(){ db.tech=this.value.trim(); save(); };
 $('supName').onchange=function(){ db.sup=this.value.trim(); save(); };
 
@@ -688,19 +774,35 @@ function mergeIn(d){
   var have={}, n=0; db.orders.forEach(function(o){ have[o.id]=1; });
   (d.orders||[]).forEach(function(o){ if(!have[o.id]){ db.orders.push(o); n++; } });
   Object.keys(d.key||{}).forEach(function(k){ if(!db.key[k]) db.key[k]=d.key[k]; });
+  var hp={}; db.profiles.forEach(function(p){ hp[p.id]=1; }); (d.profiles||[]).forEach(function(p){ if(!hp[p.id]) db.profiles.push(p); });
+  Object.keys(d.cust||{}).forEach(function(k){ if(!db.cust[k]) db.cust[k]=d.cust[k]; });
   Object.keys(d.pins||{}).forEach(function(k){ if(!db.pins[k]) db.pins[k]=d.pins[k]; });
   Object.keys(d.seq||{}).forEach(function(k){ db.seq[k]=Math.max(db.seq[k]||0,d.seq[k]); });
   db.orders.sort(function(a,b){ return a.created<b.created?1:-1; });
   save(); toast('Added '+n+' work orders'); renderList();
 }
 
+/* ---- one-tap workplace setup from a link (#profile=...) — kept on this device only ---- */
+function b64j(x){ return JSON.parse(decodeURIComponent(escape(atob(x.replace(/-/g,'+').replace(/_/g,'/'))))); }
+(function(){
+  var m=location.hash.match(/#profile=([^&]+)/); if(!m) return;
+  try{ var p=b64j(m[1]); var ex=null; db.profiles.forEach(function(x){ if(x.id===p.id) ex=x; });
+    if(ex){ Object.keys(p).forEach(function(k){ if(!ex[k]) ex[k]=p[k]; }); } else db.profiles.push(p);
+    var n=0; db.orders.forEach(function(o){ if(!o.prof){ o.prof=p.id; n++; } });
+    save(); sessionStorage.setItem('pmg_prof',p.id); localStorage.setItem('pmg_last_prof',p.id); toast('Workplace added: '+p.name+(n?' ('+n+' work orders moved in)':''));
+  }catch(e){ toast('Couldn\u2019t read that workplace link'); }
+  history.replaceState(null,'',location.pathname+location.hash.replace(/#profile=[^&]+&?/,'#').replace(/^#$/,''));
+})();
+active=sessionStorage.getItem('pmg_prof')||null;
+window.addEventListener('hashchange',function(){ if(/(profile|add)=/.test(location.hash)) location.reload(); });
+
 /* ---- one-tap import from a link (#add=...) — data in the part after # never goes to the web server ---- */
 (function(){
-  var m=location.hash.match(/#add=([^&]+)/); if(!m) return;
+  var m=location.hash.match(/[#&]add=([^&]+)/); if(!m) return;
   try{
     var list=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
     var doneKey='pmg_imp_'+m[1].slice(0,40); if(localStorage.getItem(doneKey)){ toast('Already added'); }
-    else { list.forEach(function(p){ makeOrder({unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'); }
+    else { list.forEach(function(p){ makeOrder({prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'); }
   }catch(e){ toast('Couldn’t read that link'); }
   history.replaceState(null,'',location.pathname);
 })();
@@ -723,7 +825,7 @@ var deferred=null;
 window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferred=e; $('installBtn').classList.remove('hidden'); });
 $('installBtn').onclick=function(){ if(deferred){ deferred.prompt(); deferred=null; $('installBtn').classList.add('hidden'); } };
 
-show('orders');
+if(active && prof()) signIn(active); else show('login');
 </script>
 <script src="notify.js" data-app="Maintenance" defer></script>
 </body>
