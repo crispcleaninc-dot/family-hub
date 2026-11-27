@@ -398,6 +398,42 @@ var TPL={
    ['','Landscaping, leaves, dead branches','',''],
    ['','Report to supervisor','','']
   ]},
+ part_replace:{cat:'other',n:'Missing / broken part (replace or take from another unit)',pri:'U',
+  tip:'If the part is in stock, use stock. If you take it from a vacant unit, write the donor unit in a note so the office reorders it for that unit.',
+  steps:[
+   ['','Identify the part: what it is, size, brand / model number','Photo the spot and any label or model tag.',''],
+   ['','Check the shop / stock for the part','',''],
+   ['','Not in stock: get OK, take it from a vacant unit, note which unit','Tap ✎ Note and write the donor unit.',''],
+   ['','Install the part and test it','',''],
+   ['','Add the part to Parts needed (to reorder for the donor unit or stock)','',''],
+   ['','Report to supervisor','Tap Share update.','']
+  ]},
+ appl_micro_filter:{cat:'appl',n:'Microwave screen / filter missing',pri:'U',
+  safety:'If the missing piece is the small cover INSIDE the microwave (waveguide cover, on the inside wall), tell the resident not to run it until it is replaced — it can spark.',
+  steps:[
+   ['','Which screen: grease filter under an over-the-range microwave, or the cover inside the cavity?','',''],
+   ['','Get brand and model number (label inside the door frame)','','find microwave model number'],
+   ['','Grease filter: slide in from the bottom / side until it clicks','','over the range microwave grease filter replacement'],
+   ['','Waveguide cover: order exact part; cut-to-fit sheet only if property allows','','microwave waveguide cover replacement'],
+   ['','Test run 30 seconds with a cup of water — no sparks','',''],
+   ['','Report to supervisor','','']
+  ]},
+ door_weatherstrip:{cat:'door',n:'Weatherstrip / door seal hanging',pri:'R',
+  steps:[
+   ['','Find where it pulled loose (corner, strike-plate side, bottom sweep)','',''],
+   ['','Press it back into the kerf slot or re-staple / re-glue','','how to replace door weatherstripping kerf'],
+   ['','Torn or short: replace that piece','',''],
+   ['','Close the door: latches, no daylight or draft','',''],
+   ['','Report to supervisor','','']
+  ]},
+ plumb_drain_cap:{cat:'plumb',n:'Sink drain cover / stopper missing',pri:'R',
+  steps:[
+   ['','Check the type: pop-up stopper (rod in back) or push / grid cover','','bathroom sink pop up stopper types'],
+   ['','Get a matching one from stock or a vacant unit (note which unit)','',''],
+   ['','Pop-up: line up stopper with pivot rod; adjust the clevis strap','','how to install bathroom sink pop up stopper'],
+   ['','Test: closes and holds water, opens and drains','',''],
+   ['','Report to supervisor','','']
+  ]},
  other_custom:{cat:'other',n:'Something else (I’ll add steps)',pri:'R',steps:[['','Look at the problem and write what you see','',''],['','Report to supervisor','','']]}
 };
 var PRI={E:'Emergency',U:'Urgent',R:'Routine'};
