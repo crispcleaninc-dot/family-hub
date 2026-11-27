@@ -116,6 +116,7 @@ h3{font-size:.98rem;margin:12px 0 4px}
   <section id="v-login" class="hidden">
     <div class="card"><h2>Sign in to a workplace</h2><div class="meta">Each workplace fills in its own details for you (company, property, your name and title, supervisor, due day). Its work orders stay separate.</div></div>
     <div id="pfList"></div>
+    <div class="card" id="pfImport"><b>📥 Load work orders from a setup link</b><div class="meta" id="pfImpMeta">Copy the setup link from Claude, paste it here, tap Load. Works in the installed app too. Already-added orders are skipped.</div><textarea id="pfImpTxt" rows="3" placeholder="Paste the link here"></textarea><button class="btn" id="pfImpGo" style="margin-top:8px">Load work orders</button></div>
     <div class="card hidden" id="pfPinBox"><label>PIN</label><div class="inrow"><input id="pfPin" type="password" inputmode="numeric" placeholder="PIN"><button class="btn" id="pfGo" style="flex:none">Sign in</button></div></div>
   </section>
 
@@ -532,6 +533,7 @@ function loadDB(){
   d=d||{};
   d.orders=d.orders||[]; d.key=d.key||{}; d.pins=d.pins||{}; d.seq=d.seq||{}; d.tech=d.tech||''; d.sup=d.sup||''; d.pin=d.pin||''; d.profiles=d.profiles||[]; d.cust=d.cust||{}; d.ver=2;
   if(!d.profiles.length) d.profiles.push({id:'own',name:'My own customers',kind:'customer',company:'Crisp Cares Environmental Services',site:'',addr:'',tech:d.tech||'',role:'Technician',sup:'',empId:'',pri:'',dueToday:false,shareUnit:false,needPin:false});
+  if(!d.profiles.some(function(x){return x.id==='beztak-tc';})) d.profiles.push({id:'beztak-tc',name:'Beztak \u2013 Town Court',kind:'property',company:'Beztak (Oakland Management Corp)',site:'Town Court',addr:'7110 Orchard Lake Rd, West Bloomfield',tech:'Ciarne Cyars',role:'Maintenance',sup:'Greg',empId:'',pri:'',dueToday:true,shareUnit:false,needPin:true});
   return d;
 }
 function save(){
@@ -567,6 +569,7 @@ function renderLogin(){
   var last=localStorage.getItem('pmg_last_prof');
   $('pfList').innerHTML=db.profiles.map(function(p){ var n=db.orders.filter(function(o){return o.prof===p.id && !o.archived && o.status!=='done';}).length;
     return '<button class="pf" data-p="'+p.id+'"><span class="ic">'+(p.kind==='property'?'🏢':'👤')+'</span><span><b>'+esc(p.name)+(p.id===last?' <span class="meta">(last used)</span>':'')+'</b><span class="meta">'+esc([p.company,p.site].filter(Boolean).join(' · '))+(n?' · '+n+' open':'')+'</span></span></button>'; }).join('');
+  var any=db.orders.some(function(o){return !o.archived;}); $('pfImpMeta').innerHTML=(any?'':'<b style="color:#b3261e">No work orders on this phone/app yet.</b> ')+'Copy the setup link from Claude, paste it here, tap Load. Works in the installed app too. Already-added orders are skipped.';
   $('pfList').querySelectorAll('.pf').forEach(function(b){ b.onclick=function(){ var p=null; db.profiles.forEach(function(x){ if(x.id===b.dataset.p) p=x; });
     if(p.needPin && db.pin && !unlocked){ $('pfPinBox').classList.remove('hidden'); $('pfPin').value=''; $('pfPin').focus(); $('pfGo').onclick=function(){ if(hash($('pfPin').value)===db.pin){ unlocked=true; sessionStorage.setItem('pmg_unl','1'); signIn(p.id); } else toast('Wrong PIN'); }; return; }
     signIn(p.id); }; });
@@ -912,28 +915,43 @@ function mergeIn(d){
 
 /* ---- one-tap workplace setup from a link (#profile=...) — kept on this device only ---- */
 function b64j(x){ return JSON.parse(decodeURIComponent(escape(atob(x.replace(/-/g,'+').replace(/_/g,'/'))))); }
-(function(){
-  var m=location.hash.match(/#profile=([^&]+)/); if(!m) return;
-  try{ var p=b64j(m[1]); var ex=null; db.profiles.forEach(function(x){ if(x.id===p.id) ex=x; });
+function importProfile(code){
+  try{ var p=b64j(code); var ex=null; db.profiles.forEach(function(x){ if(x.id===p.id) ex=x; });
     if(ex){ Object.keys(p).forEach(function(k){ if(!ex[k]) ex[k]=p[k]; }); } else db.profiles.push(p);
     var n=0; db.orders.forEach(function(o){ if(!o.prof){ o.prof=p.id; n++; } });
     save(); sessionStorage.setItem('pmg_prof',p.id); localStorage.setItem('pmg_last_prof',p.id); toast('Workplace added: '+p.name+(n?' ('+n+' work orders moved in)':''));
-  }catch(e){ toast('Couldn\u2019t read that workplace link'); }
+    return true;
+  }catch(e){ toast('Couldn\u2019t read that workplace link'); return false; }
+}
+(function(){
+  var m=location.hash.match(/#profile=([^&]+)/); if(!m) return;
+  importProfile(m[1]);
   history.replaceState(null,'',location.pathname+location.hash.replace(/#profile=[^&]+&?/,'#').replace(/^#$/,''));
 })();
 active=sessionStorage.getItem('pmg_prof')||null;
 window.addEventListener('hashchange',function(){ if(/(profile|add)=/.test(location.hash)) location.reload(); });
 
 /* ---- one-tap import from a link (#add=...) — data in the part after # never goes to the web server ---- */
+function importOrders(code,force){
+  try{
+    var list=JSON.parse(decodeURIComponent(escape(atob(code.replace(/-/g,'+').replace(/_/g,'/')))));
+    var doneKey='pmg_imp_'+code.slice(0,40); if(localStorage.getItem(doneKey)&&!force){ toast('Already added'); }
+    else { var skipped=0; list=list.filter(function(p){ var dup=db.orders.some(function(o){ return (db.key[o.code]||'')===(p.u||'') && (o.note||'')===(p.n||''); }); if(dup) skipped++; return !dup; }); list.forEach(function(p){ makeOrder({hc:p.h||'',entry:p.e||'',prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'+(skipped?' ('+skipped+' already here)':'')); }
+    return true;
+  }catch(e){ toast('Couldn’t read that link'); return false; }
+}
 (function(){
   var m=location.hash.match(/[#&]add=([^&]+)/); if(!m) return;
-  try{
-    var list=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
-    var doneKey='pmg_imp_'+m[1].slice(0,40); if(localStorage.getItem(doneKey)){ toast('Already added'); }
-    else { var skipped=0; list=list.filter(function(p){ var dup=db.orders.some(function(o){ return (db.key[o.code]||'')===(p.u||'') && (o.note||'')===(p.n||''); }); if(dup) skipped++; return !dup; }); list.forEach(function(p){ makeOrder({hc:p.h||'',entry:p.e||'',prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'+(skipped?' ('+skipped+' already here)':'')); }
-  }catch(e){ toast('Couldn’t read that link'); }
+  importOrders(m[1]);
   history.replaceState(null,'',location.pathname);
 })();
+/* paste-a-link import on the sign-in screen (for the installed app, which can't receive links) */
+$('pfImpGo').onclick=function(){ var t=($('pfImpTxt').value||'').trim().replace(/\s+/g,''); if(!t){ toast('Paste the setup link first'); return; }
+  var mp=t.match(/profile=([A-Za-z0-9_\-+\/=]+)/), ma=t.match(/add=([A-Za-z0-9_\-+\/=]+)/), pid='';
+  if(!mp&&!ma){ toast('That doesn\u2019t look like a setup link'); return; }
+  if(mp && importProfile(mp[1])){ try{ pid=b64j(mp[1]).id; }catch(e){} }
+  if(ma){ var keep=active; if(pid) active=pid; else if(!active) active='beztak-tc'; importOrders(ma[1],true); active=keep; }
+  $('pfImpTxt').value=''; renderLogin(); };
 
 /* ---- voice typing ---- */
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
