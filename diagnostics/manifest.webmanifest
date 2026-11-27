@@ -1,0 +1,17 @@
+{
+  "name": "Crispus Diagnostics",
+  "short_name": "Diagnostics",
+  "description": "Crispus Diagnostics: Refrigeration & HVAC diagnostics plus Property Maintenance & Grounds work orders.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f3d4c",
+  "theme_color": "#0f3d4c",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
