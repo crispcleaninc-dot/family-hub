@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Maintenance">
+<meta name="theme-color" content="#0f3d4c">
+<meta name="robots" content="noindex, nofollow">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="../samsung-guard.js"></script>
+<title>Crispus Diagnostics · Property Maintenance &amp; Grounds</title>
+<style>
+/* Field tool: big tap targets, one hand, works in a dark basement or bright parking lot.
+   Deep teal header, white cards, orange for urgent, green for done. */
+:root{--bg:#eef3f5;--card:#fff;--ink:#14232b;--muted:#5b6b73;--brand:#0f3d4c;--brand2:#1a6b80;--accent:#f28c28;--bad:#d23c3c;--good:#2e9b57;--warn:#f5b800;--line:#d5dfe3;--soft:#e4eef1}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0}
+body{font:17px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);padding-bottom:84px}
+header{position:sticky;top:0;z-index:30;background:var(--brand);color:#fff;padding:10px max(12px,calc((100vw - 760px)/2)) 8px;box-shadow:0 2px 8px #0003}
+header .row{display:flex;align-items:center;gap:10px}
+header h1{font-size:1.05rem;margin:0;line-height:1.15;flex:1}
+header h1 small{display:block;font-weight:400;opacity:.8;font-size:.78rem}
+main{max-width:760px;margin:0 auto;padding:12px}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs button{flex:1;border:0;background:none;padding:8px 2px 10px;font-size:.72rem;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:2px}
+nav.tabs button b{font-size:1.35rem;line-height:1}
+nav.tabs button.on{color:var(--brand2);font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:0 0 10px}
+.btn{border:0;border-radius:12px;padding:12px 14px;font-size:1rem;font-weight:600;background:var(--brand2);color:#fff;cursor:pointer}
+.btn.ghost{background:var(--soft);color:var(--brand)}
+.btn.warn{background:var(--accent)}
+.btn.bad{background:var(--bad)}
+.btn.good{background:var(--good)}
+.btn.sm{padding:7px 10px;font-size:.85rem;border-radius:9px}
+.btn.block{display:block;width:100%}
+.hbtn{background:#ffffff22;color:#fff;border:1px solid #ffffff44;border-radius:10px;padding:6px 10px;font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.chip{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;font-size:.92rem;cursor:pointer}
+.chip.on{background:var(--brand2);border-color:var(--brand2);color:#fff}
+.chip.pri-E.on{background:var(--bad);border-color:var(--bad)}
+.chip.pri-U.on{background:var(--accent);border-color:var(--accent)}
+label{display:block;font-size:.82rem;color:var(--muted);margin:10px 0 3px;font-weight:600}
+input,textarea,select{width:100%;font:inherit;padding:11px;border:1.5px solid var(--line);border-radius:10px;background:#fff}
+textarea{min-height:70px}
+.inrow{display:flex;gap:6px;align-items:stretch}
+.inrow > *{flex:1}
+.inrow .mic{flex:none;width:50px}
+.mic{border:0;border-radius:10px;background:var(--soft);font-size:1.3rem}
+.mic.live{background:var(--bad);color:#fff}
+.wo{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+.wo .ic{font-size:1.6rem;flex:none;width:36px;text-align:center}
+.wo .body{flex:1}
+.wo .t{font-weight:700}
+.meta{font-size:.82rem;color:var(--muted)}
+.pill{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:2px 8px;margin-right:4px;vertical-align:middle}
+.p-E{background:#fde2e2;color:var(--bad)} .p-U{background:#ffe9d3;color:#b45f0d} .p-R{background:var(--soft);color:var(--brand)}
+.s-open{background:#e8eefc;color:#2b4fb5}.s-prog{background:#fff4cc;color:#8a6a00}.s-wait{background:#f1e5fb;color:#7b3fb0}.s-done{background:#ddf3e5;color:var(--good)}
+.bar{height:6px;background:var(--soft);border-radius:4px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:var(--good)}
+.safety{background:#fff1f0;border:1.5px solid #f3b5b0;color:#7a1d16;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:.93rem}
+.safety b{display:block;margin-bottom:2px}
+.tipbox{background:#fffbea;border:1.5px solid #f1dd8b;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:.93rem}
+.step{border-top:1px solid var(--line);padding:10px 0;display:flex;gap:10px}
+.step:first-child{border-top:0}
+.step .cb{flex:none;width:34px;height:34px;border-radius:9px;border:2px solid var(--brand2);background:#fff;font-size:1.2rem;display:grid;place-items:center;cursor:pointer}
+.step.done .cb{background:var(--good);border-color:var(--good);color:#fff}
+.step.failed .cb{background:var(--bad);border-color:var(--bad);color:#fff}
+.step.done .st{color:var(--muted);text-decoration:line-through}
+.step .sb{flex:1}
+.step .grp{font-size:.72rem;font-weight:700;color:var(--brand2);text-transform:uppercase;letter-spacing:.04em}
+.step .how{font-size:.86rem;color:var(--muted);margin-top:2px}
+.step .acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.step .acts a,.step .acts button{font-size:.8rem;padding:5px 9px;border-radius:8px;background:var(--soft);color:var(--brand);border:0;text-decoration:none;font-weight:600}
+.step .acts a.vid{background:#ffe3e3;color:#b3261e}
+.step .flag{font-size:.8rem;font-weight:700;margin-top:4px}
+.step .flag.fail{color:var(--bad)} .step .flag.na{color:var(--muted)}
+.stnote{font-size:.85rem;background:var(--soft);border-radius:8px;padding:5px 8px;margin-top:5px}
+.log div{font-size:.88rem;border-left:3px solid var(--line);padding:3px 0 3px 8px;margin:4px 0}
+.log time{color:var(--muted);font-size:.75rem;display:block}
+.photos{display:flex;flex-wrap:wrap;gap:6px}.photos img{width:84px;height:84px;object-fit:cover;border-radius:8px;border:1px solid var(--line)}
+.hidden{display:none!important}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:#14232b;color:#fff;padding:10px 16px;border-radius:999px;font-size:.9rem;z-index:99;opacity:0;transition:opacity .25s;pointer-events:none}
+.toast.show{opacity:1}
+.sheet{position:fixed;inset:0;background:#0008;z-index:80;display:flex;align-items:flex-end;justify-content:center}
+.sheet .in{background:#fff;width:100%;max-width:760px;border-radius:18px 18px 0 0;padding:16px;max-height:88vh;overflow:auto}
+.lock{font-size:.85rem;color:var(--muted)}
+table.key{width:100%;border-collapse:collapse;font-size:.92rem}table.key td,table.key th{border-bottom:1px solid var(--line);padding:7px 4px;text-align:left}
+h2{font-size:1.1rem;margin:4px 0 8px}
+h3{font-size:.98rem;margin:12px 0 4px}
+.seg{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px}
+.seg .chip{white-space:nowrap;flex:none}
+.timer{font-variant-numeric:tabular-nums;font-weight:700}
+.big{font-size:1.25rem;font-weight:800;letter-spacing:.02em}
+.foot{font-size:.75rem;color:var(--muted);text-align:center;margin:18px 0}
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <h1>Property Maintenance &amp; Grounds<small>Crispus Diagnostics · Crisp Cares Environmental Services</small></h1>
+    <button class="hbtn" id="keyBtn" title="Unit key">🔒 Key</button>
+    <button class="hbtn hidden" id="installBtn">⬇ Install</button>
+  </div>
+</header>
+
+<main>
+  <!-- ORDERS -->
+  <section id="v-orders">
+    <button class="btn warn block" id="quickNew" style="margin-bottom:10px;font-size:1.1rem">＋ New work order</button>
+    <div class="seg" id="filt"></div>
+    <div id="list"></div>
+  </section>
+
+  <!-- NEW -->
+  <section id="v-new" class="hidden">
+    <div class="card">
+      <h2>New work order</h2>
+      <div class="meta">Only the unit goes in. No resident names or phone numbers. The unit is kept in your private Key; anything you share shows the work-order code only.</div>
+      <label>Unit / location</label>
+      <div class="inrow"><input id="nUnit" placeholder="e.g. 2044, Bldg C hall, pool gate" autocomplete="off"><button class="mic" data-mic="nUnit">🎤</button></div>
+      <label>Type of work</label>
+      <div class="chips" id="nCat"></div>
+      <label>What's wrong (tap one)</label>
+      <div class="chips" id="nTpl"></div>
+      <label>Priority</label>
+      <div class="chips" id="nPri"></div>
+      <label>Short note (what the resident or office said)</label>
+      <div class="inrow"><textarea id="nNote" placeholder="Talk or type"></textarea><button class="mic" data-mic="nNote">🎤</button></div>
+      <details style="margin-top:8px"><summary class="meta">More (optional): dates, due day</summary>
+        <label>Problem started</label><input type="date" id="nSince">
+        <label>Due / scheduled</label><input type="date" id="nDue">
+      </details>
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="btn block" id="nSave" style="flex:2">Save &amp; start</button>
+        <button class="btn ghost" id="nSaveOnly" style="flex:1">Save only</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section id="v-detail" class="hidden"></section>
+
+  <!-- HOW-TO -->
+  <section id="v-howto" class="hidden">
+    <div class="card">
+      <h2>How-to library</h2>
+      <div class="meta">Every job type with its step-by-step and video links. Tap a step's ▶ to watch. Use 📌 to save the exact video you like; it then shows on that step every time.</div>
+      <input id="hSearch" placeholder="Search: disposal, outlet, no heat, GFCI…" style="margin-top:8px">
+    </div>
+    <div id="hList"></div>
+  </section>
+
+  <!-- MORE -->
+  <section id="v-more" class="hidden">
+    <div class="card">
+      <h2>Unit Key (private)</h2>
+      <div class="meta">The Key matches each work-order code to its unit. It stays on this device only. Set a PIN so units stay hidden until you unlock.</div>
+      <div id="keyArea" style="margin-top:8px"></div>
+    </div>
+    <div class="card">
+      <h2>Technician</h2>
+      <label>Your name (shows on reports)</label><input id="techName" placeholder="Name">
+      <label>Supervisor / who you report to (name only)</label><input id="supName" placeholder="e.g. Greg">
+    </div>
+    <div class="card">
+      <h2>Full HVAC diagnostics</h2>
+      <div class="meta">Gauges, furnace sequence, wiring and logs to Drive live in the main Crispus Diagnostics app. Heat and AC work orders have a button straight to it.</div>
+      <a class="btn ghost block" style="text-align:center;text-decoration:none;margin-top:8px" target="_blank" rel="noopener" href="https://script.google.com/macros/s/AKfycbzBWIuIsucJrBlV1hsCdGiOp0H1HgubTgi5QOMl5fiKH_lCeh2vK_ag-iGvpxwlICXO/exec">Open full HVAC diagnostics ↗</a>
+    </div>
+    <div class="card">
+      <h2>Backup</h2>
+      <div class="meta">Everything is saved on this phone automatically, offline too. Save a backup file now and then, or to move to a new phone.</div>
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="btn ghost" id="bkSave">⬇ Save backup file</button>
+        <button class="btn ghost" id="bkLoad">⬆ Load backup file</button>
+        <input type="file" id="bkFile" accept=".json,application/json" class="hidden">
+      </div>
+      <div class="meta" style="margin-top:6px">Loading a backup adds to what is here. It never erases anything.</div>
+    </div>
+    <div class="foot">Crispus Diagnostics · Property Maintenance &amp; Grounds v1.0 · data stays on this device</div>
+  </section>
+</main>
+
+<nav class="tabs">
+  <button data-v="orders" class="on"><b>📋</b>Orders</button>
+  <button data-v="new"><b>＋</b>New</button>
+  <button data-v="howto"><b>▶</b>How-to</button>
+  <button data-v="more"><b>⚙</b>Key &amp; more</button>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ DATA: job types and step-by-step guides ============ */
+var HVAC_APP='https://script.google.com/macros/s/AKfycbzBWIuIsucJrBlV1hsCdGiOp0H1HgubTgi5QOMl5fiKH_lCeh2vK_ag-iGvpxwlICXO/exec';
+function yt(q){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(q); }
+var CATS=[
+  {id:'walk',ic:'🏠',n:'Move-in / turn'},
+  {id:'elec',ic:'⚡',n:'Electrical'},
+  {id:'plumb',ic:'🚰',n:'Plumbing'},
+  {id:'appl',ic:'🍽️',n:'Appliance'},
+  {id:'hvac',ic:'🔥',n:'Heat / AC'},
+  {id:'safe',ic:'🚨',n:'Smoke / CO'},
+  {id:'door',ic:'🚪',n:'Doors / locks / windows'},
+  {id:'grounds',ic:'🌳',n:'Grounds'},
+  {id:'tools',ic:'🧰',n:'Tools / supplies'},
+  {id:'other',ic:'🔧',n:'Other'}
+];
+/* step: [group?, text, how, videoQuery]  — groups optional */
+var TPL={
+ walk_movein:{cat:'walk',n:'Move-in walk-through',pri:'U',
+  tip:'Walk every room in the same order: entry, kitchen, living, bedrooms, bathrooms, utility, outside. Take one photo per room at the end. Mark anything that fails and it becomes its own work order with one tap.',
+  steps:[
+   ['Entry','Entry door opens, closes, latches','Deadbolt and knob lock both turn smoothly; peephole clear; weatherstrip not torn.','apartment door deadbolt adjustment strike plate'],
+   ['Entry','Keys: unit, mailbox, amenities tested','Try every key in its lock before the resident gets it.',''],
+   ['Safety','Smoke detector in each bedroom + hallway tested','Press TEST on each one. Chirping = battery. Note the date on the back (replace if 10+ years old).','how to test smoke detector apartment'],
+   ['Safety','CO detector present and tested','Required near sleeping areas when there is gas heat, a gas water heater or an attached garage.','carbon monoxide detector test'],
+   ['Electrical','Every outlet tested with outlet tester','Plug tester in each outlet. Any spark, burn mark, loose plug or warm cover = fail.','how to use an outlet tester'],
+   ['Electrical','GFCIs in kitchen, baths, laundry, outside trip and reset','Press TEST (power cuts off), then RESET.','how to test and reset GFCI outlet'],
+   ['Electrical','All lights and switches work; bulbs in','Ceiling fans run on every speed.',''],
+   ['Heat / AC','Heat comes on and blows warm; thermostat works','Set 5° above room temp, wait 5 minutes, feel the vents.','furnace not turning on troubleshooting'],
+   ['Heat / AC','New furnace filter in, date written on it','Arrow points toward the furnace.','how to change furnace filter'],
+   ['Heat / AC','Water heater: no leaks, pilot / power on, relief valve pipe in place','Look at the floor and the pan under it.','water heater inspection checklist'],
+   ['Kitchen','Fridge cold, freezer freezing, no noise, gaskets seal','Fridge 37–40°F, freezer 0°F.',''],
+   ['Kitchen','Stove burners and oven heat; hood fan and light work','',''],
+   ['Kitchen','Dishwasher runs a short cycle and drains, no leak','Watch the sink while it drains.','dishwasher not draining fix'],
+   ['Kitchen','Garbage disposal runs; no leak under sink','','garbage disposal not working reset'],
+   ['Kitchen','Sink: hot and cold, no drips, drains fast, cabinet floor dry','',''],
+   ['Bathroom','Toilet flushes, refills, stops running, doesn’t rock','Rocking toilet = wax ring/bolts.','toilet keeps running fix flapper'],
+   ['Bathroom','Tub/shower and sink drain; faucets hot and cold; no drips','',''],
+   ['Bathroom','Exhaust fan runs; caulk and grout sealed','',''],
+   ['Rooms','Windows open, close, lock; screens in place','','window balance repair apartment'],
+   ['Rooms','Blinds, closet doors, interior doors work','','bifold closet door repair'],
+   ['Rooms','Walls, paint, flooring, carpet clean and undamaged','Note anything for the office.',''],
+   ['Rooms','No signs of pests','Under sinks, behind fridge, in closets.',''],
+   ['Utility','Washer/dryer hookups and dryer vent clear (if any)','',''],
+   ['Outside','Balcony/patio, railings secure; exterior light works','',''],
+   ['Finish','Photos taken of every room','Tap 📷 Add photo below.',''],
+   ['Finish','Report to supervisor: ready or list of items','Tap Share update.','']
+  ]},
+ elec_outlet_spark:{cat:'elec',n:'Outlet sparks / burn marks',pri:'E',
+  safety:'Treat sparking as a fire risk. Tell the resident not to use that outlet. Kill the breaker before touching anything. Do only what your property and supervisor allow; burn marks, melted plastic, a hot cover plate, aluminum wiring or sparking that comes back go to a licensed electrician.',
+  steps:[
+   ['Make safe','Tell resident: don’t use that outlet; unplug the hair dryer','Note what was plugged in and how many watts (hair dryers are 1500–1875 W).',''],
+   ['Make safe','Find and shut off the breaker for that outlet','Plug a radio or the tester in and flip breakers until it goes dead. Label it.','how to find which breaker controls an outlet'],
+   ['Make safe','Verify dead with a non-contact voltage tester','Test the tester on a live outlet first, then the bad outlet, then the live one again.','how to use non contact voltage tester'],
+   ['Check','Look for scorch, melted plastic, loose / pushed-in plugs','Photo it (📷 below).',''],
+   ['Check','Check if outlet is on a GFCI or AFCI and if the breaker tripped','Bathroom/kitchen outlets often run through one GFCI.','AFCI breaker tripping causes'],
+   ['Check','Remove cover and pull outlet: loose wires? backstab? burnt wire?','Backstabbed (push-in) wires and loose screws are the most common cause of sparks.','why does my outlet spark when I plug something in'],
+   ['Fix (only if allowed)','Replace receptacle (match 15A/20A, same type: GFCI/tamper-resistant)','Wires on the screw terminals, hook clockwise, tight. Ground to green screw.','how to replace an electrical outlet'],
+   ['Fix (only if allowed)','If wire is burnt back, aluminum, or the box is damaged: STOP, call electrician','Leave breaker off and tag it.',''],
+   ['Test','Power on, test with outlet tester, test load (hair dryer) 1 min','Cover plate should not get warm.','how to use an outlet tester'],
+   ['Finish','Tell resident what was done; report to supervisor','Tap Share update.','']
+  ]},
+ plumb_disposal_dw:{cat:'plumb',n:'Disposal not working / dishwasher backs up sink',pri:'U',
+  safety:'Power off before any hand or tool goes near the disposal. Never put your hand inside — use tongs or pliers.',
+  tip:'The dishwasher drains through the disposal (or the sink tail piece). A jammed or clogged disposal, a clogged trap, or a disposal knockout plug that was never removed all make dishwasher water come up in the sink.',
+  steps:[
+   ['Disposal','Switch off; unplug under sink or shut breaker','',''],
+   ['Disposal','Press the red RESET button on the bottom of the disposal','If it pops back out right away, the motor is jammed.','garbage disposal reset button'],
+   ['Disposal','Free the jam: 1/4" hex (Allen) key in bottom center, work back and forth','Until it turns a full circle freely.','unjam garbage disposal allen wrench'],
+   ['Disposal','Flashlight + tongs: remove objects (glass, bones, utensils)','',''],
+   ['Disposal','Power on, run cold water, test','Hums but won’t spin = still jammed. Nothing at all = reset, breaker, switch or plug.','garbage disposal hums but doesn’t work'],
+   ['Dishwasher','If the disposal is new: check the knockout plug in the dishwasher inlet is removed','Pull the dishwasher hose off the disposal and look inside the inlet.','dishwasher knockout plug garbage disposal'],
+   ['Dishwasher','Drain hose has a high loop (or air gap is clear)','Hose should loop up under the counter; clean the air gap cap on the sink if there is one.','dishwasher drain hose high loop air gap clean'],
+   ['Dishwasher','Clean dishwasher filter / drain basket in the bottom of the tub','',''],
+   ['Drain','Clear the sink: plunge (hold the other sink and clamp the DW hose)','',''],
+   ['Drain','Pull the P-trap, clean it, snake the wall line if needed','Bucket under it. Hand-tighten slip nuts.','how to clean p trap kitchen sink snake drain'],
+   ['Test','Run the dishwasher drain / short cycle — water stays out of the sink','','dishwasher backing up into sink fix'],
+   ['Test','No leaks under sink at hose, trap and disposal flange','Dry paper towel test.',''],
+   ['Finish','If the line clog is past the wall / other units affected → plumber or main line','',''],
+   ['Finish','Report to supervisor','Tap Share update.','']
+  ]},
+ hvac_noheat:{cat:'hvac',n:'No heat',pri:'E',hvac:true,
+  safety:'Smell gas: get everyone out, no switches, call the gas company emergency line and your supervisor from outside. CO alarm going off: evacuate and call 911. No heat in winter is an urgent habitability issue — follow property policy on temporary heaters.',
+  steps:[
+   ['Thermostat','Mode on HEAT, set 5° above room temp, fan AUTO','',''],
+   ['Thermostat','Display on? Replace batteries','Blank screen = batteries or no 24V (blown fuse on the furnace board).','thermostat blank screen no heat'],
+   ['Power','Furnace switch ON, breaker ON, blower door closed tight','Door safety switch kills power when the door is off.','furnace door safety switch'],
+   ['Power','Filter not plugged','A clogged filter trips the high limit.','dirty furnace filter no heat'],
+   ['Gas furnace','Gas valve on; read and write down the LED blink code','The code chart is on the inside of the door. Write it in the note.','furnace blinking light codes how to read'],
+   ['Gas furnace','Watch the sequence: inducer → pressure switch → igniter → flame → blower','Note the step where it stops.','furnace sequence of operation troubleshooting'],
+   ['Gas furnace','Lights then goes out in a few seconds → clean flame sensor','Fine steel wool or emery cloth, wipe clean, reinstall.','how to clean furnace flame sensor'],
+   ['Gas furnace','High-efficiency: condensate trap/drain not clogged; vent pipe clear','Clogged drain = pressure switch won’t close.','furnace pressure switch condensate clogged'],
+   ['Gas furnace','Igniter glows? (no glow = igniter or board)','',''],
+   ['Electric / heat pump','Air handler breakers on (heat strips); outdoor unit running, not iced','','heat pump not heating troubleshooting'],
+   ['Readings','Supply and return temps (temp rise) logged','Open the full diagnostics for readings and the furnace module.',''],
+   ['Finish','Heat restored? Resident told. If parts needed: note part and model','',''],
+   ['Finish','Report to supervisor','Tap Share update.','']
+  ]},
+ tools_check:{cat:'tools',n:'Tool / supply check',pri:'R',
+  tip:'Go shelf by shelf. Mark each one ✓ here, or ✗ with a note for missing or broken.',
+  steps:[
+   ['Hand tools','Screwdrivers, nut drivers, pliers, adjustable wrenches','',''],
+   ['Hand tools','Hex/Allen key set (incl. 1/4" disposal key)','',''],
+   ['Electrical','Non-contact voltage tester, outlet/GFCI tester, multimeter','',''],
+   ['Electrical','Spare receptacles (15A, 20A, GFCI), cover plates, wire nuts','',''],
+   ['Plumbing','Plungers (sink + flange), hand snake/auger, bucket','',''],
+   ['Plumbing','Flappers, fill valves, wax rings, supply lines, P-traps, plumber’s putty','',''],
+   ['HVAC','Furnace filters by size, flame sensor cleaning pad, batteries (AA/AAA)','',''],
+   ['General','Drill + bits + charged batteries, flashlight/headlamp, ladder','',''],
+   ['General','Smoke/CO detectors + 9V batteries, light bulbs','',''],
+   ['Grounds','Ice melt / salt, shovels, trash bags, gloves','',''],
+   ['Finish','List what is missing or low and send to supervisor','Tap Share update.','']
+  ]},
+ elec_gfci:{cat:'elec',n:'Outlets dead / GFCI won’t reset',pri:'U',
+  steps:[
+   ['','Find the GFCI that feeds them (kitchen, bath, garage, outside)','One GFCI can protect outlets in other rooms.','find GFCI that controls dead outlets'],
+   ['','Press RESET firmly; check the breaker','',''],
+   ['','Won’t reset: unplug everything on that circuit and try again','Water in an outside box is common.','GFCI will not reset troubleshooting'],
+   ['','Still won’t reset → replace GFCI (line/load correct) if allowed','','how to replace a GFCI outlet line load'],
+   ['','Test: TEST trips, RESET restores','',''],
+   ['','Report to supervisor','','']
+  ]},
+ elec_light:{cat:'elec',n:'Light out / fixture not working',pri:'R',
+  steps:[
+   ['','Replace bulb with correct type/wattage','',''],
+   ['','Check switch and breaker','',''],
+   ['','Power off, verify dead, check connections at fixture','','light fixture not working troubleshooting'],
+   ['','Replace switch or fixture if allowed','','how to replace a light switch'],
+   ['','Report to supervisor','','']
+  ]},
+ plumb_toilet:{cat:'plumb',n:'Toilet running / clogged / leaking',pri:'U',
+  steps:[
+   ['','Shut the supply valve if it is overflowing','',''],
+   ['','Clogged: flange plunger, then closet auger','','how to use toilet auger'],
+   ['','Running: flapper, chain length, fill valve height','','toilet keeps running fix flapper fill valve'],
+   ['','Leaking at base / rocking: tighten bolts or replace wax ring','','replace toilet wax ring'],
+   ['','Test 3 flushes, floor dry','',''],
+   ['','Report to supervisor','','']
+  ]},
+ plumb_leak:{cat:'plumb',n:'Leak under sink / faucet drip',pri:'U',
+  steps:[
+   ['','Find the leak: dry everything, run water, watch','Supply line, faucet base, trap or drain.',''],
+   ['','Tighten slip nuts / supply nuts; replace supply line if old','','fix leak under kitchen sink'],
+   ['','Faucet drip: cartridge or washer','','how to fix a dripping faucet cartridge'],
+   ['','Check cabinet floor for damage/mold; dry it','',''],
+   ['','Report to supervisor','','']
+  ]},
+ appl_fridge:{cat:'appl',n:'Refrigerator not cooling',pri:'U',hvac:true,
+  steps:[
+   ['','Temp setting, door gasket seal, nothing blocking vents','',''],
+   ['','Condenser coils clean (bottom/back), condenser fan running','','refrigerator not cooling condenser coils fan'],
+   ['','Freezer frosted over on back wall = defrost problem','','refrigerator defrost problem symptoms'],
+   ['','Evaporator fan running inside freezer','',''],
+   ['','Log temps; open full diagnostics if sealed-system issue','',''],
+   ['','Report to supervisor','','']
+  ]},
+ appl_dw_leak:{cat:'appl',n:'Dishwasher not draining / leaking',pri:'U',
+  steps:[
+   ['','Clean filter in the bottom of the tub','','dishwasher not draining fix'],
+   ['','Check drain hose kink, high loop, air gap','',''],
+   ['','Leak: door gasket, level, spray arm, inlet','','dishwasher leaking from door fix'],
+   ['','Report to supervisor','','']
+  ]},
+ safe_chirp:{cat:'safe',n:'Smoke / CO detector chirping',pri:'U',
+  safety:'A CO alarm in alarm (not chirp) means get everyone out and call 911.',
+  steps:[
+   ['','Replace battery; press and hold TEST to reset','','smoke detector chirping after battery change'],
+   ['','Check date on back; replace if expired (10 yrs smoke / 7–10 yrs CO)','',''],
+   ['','Hardwired: check connector and breaker','',''],
+   ['','Test every detector in the unit','',''],
+   ['','Report to supervisor','','']
+  ]},
+ door_lock:{cat:'door',n:'Door / lock / window problem',pri:'U',
+  steps:[
+   ['','Identify: sticking, won’t latch, lock binding, window won’t lock','',''],
+   ['','Tighten hinges (3" screw in top hinge), adjust strike plate','','door won’t latch fix strike plate'],
+   ['','Lube lock with graphite; replace if needed','',''],
+   ['','Windows: balance, lock, screen','',''],
+   ['','Report to supervisor','','']
+  ]},
+ grounds_snow:{cat:'grounds',n:'Snow / ice — walks, steps, entries',pri:'U',
+  safety:'Salt steps and entries first. Wear traction cleats. Lift with your legs.',
+  steps:[
+   ['','Shovel entries, steps, ramps, mailbox area first','',''],
+   ['','Spread ice melt on steps and walkways','Follow bag rate; less near concrete under 1 year old.','ice melt how much to use'],
+   ['','Clear fire hydrants and dumpster access','',''],
+   ['','Recheck after refreeze (evening / morning)','',''],
+   ['','Report to supervisor','','']
+  ]},
+ grounds_trash:{cat:'grounds',n:'Trash / debris / common area clean',pri:'R',
+  steps:[
+   ['','Pick up litter in lots, walks, landscaping','',''],
+   ['','Trash rooms / dumpsters: overflow, doors closed','',''],
+   ['','Hallways, laundry room, mail area tidy','',''],
+   ['','Report anything broken (lights, doors, signs)','',''],
+   ['','Report to supervisor','','']
+  ]},
+ grounds_inspect:{cat:'grounds',n:'Grounds walk / exterior check',pri:'R',
+  steps:[
+   ['','Exterior lights and parking lot lights working','',''],
+   ['','Walkways: trip hazards, broken concrete, ice','',''],
+   ['','Gates, fences, signs, railings secure','',''],
+   ['','Gutters / downspouts flowing, no pooling','',''],
+   ['','Landscaping, leaves, dead branches','',''],
+   ['','Report to supervisor','','']
+  ]},
+ other_custom:{cat:'other',n:'Something else (I’ll add steps)',pri:'R',steps:[['','Look at the problem and write what you see','',''],['','Report to supervisor','','']]}
+};
+var PRI={E:'Emergency',U:'Urgent',R:'Routine'};
+var STAT={open:'Open',prog:'In progress',wait:'Waiting (parts / supervisor)',done:'Done'};
+
+/* ============ STORAGE (never erases; adds and migrates) ============ */
+var LS='pmg_data_v1';
+var db=loadDB();
+function loadDB(){
+  var d=null; try{ d=JSON.parse(localStorage.getItem(LS)||'null'); }catch(e){}
+  d=d||{};
+  d.orders=d.orders||[]; d.key=d.key||{}; d.pins=d.pins||{}; d.seq=d.seq||{}; d.tech=d.tech||''; d.sup=d.sup||''; d.pin=d.pin||''; d.ver=1;
+  return d;
+}
+function save(){
+  try{ localStorage.setItem(LS,JSON.stringify(db)); return true; }
+  catch(e){ toast('Phone storage full — save a backup file and remove some photos'); return false; }
+}
+var unlocked = !db.pin || sessionStorage.getItem('pmg_unl')==='1';
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function toast(t){ var e=$('toast'); e.textContent=t; e.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(function(){e.classList.remove('show');},2200); }
+function now(){ return new Date().toISOString(); }
+function fmt(iso){ if(!iso) return ''; var d=new Date(iso); return d.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}); }
+function fmtD(s){ if(!s) return ''; var p=s.split('-'); var d=new Date(+p[0],+p[1]-1,+p[2]); return d.toLocaleDateString([], {weekday:'short',month:'short',day:'numeric'}); }
+function catOf(id){ for(var i=0;i<CATS.length;i++) if(CATS[i].id===id) return CATS[i]; return CATS[CATS.length-1]; }
+function newCode(){
+  var d=new Date(); var k=('0'+(d.getMonth()+1)).slice(-2)+('0'+d.getDate()).slice(-2);
+  db.seq[k]=(db.seq[k]||0)+1; return 'WO-'+k+'-'+('0'+db.seq[k]).slice(-2);
+}
+function unitOf(o){ var u=db.key[o.code]; return u ? (unlocked ? u : '🔒 unit hidden') : '—'; }
+
+function makeOrder(p){
+  var t=TPL[p.tpl]||TPL.other_custom;
+  var o={id:'o'+Date.now()+Math.random().toString(36).slice(2,6), code:newCode(), tpl:p.tpl, cat:t.cat, title:p.title||t.n,
+    pri:p.pri||t.pri, status:'open', created:now(), since:p.since||'', due:p.due||'', note:p.note||'',
+    steps:t.steps.map(function(s){return {g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''};}),
+    log:[{at:now(),x:'Work order created'+(p.note?': '+p.note:'')}], parts:[], photos:[], time:[], archived:false};
+  if(p.unit) db.key[o.code]=p.unit;
+  db.orders.unshift(o); save(); return o;
+}
+
+/* ============ VIEWS ============ */
+var cur='orders', filter='active';
+function show(v){
+  cur=v; ['orders','new','detail','howto','more'].forEach(function(x){ $('v-'+x).classList.toggle('hidden',x!==v); });
+  document.querySelectorAll('nav.tabs button').forEach(function(b){ b.classList.toggle('on',b.dataset.v===v || (v==='detail'&&b.dataset.v==='orders')); });
+  if(v==='orders') renderList(); if(v==='new') renderNew(); if(v==='howto') renderHow(); if(v==='more') renderMore();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll('nav.tabs button').forEach(function(b){ b.onclick=function(){ show(b.dataset.v); }; });
+$('quickNew').onclick=function(){ show('new'); };
+
+function prog(o){ var n=o.steps.length, d=o.steps.filter(function(s){return s.st;}).length; return n?Math.round(d*100/n):0; }
+function renderList(){
+  var F=[['active','Active'],['E','🔴 Emergency'],['today','Due today'],['done','Done'],['arch','Archived'],['all','All']];
+  $('filt').innerHTML=F.map(function(f){return '<button class="chip'+(filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>';}).join('');
+  $('filt').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ filter=b.dataset.f; renderList(); }; });
+  var today=new Date().toISOString().slice(0,10);
+  var L=db.orders.filter(function(o){
+    if(filter==='arch') return o.archived; if(o.archived && filter!=='all') return false;
+    if(filter==='active') return o.status!=='done'; if(filter==='done') return o.status==='done';
+    if(filter==='E') return o.pri==='E' && o.status!=='done'; if(filter==='today') return o.due && o.due<=today && o.status!=='done';
+    return true; });
+  var rank={E:0,U:1,R:2};
+  if(filter!=='all'&&filter!=='arch'&&filter!=='done') L.sort(function(a,b){ return (rank[a.pri]-rank[b.pri]) || ((a.due||'9')<(b.due||'9')?-1:1); });
+  $('list').innerHTML = L.length ? L.map(function(o){
+    var c=catOf(o.cat), p=prog(o);
+    return '<div class="card wo" data-id="'+o.id+'"><div class="ic">'+c.ic+'</div><div class="body">'+
+      '<div class="t">'+esc(o.title)+'</div>'+
+      '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span><span class="pill s-'+o.status+'">'+STAT[o.status].split(' (')[0]+'</span> '+
+      '<b>'+esc(unitOf(o))+'</b> · '+o.code+(o.due?' · due '+fmtD(o.due):'')+(o.since?' · since '+fmtD(o.since):'')+'</div>'+
+      '<div class="bar"><i style="width:'+p+'%"></i></div></div></div>';
+  }).join('') : '<div class="card meta">Nothing here. Tap ＋ New work order.</div>';
+  $('list').querySelectorAll('.wo').forEach(function(e){ e.onclick=function(){ openOrder(e.dataset.id); }; });
+}
+
+/* ---- new ---- */
+var nf={cat:'',tpl:'',pri:''};
+function renderNew(){
+  nf={cat:'',tpl:'',pri:''};
+  ['nUnit','nNote','nSince','nDue'].forEach(function(i){ $(i).value=''; });
+  $('nCat').innerHTML=CATS.map(function(c){return '<button class="chip" data-c="'+c.id+'">'+c.ic+' '+c.n+'</button>';}).join('');
+  $('nCat').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.cat=b.dataset.c; nf.tpl=''; mark('nCat','c',nf.cat); drawTpl(); }; });
+  $('nPri').innerHTML=['E','U','R'].map(function(k){return '<button class="chip pri-'+k+'" data-p="'+k+'">'+PRI[k]+'</button>';}).join('');
+  $('nPri').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.pri=b.dataset.p; mark('nPri','p',nf.pri); }; });
+  drawTpl();
+}
+function mark(box,attr,val){ $(box).querySelectorAll('button').forEach(function(b){ b.classList.toggle('on',b.dataset[attr]===val); }); }
+function drawTpl(){
+  var ks=Object.keys(TPL).filter(function(k){ return !nf.cat || TPL[k].cat===nf.cat; });
+  $('nTpl').innerHTML=ks.map(function(k){return '<button class="chip" data-t="'+k+'">'+catOf(TPL[k].cat).ic+' '+TPL[k].n+'</button>';}).join('');
+  $('nTpl').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.tpl=b.dataset.t; nf.cat=TPL[nf.tpl].cat; mark('nCat','c',nf.cat); mark('nTpl','t',nf.tpl); if(!nf.pri){ nf.pri=TPL[nf.tpl].pri; mark('nPri','p',nf.pri);} }; });
+  if(nf.tpl) mark('nTpl','t',nf.tpl);
+}
+function doSave(go){
+  var tpl=nf.tpl || (nf.cat ? (Object.keys(TPL).filter(function(k){return TPL[k].cat===nf.cat;})[0]) : 'other_custom');
+  if(!$('nUnit').value.trim() && !confirm('No unit or location entered. Save anyway?')) return;
+  var o=makeOrder({unit:$('nUnit').value.trim(),tpl:tpl,pri:nf.pri,note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
+  toast('Saved '+o.code);
+  if(go){ o.status='prog'; o.log.push({at:now(),x:'Started'}); save(); openOrder(o.id); } else show('orders');
+}
+$('nSave').onclick=function(){ doSave(true); };
+$('nSaveOnly').onclick=function(){ doSave(false); };
+
+/* ---- detail ---- */
+var openId=null, tick=null;
+function find(id){ for(var i=0;i<db.orders.length;i++) if(db.orders[i].id===id) return db.orders[i]; return null; }
+function openOrder(id){ openId=id; show('detail'); renderDetail(); }
+function vidFor(o,i){ var s=o.steps[i]; var pin=db.pins[o.tpl+'|'+s.t]; return pin || (s.v?yt(s.v):''); }
+function runningSince(o){ var t=o.time[o.time.length-1]; return t && !t.end ? t.start : null; }
+function totalMin(o){ var ms=0; o.time.forEach(function(t){ ms+=(t.end?new Date(t.end):new Date())-new Date(t.start); }); return Math.round(ms/60000); }
+function renderDetail(){
+  var o=find(openId); if(!o){ show('orders'); return; }
+  var t=TPL[o.tpl]||{}, c=catOf(o.cat), p=prog(o), run=runningSince(o);
+  var h='<button class="btn ghost sm" id="dBack">‹ All orders</button>';
+  h+='<div class="card" style="margin-top:8px"><div class="meta">'+o.code+' · '+c.ic+' '+c.n+' · opened '+fmt(o.created)+'</div>'+
+     '<div class="big">'+esc(unitOf(o))+' <button class="btn ghost sm" id="dUnit">✎ Unit</button></div><div style="font-weight:700">'+esc(o.title)+'</div>'+
+     '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span>'+(o.since?'Problem since '+fmtD(o.since)+' · ':'')+(o.due?'Due '+fmtD(o.due):'')+'</div>'+
+     (o.note?'<div class="stnote">'+esc(o.note)+'</div>':'')+
+     '<div class="chips" id="dStat">'+Object.keys(STAT).map(function(k){return '<button class="chip'+(o.status===k?' on':'')+'" data-s="'+k+'">'+STAT[k]+'</button>';}).join('')+'</div>'+
+     '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
+       '<button class="btn sm '+(run?'bad':'good')+'" id="dClock">'+(run?'⏹ Stop clock':'▶ Start clock')+'</button>'+
+       '<span class="timer" id="dTime">'+totalMin(o)+' min on job</span>'+
+       (t.hvac||o.cat==='hvac'?'<a class="btn sm ghost" style="text-decoration:none" target="_blank" rel="noopener" href="'+HVAC_APP+'">Full HVAC diagnostics ↗</a>':'')+
+     '</div>'+
+     '<div class="bar"><i style="width:'+p+'%"></i></div><div class="meta">'+p+'% of steps checked</div></div>';
+  if(t.safety) h+='<div class="safety"><b>⚠ Safety first</b>'+esc(t.safety)+'</div>';
+  if(t.tip) h+='<div class="tipbox">💡 '+esc(t.tip)+'</div>';
+  h+='<div class="card"><h2>Step by step</h2><div id="dSteps">';
+  var lastG=null;
+  o.steps.forEach(function(s,i){
+    var v=vidFor(o,i), pinned=!!db.pins[o.tpl+'|'+s.t];
+    h+='<div class="step'+(s.st==='ok'||s.st==='na'?' done':'')+(s.st==='fail'?' failed':'')+'" data-i="'+i+'"><button class="cb" data-a="tog">'+(s.st==='ok'?'✓':s.st==='fail'?'✗':s.st==='na'?'–':'')+'</button><div class="sb">'+
+       (s.g && s.g!==lastG?'<div class="grp">'+esc(s.g)+'</div>':'')+'<div class="st">'+esc(s.t)+'</div>'+
+       (s.h?'<div class="how">'+esc(s.h)+'</div>':'')+
+       (s.st==='fail'?'<div class="flag fail">✗ Needs work'+(s.at?' · '+fmt(s.at):'')+'</div>':s.st==='na'?'<div class="flag na">Not applicable</div>':s.st==='ok'&&s.at?'<div class="meta">✓ '+fmt(s.at)+'</div>':'')+
+       (s.n?'<div class="stnote">'+esc(s.n)+'</div>':'')+
+       '<div class="acts">'+(v?'<a class="vid" target="_blank" rel="noopener" href="'+esc(v)+'">▶ '+(pinned?'My video':'Watch how')+'</a>':'')+
+       '<button data-a="pin">📌 '+(pinned?'Change video':'Pin video')+'</button><button data-a="fail">✗ Fail</button><button data-a="na">N/A</button><button data-a="note">✎ Note</button>'+
+       (s.st==='fail'?'<button data-a="spin">＋ Make work order</button>':'')+'</div></div></div>';
+    lastG=s.g;
+  });
+  h+='</div><button class="btn ghost sm" id="dAddStep" style="margin-top:8px">＋ Add my own step</button></div>';
+  h+='<div class="card"><h2>Notes &amp; history</h2><div class="inrow"><input id="dNote" placeholder="What you found / did"><button class="mic" data-mic="dNote">🎤</button><button class="btn sm" id="dNoteAdd" style="flex:none">Add</button></div>'+
+     '<div class="log" style="margin-top:6px">'+o.log.slice().reverse().map(function(l){return '<div><time>'+fmt(l.at)+'</time>'+esc(l.x)+'</div>';}).join('')+'</div></div>';
+  h+='<div class="card"><h2>Parts needed</h2><div class="inrow"><input id="dPart" placeholder="Part, size, model #"><button class="btn sm" id="dPartAdd" style="flex:none">Add</button></div>'+
+     (o.parts.length?'<ul>'+o.parts.map(function(x){return '<li>'+esc(x.x)+' <span class="meta">'+fmt(x.at)+'</span></li>';}).join('')+'</ul>':'<div class="meta">None yet</div>')+'</div>';
+  h+='<div class="card"><h2>Photos</h2><div class="photos">'+o.photos.map(function(ph,i){return '<img src="'+ph.d+'" data-ph="'+i+'" alt="photo">';}).join('')+'</div>'+
+     '<label class="btn ghost sm" style="display:inline-block;margin-top:8px;color:var(--brand)">📷 Add photo<input type="file" accept="image/*" capture="environment" id="dPhoto" class="hidden"></label></div>';
+  h+='<div class="card"><h2>Send / share</h2><div class="meta">The share text uses the work-order code. Turn on the unit only if you are sending it to someone who should know it.</div>'+
+     '<label style="display:flex;gap:8px;align-items:center;color:var(--ink);font-size:.95rem"><input type="checkbox" id="dIncUnit" style="width:auto"> Include unit number</label>'+
+     '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn" id="dShare">📤 Share update</button><button class="btn ghost" id="dCopy">Copy text</button>'+
+     '<button class="btn ghost" id="dArch">'+(o.archived?'Un-archive':'Archive')+'</button></div></div>';
+  $('v-detail').innerHTML=h;
+  bindDetail(o);
+  clearInterval(tick); if(run) tick=setInterval(function(){ var e=$('dTime'); if(e) e.textContent=totalMin(o)+' min on job'; },20000);
+}
+function bindDetail(o){
+  $('dBack').onclick=function(){ show('orders'); };
+  $('dUnit').onclick=function(){ if(db.pin && !unlocked){ toast('Unlock the Key first'); show('more'); return; } var u=prompt('Unit / location for '+o.code, db.key[o.code]||''); if(u===null) return; u=u.trim(); if(!u) return; db.key[o.code]=u; o.log.push({at:now(),x:'Unit set in Key'}); save(); renderDetail(); };
+  $('dStat').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ if(o.status===b.dataset.s) return; o.status=b.dataset.s; o.log.push({at:now(),x:'Status: '+STAT[o.status]}); if(o.status==='done'){ var r=runningSince(o); if(r) o.time[o.time.length-1].end=now(); } save(); renderDetail(); }; });
+  $('dClock').onclick=function(){ var r=runningSince(o); if(r){ o.time[o.time.length-1].end=now(); o.log.push({at:now(),x:'Clock stopped ('+totalMin(o)+' min total)'}); } else { o.time.push({start:now()}); o.log.push({at:now(),x:'Clock started'}); if(o.status==='open') o.status='prog'; } save(); renderDetail(); };
+  $('dSteps').querySelectorAll('.step').forEach(function(row){
+    var i=+row.dataset.i, s=o.steps[i];
+    row.querySelectorAll('[data-a]').forEach(function(b){ b.onclick=function(ev){ ev.stopPropagation(); var a=b.dataset.a;
+      if(a==='tog'){ s.st = s.st ? '' : 'ok'; s.at = s.st ? now() : ''; if(s.st) o.log.push({at:now(),x:'✓ '+s.t}); if(o.status==='open') o.status='prog'; }
+      if(a==='fail'){ s.st='fail'; s.at=now(); var why=prompt('What is wrong? (optional)', s.n||''); if(why!==null && why.trim()) s.n=why.trim(); o.log.push({at:now(),x:'✗ '+s.t+(s.n?' — '+s.n:'')}); }
+      if(a==='na'){ s.st='na'; s.at=now(); }
+      if(a==='note'){ var n=prompt('Note for this step', s.n||''); if(n===null) return; s.n=n.trim(); if(s.n) o.log.push({at:now(),x:'Note on "'+s.t+'": '+s.n}); }
+      if(a==='pin'){ var k=o.tpl+'|'+s.t; var u=prompt('Paste the YouTube link you want for this step.\n(Leave empty to go back to the search link.)', db.pins[k]||''); if(u===null) return; u=u.trim(); if(u && !/^https?:\/\//i.test(u)){ toast('That needs to be a web link'); return; } if(u) db.pins[k]=u; else delete db.pins[k]; toast(u?'Video pinned to this step':'Pin removed'); }
+      if(a==='spin'){ var tplPick=guessTpl(s.t); var no=makeOrder({unit:db.key[o.code]||'',tpl:tplPick,pri:'U',note:'From '+o.code+' ('+o.title+'): '+s.t+(s.n?' — '+s.n:'')}); o.log.push({at:now(),x:'Made '+no.code+' for: '+s.t}); save(); toast('Made '+no.code); renderDetail(); return; }
+      save(); renderDetail(); }; });
+  });
+  $('dAddStep').onclick=function(){ var t=prompt('New step'); if(!t||!t.trim()) return; o.steps.push({g:'My steps',t:t.trim(),h:'',v:'',st:'',at:'',n:''}); o.log.push({at:now(),x:'Added step: '+t.trim()}); save(); renderDetail(); };
+  $('dNoteAdd').onclick=function(){ var v=$('dNote').value.trim(); if(!v) return; o.log.push({at:now(),x:v}); save(); renderDetail(); toast('Note saved'); };
+  $('dPartAdd').onclick=function(){ var v=$('dPart').value.trim(); if(!v) return; o.parts.push({x:v,at:now()}); o.log.push({at:now(),x:'Part needed: '+v}); if(o.status!=='done') o.status='wait'; save(); renderDetail(); };
+  $('dPhoto').onchange=function(e){ var f=e.target.files[0]; if(!f) return; shrink(f,function(d){ o.photos.push({d:d,at:now()}); o.log.push({at:now(),x:'Photo added'}); if(!save()) o.photos.pop(); renderDetail(); }); };
+  $('v-detail').querySelectorAll('img[data-ph]').forEach(function(im){ im.onclick=function(){ var w=window.open(); if(w) w.document.write('<img src="'+im.src+'" style="max-width:100%">'); }; });
+  $('dShare').onclick=function(){ var txt=summary(o,$('dIncUnit').checked); if(navigator.share) navigator.share({text:txt}).catch(function(){}); else copy(txt); };
+  $('dCopy').onclick=function(){ copy(summary(o,$('dIncUnit').checked)); };
+  $('dArch').onclick=function(){ o.archived=!o.archived; o.log.push({at:now(),x:o.archived?'Archived':'Un-archived'}); save(); toast(o.archived?'Archived (still saved — see Archived)':'Back in your list'); renderDetail(); };
+  bindMics($('v-detail'));
+}
+function guessTpl(t){ t=t.toLowerCase();
+  if(/outlet|gfci|spark/.test(t)) return /gfci/.test(t)?'elec_gfci':'elec_outlet_spark';
+  if(/light|switch|fan/.test(t)) return 'elec_light';
+  if(/disposal|dishwasher/.test(t)) return 'plumb_disposal_dw';
+  if(/toilet/.test(t)) return 'plumb_toilet';
+  if(/sink|faucet|drain|tub|shower|leak/.test(t)) return 'plumb_leak';
+  if(/heat|furnace|thermostat|filter|water heater/.test(t)) return 'hvac_noheat';
+  if(/fridge|freezer/.test(t)) return 'appl_fridge';
+  if(/smoke|co detector|carbon/.test(t)) return 'safe_chirp';
+  if(/door|lock|window|key|blind|closet/.test(t)) return 'door_lock';
+  return 'other_custom'; }
+function summary(o,inc){
+  var lines=[(inc&&db.key[o.code]?'Unit '+db.key[o.code]+' · ':'')+o.code+' · '+o.title, 'Priority: '+PRI[o.pri]+' · Status: '+STAT[o.status]];
+  var done=o.steps.filter(function(s){return s.st==='ok';}), fail=o.steps.filter(function(s){return s.st==='fail';}), left=o.steps.filter(function(s){return !s.st;});
+  if(done.length) lines.push('Done ('+done.length+'): '+done.map(function(s){return s.t;}).join('; '));
+  if(fail.length) lines.push('NEEDS WORK: '+fail.map(function(s){return s.t+(s.n?' ('+s.n+')':'');}).join('; '));
+  if(left.length && o.status!=='done') lines.push('Still to do: '+left.length+' steps');
+  if(o.parts.length) lines.push('Parts needed: '+o.parts.map(function(p){return p.x;}).join(', '));
+  var notes=o.log.filter(function(l){ return !/^(✓|Status:|Clock|Photo added|Started|Work order created)/.test(l.x); }).slice(-3);
+  if(notes.length) lines.push('Notes: '+notes.map(function(l){return l.x;}).join(' | '));
+  if(totalMin(o)) lines.push('Time on job: '+totalMin(o)+' min');
+  if(db.tech) lines.push('— '+db.tech);
+  return lines.join('\n');
+}
+function copy(t){ if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){toast('Copied');},function(){prompt('Copy this:',t);}); else prompt('Copy this:',t); }
+function shrink(file,cb){ var r=new FileReader(); r.onload=function(){ var im=new Image(); im.onload=function(){ var m=900, sc=Math.min(1,m/Math.max(im.width,im.height)); var cv=document.createElement('canvas'); cv.width=im.width*sc; cv.height=im.height*sc; cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height); cb(cv.toDataURL('image/jpeg',0.6)); }; im.src=r.result; }; r.readAsDataURL(file); }
+
+/* ---- how-to library ---- */
+function renderHow(){
+  var q=($('hSearch').value||'').toLowerCase();
+  $('hList').innerHTML=Object.keys(TPL).filter(function(k){ var t=TPL[k]; return !q || (t.n+' '+t.steps.map(function(s){return s[1]+' '+s[2];}).join(' ')).toLowerCase().indexOf(q)>=0; }).map(function(k){
+    var t=TPL[k];
+    return '<details class="card"><summary><b>'+catOf(t.cat).ic+' '+esc(t.n)+'</b> <span class="meta">· '+t.steps.length+' steps</span></summary>'+
+      (t.safety?'<div class="safety"><b>⚠ Safety first</b>'+esc(t.safety)+'</div>':'')+(t.tip?'<div class="tipbox">💡 '+esc(t.tip)+'</div>':'')+
+      '<ol>'+t.steps.map(function(s){ var pin=db.pins[k+'|'+s[1]]; var v=pin||(s[3]?yt(s[3]):''); return '<li style="margin:6px 0">'+esc(s[1])+(s[2]?'<div class="meta">'+esc(s[2])+'</div>':'')+(v?' <a target="_blank" rel="noopener" href="'+esc(v)+'" style="color:#b3261e;font-weight:700;font-size:.85rem">▶ '+(pin?'My video':'Watch how')+'</a>':'')+'</li>'; }).join('')+'</ol>'+
+      '<button class="btn sm" data-start="'+k+'">Start a work order with this</button></details>';
+  }).join('');
+  $('hList').querySelectorAll('[data-start]').forEach(function(b){ b.onclick=function(){ show('new'); nf.tpl=b.dataset.start; nf.cat=TPL[nf.tpl].cat; nf.pri=TPL[nf.tpl].pri; mark('nCat','c',nf.cat); drawTpl(); mark('nPri','p',nf.pri); $('nUnit').focus(); }; });
+}
+$('hSearch').oninput=renderHow;
+
+/* ---- key & more ---- */
+function renderMore(){
+  $('techName').value=db.tech; $('supName').value=db.sup;
+  var a=$('keyArea');
+  if(db.pin && !unlocked){ a.innerHTML='<div class="inrow"><input id="kPin" type="password" inputmode="numeric" placeholder="PIN"><button class="btn" id="kUn" style="flex:none">Unlock</button></div>'; $('kUn').onclick=tryUnlock; return; }
+  var rows=db.orders.filter(function(o){return db.key[o.code];});
+  a.innerHTML=(db.pin?'<div class="lock">🔓 Unlocked until you close the app. <button class="btn ghost sm" id="kLock">Lock now</button> <button class="btn ghost sm" id="kChg">Change PIN</button></div>':'<div class="lock">No PIN set — units show to anyone holding this phone. <button class="btn sm" id="kSet">Set a PIN</button></div>')+
+    (rows.length?'<table class="key" style="margin-top:8px"><tr><th>Code</th><th>Unit</th><th>Job</th></tr>'+rows.map(function(o){return '<tr><td>'+o.code+'</td><td><b>'+esc(db.key[o.code])+'</b> <button class="btn ghost sm" data-ek="'+o.code+'">✎</button></td><td>'+esc(o.title)+'</td></tr>';}).join('')+'</table>':'<div class="meta" style="margin-top:8px">No units yet.</div>');
+  if($('kLock')) $('kLock').onclick=function(){ unlocked=false; sessionStorage.removeItem('pmg_unl'); renderMore(); };
+  if($('kSet')) $('kSet').onclick=setPin; if($('kChg')) $('kChg').onclick=setPin;
+  a.querySelectorAll('[data-ek]').forEach(function(b){ b.onclick=function(){ var c=b.dataset.ek; var u=prompt('Unit / location for '+c, db.key[c]); if(u===null||!u.trim()) return; db.key[c]=u.trim(); save(); renderMore(); }; });
+}
+function setPin(){ var p=prompt('New PIN (4+ digits)'); if(!p) return; if(!/^\d{4,}$/.test(p)){ toast('Use 4 or more numbers'); return; } var p2=prompt('Type it again'); if(p2!==p){ toast('PINs didn’t match'); return; } db.pin=hash(p); save(); unlocked=true; sessionStorage.setItem('pmg_unl','1'); toast('PIN set'); renderMore(); }
+function tryUnlock(){ var v=$('kPin').value; if(hash(v)===db.pin){ unlocked=true; sessionStorage.setItem('pmg_unl','1'); toast('Unlocked'); renderMore(); } else toast('Wrong PIN'); }
+function hash(s){ var h=5381; s='pmg:'+s; for(var i=0;i<s.length;i++) h=((h<<5)+h+s.charCodeAt(i))|0; return 'h'+(h>>>0).toString(36); }
+$('keyBtn').onclick=function(){ show('more'); };
+$('techName').onchange=function(){ db.tech=this.value.trim(); save(); };
+$('supName').onchange=function(){ db.sup=this.value.trim(); save(); };
+
+/* ---- backup (adds, never erases) ---- */
+$('bkSave').onclick=function(){ var b=new Blob([JSON.stringify(db)],{type:'application/json'}); var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='maintenance-backup-'+new Date().toISOString().slice(0,10)+'.json'; a.click(); toast('Backup saved'); };
+$('bkLoad').onclick=function(){ $('bkFile').click(); };
+$('bkFile').onchange=function(e){ var f=e.target.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(){ try{ mergeIn(JSON.parse(r.result)); }catch(x){ toast('That file isn’t a backup'); } }; r.readAsText(f); };
+function mergeIn(d){
+  var have={}, n=0; db.orders.forEach(function(o){ have[o.id]=1; });
+  (d.orders||[]).forEach(function(o){ if(!have[o.id]){ db.orders.push(o); n++; } });
+  Object.keys(d.key||{}).forEach(function(k){ if(!db.key[k]) db.key[k]=d.key[k]; });
+  Object.keys(d.pins||{}).forEach(function(k){ if(!db.pins[k]) db.pins[k]=d.pins[k]; });
+  Object.keys(d.seq||{}).forEach(function(k){ db.seq[k]=Math.max(db.seq[k]||0,d.seq[k]); });
+  db.orders.sort(function(a,b){ return a.created<b.created?1:-1; });
+  save(); toast('Added '+n+' work orders'); renderList();
+}
+
+/* ---- one-tap import from a link (#add=...) — data in the part after # never goes to the web server ---- */
+(function(){
+  var m=location.hash.match(/#add=([^&]+)/); if(!m) return;
+  try{
+    var list=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
+    var doneKey='pmg_imp_'+m[1].slice(0,40); if(localStorage.getItem(doneKey)){ toast('Already added'); }
+    else { list.forEach(function(p){ makeOrder({unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'); }
+  }catch(e){ toast('Couldn’t read that link'); }
+  history.replaceState(null,'',location.pathname);
+})();
+
+/* ---- voice typing ---- */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+function bindMics(root){
+  (root||document).querySelectorAll('[data-mic]').forEach(function(b){
+    if(!SR){ b.classList.add('hidden'); return; }
+    b.onclick=function(){ var el=$(b.dataset.mic); var r=new SR(); r.lang='en-US'; r.interimResults=false;
+      b.classList.add('live'); r.onresult=function(e){ var t=e.results[0][0].transcript; el.value=(el.value?el.value+' ':'')+t; };
+      r.onend=function(){ b.classList.remove('live'); }; r.onerror=function(){ b.classList.remove('live'); toast('Mic didn’t catch that'); }; r.start(); };
+  });
+}
+bindMics(document);
+
+/* ---- install / offline ---- */
+if('serviceWorker' in navigator && location.protocol==='https:') navigator.serviceWorker.register('sw.js').catch(function(){});
+var deferred=null;
+window.addEventListener('beforeinstallprompt',function(e){ e.preventDefault(); deferred=e; $('installBtn').classList.remove('hidden'); });
+$('installBtn').onclick=function(){ if(deferred){ deferred.prompt(); deferred=null; $('installBtn').classList.add('hidden'); } };
+
+show('orders');
+</script>
+<script src="notify.js" data-app="Maintenance" defer></script>
+</body>
+</html>
