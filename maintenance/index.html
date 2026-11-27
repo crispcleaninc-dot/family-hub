@@ -466,20 +466,21 @@ var TPL={
    ['','Test: closes and holds water, opens and drains','',''],
    ['','Report to supervisor','','']
   ]},
- plumb_slow_drain:{cat:'plumb',n:'Bathroom sink draining slowly / clogged',pri:'R',
-  tip:'Most slow bathroom sinks are hair and soap caught on the pop-up stopper or just below it. Clean the stopper first; snake only if that does not fix it.',
-  safety:'Gloves and eye protection. If any chemical drain cleaner was already used, do not snake or plunge — it can splash. Do not mix drain cleaners.',
-  parts:['Drain snake / zip-it tool','Replacement pop-up stopper','Pivot rod nut / gasket','Bucket + rags','Enzyme drain cleaner (if property allows)','Gloves'],
+ plumb_slow_drain:{cat:'plumb',n:'Bathroom sink draining slowly / clogged',pri:'R',ver:2,
+  tip:'Town Court way (from Greg): there is no snake in the shop. Put a small bucket under the sink, pull the P-trap apart, pull the pop-up stopper out, clear the hair, and put it all back.',
+  safety:'Gloves on. If any chemical drain cleaner was already used, warn — the water in the trap can burn skin and eyes. Do not mix drain cleaners.',
+  parts:['Small bucket + rags','Gloves','Channel-lock pliers','Slip-joint washers (if old ones are cracked)','Replacement pop-up stopper','Pivot rod nut / gasket'],
   steps:[
-   ['','Ask / check: any drain cleaner already poured in?','If yes, flush with lots of water first and use gloves + goggles.',''],
-   ['','Pull the pop-up stopper','Loosen the pivot rod nut under the sink, pull the rod, lift the stopper out.','how to remove bathroom sink pop up stopper'],
-   ['','Clean hair and gunk off the stopper','',''],
-   ['','Run a zip-it tool down the drain and pull out hair','','zip it drain tool bathroom sink'],
-   ['','Still slow: hand snake through the drain or remove the P-trap and clean it','Bucket under the trap.','how to snake a bathroom sink drain'],
-   ['','Clean the overflow hole','',''],
-   ['','Reinstall stopper and pivot rod; check it opens/closes and holds water','','how to adjust bathroom sink pop up stopper'],
-   ['','Run hot water 1 minute — drains fast, no leaks under sink','',''],
-   ['','Wipe sink clean; report','Tap Share update.','']
+   ['Get ready','Ask: was any drain cleaner poured in?','If yes: gloves and eye protection before opening the trap.',''],
+   ['Get ready','Clear out the cabinet and put a small bucket under the P-trap','The U-shaped pipe under the sink is the P-trap. Rags on the cabinet floor.',''],
+   ['P-trap','Loosen both slip nuts and pull the P-trap apart (water goes in the bucket)','Turn by hand; use channel-locks only if stuck. Keep the washers.','how to remove p trap bathroom sink'],
+   ['P-trap','Clean the hair and gunk out of the trap and the pipe ends','',''],
+   ['Pop-up','Loosen the pivot rod nut on the back of the drain and pull the rod out','The small nut on the back of the drain pipe, behind the sink.','how to remove bathroom sink pop up stopper'],
+   ['Pop-up','Lift the pop-up stopper out and remove the hair from it and the drain','',''],
+   ['Put back','Put the stopper back, slide the pivot rod through the hole in it, tighten the nut','Check the stopper goes up and down with the lift rod.','how to adjust bathroom sink pop up stopper'],
+   ['Put back','Put the P-trap back: washers in place, slip nuts hand-tight plus a quarter turn','',''],
+   ['Test','Run water 1 minute: drains fast, no drips at the slip nuts or pivot nut','Wipe the joints with a dry paper towel and check for wet spots.',''],
+   ['Finish','Empty the bucket, wipe the sink and cabinet, report to Greg','Tap Share update or Close work order.','']
   ]},
  tub_stopper:{cat:'plumb',n:'Bathtub stopper won’t plug / loose (toe-touch)',pri:'R',
   tip:'A toe-touch (push-pull) stopper screws onto a post in the drain. If pressing it with your heel does not hold water, it is usually loose, missing its post, or the seal is worn.',
@@ -535,6 +536,10 @@ function save(){
   try{ localStorage.setItem(LS,JSON.stringify(db)); return true; }
   catch(e){ toast('Phone storage full — save a backup file and remove some photos'); return false; }
 }
+(function(){ var ch=0; db.orders.forEach(function(o){ var t=TPL[o.tpl]; if(!t||!t.ver||(o.tplv||1)>=t.ver||o.status==='done') return;
+  if(o.steps.some(function(x){return x.st;})) return;
+  o.steps=t.steps.map(function(x){return {g:x[0],t:x[1],h:x[2],v:x[3],st:'',at:'',n:''};}); o.tplv=t.ver; o.log.push({at:new Date().toISOString(),x:'Steps updated to the newest how-to'}); ch++; });
+  if(ch) try{ localStorage.setItem(LS,JSON.stringify(db)); }catch(e){} })();
 var unlocked = !db.pin || sessionStorage.getItem('pmg_unl')==='1';
 
 function $(id){ return document.getElementById(id); }
@@ -591,7 +596,7 @@ function makeOrder(p){
     pri:p.pri||t.pri, status:'open', created:now(), since:p.since||'', due:p.due||'', note:p.note||'',
     steps:t.steps.map(function(s){return {g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''};}),
     log:[{at:now(),x:'Work order created'+(p.note?': '+p.note:'')}], parts:[], photos:[], time:[], archived:false};
-  o.prof=p.prof||active||''; o.entry=p.entry||''; o.hc=p.hc||'';
+  o.prof=p.prof||active||''; o.entry=p.entry||''; o.hc=p.hc||''; o.tplv=t.ver||1;
   if(p.unit) db.key[o.code]=p.unit;
   if(p.cust) db.cust[o.code]=p.cust;
   db.orders.unshift(o); save(); return o;
