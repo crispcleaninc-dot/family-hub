@@ -146,6 +146,8 @@ h3{font-size:.98rem;margin:12px 0 4px}
       <div class="chips" id="nCat"></div>
       <label>What's wrong (tap one)</label>
       <div class="chips" id="nTpl"></div>
+      <label>Entry</label>
+      <div class="chips" id="nEntry"></div>
       <label>Priority</label>
       <div class="chips" id="nPri"></div>
       <label>Short note (what the resident or office said)</label>
@@ -462,9 +464,44 @@ var TPL={
    ['','Test: closes and holds water, opens and drains','',''],
    ['','Report to supervisor','','']
   ]},
+ plumb_slow_drain:{cat:'plumb',n:'Bathroom sink draining slowly / clogged',pri:'R',
+  tip:'Most slow bathroom sinks are hair and soap caught on the pop-up stopper or just below it. Clean the stopper first; snake only if that does not fix it.',
+  safety:'Gloves and eye protection. If any chemical drain cleaner was already used, do not snake or plunge — it can splash. Do not mix drain cleaners.',
+  parts:['Drain snake / zip-it tool','Replacement pop-up stopper','Pivot rod nut / gasket','Bucket + rags','Enzyme drain cleaner (if property allows)','Gloves'],
+  steps:[
+   ['','Ask / check: any drain cleaner already poured in?','If yes, flush with lots of water first and use gloves + goggles.',''],
+   ['','Pull the pop-up stopper','Loosen the pivot rod nut under the sink, pull the rod, lift the stopper out.','how to remove bathroom sink pop up stopper'],
+   ['','Clean hair and gunk off the stopper','',''],
+   ['','Run a zip-it tool down the drain and pull out hair','','zip it drain tool bathroom sink'],
+   ['','Still slow: hand snake through the drain or remove the P-trap and clean it','Bucket under the trap.','how to snake a bathroom sink drain'],
+   ['','Clean the overflow hole','',''],
+   ['','Reinstall stopper and pivot rod; check it opens/closes and holds water','','how to adjust bathroom sink pop up stopper'],
+   ['','Run hot water 1 minute — drains fast, no leaks under sink','',''],
+   ['','Wipe sink clean; report','Tap Share update.','']
+  ]},
+ tub_stopper:{cat:'plumb',n:'Bathtub stopper won’t plug / loose (toe-touch)',pri:'R',
+  tip:'A toe-touch (push-pull) stopper screws onto a post in the drain. If pressing it with your heel does not hold water, it is usually loose, missing its post, or the seal is worn.',
+  parts:['Toe-touch tub stopper (match thread size)','Stopper post / adapter','Rubber seal / O-ring','Plumber’s grease'],
+  steps:[
+   ['','Test it: press down with your heel; does it seal and hold water?','',''],
+   ['','Unscrew the cap and stopper (counter-clockwise)','Hold the body, turn the top cap off, then unscrew the stopper.','how to remove toe touch tub stopper'],
+   ['','Clean hair from under the stopper and the drain','',''],
+   ['','Check the post is screwed tight into the cross bars; tighten','',''],
+   ['','Check the rubber seal; replace if flat or torn','',''],
+   ['','Screw the stopper back on snug; adjust height so it seals','','toe touch tub stopper adjustment'],
+   ['','Fill a few inches of water and test it holds 5 minutes, then drains','',''],
+   ['','Report','Tap Share update.','']
+  ]},
  other_custom:{cat:'other',n:'Something else (I’ll add steps)',pri:'R',steps:[['','Look at the problem and write what you see','',''],['','Report to supervisor','','']]}
 };
 var PRI={E:'Emergency',U:'Urgent',R:'Routine'};
+var NEEDS_BY_CAT={elec:['Receptacle 15A / 20A','GFCI outlet','Cover plate','Wire nuts','Breaker','Licensed electrician'],
+  plumb:['Drain snake','P-trap / slip nuts','Supply line','Flapper / fill valve','Wax ring','Plumber','Shop vac'],
+  appl:['Replacement part (model #)','Appliance tech','Filter'],hvac:['Furnace filter','Flame sensor','Igniter','Capacitor','Thermostat','HVAC tech'],
+  safe:['9V batteries','Smoke detector','CO detector'],door:['Weatherstrip','Strike plate','Lock / deadbolt','Screws','Door sweep'],
+  grounds:['Ice melt','Shovel','Trash bags','Light bulbs'],walk:['Light bulbs','Smoke detector batteries','Furnace filter','Caulk','Touch-up paint'],tools:['Tool to buy'],other:['Part (describe)']};
+function needsFor(o){ var t=TPL[o.tpl]||{}; var a=(t.parts||[]).concat(NEEDS_BY_CAT[o.cat]||[]); var seen={}; return a.filter(function(x){ if(seen[x]) return false; seen[x]=1; return true; }); }
+var ENTRY={ok:'✅ OK to enter',call:'📞 Call first',home:'🏠 Resident must be home'};
 var STAT={open:'Open',prog:'In progress',wait:'Waiting (parts / supervisor)',done:'Done'};
 
 /* ============ STORAGE (never erases; adds and migrates) ============ */
@@ -537,7 +574,7 @@ function makeOrder(p){
     pri:p.pri||t.pri, status:'open', created:now(), since:p.since||'', due:p.due||'', note:p.note||'',
     steps:t.steps.map(function(s){return {g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''};}),
     log:[{at:now(),x:'Work order created'+(p.note?': '+p.note:'')}], parts:[], photos:[], time:[], archived:false};
-  o.prof=p.prof||active||'';
+  o.prof=p.prof||active||''; o.entry=p.entry||'';
   if(p.unit) db.key[o.code]=p.unit;
   if(p.cust) db.cust[o.code]=p.cust;
   db.orders.unshift(o); save(); return o;
@@ -556,7 +593,7 @@ $('quickNew').onclick=function(){ show('new'); };
 
 function prog(o){ var n=o.steps.length, d=o.steps.filter(function(s){return s.st;}).length; return n?Math.round(d*100/n):0; }
 function renderList(){
-  var F=[['active','Active'],['E','🔴 Emergency'],['today','Due today'],['done','Done'],['arch','Archived'],['all','All']];
+  var F=[['active','Active'],['E','🔴 Emergency'],['needs','🧰 Needs parts'],['today','Due today'],['done','Done'],['arch','Archived'],['all','All']];
   $('filt').innerHTML=F.map(function(f){return '<button class="chip'+(filter===f[0]?' on':'')+'" data-f="'+f[0]+'">'+f[1]+'</button>';}).join('');
   $('filt').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ filter=b.dataset.f; renderList(); }; });
   var today=new Date().toISOString().slice(0,10);
@@ -564,18 +601,24 @@ function renderList(){
     if(!inProf(o)) return false;
     if(filter==='arch') return o.archived; if(o.archived && filter!=='all') return false;
     if(filter==='active') return o.status!=='done'; if(filter==='done') return o.status==='done';
+    if(filter==='needs') return o.status!=='done' && (o.parts||[]).some(function(x){return !x.got;});
     if(filter==='E') return o.pri==='E' && o.status!=='done'; if(filter==='today') return o.due && o.due<=today && o.status!=='done';
     return true; });
   var rank={E:0,U:1,R:2};
   if(filter!=='all'&&filter!=='arch'&&filter!=='done') L.sort(function(a,b){ return (rank[a.pri]-rank[b.pri]) || ((a.due||'9')<(b.due||'9')?-1:1); });
-  $('list').innerHTML = L.length ? L.map(function(o){
+  var shop='';
+  if(filter==='needs' && L.length){ var items=[]; L.forEach(function(o){ (o.parts||[]).forEach(function(x){ if(!x.got) items.push({o:o,x:x}); }); });
+    shop='<div class="card"><h2>🧰 Parts &amp; help needed ('+items.length+')</h2>'+items.map(function(it){ return '<div class="meta" style="padding:3px 0">• <b style="color:var(--ink)">'+esc(it.x.x)+'</b> — '+esc(unitOf(it.o))+' · '+it.o.code+'</div>'; }).join('')+
+      '<button class="btn sm" id="shopShare" style="margin-top:8px">📤 Send list to supervisor</button></div>'; }
+  $('list').innerHTML = shop + (L.length ? L.map(function(o){
     var c=catOf(o.cat), p=prog(o);
     return '<div class="card wo" data-id="'+o.id+'"><div class="ic">'+c.ic+'</div><div class="body">'+
       '<div class="t">'+esc(o.title)+'</div>'+
       '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span><span class="pill s-'+o.status+'">'+STAT[o.status].split(' (')[0]+'</span> '+
-      '<b>'+esc(unitOf(o))+'</b> · '+o.code+(o.due?' · due '+fmtD(o.due):'')+(o.since?' · since '+fmtD(o.since):'')+'</div>'+
+      '<b>'+esc(unitOf(o))+'</b> · '+o.code+(o.entry?' · '+ENTRY[o.entry]:'')+(o.parts&&o.parts.some(function(x){return !x.got;})&&o.status!=='done'?' · 🧰 needs parts':'')+(o.due?' · due '+fmtD(o.due):'')+(o.since?' · since '+fmtD(o.since):'')+'</div>'+
       '<div class="bar"><i style="width:'+p+'%"></i></div></div></div>';
-  }).join('') : '<div class="card meta">Nothing here. Tap ＋ New work order.</div>';
+  }).join('') : '<div class="card meta">Nothing here. Tap ＋ New work order.</div>');
+  if($('shopShare')) $('shopShare').onclick=function(){ var P=prof(); var lines=['Parts / help needed'+(P&&P.site?' — '+P.site:'')]; L.forEach(function(o){ var need=(o.parts||[]).filter(function(x){return !x.got;}).map(function(x){return x.x;}); if(need.length) lines.push((db.key[o.code]&&P&&P.shareUnit?'Unit '+db.key[o.code]+' · ':'')+o.code+' ('+o.title+'): '+need.join(', ')); }); if(db.tech) lines.push('— '+db.tech); var t=lines.join('\n'); if(navigator.share) navigator.share({text:t}).catch(function(){}); else copy(t); };
   $('list').querySelectorAll('.wo').forEach(function(e){ e.onclick=function(){ openOrder(e.dataset.id); }; });
 }
 
@@ -596,6 +639,8 @@ function renderNew(){
   $('nRecent').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ $('nUnit').value=b.dataset.u; var c=null; db.orders.forEach(function(o){ if(!c && db.key[o.code]===b.dataset.u && db.cust[o.code]) c=db.cust[o.code]; }); if(c && isCust){ $('cName').value=c.name||''; $('cPhone').value=c.phone||''; $('cEmail').value=c.email||''; $('cEquip').value=c.equip||''; } }; });
   $('nCat').innerHTML=CATS.map(function(c){return '<button class="chip" data-c="'+c.id+'">'+c.ic+' '+c.n+'</button>';}).join('');
   $('nCat').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.cat=b.dataset.c; nf.tpl=''; mark('nCat','c',nf.cat); drawTpl(); }; });
+  nf.entry=''; $('nEntry').innerHTML=Object.keys(ENTRY).map(function(k){return '<button class="chip" data-e="'+k+'">'+ENTRY[k]+'</button>';}).join('');
+  $('nEntry').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.entry=(nf.entry===b.dataset.e?'':b.dataset.e); mark('nEntry','e',nf.entry); }; });
   $('nPri').innerHTML=['E','U','R'].map(function(k){return '<button class="chip pri-'+k+'" data-p="'+k+'">'+PRI[k]+'</button>';}).join('');
   $('nPri').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ nf.pri=b.dataset.p; mark('nPri','p',nf.pri); }; });
   drawTpl();
@@ -612,7 +657,7 @@ function doSave(go){
   var tpl=nf.tpl || (nf.cat ? (Object.keys(TPL).filter(function(k){return TPL[k].cat===nf.cat;})[0]) : 'other_custom');
   if(!$('nUnit').value.trim() && !confirm('No unit or location entered. Save anyway?')) return;
   var P=prof(), cu=(P&&P.kind==='customer')?{name:$('cName').value.trim(),phone:$('cPhone').value.trim(),email:$('cEmail').value.trim(),equip:$('cEquip').value.trim()}:null;
-  var o=makeOrder({unit:$('nUnit').value.trim(),cust:cu,tpl:tpl,pri:nf.pri,note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
+  var o=makeOrder({unit:$('nUnit').value.trim(),cust:cu,tpl:tpl,pri:nf.pri,entry:nf.entry||'',note:$('nNote').value.trim(),since:$('nSince').value,due:$('nDue').value});
   toast('Saved '+o.code);
   if(go){ o.status='prog'; o.log.push({at:now(),x:'Started'}); save(); openOrder(o.id); } else show('orders');
 }
@@ -634,7 +679,10 @@ function renderDetail(){
      '<div class="big">'+esc(unitOf(o))+' <button class="btn ghost sm" id="dUnit">✎ Unit</button></div><div style="font-weight:700">'+esc(o.title)+'</div>'+
      '<div class="meta"><span class="pill p-'+o.pri+'">'+PRI[o.pri]+'</span>'+(o.since?'Problem since '+fmtD(o.since)+' · ':'')+(o.due?'Due '+fmtD(o.due):'')+'</div>'+
      (unlocked&&db.cust[o.code]&&db.cust[o.code].name?'<div class="meta">👤 '+esc([db.cust[o.code].name,db.cust[o.code].phone,db.cust[o.code].email].filter(Boolean).join(' · '))+(db.cust[o.code].equip?'<br>⚙️ '+esc(db.cust[o.code].equip):'')+'</div>':'')+
+     (o.entry?'<div class="meta" style="font-weight:700;color:var(--ink)">'+ENTRY[o.entry]+'</div>':'')+
      (o.note?'<div class="stnote">'+esc(o.note)+'</div>':'')+
+     (o.closed&&o.status==='done'?'<div class="tipbox" style="background:#ddf3e5;border-color:#9fd8b3">✅ <b>Closed '+fmt(o.closed.at)+'</b> — '+esc(o.closed.outcome)+(o.closed.note?'<br>'+esc(o.closed.note):'')+'</div>':'')+
+     (o.status!=='done'?'<div style="display:flex;gap:8px;margin:8px 0"><button class="btn good" id="dClose" style="flex:1">✅ Close work order</button><button class="btn warn" id="dNeed" style="flex:1">🧰 I need stuff to finish</button></div>':'')+
      '<div class="chips" id="dStat">'+Object.keys(STAT).map(function(k){return '<button class="chip'+(o.status===k?' on':'')+'" data-s="'+k+'">'+STAT[k]+'</button>';}).join('')+'</div>'+
      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">'+
        '<button class="btn sm '+(run?'bad':'good')+'" id="dClock">'+(run?'⏹ Stop clock':'▶ Start clock')+'</button>'+
@@ -662,7 +710,7 @@ function renderDetail(){
   h+='<div class="card"><h2>Notes &amp; history</h2><div class="inrow"><input id="dNote" placeholder="What you found / did"><button class="mic" data-mic="dNote">🎤</button><button class="btn sm" id="dNoteAdd" style="flex:none">Add</button></div>'+
      '<div class="log" style="margin-top:6px">'+o.log.slice().reverse().map(function(l){return '<div><time>'+fmt(l.at)+'</time>'+esc(l.x)+'</div>';}).join('')+'</div></div>';
   h+='<div class="card"><h2>Parts needed</h2><div class="inrow"><input id="dPart" placeholder="Part, size, model #"><button class="btn sm" id="dPartAdd" style="flex:none">Add</button></div>'+
-     (o.parts.length?'<ul>'+o.parts.map(function(x){return '<li>'+esc(x.x)+' <span class="meta">'+fmt(x.at)+'</span></li>';}).join('')+'</ul>':'<div class="meta">None yet</div>')+'</div>';
+     (o.parts.length?'<div style="margin-top:6px">'+o.parts.map(function(x,i){return '<label style="display:flex;gap:8px;align-items:center;color:var(--ink);font-size:.95rem;margin:6px 0"><input type="checkbox" data-got="'+i+'" style="width:22px;height:22px"'+(x.got?' checked':'')+'> <span style="'+(x.got?'text-decoration:line-through;color:var(--muted)':'')+'">'+esc(x.x)+'</span> <span class="meta">'+(x.got?'got it '+fmt(x.got):fmt(x.at))+'</span></label>';}).join('')+'<div class="meta">Tick each item when you have it.</div></div>':'<div class="meta">None yet</div>')+'</div>';
   h+='<div class="card"><h2>Photos</h2><div class="photos">'+o.photos.map(function(ph,i){return '<img src="'+ph.d+'" data-ph="'+i+'" alt="photo">';}).join('')+'</div>'+
      '<label class="btn ghost sm" style="display:inline-block;margin-top:8px;color:var(--brand)">📷 Add photo<input type="file" accept="image/*" capture="environment" id="dPhoto" class="hidden"></label></div>';
   h+='<div class="card"><h2>Send / share</h2><div class="meta">The share text uses the work-order code. Turn on the unit only if you are sending it to someone who should know it.</div>'+
@@ -691,6 +739,9 @@ function bindDetail(o){
   });
   $('dAddStep').onclick=function(){ var t=prompt('New step'); if(!t||!t.trim()) return; o.steps.push({g:'My steps',t:t.trim(),h:'',v:'',st:'',at:'',n:''}); o.log.push({at:now(),x:'Added step: '+t.trim()}); save(); renderDetail(); };
   $('dNoteAdd').onclick=function(){ var v=$('dNote').value.trim(); if(!v) return; o.log.push({at:now(),x:v}); save(); renderDetail(); toast('Note saved'); };
+  $('v-detail').querySelectorAll('[data-got]').forEach(function(cb){ cb.onchange=function(){ var x=o.parts[+cb.dataset.got]; x.got=cb.checked?now():''; o.log.push({at:now(),x:(cb.checked?'Got: ':'Still need: ')+x.x}); if(o.status==='wait' && o.parts.every(function(y){return y.got;})){ o.status='prog'; o.log.push({at:now(),x:'All parts in hand — back in progress'}); toast('All parts in hand'); } save(); renderDetail(); }; });
+  if($('dClose')) $('dClose').onclick=function(){ closeSheet(o); };
+  if($('dNeed')) $('dNeed').onclick=function(){ needSheet(o); };
   $('dPartAdd').onclick=function(){ var v=$('dPart').value.trim(); if(!v) return; o.parts.push({x:v,at:now()}); o.log.push({at:now(),x:'Part needed: '+v}); if(o.status!=='done') o.status='wait'; save(); renderDetail(); };
   $('dPhoto').onchange=function(e){ var f=e.target.files[0]; if(!f) return; shrink(f,function(d){ o.photos.push({d:d,at:now()}); o.log.push({at:now(),x:'Photo added'}); if(!save()) o.photos.pop(); renderDetail(); }); };
   $('v-detail').querySelectorAll('img[data-ph]').forEach(function(im){ im.onclick=function(){ var w=window.open(); if(w) w.document.write('<img src="'+im.src+'" style="max-width:100%">'); }; });
@@ -700,11 +751,53 @@ function bindDetail(o){
   $('dArch').onclick=function(){ o.archived=!o.archived; o.log.push({at:now(),x:o.archived?'Archived':'Un-archived'}); save(); toast(o.archived?'Archived (still saved — see Archived)':'Back in your list'); renderDetail(); };
   bindMics($('v-detail'));
 }
+function closeSheet(o){
+  var left=o.steps.filter(function(s){return !s.st;}).length;
+  var h='<div class="sheet" id="cSheet"><div class="in"><h2>✅ Close '+o.code+'</h2><div class="meta">'+esc(o.title)+(left?' · '+left+' step'+(left>1?'s':'')+' not checked':'')+'</div>'+
+    '<label>How did it end?</label><div class="chips" id="cOut"><button class="chip on" data-o="Fixed">Fixed</button><button class="chip" data-o="Fixed — follow-up needed">Fixed, follow-up needed</button><button class="chip" data-o="Could not fix — sent to vendor / supervisor">Couldn’t fix — sent on</button><button class="chip" data-o="Nothing wrong found">Nothing wrong found</button></div>'+
+    '<label>Closing notes (what you did)</label><div class="inrow"><textarea id="cNote" placeholder="Talk or type"></textarea><button class="mic" data-mic="cNote">🎤</button></div>'+
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn good" id="cGo" style="flex:2">Close work order</button><button class="btn ghost" id="cNo" style="flex:1">Cancel</button></div></div></div>';
+  document.body.insertAdjacentHTML('beforeend',h); bindMics($('cSheet'));
+  var out='Fixed'; $('cOut').querySelectorAll('button').forEach(function(b){ b.onclick=function(){ out=b.dataset.o; mark('cOut','o',out); }; });
+  $('cNo').onclick=function(){ $('cSheet').remove(); };
+  $('cGo').onclick=function(){ var n=$('cNote').value.trim(); var r=runningSince(o); if(r) o.time[o.time.length-1].end=now();
+    o.status='done'; o.closed={at:now(),outcome:out,note:n}; o.log.push({at:now(),x:'CLOSED — '+out+(n?': '+n:'')});
+    if(/follow-up/.test(out)){ var no=makeOrder({prof:o.prof,unit:db.key[o.code]||'',tpl:o.tpl,pri:'R',entry:o.entry,note:'Follow-up from '+o.code+(n?': '+n:'')}); o.log.push({at:now(),x:'Follow-up '+no.code+' created'}); }
+    save(); $('cSheet').remove(); toast('Closed '+o.code); renderDetail(); };
+}
+function needSheet(o){
+  var sug=needsFor(o), have={}; (o.parts||[]).forEach(function(x){ have[x.x]=1; });
+  var h='<div class="sheet" id="nSheet"><div class="in"><h2>🧰 What do you need to finish?</h2><div class="meta">'+o.code+' · '+esc(o.title)+'</div>'+
+    '<div class="chips" id="nsList" style="margin-top:10px">'+sug.map(function(x){return '<button class="chip'+(have[x]?' on':'')+'" data-n="'+esc(x)+'"'+(have[x]?' disabled':'')+'>'+esc(x)+'</button>';}).join('')+'</div>'+
+    '<label>Something else (size, model #, who)</label><div class="inrow"><input id="nsOther" placeholder="e.g. 1-1/4&quot; P-trap, plumber"><button class="mic" data-mic="nsOther">🎤</button></div>'+
+    '<label>Why it can’t be finished today (optional)</label><div class="inrow"><input id="nsWhy" placeholder="e.g. stopper is stripped, need new one"><button class="mic" data-mic="nsWhy">🎤</button></div>'+
+    '<div style="display:flex;gap:8px;margin-top:14px"><button class="btn warn" id="nsGo" style="flex:2">Add needs &amp; next steps</button><button class="btn ghost" id="nsNo" style="flex:1">Cancel</button></div></div></div>';
+  document.body.insertAdjacentHTML('beforeend',h); bindMics($('nSheet'));
+  var pick={}; $('nsList').querySelectorAll('button:not([disabled])').forEach(function(b){ b.onclick=function(){ pick[b.dataset.n]=!pick[b.dataset.n]; b.classList.toggle('on',!!pick[b.dataset.n]); }; });
+  $('nsNo').onclick=function(){ $('nSheet').remove(); };
+  $('nsGo').onclick=function(){
+    var items=Object.keys(pick).filter(function(k){return pick[k];}); var oth=$('nsOther').value.trim(); if(oth) items=items.concat(oth.split(/\s*[,;]\s*/).filter(Boolean));
+    if(!items.length){ toast('Pick at least one thing'); return; }
+    var why=$('nsWhy').value.trim();
+    items.forEach(function(x){ o.parts.push({x:x,at:now()}); });
+    var help=items.filter(function(x){ return /electrician|plumber|tech|vendor|supervisor/i.test(x); }), stuff=items.filter(function(x){ return help.indexOf(x)<0; });
+    var ns=[];
+    if(stuff.length) ns.push(['To finish','Get from shop / order: '+stuff.join(', '),'Check the shop first; if not in stock, ask your supervisor to order it. Tick it under Parts needed when you have it.','']);
+    help.forEach(function(x){ ns.push(['To finish','Schedule '+x,'Tell your supervisor; note the date they will come.','']); });
+    ns.push(['To finish','Go back to the unit'+(o.entry?' ('+ENTRY[o.entry].replace(/^\S+\s/,'')+')':'')+' and finish the repair','','']);
+    ns.push(['To finish','Test it works and clean up','','']);
+    ns.push(['To finish','Close the work order with notes','Tap ✅ Close work order.','']);
+    ns.forEach(function(s){ o.steps.push({g:s[0],t:s[1],h:s[2],v:s[3],st:'',at:'',n:''}); });
+    o.status='wait'; o.log.push({at:now(),x:'Needs to finish: '+items.join(', ')+(why?' — '+why:'')});
+    save(); $('nSheet').remove(); toast('Needs added — status: waiting'); renderDetail(); };
+}
 function guessTpl(t){ t=t.toLowerCase();
   if(/outlet|gfci|spark/.test(t)) return /gfci/.test(t)?'elec_gfci':'elec_outlet_spark';
   if(/light|switch|fan/.test(t)) return 'elec_light';
   if(/disposal|dishwasher/.test(t)) return 'plumb_disposal_dw';
   if(/toilet/.test(t)) return 'plumb_toilet';
+  if(/tub|stopper/.test(t)) return 'tub_stopper';
+  if(/slow|clog|hair/.test(t)) return 'plumb_slow_drain';
   if(/sink|faucet|drain|tub|shower|leak/.test(t)) return 'plumb_leak';
   if(/heat|furnace|thermostat|filter|water heater/.test(t)) return 'hvac_noheat';
   if(/fridge|freezer/.test(t)) return 'appl_fridge';
@@ -718,7 +811,9 @@ function summary(o,inc){
   if(done.length) lines.push('Done ('+done.length+'): '+done.map(function(s){return s.t;}).join('; '));
   if(fail.length) lines.push('NEEDS WORK: '+fail.map(function(s){return s.t+(s.n?' ('+s.n+')':'');}).join('; '));
   if(left.length && o.status!=='done') lines.push('Still to do: '+left.length+' steps');
-  if(o.parts.length) lines.push('Parts needed: '+o.parts.map(function(p){return p.x;}).join(', '));
+  if(o.entry) lines.push(ENTRY[o.entry].replace(/^\S+\s/,''));
+  var need=o.parts.filter(function(p){return !p.got;}).map(function(p){return p.x;}); if(need.length) lines.push('Still need: '+need.join(', '));
+  if(o.closed && o.status==='done') lines.push('CLOSED: '+o.closed.outcome+(o.closed.note?' — '+o.closed.note:''));
   var notes=o.log.filter(function(l){ return !/^(✓|Status:|Clock|Photo added|Started|Work order created)/.test(l.x); }).slice(-3);
   if(notes.length) lines.push('Notes: '+notes.map(function(l){return l.x;}).join(' | '));
   if(totalMin(o)) lines.push('Time on job: '+totalMin(o)+' min');
@@ -802,7 +897,7 @@ window.addEventListener('hashchange',function(){ if(/(profile|add)=/.test(locati
   try{
     var list=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
     var doneKey='pmg_imp_'+m[1].slice(0,40); if(localStorage.getItem(doneKey)){ toast('Already added'); }
-    else { list.forEach(function(p){ makeOrder({prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'); }
+    else { var skipped=0; list=list.filter(function(p){ var dup=db.orders.some(function(o){ return (db.key[o.code]||'')===(p.u||'') && (o.note||'')===(p.n||''); }); if(dup) skipped++; return !dup; }); list.forEach(function(p){ makeOrder({entry:p.e||'',prof:active||(function(){ var f=''; db.profiles.forEach(function(x){ if(!f&&x.kind==='property') f=x.id; }); return f; })(),unit:p.u||'',tpl:p.t||'other_custom',pri:p.p,note:p.n||'',since:p.s||'',due:p.d||'',title:p.ti}); }); localStorage.setItem(doneKey,'1'); toast('Added '+list.length+' work orders'+(skipped?' ('+skipped+' already here)':'')); }
   }catch(e){ toast('Couldn’t read that link'); }
   history.replaceState(null,'',location.pathname);
 })();
