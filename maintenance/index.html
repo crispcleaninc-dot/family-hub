@@ -492,6 +492,21 @@ var TPL={
    ['','Fill a few inches of water and test it holds 5 minutes, then drains','',''],
    ['','Report','Tap Share update.','']
   ]},
+ door_sticks:{cat:'door',n:'Door sticks / won’t close without forcing',pri:'R',
+  tip:'Try the easy fixes first: most sticking doors are loose hinge screws, not a door that needs shaving. Only plane (shave) it once the hinges are tight and you have marked exactly where it rubs.',
+  parts:['3" hinge screws','Wood plane / power planer','Sandpaper','Primer + paint for the cut edge','Shims (cardboard / hinge shims)','Pencil / chalk'],
+  steps:[
+   ['Find it','Close it slowly and find where it rubs (top corner, latch side, bottom)','Look for shiny worn paint, or run a piece of paper around the gap.','how to fix a door that sticks'],
+   ['Easy fix','Tighten all hinge screws (door and frame side)','',''],
+   ['Easy fix','Top hinge: swap one short screw for a 3" screw into the stud','Pulls the door up and away from the latch side.','fix sagging door 3 inch hinge screw'],
+   ['Easy fix','Still rubs? Shim a hinge or adjust the strike plate','Shim behind the bottom hinge to move the top over, or the reverse.','how to shim a door hinge'],
+   ['Easy fix','Check if it closes now without forcing','If yes, skip to the last steps.',''],
+   ['Shave it (if needed)','Mark the rub line in pencil with the door closed','',''],
+   ['Shave it (if needed)','Take the door off (pop hinge pins), plane to the line — small passes','Plane toward the center on the top/bottom edges so the corners don’t split.','how to plane a door that sticks'],
+   ['Shave it (if needed)','Sand, then prime/paint the bare edge (bathroom humidity swells raw wood)','',''],
+   ['Shave it (if needed)','Rehang, check even gap (about the thickness of a nickel) and latch','',''],
+   ['Finish','Door opens and closes and latches without forcing; report','Tap Share update.','']
+  ]},
  other_custom:{cat:'other',n:'Something else (I’ll add steps)',pri:'R',steps:[['','Look at the problem and write what you see','',''],['','Report to supervisor','','']]}
 };
 var PRI={E:'Emergency',U:'Urgent',R:'Routine'};
@@ -802,6 +817,7 @@ function guessTpl(t){ t=t.toLowerCase();
   if(/heat|furnace|thermostat|filter|water heater/.test(t)) return 'hvac_noheat';
   if(/fridge|freezer/.test(t)) return 'appl_fridge';
   if(/smoke|co detector|carbon/.test(t)) return 'safe_chirp';
+  if(/stick|rub|forc|shave/.test(t)) return 'door_sticks';
   if(/door|lock|window|key|blind|closet/.test(t)) return 'door_lock';
   return 'other_custom'; }
 function summary(o,inc){
